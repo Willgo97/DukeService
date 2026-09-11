@@ -13,6 +13,7 @@ data class Machine(
     val kast: String = "",
     val scherm: String = "",
     val actief: Boolean = true,
+    val foto: String = "",
     val servicemenu: String = "",
     val servicemenuUitleg: String = "",
     val kort: String = "",

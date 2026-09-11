@@ -15,11 +15,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ListAlt
 import androidx.compose.material.icons.filled.Brightness4
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -61,6 +63,7 @@ import nl.dejongduke.service.ui.screens.PartsScreen
 import nl.dejongduke.service.ui.screens.ProcedureDetail
 import nl.dejongduke.service.ui.screens.ProcedureList
 import nl.dejongduke.service.ui.screens.SchemaDetail
+import nl.dejongduke.service.ui.screens.ScanScreen
 import nl.dejongduke.service.ui.screens.SearchScreen
 import nl.dejongduke.service.ui.screens.SpecsScreen
 
@@ -105,6 +108,17 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                     containerColor = MaterialTheme.colorScheme.surface,
                 ),
             )
+        },
+        floatingActionButton = {
+            if (current == null) {
+                ExtendedFloatingActionButton(
+                    onClick = { vm.open(Route.Scan) },
+                    icon = { Icon(Icons.Filled.CameraAlt, null) },
+                    text = { Text("Scan") },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
         },
         bottomBar = {
             NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
@@ -177,6 +191,7 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
     val ticks by vm.ticks.collectAsStateWithLifecycle()
     val recent by vm.recent.collectAsStateWithLifecycle()
     val today by vm.today.collectAsStateWithLifecycle()
+    val pins by vm.pins.collectAsStateWithLifecycle()
 
     when (tab) {
         Tab.Zoek -> SearchScreen(
@@ -184,10 +199,13 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
             query = query,
             results = results,
             recent = recent,
+            pins = pins,
+            ticks = ticks,
             onQuery = vm::setQuery,
             onCommit = vm::commitQuery,
             onClearRecent = vm::clearRecent,
             onOpen = vm::open,
+            onTab = vm::selectTab,
         )
 
         Tab.Storingen -> FaultsScreen(cat, filter, vm::setFilter, vm::open)
@@ -204,16 +222,22 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
 private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
     val ticks by vm.ticks.collectAsStateWithLifecycle()
     val filter by vm.filter.collectAsStateWithLifecycle()
+    val pins by vm.pins.collectAsStateWithLifecycle()
+    val notes by vm.notes.collectAsStateWithLifecycle()
 
     when (route) {
         is Route.Fault -> {
             val group = cat.faultGroup(route.key)
-            if (group != null) FaultDetail(cat, group, vm::open)
+            if (group != null) {
+                FaultDetail(cat, group, pins.contains("fault:" + group.melding), vm::togglePin, vm::open)
+            }
         }
 
         is Route.Procedure -> {
             val proc = cat.procedure(route.id)
-            if (proc != null) ProcedureDetail(cat, proc)
+            if (proc != null) {
+                ProcedureDetail(cat, proc, pins.contains("proc:" + proc.id), vm::togglePin)
+            }
         }
 
         Route.Procedures -> ProcedureList(cat, filter, vm::setFilter, vm::open)
@@ -221,6 +245,8 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
         Route.Components -> ComponentList(cat, vm::open)
 
         Route.Servicemenu -> MenuList(cat, vm::open)
+
+        Route.Scan -> ScanScreen(cat, vm::open)
 
         is Route.MenuItem -> {
             val item = cat.menuItem(route.nr)
@@ -235,7 +261,7 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
         is Route.Machine -> {
             val machine = cat.machine(route.id)
             if (machine != null) {
-                MachineDetail(cat, machine, vm::open) { tab, machineId ->
+                MachineDetail(cat, machine, notes[machine.id].orEmpty(), vm::setNote, vm::open) { tab, machineId ->
                     vm.setFilter(machineId)
                     vm.back()
                     vm.selectTab(tab)
@@ -275,6 +301,7 @@ private fun titleFor(catalog: Catalog?, tab: Tab, route: Route?): String = when 
     Route.Procedures -> "Procedures"
     Route.Components -> "Techniek"
     Route.Servicemenu -> "Servicemenu"
+    Route.Scan -> "Scannen"
     is Route.MenuItem -> "Servicemenu"
     is Route.Component -> "Techniek"
     is Route.Machine -> catalog?.machine(route.id)?.naam ?: "Machine"

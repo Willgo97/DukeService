@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,11 @@ import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Machine
+import nl.dejongduke.service.ui.AssetPhoto
 import nl.dejongduke.service.ui.Card
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
@@ -74,32 +81,59 @@ private fun MachineCard(catalog: Catalog, machine: Machine, onOpen: (Route) -> U
 
     Card(onClick = { onOpen(Route.Machine(machine.id)) }) {
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(machine.naam, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-                Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            Spacer(Modifier.height(2.dp))
-            Text(
-                machine.kort,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(10.dp))
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
-            ) {
-                if (machine.servicemenu.isNotEmpty()) {
-                    Pill(
-                        servicemenuLabel(machine.servicemenu),
-                        tone = if (machine.servicemenu == "nieuw") MaterialTheme.colorScheme.primary else null,
-                    )
+            Row(verticalAlignment = Alignment.Top) {
+                if (machine.foto.isNotEmpty()) {
+                    MachineThumb(machine.foto)
+                    Spacer(Modifier.width(14.dp))
                 }
-                if (faults > 0) Pill("$faults storingen")
-                if (procs > 0) Pill("$procs procedures")
-                if (parts > 0) Pill("$parts onderdelen")
+                Column(Modifier.weight(1f)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            machine.naam,
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Spacer(Modifier.height(2.dp))
+                    Text(
+                        machine.kort,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(10.dp))
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
+                    if (machine.servicemenu.isNotEmpty()) {
+                        Pill(
+                            servicemenuLabel(machine.servicemenu),
+                            tone = if (machine.servicemenu == "nieuw") MaterialTheme.colorScheme.primary else null,
+                        )
+                    }
+                    if (faults > 0) Pill("$faults storingen")
+                    if (procs > 0) Pill("$procs procedures")
+                    if (parts > 0) Pill("$parts onderdelen")
+                    }
+                }
             }
         }
+    }
+}
+
+/** Small machine photo for a list row. */
+@Composable
+private fun MachineThumb(path: String) {
+    Box(
+        Modifier
+            .width(78.dp)
+            .height(104.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+        contentAlignment = Alignment.Center,
+    ) {
+        AssetPhoto(path, Modifier.fillMaxSize())
     }
 }
 
@@ -107,6 +141,8 @@ private fun MachineCard(catalog: Catalog, machine: Machine, onOpen: (Route) -> U
 fun MachineDetail(
     catalog: Catalog,
     machine: Machine,
+    notitie: String,
+    onNote: (String, String) -> Unit,
     onOpen: (Route) -> Unit,
     onJump: (Tab, String) -> Unit,
 ) {
@@ -115,6 +151,21 @@ fun MachineDetail(
     val parts = catalog.parts.count { it.machine == machine.id }
 
     LazyColumn(Modifier.fillMaxWidth()) {
+        if (machine.foto.isNotEmpty()) {
+            item {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(260.dp)
+                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    AssetPhoto(machine.foto, Modifier.fillMaxSize())
+                }
+            }
+        }
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(machine.naam, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
@@ -299,6 +350,30 @@ fun MachineDetail(
                         Spacer(Modifier.height(4.dp))
                     }
                 }
+            }
+        }
+
+        item { SectionHeader("Mijn notitie") }
+        item {
+            var tekst by remember(machine.id) { mutableStateOf(notitie) }
+            Column(Modifier.padding(horizontal = 12.dp)) {
+                OutlinedTextField(
+                    value = tekst,
+                    onValueChange = {
+                        tekst = it
+                        onNote(machine.id, it)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("Serienummer, locatie, wat je hebt vervangen…") },
+                    minLines = 3,
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "Blijft op deze telefoon staan.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                )
             }
         }
 

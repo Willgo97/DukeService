@@ -33,6 +33,19 @@ class Prefs(context: Context) {
         sp.edit().apply { stale.forEach { remove(it) } }.apply()
     }
 
+    // --- Pinned items -----------------------------------------------------
+    // Keys look like "fault:Grinder blocked" or "part:5KAF119".
+
+    fun pins(): List<String> =
+        sp.getString("pins", "")!!.split("\n").filter { it.isNotBlank() }
+
+    fun togglePin(key: String): Boolean {
+        val current = pins().toMutableList()
+        val added = if (current.remove(key)) false else { current.add(0, key); true }
+        sp.edit().putString("pins", current.take(40).joinToString("\n")).apply()
+        return added
+    }
+
     // --- Recent searches --------------------------------------------------
 
     fun recent(): List<String> =
@@ -46,6 +59,20 @@ class Prefs(context: Context) {
     }
 
     fun clearRecent() = sp.edit().remove("recent").apply()
+
+    // --- Notes per machine ------------------------------------------------
+    // Serial number, where it stands, what was replaced last time — the things
+    // an engineer now writes on the back of a hand.
+
+    fun note(machineId: String): String = sp.getString("note:$machineId", "")!!
+
+    fun setNote(machineId: String, text: String) {
+        if (text.isBlank()) sp.edit().remove("note:$machineId").apply()
+        else sp.edit().putString("note:$machineId", text.trim()).apply()
+    }
+
+    fun notedMachines(): Set<String> =
+        sp.all.keys.filter { it.startsWith("note:") }.map { it.removePrefix("note:") }.toSet()
 
     // --- Appearance -------------------------------------------------------
 

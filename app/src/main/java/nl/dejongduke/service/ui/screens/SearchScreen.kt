@@ -39,6 +39,7 @@ import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.PartNumber
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
+import nl.dejongduke.service.ui.Tab
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -47,10 +48,13 @@ fun SearchScreen(
     query: String,
     results: SearchResult,
     recent: List<String>,
+    pins: List<String>,
+    ticks: Map<String, Set<Int>>,
     onQuery: (String) -> Unit,
     onCommit: () -> Unit,
     onClearRecent: () -> Unit,
     onOpen: (Route) -> Unit,
+    onTab: (Tab) -> Unit,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
 
@@ -100,72 +104,14 @@ fun SearchScreen(
                     }
                 }
             }
+            homeSections(catalog, pins, ticks, onOpen, onTab)
+
             item { SectionHeader("Vaak nodig") }
             items(veelVoorkomend(catalog)) { group ->
                 FaultCard(catalog, group, showMachines = false) { onOpen(Route.Fault(group.melding)) }
             }
-            item { SectionHeader("Snel naar") }
-            item {
-                Card(onClick = { onOpen(Route.Components) }) {
-                    Column {
-                        Text("Techniek: hoe het werkt", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            "Watersysteem, boilers, ventielen, brewer, molen en elektronica — met schema's",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
-            item {
-                Card(onClick = { onOpen(Route.Servicemenu) }) {
-                    Column {
-                        Text("Servicemenu", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            "Wat elke functie doet, met wachtwoordniveaus — plus ontkalken en kalibreren",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
-            item {
-                Card(onClick = { onOpen(Route.Specs) }) {
-                    Column {
-                        Text("Technische gegevens", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            "Water, boiler, omgeving, beker- en kanmaten, typeplaatje",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
-            item {
-                Card(onClick = { onOpen(Route.Bronnen) }) {
-                    Column {
-                        Text("Waar komt dit vandaan?", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            "De bronnen achter elke melding, procedure en onderdeelnummer",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            }
-            item {
-                Column(Modifier.padding(horizontal = 26.dp, vertical = 18.dp)) {
-                    Text(
-                        "Tip: typ een onderdeelnummer zoals 5KAF119, of een stuk van een schermmelding zoals \"brewer\".",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
+
+            catalogSummary(catalog)
             return@LazyColumn
         }
 

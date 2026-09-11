@@ -13,21 +13,22 @@ cd "$(dirname "$0")"
 case "${1:-release}" in
   debug)
     ./gradlew assembleDebug
-    echo "-> app/build/outputs/apk/debug/app-debug.apk"
+    ls app/build/outputs/apk/debug/*.apk
     ;;
   install)
     ./gradlew assembleRelease
-    cp -f app/build/outputs/apk/release/app-release.apk ../DukeService.apk
+    cp -f app/build/outputs/apk/release/app-arm64-v8a-release.apk ../DukeService.apk
     [ -d ../DukeService-share ] && cp -f ../DukeService.apk ../DukeService-share/DukeService.apk
-    adb install -r app/build/outputs/apk/release/app-release.apk
+    # the emulator is x86_64; a phone gets the arm64 build above
+    adb install -r app/build/outputs/apk/release/app-x86_64-release.apk
     ;;
   clean)
     ./gradlew clean
     ;;
   *)
     ./gradlew assembleRelease
-    cp -f app/build/outputs/apk/release/app-release.apk ../DukeService.apk
-    # Keep the phone-install folder in step, so the QR never hands out a stale build.
+    # Phones are arm64; that is the build the QR hands out.
+    cp -f app/build/outputs/apk/release/app-arm64-v8a-release.apk ../DukeService.apk
     [ -d ../DukeService-share ] && cp -f ../DukeService.apk ../DukeService-share/DukeService.apk
     ls -lh ../DukeService.apk
     ;;

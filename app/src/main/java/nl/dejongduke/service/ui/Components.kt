@@ -1,5 +1,15 @@
 package nl.dejongduke.service.ui
 
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -107,11 +117,15 @@ fun Pill(
 /** Monospaced badge for part numbers — the thing engineers compare character by character. */
 @Composable
 fun PartNumber(text: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Text(
         text,
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+            // Tapping a part number puts it on the clipboard, ready for the
+            // order system.
+            .clickable { copyToClipboard(context, text) }
             .padding(horizontal = 7.dp, vertical = 3.dp),
         style = MaterialTheme.typography.labelLarge,
         fontFamily = FontFamily.Monospace,
@@ -194,5 +208,28 @@ fun EmptyState(title: String, hint: String) {
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/** An image from the app's assets, decoded off the main thread. */
+@Composable
+fun AssetPhoto(
+    path: String,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Fit,
+) {
+    val context = LocalContext.current
+    val bitmap by produceState<ImageBitmap?>(null, path) {
+        value = withContext(Dispatchers.IO) {
+            runCatching {
+                context.assets.open(path).use { BitmapFactory.decodeStream(it)?.asImageBitmap() }
+            }.getOrNull()
+        }
+    }
+    val image = bitmap
+    if (image != null) {
+        Image(image, contentDescription = null, modifier = modifier, contentScale = contentScale)
+    } else {
+        Box(modifier)
     }
 }

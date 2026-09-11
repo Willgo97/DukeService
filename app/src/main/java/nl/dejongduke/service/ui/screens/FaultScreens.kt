@@ -31,6 +31,7 @@ import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Fault
 import nl.dejongduke.service.data.FaultGroup
 import nl.dejongduke.service.data.LetOp
+import nl.dejongduke.service.ui.ActionRow
 import nl.dejongduke.service.ui.Card
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
@@ -129,7 +130,13 @@ fun FaultCard(catalog: Catalog, group: FaultGroup, showMachines: Boolean, onClic
 }
 
 @Composable
-fun FaultDetail(catalog: Catalog, group: FaultGroup, onOpen: (Route) -> Unit) {
+fun FaultDetail(
+    catalog: Catalog,
+    group: FaultGroup,
+    pinned: Boolean,
+    onPin: (String) -> Unit,
+    onOpen: (Route) -> Unit,
+) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -152,6 +159,21 @@ fun FaultDetail(catalog: Catalog, group: FaultGroup, onOpen: (Route) -> Unit) {
                     Pill(catalog.machineNames(group.machines))
                 }
             }
+        }
+
+        item {
+            ActionRow(
+                pinKey = "fault:" + group.melding,
+                pinned = pinned,
+                onPin = onPin,
+                deelTekst = buildString {
+                    appendLine(group.melding)
+                    appendLine(group.eerste.nl)
+                    if (group.eerste.oorzaak.isNotEmpty()) appendLine("\nOorzaak: " + group.eerste.oorzaak)
+                    group.eerste.oplossing.forEachIndexed { i, stap -> appendLine("${i + 1}. $stap") }
+                    append("\n— DUKE Service")
+                },
+            )
         }
 
         group.varianten.forEachIndexed { index, variant ->

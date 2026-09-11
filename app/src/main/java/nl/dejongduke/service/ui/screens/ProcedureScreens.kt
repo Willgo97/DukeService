@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Procedure
+import nl.dejongduke.service.ui.ActionRow
 import nl.dejongduke.service.ui.Card
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.Pill
@@ -95,7 +96,12 @@ fun ProcedureList(
 }
 
 @Composable
-fun ProcedureDetail(catalog: Catalog, procedure: Procedure) {
+fun ProcedureDetail(
+    catalog: Catalog,
+    procedure: Procedure,
+    pinned: Boolean,
+    onPin: (String) -> Unit,
+) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -111,6 +117,21 @@ fun ProcedureDetail(catalog: Catalog, procedure: Procedure) {
 
         // The chip above already says "Dagelijks"; only spell the interval out
         // when the manual adds something the chip does not cover.
+        item {
+            ActionRow(
+                pinKey = "proc:" + procedure.id,
+                pinned = pinned,
+                onPin = onPin,
+                deelTekst = buildString {
+                    appendLine(procedure.titel)
+                    if (procedure.intervalTekst.isNotEmpty()) appendLine(procedure.intervalTekst)
+                    appendLine()
+                    procedure.stappen.forEachIndexed { i, stap -> appendLine("${i + 1}. ${stap.tekst}") }
+                    append("— DUKE Service")
+                },
+            )
+        }
+
         if (procedure.intervalTekst.isNotEmpty() &&
             !procedure.intervalTekst.equals(intervalLabel(procedure.interval), ignoreCase = true)
         ) {

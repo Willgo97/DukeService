@@ -33,6 +33,7 @@ sealed interface Route {
     data object Components : Route
     data class MenuItem(val nr: String) : Route
     data object Servicemenu : Route
+    data object Scan : Route
     data object Procedures : Route
     data object Specs : Route
     data object Bronnen : Route
@@ -79,6 +80,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _recent = MutableStateFlow(prefs.recent())
     val recent: StateFlow<List<String>> = _recent.asStateFlow()
+
+    private val _pins = MutableStateFlow(prefs.pins())
+    val pins: StateFlow<List<String>> = _pins.asStateFlow()
+
+    private val _notes = MutableStateFlow(
+        prefs.notedMachines().associateWith { prefs.note(it) }
+    )
+    val notes: StateFlow<Map<String, String>> = _notes.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -131,6 +140,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         prefs.clearRecent()
         _recent.value = emptyList()
     }
+
+    fun setNote(machineId: String, text: String) {
+        prefs.setNote(machineId, text)
+        _notes.value = if (text.isBlank()) _notes.value - machineId
+        else _notes.value + (machineId to text.trim())
+    }
+
+    fun togglePin(key: String) {
+        prefs.togglePin(key)
+        _pins.value = prefs.pins()
+    }
+
+    fun isPinned(key: String) = _pins.value.contains(key)
 
     fun setFilter(machineId: String?) {
         _filter.value = machineId

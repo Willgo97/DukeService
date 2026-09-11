@@ -55,7 +55,8 @@
         "brewer": "CoEx",
         "doc": "UM 5DUCEK20I (EN) · onderdelenboek 9CECK"
       }
-    ]
+    ],
+    "foto": "machines/virtu.webp"
   },
   {
     "id": "zia",
@@ -112,7 +113,8 @@
         "brewer": "CoEx",
         "doc": "Onderdelenboek 9CECP"
       }
-    ]
+    ],
+    "foto": "machines/zia.webp"
   },
   {
     "id": "nio",
@@ -145,7 +147,8 @@
         "brewer": "CoEx XL",
         "doc": "TM 5DTXKA20M (EN)"
       }
-    ]
+    ],
+    "foto": ""
   },
   {
     "id": "nionext",
@@ -192,7 +195,8 @@
     ],
     "docs": [],
     "servicemenu": "nieuw",
-    "servicemenuUitleg": "Alleen het nieuwe servicemenu."
+    "servicemenuUitleg": "Alleen het nieuwe servicemenu.",
+    "foto": "machines/nionext.webp"
   },
   {
     "id": "lua",
@@ -257,7 +261,8 @@
         "brewer": "Instant",
         "doc": "TM 5DTINS10M (NL)"
       }
-    ]
+    ],
+    "foto": "machines/lua.webp"
   },
   {
     "id": "avy",
@@ -329,7 +334,8 @@
         "brewer": "CoEx XL",
         "doc": "TM 5DTXET20M (EN)"
       }
-    ]
+    ],
+    "foto": "machines/avy.webp"
   },
   {
     "id": "rosa",
@@ -388,7 +394,8 @@
         "brewer": "Uni-Brewer (Filterfresh)",
         "doc": "TM 5DTFNV20M (EN) · UM 5DUFNV20M · onderdelenboek 9FND"
       }
-    ]
+    ],
+    "foto": "machines/rosa.webp"
   },
   {
     "id": "lina",
@@ -435,7 +442,8 @@
     ],
     "docs": [],
     "servicemenu": "nieuw",
-    "servicemenuUitleg": "Alleen het nieuwe servicemenu."
+    "servicemenuUitleg": "Alleen het nieuwe servicemenu.",
+    "foto": "machines/lina.webp"
   },
   {
     "id": "blu",
@@ -482,7 +490,8 @@
     ],
     "docs": [],
     "servicemenu": "onbekend",
-    "servicemenuUitleg": "Niet vastgelegd. Kijk in de machine welke besturing erin zit."
+    "servicemenuUitleg": "Niet vastgelegd. Kijk in de machine welke besturing erin zit.",
+    "foto": "machines/blu.webp"
   },
   {
     "id": "edge",
@@ -498,7 +507,8 @@
     "specs": [],
     "docs": [],
     "servicemenu": "oud",
-    "servicemenuUitleg": "ICeQ2-besturing: altijd het oude servicemenu."
+    "servicemenuUitleg": "ICeQ2-besturing: altijd het oude servicemenu.",
+    "foto": ""
   },
   {
     "id": "vareo",
@@ -514,6 +524,7 @@
     "specs": [],
     "docs": [],
     "servicemenu": "oud",
-    "servicemenuUitleg": "ICeQ2-besturing: altijd het oude servicemenu."
+    "servicemenuUitleg": "ICeQ2-besturing: altijd het oude servicemenu.",
+    "foto": ""
   }
 ]

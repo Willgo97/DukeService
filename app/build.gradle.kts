@@ -62,6 +62,18 @@ android {
         compose = true
     }
 
+    // The bundled OCR library is ~11 MB of native code per architecture, and
+    // shipping all four quadruples the download for no one's benefit. Phones
+    // get arm64, the emulator gets x86_64.
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "x86_64")
+            isUniversalApk = false
+        }
+    }
+
     androidResources {
         // The catalog assets are already compact JSON; compressing them again
         // only slows down the cold start where every millisecond is visible.
@@ -101,6 +113,14 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("androidx.compose.animation:animation")
+
+    // Camera + on-device text recognition for the scanner. The bundled ML Kit
+    // model keeps it working without a network, which is the whole point.
+    implementation("androidx.camera:camera-core:1.4.2")
+    implementation("androidx.camera:camera-camera2:1.4.2")
+    implementation("androidx.camera:camera-lifecycle:1.4.2")
+    implementation("androidx.camera:camera-view:1.4.2")
+    implementation("com.google.mlkit:text-recognition:16.0.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
