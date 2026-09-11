@@ -1,0 +1,888 @@
+[
+ {
+  "melding": "Brewer not in home position",
+  "nl": "Brewer niet in startpositie",
+  "machines": [
+   "virtu"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De microschakelaar heeft de startpositie van de brewer niet op het vereiste moment gedetecteerd.",
+  "oplossing": [
+   "Controleer of de brewer correct is geïnstalleerd. Verwijder en vervang de brewer volgens de procedure.",
+   "Controleer of de micro-leveler gebogen is.",
+   "Controleer of de motorschacht defect is.",
+   "Controleer of de brewer geblokkeerd en niet kan draaien."
+  ],
+  "monteur": "Blijft de melding staan, dan is het een servicemelding.",
+  "proc": [
+   "brewer-schoonmaken"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Brewer out of position",
+  "nl": "Brewer niet in positie",
+  "machines": [
+   "virtu"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De brewer zit niet goed in de houder.",
+  "oplossing": [
+   "Verwijder de brewer en reinig hem. Wanneer het probleem niet verholpen is: neem contact op met fabrikant."
+  ],
+  "monteur": "Blijft de melding staan, dan is het een servicemelding.",
+  "proc": [
+   "brewer-schoonmaken"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Brewer out of position",
+  "nl": "Brewer niet in positie",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De brewer zit niet goed vergrendeld in de machine.",
+  "oplossing": [
+   "Verwijder de brewer en reinig hem. Wanneer het probleem niet verholpen is: neem contact op met fabrikant."
+  ],
+  "monteur": "Blijft de melding staan, dan is het een servicemelding.",
+  "proc": [
+   "brewer-schoonmaken-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Brewer is turning the wrong way, check the wiring",
+  "nl": "Brewer draait de verkeerde kant op, controleer de bedrading",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De brewermotor draait verkeerd om — vrijwel altijd een bedradingsfout na een reparatie of vervanging.",
+  "oplossing": [
+   "Controleer de bedrading van de brewermotor."
+  ],
+  "monteur": "Dit is een servicemelding: laat het na door een monteur controleren.",
+  "proc": [],
+  "zelf": false
+ },
+ {
+  "melding": "The brewer blocked during recipe, did not reach position",
+  "nl": "Brewer geblokkeerd tijdens recept, positie niet bereikt",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De brewer is tijdens het zetten vastgelopen.",
+  "oplossing": [
+   "Open en sluit de deur om de brewer te initialiseren.",
+   "Controleer de werking door een koffie te tappen."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [
+   "brewer-schoonmaken-xl"
+  ],
+  "zelf": true
+ },
+ {
+  "melding": "Initialization failed, the brewer did not reach maximum movement",
+  "nl": "Initialisatie mislukt, brewer bereikte maximale beweging niet",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De brewer kon bij het opstarten zijn volledige slag niet maken.",
+  "oplossing": [
+   "Open en sluit de deur om de brewer te initialiseren.",
+   "Controleer de werking door een koffie te tappen."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [
+   "brewer-schoonmaken-xl"
+  ],
+  "zelf": true
+ },
+ {
+  "melding": "Piston blocked, dosage too high",
+  "nl": "Zuiger geblokkeerd, dosering te hoog",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "Te veel gemalen koffie in de brewer waardoor de zuiger vastloopt.",
+  "oplossing": [
+   "Open en sluit de deur om de brewer te initialiseren.",
+   "Controleer de werking door een koffie te tappen."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding — laat de dosering nakijken.",
+  "proc": [
+   "brewer-schoonmaken-xl"
+  ],
+  "zelf": true
+ },
+ {
+  "melding": "Error occurred during recipe cycle",
+  "nl": "Fout tijdens receptcyclus",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "Er ging iets mis tijdens het bereiden van een drank.",
+  "oplossing": [
+   "Open en sluit de deur om de brewer te initialiseren.",
+   "Controleer de werking door een koffie te tappen."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [],
+  "zelf": true
+ },
+ {
+  "melding": "No coffee detected in brewer",
+  "nl": "Geen koffie gedetecteerd in brewer",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De brewer krijgt geen gemalen koffie.",
+  "oplossing": [
+   "Controleer of de container moet worden gevuld. Zie het gedeelte De ingrediëntencontainers vullen.",
+   "Controleer of de molen werkt en de brewer vult."
+  ],
+  "monteur": "",
+  "proc": [
+   "bonencanister-vullen",
+   "molen-vrijmaken",
+   "molen-vrijmaken-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Wrong brewer defined in the software",
+  "nl": "Verkeerde brewer ingesteld in de software",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Brewer",
+  "oorzaak": "De softwareconfiguratie komt niet overeen met de gemonteerde brewer.",
+  "oplossing": [
+   "De configuratie moet worden aangepast."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false
+ },
+ {
+  "melding": "Grinder blocked",
+  "nl": "Koffiemolen blokkeert",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Molen",
+  "oorzaak": "Er is een te hoge stroom naar de koffiemolen gedetecteerd.",
+  "oplossing": [
+   "Maak de koffiemolen schoon."
+  ],
+  "monteur": "",
+  "proc": [
+   "molen-vrijmaken",
+   "molen-vrijmaken-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Mixer blocked",
+  "nl": "Mixer geblokkeerd",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Mixer",
+  "oorzaak": "Er is een te hoge stroom naar de mixer gedetecteerd.",
+  "oplossing": [
+   "Reinig de mengschaal, controleer de motor.",
+   "Controleer de recepten. Er mag geen droog poeder in de mengschaal vallen."
+  ],
+  "monteur": "",
+  "proc": [
+   "mixsysteem-reinigen"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Enough water?",
+  "nl": "Voldoende water?",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "De uitgegeven drank heeft de aangepaste hoeveelheid water niet op tijd bereikt (pulsen gemeten door waterstroommeter).",
+  "oplossing": [
+   "Als het gaat om een drank uit de brewer, dan zouden de filters vuil kunnen zijn. Voer de reinigingscyclus met een reinigingstablet uit om de filter te reinigen.",
+   "Controleer de watertoevoer, inlaatventiel.",
+   "Controleer de ventiel(en).",
+   "Controleer de pomp(en).",
+   "Controleer of de waterstroommeter is aangesloten en naar behoren werkt."
+  ],
+  "monteur": "Blijft het probleem: servicemelding — geef de uitkomst van stap 3 door.",
+  "proc": [
+   "brewer-tablet",
+   "brewer-tablet-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "No water connected / No water in boiler",
+  "nl": "Geen water aangesloten / Geen water in boiler",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "Er is langer dan 2 minuten geen water gedetecteerd.",
+  "oplossing": [
+   "Controleer of de watertoevoer open/aangesloten is.",
+   "Open de deur van de koffiemachine om het Servicemenu op te roepen. Wacht 2 seconden en sluit de deur weer en wacht totdat de machine opnieuw is geactiveerd.",
+   "Wanneer dit niet helpt, start u de koffiemachine opnieuw (zet de koffiemachine UIT, wacht 5 seconden, en zet de machine weer AAN).",
+   "Controleer het inlaatventiel, drukregelaar en waterstroommeter.",
+   "Controleer de aardingsdraad aangesloten op de boiler."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Water level too low",
+  "nl": "Waterniveau te laag",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "De niveausensor in de boiler heeft heen waterniveau gedetecteerd.",
+  "oplossing": [
+   "Controleer of de kraan is geopend.",
+   "Controleer de niveausensor.",
+   "Controleer of de bedrading van de sensor aangesloten is op de draadboom.",
+   "Controleer de aarding aangesloten op de boiler.",
+   "Controleer of de boiler water lekt vanwege een lekkage of een verkeerd aangesloten ventiel."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Filling boiler",
+  "nl": "Vullen boiler",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "Normale opstartmelding: de boiler loopt vol.",
+  "oplossing": [
+   "Open en sluit de machinedeur voor een herstart. Wacht tot de boiler is gevuld.",
+   "Als de melding blijft verschijnen:",
+   "Controleer of de watertoevoer is aangesloten en beschikbaar is.",
+   "Controleer of het inlaatventiel en pompen werken.",
+   "Controleer het watersysteem in de machine."
+  ],
+  "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Replace water filter",
+  "nl": "Vervang waterfilter",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "De teller heeft het aantal cycli bereikt.",
+  "oplossing": [
+   "Installeer een nieuwe filter en reset de teller."
+  ],
+  "monteur": "Dit doet de monteur.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Water filter installed? / Water filter settings not set!",
+  "nl": "Waterfilter geïnstalleerd?",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "In de servicemodus moet de juiste selectie worden gemaakt.",
+  "oplossing": [
+   "Zie het hoofdstuk Waterfilterinstellingen voor meer informatie."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Heating boiler",
+  "nl": "Opwarmen boiler",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Temperatuur",
+  "oorzaak": "Normale opstartmelding.",
+  "oplossing": [
+   "Wacht tot de boiler is opgewarmd.",
+   "Als het bericht niet is verdwenen, wacht u 10 minuten:",
+   "controleer de clixon(s) en het verwarmingselement."
+  ],
+  "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Wait, Heating boiler",
+  "nl": "Opwarmen boiler",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Temperatuur",
+  "oorzaak": "Normale opstartmelding.",
+  "oplossing": [
+   "Wacht tot de boiler is opgewarmd.",
+   "Als het bericht niet is verdwenen, wacht u 10 minuten:",
+   "controleer de clixon(s) en het verwarmingselement."
+  ],
+  "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Temperature boiler (too) high",
+  "nl": "Temperatuur van de boiler te hoog",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Temperatuur",
+  "oorzaak": "Een temperatuur van 10 graden hoger dan de ingestelde temperatuur is gedetecteerd.",
+  "oplossing": [
+   "Controleer of de verwarming defect is en blijft verwarmen.",
+   "Controleer de temperatuurinstelling.",
+   "Controleer de temperatuursensor.",
+   "Controleer op losse bedrading/slecht contact",
+   "Controleer of de boilers correct zijn aangesloten. Verwissel de bedrading voor boiler 1 niet met die van boiler 2."
+  ],
+  "monteur": "Staat de melding er dan nog: servicemelding.",
+  "proc": [
+   "mixers-spoelen",
+   "mixers-spoelen-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Temp. sensor disconnected",
+  "nl": "Temp. sensor los",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Temperatuur",
+  "oorzaak": "Er is een te hoge weerstand gedetecteerd op de ingang van de IO-print.",
+  "oplossing": [
+   "Controleer of de temperatuursensor defect is, of de bedrading los zit."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Drip tray full",
+  "nl": "Lekbak vol",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Afval",
+  "oorzaak": "De niveausensor in de lekbak of drupbak is aangesproken.",
+  "oplossing": [
+   "Reinig de lekbak aan de voorzijde van de machine en/of reinig de lekbak van de brewer binnenin de afvalbak.",
+   "Zorg ervoor dat de waterniveausensoren in de lekbak/ afvalbak droog zijn. Zie het gedeelte Dagelijks onderhoud."
+  ],
+  "monteur": "",
+  "proc": [
+   "lekbak-reinigen",
+   "lekbak-reinigen-xl",
+   "afvalemmer-reinigen",
+   "afvalemmer-reinigen-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Install drip tray",
+  "nl": "Installeer lekbak",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Afval",
+  "oorzaak": "Externe lekbak is niet gedetecteerd.",
+  "oplossing": [
+   "Plaats de lekbak.",
+   "Controleer contactpunten op de lekbak, reinig de contactpunten op de lekbak en in de machine (kunnen vuil zijn, gecorrodeerd)."
+  ],
+  "monteur": "",
+  "proc": [
+   "lekbak-reinigen",
+   "lekbak-reinigen-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Waste bucket full / Empty waste bucket",
+  "nl": "Afvalbak vol / Maak afvalbak leeg",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Afval",
+  "oorzaak": "De emmer met koffiedik is vol, of de detectieschakelaar is vervuild.",
+  "oplossing": [
+   "Maak afvalbak leeg.",
+   "Wanneer het bericht nog steeds wordt weergegeven, verwijdert u de afvalbak en wacht u 6 seconden voordat u hem terug plaatst.",
+   "Wanneer het bericht nog steeds wordt weergegeven, controleert u of de detectorschakelaar van de afvalbak schoon is.",
+   "Wanneer in de onderkast een afvalbak wordt gebruikt, reset dan de afvalbakteller of pas de waarde van de volle afvalbak aan in Errorinstellingen.",
+   "Wanneer het probleem niet verholpen is: neem contact op met fabrikant."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [
+   "afvalemmer-reinigen",
+   "afvalemmer-reinigen-xl",
+   "afvalbak-onderkast",
+   "afvalbak-onderkast-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Empty waste bucket",
+  "nl": "Maak de afvalbak leeg",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Afval",
+  "oorzaak": "Het aantal cycli voor het genereren van de melding is bereikt. Afvalbak is vol.",
+  "oplossing": [
+   "Reinig de afvalbak.",
+   "Als het bericht nog steeds wordt weergegeven, controleert u of de detectorschakelaar schoon is.",
+   "Als in de onderkast een afvalbak wordt gebruikt, reset dan de afvalbakteller of pas de waarde van de lege afvalbak aan in Errorinstellingen."
+  ],
+  "monteur": "",
+  "proc": [
+   "afvalemmer-reinigen",
+   "afvalemmer-reinigen-xl"
+  ],
+  "zelf": true,
+  "opmerking": "Deze melding en teller worden gereset door de microschakelaar achter de afvalbak voor minstens 3 seconden te activeren (verwijder de afvalbak tenminste 3 seconden).",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Install waste bucket",
+  "nl": "Plaats afvalbak",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Afval",
+  "oorzaak": "De microschakelaar achter de afvalbak detecteert de afvalbak niet.",
+  "oplossing": [
+   "Plaats de afvalbak."
+  ],
+  "monteur": "",
+  "proc": [
+   "afvalemmer-reinigen",
+   "afvalemmer-reinigen-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Clean screen",
+  "nl": "Reinig scherm",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Reiniging",
+  "oorzaak": "Na een bepaald aantal consumpties moet het touchscreen worden gereinigd. Zie het hoofdstuk Errorinstellingen voor meer informatie.",
+  "oplossing": [
+   "Reinig het touchscreen volgens de procedure."
+  ],
+  "monteur": "",
+  "proc": [
+   "touchscreen-reinigen",
+   "touchscreen-reinigen-xl"
+  ],
+  "zelf": true,
+  "opmerking": "Het is mogelijk om deze functie in het servicemenu uit te schakelen.",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Cleaning Error",
+  "nl": "Reinigingsfout",
+  "machines": [
+   "virtu"
+  ],
+  "cat": "Reiniging",
+  "oorzaak": "De reinigingscyclus van de CoEx®-brewer is niet correct afgesloten of werd onderbroken.",
+  "oplossing": [
+   "Voer de reinigingscyclus voor de brewer (opnieuw) uit."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [
+   "brewer-tablet"
+  ],
+  "zelf": true,
+  "opmerking": "Het is mogelijk om deze melding in het servicemenu te verwijderen.",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Rinse brewer with tablet",
+  "nl": "Spoel de brewer met tablet",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Reiniging",
+  "oorzaak": "Reinigingscyclus is vereist, de tijd (ingesteld in het servicemenu) is verstreken.",
+  "oplossing": [
+   "Voer de reinigingscyclus uit en de melding verdwijnt. De timer wordt gereset."
+  ],
+  "monteur": "",
+  "proc": [
+   "brewer-tablet",
+   "brewer-tablet-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Not all ingredients available",
+  "nl": "Niet alle ingrediënten beschikbaar",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Ingrediënten",
+  "oorzaak": "Een of meer canisters zijn leeg.",
+  "oplossing": [
+   "Een of meer containers moeten worden bijgevuld. Zie het gedeelte De ingrediëntencontainers vullen."
+  ],
+  "monteur": "",
+  "proc": [
+   "canisters-vullen"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Place cup in center",
+  "nl": "Plaats beker in midden",
+  "machines": [
+   "virtu"
+  ],
+  "cat": "Beker",
+  "oorzaak": "De beker moet onder de juiste tuit worden geplaatst voordat de [Start]-knop beschikbaar is.",
+  "oplossing": [
+   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken. Opmerking: De gevoeligheid van de sensor is instelbaar."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Place cup in center",
+  "nl": "Plaats beker in midden",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Beker",
+  "oorzaak": "De beker moet onder de juiste tuit worden geplaatst voordat de [Start]-knop beschikbaar is.",
+  "oplossing": [
+   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken. Opmerking: De gevoeligheid van de sensor is instelbaar."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Place cup right",
+  "nl": "Plaats beker rechts",
+  "machines": [
+   "virtu"
+  ],
+  "cat": "Beker",
+  "oorzaak": "De beker moet onder de waterschenktuit worden geplaatst voordat de knop beschikbaar is.",
+  "oplossing": [
+   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Place cup right",
+  "nl": "Plaats beker rechts",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Beker",
+  "oorzaak": "De beker moet onder de waterschenktuit worden geplaatst voordat de knop beschikbaar is.",
+  "oplossing": [
+   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Ready, take your cup",
+  "nl": "Klaar, pak je beker",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "De bereiding is klaar. Geen storing.",
+  "oplossing": [
+   "Pak de beker of kan weg."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true
+ },
+ {
+  "melding": "Door open",
+  "nl": "Deur open",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "De deur staat open of de deurschakelaar is niet bekrachtigd.",
+  "oplossing": [
+   "Sluit de deur of plaats de groene servicesleutel om de machine te activeren."
+  ],
+  "monteur": "",
+  "proc": [
+   "servicesleutel-plaatsen",
+   "deur-sluiten",
+   "deur-sluiten-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Insert coins",
+  "nl": "Geld inwerpen",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Betaling",
+  "oorzaak": "De betaling is nog niet compleet.",
+  "oplossing": [
+   "Betaal het volledige met muntgeld, munten of een kaart."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Machine Blocked",
+  "nl": "Bediening geblokkeerd",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "De koffiemachine wordt gedurende deze tijd door de planner geblokkeerd en is niet beschikbaar voor gebruik.",
+  "oplossing": [
+   "Wijzig de instellingen in de planner.",
+   "Controleer of de klok in de koffiemachine goed staat ingesteld."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Machine is temporarily out of order",
+  "nl": "Machine is tijdelijk buiten gebruik",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "De operator heeft deze melding bewust gezet, bijvoorbeeld omdat er geen ingrediënten zijn.",
+  "oplossing": [
+   "De melding is bewust door de operator in het servicemenu of op afstand via ConnectMe ingesteld. Zie het hoofdstuk Melding buiten werking voor meer informatie."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Startup problem",
+  "nl": "Opstartprobleem",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "De hoeveelheid pulses voor de waterstroommeter tijdens het opstarten is niet op tijd bereikt.",
+  "oplossing": [
+   "Open en sluit de machinedeur voor een herstart.",
+   "Als de melding opnieuw verschijnt, controleer dan het overstortventiel, 2 bar-ventiel, pompen, waterinlaat van de waterleiding en inlaatventiel.",
+   "Controleer de waterstroommeter."
+  ],
+  "monteur": "Blijft het probleem, dan is het een servicemelding.",
+  "proc": [
+   "inschakelen",
+   "inschakelen-xl"
+  ],
+  "zelf": true,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "General error",
+  "nl": "Algemene fout",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "De machine is nog bezig.",
+  "oplossing": [
+   "Wacht tot de machine klaar is."
+  ],
+  "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
+  "proc": [],
+  "zelf": true
+ },
+ {
+  "melding": "Communication error",
+  "nl": "Communicatiefout",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Besturing",
+  "oorzaak": "Communicatie tussen besturingsprint en IO-print is niet correct.",
+  "oplossing": [
+   "Controleer de kabel tussen de printplaten op schade.",
+   "Een slechte verbinding op besturings- of IO-print kan deze melding genereren."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Please load configuration",
+  "nl": "Laad de configuratie",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Besturing",
+  "oorzaak": "De configuratie is niet gevonden.",
+  "oplossing": [
+   "Zie het hoofdstuk Een nieuw configuratiebestand laden vanaf een USB-stick om een configuratie te laden."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Please load the User Interface",
+  "nl": "Laad de gebruikersinterface",
+  "machines": [
+   "virtu",
+   "lua"
+  ],
+  "cat": "Besturing",
+  "oorzaak": "De bestanden van de Gebruikersinterface komen niet overeen met deze configuratie of het bestand is corrupt / ontbreekt.",
+  "oplossing": [
+   "Zie het hoofdstuk IPK- of FW-bestanden laden vanaf USB om alle bestanden inclusief de gebruikersinterface te laden."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ },
+ {
+  "melding": "Recipe error, contact tech. support",
+  "nl": "Receptfout, neem contact op met tech. support",
+  "machines": [
+   "lua"
+  ],
+  "cat": "Besturing",
+  "oorzaak": "Er zit een fout in het receptenbestand.",
+  "oplossing": [
+   "Laad de recepten opnieuw in of neem contact op met technical support."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false
+ },
+ {
+  "melding": "Open boiler leaking, inlet closed",
+  "nl": "Open boiler lekt, inlaat gesloten",
+  "machines": [
+   "avy",
+   "lua"
+  ],
+  "cat": "Water",
+  "oorzaak": "Er is een lek gedetecteerd.",
+  "oplossing": [
+   "Draai de kraan dicht.",
+   "neem contact op met fabrikant."
+  ],
+  "monteur": "Dit is een servicemelding.",
+  "proc": [],
+  "zelf": false,
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+ }
+]

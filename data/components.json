@@ -1,0 +1,290 @@
+[
+ {
+  "nr": "4.1",
+  "titel": "Heetwatersysteem",
+  "pagina": 28,
+  "tekst": "Het watersysteem zit aan de achterkant van de machine en is ook via de achterkant bereikbaar. Zodra het water en de stroom is aangesloten en de deur dicht is, vult het watersysteem de boiler(s) automatisch. Het watersysteem bestaat uit de volgende hoofdcomponenten: Achteraanzicht CoEx (medium model) METALEN ventielen (links) PPSU-ventielen (rechts) 1. Open de boiler 2. Drukventielen (CoEx) - METAAL (linker afbeelding) - PPSU (rechter afbeelding) 3. Waterstroommeter 4. Inlaatventiel 5. Drukregelaar 6. Waterpompen 7. Drukboiler 8. Uitlaatventielen open boiler",
+  "afb": "img/p28.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 29
+ },
+ {
+  "nr": "4.1.1",
+  "titel": "Schematisch diagram van het watersysteem",
+  "pagina": 30,
+  "tekst": "Diagram van het CoEx-watersysteem, medium model met 3 mixers of 2 mixers en thee-brewer. BO Open boiler S12 Veiligheidsventiel 12 bar BP Drukboiler S2 Drukventiel 2 bar CDT CoEx lekbak TB Thee-brewer (optioneel - in plaats van M1) CoEx CoEx Brewer VC 3-weg brewerventiel (let op richting!) DT Lekbak VI Inlaatventiel HW 2-weg uitlaatventiel - heet water VO 2-weg uitlaatventiel M1,M2,M3 Mixers W Water in MA Verdeelstuk WC Waterstroommeter MX1,MX2,MX3 2-weg uitlaatventielen - mixers WO Boiler P1 Plug * WP1 Waterpomp P2 Plug ** WP2 Waterpomp (uitsluitend 9xxx) P3 Waterklem 1 Uitlaat brewer / mixers PR Drukregelaar 2 Uitlaat heet water *) Gebruik: meter aansluiten en waterdruk instellen met drukregelaar PR **) Gebruik 1: pompdruk WPx meten Gebruik 2: boilers legen",
+  "afb": "img/p30.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 30
+ },
+ {
+  "nr": "4.1.2",
+  "titel": "Inlaatventiel",
+  "pagina": 31,
+  "tekst": "Het dubbele inlaatventiel wordt geregeld door de niveausensoren in de boilers en wordt ingeschakeld tijdens de uitgifte van heet water naar de brewer of mixer. Eén ventiel wordt gebruikt voor de drukboiler, de tweede voor de open boiler. De inlaatventielen zijn 24V DC-ventielen. De inlaatventielen hebben een terugstroombeveiliging. Deze terugstroombeveiliging voorkomt dat water terug in de watertoevoer stroomt. Elektrische aansluitingen / kabelkleuren Functie Kabelkleur Common (+24V) Oranje Uitlaat (0) ventiel 1 - open Rood / Groen boiler Uitlaat (0) ventiel 2 - druk Oranje / Groen boiler",
+  "afb": "img/p31.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 31
+ },
+ {
+  "nr": "4.1.3",
+  "titel": "Drukregelaar",
+  "pagina": 31,
+  "tekst": "De drukregelaar verlaagt de waterdruk tot een stabiele druk die onafhankelijk is van de inlaatdruk van de watertoevoer. De vereiste inlaatdruk van de watertoevoer ligt tussen 1,0 en 6 bar. De drukregelaar wordt tijdens een espressocyclus ingesteld op een uitlaatdruk van ca. 0,8 - 0,9 bar. De invoer- en uitvoerleiding van de regelaar moeten in de juiste richting zijn aangesloten. In tegenovergestelde richting werkt de regelaar niet goed. Aan de kant van de regelaar zit een pijl die de juiste waterstroomrichting aangeeft. De regelaar heeft een terugstroombeveiliging. Deze terugstroombeveiliging voorkomt de mogelijkheid dat water vanuit de machine terug in de watertoevoer stroomt. Procedure voor het aanpassen van de Voer de volgende stappen uit: druk 1. Verwijder de onderste plaat van de achterkant van de machine. 2. Verwijder plug P1 (zie inzet). ▪ Zie het binnenaanzicht van het Heetwatersysteem (op pagina 28) voor meer informatie. 3. Sluit de manometer aan op de slang. 4. Trek de knop uit om de regelaar te ontgrendelen. 5. Selecteer een (dubbele) espresso. 6. Pas de regelaar aan door de knop tijden de pompcyclus van de espressoselectie te draaien. ▪ De manometer moet tijdens een espressocyclus tussen de 0,8 - 0,9 baraangeven. ▪ Met de klok mee draaien => verhogen van uitvoerdruk (vanaf boven gezien) ▪ Tegen de klok in draaien => verlagen van uitvoerdruk 7. Vergrendel de regelaar door de knop naar beneden te drukken. 8. Ontkoppel de manometer en doe de plug in de slang. 9. Plaats de achterplaat op de machine. 10. Klaar.",
+  "afb": "img/p31.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 33
+ },
+ {
+  "nr": "4.1.4",
+  "titel": "Waterstroommeter",
+  "pagina": 33,
+  "tekst": "De waterstroommeter (waterteller) meet de hoeveelheid water die door het heetwatersysteem stroomt. Drie functies zijn gebaseerd op de waterstroommeter: 1. De waterdosering voor consumpties is gebaseerd op de hoeveelheid pulsen die de waterstroommeter genereert. 2. Tijdens de opstartprocedure wordt gedetecteerd of er water in het systeem stroomt. Is dat niet het geval dan stopt de machine en worden de foutmeldingen “opstartprobleem” en “geen water aangesloten” weergegeven. 3. Hoeveel de boiler verwarmt is, naast het meten met de temperatuursonde, ook gebaseerd op de hoeveelheid inkomend water. De waterstroommeter zit tussen de drukregelaar en de pompen ingebouwd. Het is een kleine turbine die elektrische pulsen afgeeft. Elke rotatie van 360º produceert 2 pulsen in de sensor (Hall- element). De pulsen worden door het regelsysteem gedetecteerd. De leiding naar de waterstroommeter moet in de juiste positie worden aangesloten; de waterstroommeter kan geen water detecteren in tegenovergestelde richting. Er staat een kleine pijl op de waterstroommeter die de juiste richting aangeeft. De waterstroommeter is een 1,8 mm-type. Elke puls is ongeveer 0,8 ml water. Elektrische aansluitingen / bedradingskleuren Functie Bedradingskleur 1 common (+) Rood / Wit 2 null (^) Groen / Paars 3 signaal naar de IO-print Zwart / Blauw (#)",
+  "afb": "img/p33.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 34
+ },
+ {
+  "nr": "4.1.5",
+  "titel": "Waterpomp",
+  "pagina": 34,
+  "tekst": "De pompen genereren de druk en stroming van het water. De pompen verhogen de druk naar de vereiste brewingdruk (tussen 1,5 en 10 bar). De pomp is een vibratiepomp. De zuiger vibreert op en neer om druk op te bouwen. De pomp is een 24VAC-pomp. Het elektrische signaal naar de pomp is een 24V-blokgolf. De druk kan door het elektrische signaal (pulsbreedte) naar de pomp worden aangepast. Een langere puls zorgt voor een hogere druk omdat de zuiger verder omhoog gaat. De maximale pulsbreedte is 20. Dit getal kan voor elke consumptie apart in het onderhoudsprogramma worden ingesteld. Vanwege de hoge frequentie van de pulsen kan dit elektronische signaal niet met een gewone spanningsmeter worden gemeten. De pulsen voor de twee pompen bewegen uit fase, waardoor een stabiele hoge druk ontstaat voor het zetten van een espresso. P1 Pomp 1 P2 Pomp 2 PW Pulsbreedte Elektrische aansluitingen / bedradingskleuren Functie Bedradingskleur Bedradingskleur Pomp P1 P2 Common (+24V) Grijs / Blauw Zwart / Roze Uitlaat (0) Geel / Bruin Oranje / Wit Thermische bescherming De pomp wordt voor de veiligheid beschermd door een zelfherstellende thermische onderbreking. Wanneer de pomp langer dan 15 minuten zonder water draait, wordt deze thermische onderbreking te heet en wordt de stroom van de pomp uitgeschakeld. Wanneer de pomp en de thermische bescherming zijn afgekoeld, schakelt de thermische bescherming automatisch in. Lay-out van een systeem met twee pompen",
+  "afb": "img/p34.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 36
+ },
+ {
+  "nr": "4.1.6",
+  "titel": "De boiler",
+  "pagina": 37,
+  "tekst": "Het watersysteem zit aan de achterkant van de machine en is ook via de achterkant bereikbaar. Zodra het water en de stroom is aangesloten en de deur dicht is, vult het watersysteem de boiler(s) automatisch. Het CoEx medium-model heeft één drukboiler die zorgt voor heet water voor de CoEx-brewer en een open boiler die zorgt voor heet water voor de mixers, de thee-brewer (optioneel) en de uitlaat voor heet water.",
+  "afb": "img/p37.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 37
+ },
+ {
+  "nr": "4.1.7",
+  "titel": "Drukboiler",
+  "pagina": 37,
+  "tekst": "De boiler wordt gebruikt voor het bereiden van heet water en is gemaakt van roestvrij staal. De waterinlaat bevindt zich onderin de boiler, de uitlaat bevindt zich bovenin. De koffiemachine heeft één drukboiler. Voor meer informatie over het legen van de boilers, zie Drukboilers legen (op pagina 125). Details drukboiler (getoond model is 1.660 Watt) 1. Aansluiting temperatuursensor 2. Aansluiting niveausensor 3. Temperatuurbeveiliging (2 clixons) 4. Aansluitingen clixon 5. Aardaansluiting / niveau boiler 6. Waterinlaat 7. Verwarmingselement 8. Gecombineerde temperatuur/niveausensor 9. Aansluitingen verwarmingselement 10. Waterafvoer Elektrische aansluitingen boiler Verwarmingsschema drukboiler V1 Stroomvoorziening in (240VAC/120VAC) TR Triac (op IO-print) TS1 Temperatuurbeveiliging (clixon 1) TS2 Temperatuurbeveiliging (clixon 2) H1 Verwarmingselement Aansluitingen drukboiler(s) / bedradingskleuren Functie Bedradingskleur Bedradingskleur Boiler 1 Boiler 2 (uitsluitend klein model) Temperatuur common Groen / Paars Groen / Paars Temperatuur Roze Wit / Roze Niveaudetectie Donkerrood / Zwart Bruin / Zwart Verwarmingsfase Zwart Zwart Verwarming neutraal Blauw Blauw / Wit Temperatuurbeveiliging Zwart Zwart Temperatuurbeveiliging Bruin Bruin / Wit Aarde boilerbehuizing Geel / Grijs Geel / Grijs Verwarming Het verwarmingselement is in de bovenkant van de boiler gelast. De boiler heeft een 1660W/240VAC- (of 1400W/240VAC- met een serienummer < 2021.14.0428.001) of een 1,1KW/120VAC- verwarming. Het volume van één boiler is 0,36 liter. De boiler en de verwarming zijn van roestvrij staal. De weerstand van het verwarmingselement van de drukboiler VerwarmingselementWeerstand 1400W 240VAC 39 - 40 W 1660W 240VAC 34 - 35 W 1100W 120VAC 12 – 13 W De verwarming wordt door het regelsysteem geregeld. Dit gebeurt op basis van een combinatie van de door de temperatuursensor gedetecteerde temperatuur en de hoeveelheid inkomend water gemeten door de waterstroommeter.",
+  "afb": "img/p37.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 39
+ },
+ {
+  "nr": "4.1.8",
+  "titel": "Open boiler",
+  "pagina": 40,
+  "tekst": "Het watersysteem van de open boiler bestaat uit de volgende hoofdcomponenten: Details open boiler 1. Boilerafvoer 2. Uitlaatventielen 3. Temperatuurbeveiliging (clixon) 4. Overloop 5. Waterinlaat 6. Niveausensor 7. Temperatuursensor 8. Droogkookbeveiliging (clixon) 9. Verwarmingselement Elektrische aansluitingen boiler Verwarmingsschema open boiler V1 Stroomvoorziening in (240VAC/120VAC) TR Triac (op IO-print) TS1 Temperatuurbeveiliging (clixon 1) TS2 Temperatuurbeveiliging (clixon 2) H1 Verwarmingselement Aansluitingen open boiler / bedradingskleuren Functie Bedradingskleur Temperatuur common Groen / Paars Temperatuur Roze Niveaudetectie Rood / Zwart Verwarmingsfase Bruin Verwarming neutraal Blauw Temperatuurbeveiliging Bruin Temperatuurbeveiliging Bruin Aarde boilerbehuizing Geel / Groen Verwarming De boiler heeft een 2,25 KW/240VAC- of een 1,2KW/120VAC- verwarming. De boiler en de verwarming zijn van roestvrij staal. De verwarming bevindt zich bovenin de boiler. Weerstand van verwarmingselement Verwarming Weerstand 2250W 240VAC 24 - 24,3 W 1200W 120VAC 12 – 12,3 W De verwarming wordt door het regelsysteem geregeld, op basis van de door de sensor gedetecteerde temperatuur. OPMERKING: Standaard boilertemperatuur met betrekking tot de hoogte van uw locatie. De standaard boilertemperatuur van de open boiler moet op basis van de hoogte van en het kookpunt op de locatie worden aangepast. De standaardinstelling van de boilertemperatuur in het configuratiebestand is gebaseerd op het kookpunt van 100 °C bij 1 bar(zeeniveau). Bij elke stijging in hoogte van 150 meter is het kookpunt van water ongeveer 0,5 °C lager. Heeft uw koffiemachine zowel een drukboiler als een open boiler, dan hoeft u dit alleen voor de open boiler aan te passen.",
+  "afb": "img/p40.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 42
+ },
+ {
+  "nr": "4.1.9",
+  "titel": "Temperatuur / Niveausensor drukboiler",
+  "pagina": 43,
+  "tekst": "Temperatuur/Niveausensor De sensor in de drukboiler is een gecombineerde niveau- en temperatuursensor. De sensor is van de boilerbehuizing gescheiden door kunststof isolatie dat met twee moeren rond de roestvrijstalen sensorbehuizing is geklemd. OPMERKING Als de sensor moet worden vervangen, vervang deze dan helemaal, inclusief de moeren. Temperatuur Aanbevolen temperatuurinstellingen drukboiler Temperatuur Waarde Normaal 92 ºC Hoog 102 ºC Laag 75 ºC Stand-by 65 ºC De temperatuur wordt door een thermistor gedetecteerd. Deze is in de roestvrijstalen behuizing gemonteerd. Het regelsysteem regelt de temperatuur in de boiler op basis van de weerstand van de thermistor. Weerstand van de thermistor Weerstand Temperatuur 6,5 kW 95 ºC 100 kW 25 ºC 126,7 kW 20 ºC Temperatuursensor De temperatuur kan in het servicemenu worden aangepast (Boilertemperatuur (op pagina 112)). De optimale temperatuurinstelling van de drukboiler is 92 ºC. Als er geen consumpties bereid worden, dan stijgt de temperatuur in de boiler automatisch 6 ºC in circa 25 minuten. De eerste consumptie met een koude brewer wordt nu bereid met inkomend water met een hogere temperatuur, waardoor de koude brewer wordt gecompenseerd. Het regelsysteem bevat beveiligingen en de waarschuwingsmeldingen zijn gebaseerd op de gedetecteerde waarde van de temperatuursensor. • Een te hoge temperatuur, een te lage temperatuur, kortsluiting of ontkoppelde sensor wordt door het regelsysteem gedetecteerd. • Een sensor wordt ontkoppeld als de weerstand boven de 350 kW komt. • Kortsluiting temperatuursensor wordt gegenereerd als de weerstand lager is dan 1 kW. • Vervang temperatuursensoren als een onwaarschijnlijke temperatuur wordt gemeten. Niveausensor Het waterniveau in de boiler wordt door de temperatuur/ niveausensor gemeten. De boiler is geaard. Vanuit het regelsysteem wordt een positief signaal op de geïsoleerde sensorbehuizing toegepast. Wanneer het waterniveau de sensor bereikt, gaat er stroom via het water naar aarde. Dit wordt door het regelsysteem gedetecteerd.",
+  "afb": "img/p43.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 44
+ },
+ {
+  "nr": "4.1.10",
+  "titel": "Temperatuur sensor / Niveausensor open boiler",
+  "pagina": 44,
+  "tekst": "Sensoren De open boiler heeft twee gescheiden sensoren; een niveausensor en een temperatuursensor. De sensoren zijn van de boilerbehuizing gescheiden door kunststof isolatie dat met twee moeren rond de roestvrijstalen sensorbehuizing is geklemd. OPMERKING Gebruik voor elke sensor de juiste isolatie (stopfitting). Zie de handleidingen voor reserveonderdelen voor het correcte onderdeelnummer. OPMERKING Als de sensor moet worden vervangen, vervang deze dan helemaal, inclusief de moeren. Temperatuur- en niveausensoren open boiler 1. Niveausensor 2. Temperatuursensor Temperatuur Aanbevolen temperatuurinstellingen open boiler Temperatuur Waarde Normaal 91 ºC Hoog 98 ºC Laag 70 ºC Stand-by 65 ºC De temperatuur wordt door een thermistor gedetecteerd. Deze is in de roestvrijstalen behuizing gemonteerd. Het regelsysteem regelt de temperatuur in de boiler op basis van de weerstand van de thermistor. Weerstand van de thermistor Weerstand Temperatuur 6,5 kW 95 ºC 100 kW 25 ºC 126,7 kW 20 ºC Temperatuursensor De temperatuur kan in het servicemenu worden aangepast. De optimale temperatuurinstelling is 91 ºC. Het regelsysteem bevat verschillende beveiligingen en toont waarschuwingen gebaseerd op de gedetecteerde waarde van de temperatuursensor: • Een te hoge temperatuur, een te lage temperatuur, kortsluiting of uitgeschakelde sensor • Een sensor wordt uitgeschakeld als de weerstand boven de 350 kW komt. • Kortsluiting temperatuursensor wordt gegenereerd als de weerstand lager is dan 1 kW. Niveausensor Het niveau in de boiler wordt door de roestvrijstalen behuizing van de niveausensor gemeten. De boiler is geaard. Vanuit het regelsysteem wordt een positief signaal op de sensorbehuizing toegepast. Wanneer het waterniveau de sensor bereikt, gaat er stroom door het water. Dit wordt door het regelsysteem gedetecteerd.",
+  "afb": "img/p44.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 46
+ },
+ {
+  "nr": "4.1.11",
+  "titel": "Temperatuurbeveiliging",
+  "pagina": 46,
+  "tekst": "Temperatuurbeveiliging / clixon De temperatuurbeveiliging (of clixon) beschermt de verwarming tegen oververhitting als het regelsysteem de verwarming niet uitschakelt. De beveiliging onderbreekt de stroomtoevoer naar de verwarming onmiddellijk als de boiler te heet wordt. De beveiliging is een behuizing met een bimetalen schijf. Als het apparaat te heet wordt, opent de bimetalen schijf een (in rusttoestand gesloten) schakelaar. Interne delen van de temperatuurbeveiliging 1. Schakelarm 2. Transferpin 3. Basis 4. Schijfbevestiging 5. Kap 6. Bimetalen schijf Na het afkoelen kan de veiligheidsschakelaar worden gereset door handmatig op de pin (1) te drukken. Waardes temperatuurbeveiliging Deze koffiemachine heeft één open boiler en één drukboiler. De open boiler heeft twee verschillende clixons. • Een droogkookbeveiliging op het bovendeksel van de open boiler. Deze clixon schakelt uit wanneer de temperatuur boven de 110 °C ± 5 °C uitkomt. • Een temperatuurbeveiliging op de overloopleiding van de open boiler. Deze clixon schakelt uit wanneer de temperatuur van het overtollige water boven de 90 °C ± 5 °C uitkomt. De drukboiler heeft twee identieke clixons. • Deze zitten beide aan de zijkant van de drukboiler. Ze schakelen uit wanneer de temperatuur boven de 110 °C ± 5 °C uitkomt.",
+  "afb": "img/p46.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 47
+ },
+ {
+  "nr": "4.1.12",
+  "titel": "Positionering van de ventielen",
+  "pagina": 48,
+  "tekst": "Ventielen open boiler Mogelijke lay-outs voor uitlaatventielen open boiler (CoEx - medium model) Aansluitingen uitlaatventielen open boiler Code Functie Bedradingskleuren MX1 Mixer 1 Geel / Wit MX2 Mixer 2 Violet / Wit MX3 Mixer 3 Oranje / Bruin HW Heet water Rood / Blauw Afhankelijk van het model zijn er tot 4 uitlaatventielen op de open boiler aangesloten. Ze leveren water aan de heetwateruitlaat en aan de mixers. Meer informatie over de uitlaatventielen vindt u in het hoofdstuk 2-wegventiel / uitlaatventiel open boiler (zie 2-weg uitlaatventiel (Open boiler) op pagina 53). Drukboilerventielen (METAAL) Positionering van de metalen drukboilerventielen (CoEx medium model) 1. Expansieventiel 2 bar (S2) 2. Veiligheidsventiel 12 bar (S12) 3. Verdeelstuk 4. 2-wegventiel (VO) 5. 3-wegventiel (VC) OPMERKING De metalen ventielen hebben nummers die die de normale stroomrichting aangeven (van 1 naar 2). Let op: het 3-weg CoEx- ventiel wordt andersom gemonteerd! Drukboilerventielen (PPSU) Positionering van de PPSU-drukboilerventielen (CoEx medium model) 1. Expansieventiel 2 bar (S2) 2. Veiligheidsventiel 12 bar (S12) 3. Verdeelstuk 4. 2-weg overdrukventiel (VO) 5. 3-wegventiel CoEx (VC) OPMERKING De pijl op de ventiel geeft de waterstroomrichting aan. Let op: het CoEx-brewerventiel wordt andersom gemonteerd. Aansluitingen / bedradingskleuren van de uitlaatventielen van de drukboiler Code Functie Bedradingskleuren VC 3-wegventiel naar brewer Geel / Wit VO 2-wegventiel naar 2 bar Blauw / Geel Het 3-wegventiel (VC) wordt gebruikt voor heet water naar de CoEx-brewer. Het 2-weg expansieventiel (VO) wordt tijdens stand-by ingeschakeld en beperkt de maximale druk in het heetwatersysteem met het 2-bar expansieventiel (S2). Het overdrukventiel schakelt tijdens een bereidingscyclus voor koffie uit. De druk wordt vervolgens door het 12-bar veiligheidsventiel (S12) beperkt. Meer details: • Overdruk- en veiligheidsventielen (op pagina 55) • 2-wegventiel / uitlaatventiel drukboiler (zie 2-weg uitlaatventiel (Drukboiler) op pagina 51) • 3-wegventiel / brewerventiel drukboiler (zie 3-weg CoEx- brewerventiel (Drukboiler) op pagina 52) Gebruikte materialen De 2-weg- en 3-wegventielen kunnen worden geleverd in metaal, met een metalen verdeelstuk of zonder metaal met een kunststof (PPSU) verdeelstuk. 4.1.13 2-weg uitlaatventiel (Drukboiler) Het 2-wegventiel is de uitlaat van het heetwatersysteem naar een component. De beweegbare zuiger heeft een geïntegreerde zitting die, wanneer de elektromagnetische spoel wordt geactiveerd, van de ventielopening (direct geregeld) beweegt waardoor het ventiel opengaat. Wanneer de stroom naar de spoel wordt onderbroken, trekt de ventielretourveer de zuiger terug naar de zitting, waardoor de waterstroom wordt afgesloten. Dit ventiel wordt vanaf de IO-print door 24VDC geregeld. OPMERKINGEN De 2-wegventielen zijn er in PPSU en metaal. De metalen ventielen zijn voorzien van een nummer die de ingang (1) en de uitgang (2) aangeeft. De PPSU-ventielen zijn voorzien van een pijl die de stroomrichting aangeeft. Waterstroom in ventiel wanneer spoel is gedeactiveerd: (geen waterstroom) Wateraansluitingen: 1. ingang - aangesloten op verdeelstuk. 2. uitgang - aangesloten op component (mixsysteem, heet water of 2 bar- ventiel). Waterstroom in ventiel wanneer spoel is geactiveerd: (waterstroom) 4.1.14 3-weg CoEx-brewerventiel (Drukboiler) Het 3-wegventiel is de uitlaat van het heetwatersysteem naar het CoEx®-brewer (koffieventiel) en heeft een kanaal van de brewer naar de lekbak. Via dit kanaal kunnen koffieresten vanuit de brewer terug naar de afvalbak stromen. De ventielfunctie is gebaseerd op een veer die samen met de systeemdruk de zuiger terug in de ventielzitting drukt. Het ventiel wordt door 24VDC geregeld. OPMERKINGEN De 3-wegventielen zijn er in PPSU en metaal. De metalen ventielen zijn voorzien van een nummer die de ingang (1) en de uitgang (2) aangeeft. De PPSU-ventielen zijn voorzien van een pijl die de stroomrichting aangeeft. BELANGRIJK het 3-weg brewerventiel wordt andersom gemonteerd, het water stroomt van 2 naar 1 (metalen ventiel) De PPSU-ventiel heeft een zwarte pijl die de juiste richting aangeeft. Waterstroom in ventiel wanneer spoel is gedeactiveerd: Wateraansluitingen: 1. Uitgang - aangesloten op brewer 2. Ingang - aangesloten op verdeelstuk 3. Afvoer - afvoer naar lekbak Waterstroom in ventiel wanneer spoel is geactiveerd: 4.1.15 2-weg uitlaatventiel (Open boiler) Het 2-wegventiel is de uitlaat van het heetwatersysteem naar een component. De ventielen zijn gestapeld en op de boiler aangesloten. Het in rusttoestand gesloten ventiel (NC) wordt vanaf de IO-print door 24VDC geregeld. Wanneer een drank is geselecteerd, stuurt het regelsysteem een signaal naar een van de uitlaatventielen om voor een bepaalde tijd open te gaan. Deze tijd (de gedoseerde waterhoeveelheid) kan in het regelsysteem van de machine worden ingesteld. De doseerhoeveelheid van het uitlaatventiel kan op het uitlaatventiel zelf worden ingesteld (gekalibreerd). Hierdoor is het mogelijk om bij dezelfde gedoseerde waterhoeveelheid meer ingrediënten te doseren. Dit vooral van toepassing op oplosingrediënten. Het ventiel kalibreren (wanneer niet De ventielen staan af fabriek ingesteld op een opening van 1,5 geïnstalleerd) mm. Voor het instellen van een nieuw ventiel op 1,5 mm vóór installatie: steek een inbussleutel van 1,5 mm als meetinstrument in de ventieluitlaat en gebruik een inbussleutel van 5 mm om de schenktuit te sluiten, totdat de inbussleutel van 1,5 mm wordt omklemd. Installeer het ventiel. Het ventiel kalibreren (wanneer Volg voor het kalibreren van een open-boilerventiel binnenin de geïnstalleerd) koffiemachine de volgende stappen: 1. Open de deur. 2. Verwijder de containers. 3. Verwijder het ventiel achter de containers door de schroeven te verwijderen. 4. Log in in het servicemenu. 5. Selecteer het menu ‘Test uitgangen / Kalibreer ventielen’ 6. Plaats een maatbeker op het bekerplateau. 7. Test het ventiel (zie de afbeelding in ‘Positionering van de ventielen’ om te zien welk ventiel). 8. De juiste hoeveelheid is 125 ml (in 7 seconden). 9. Pas de instelling van het ventiel aan. ▪ Draai tegen de klok in voor meer water (zie inzet) ▪ Draai met de klok mee voor minder water 10. Test 3 keer, tel de resultaten op en deel door 3. Een resultaat tussen 122,5 ml en 127,5 ml is goed. 11. Klaar.",
+  "afb": "img/p48.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 54
+ },
+ {
+  "nr": "4.1.16",
+  "titel": "Overdruk- en veiligheidsventielen",
+  "pagina": 55,
+  "tekst": "De overstort- (overdrukreductie) en veiligheidsventielen zijn mechanisch. OPMERKING Pas de overdruk- of veiligheidsventielen niet aan in geval van storing. Ze zijn speciaal ingesteld op 2 of 12 bar en kunnen niet worden ingesteld zonder speciaal gereedschap en kennis. In geval van storing vervangen voor een nieuwe. Interne details drukventiel 1. Behuizing 2. Afdichting 3. O-ring 4. Sluiter 5. Veer 6. Sleeve 7. Drukregelaar",
+  "afb": "img/p55.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 55
+ },
+ {
+  "nr": "4.1.16.1",
+  "titel": "Overdrukventiel 2 bar",
+  "pagina": 55,
+  "tekst": "Het 2 bar-drukventiel is een mechanisch drukventiel. Dit ventiel opent als een druk van 2 bar is bereikt. Dit drukventiel kan door het 2-wegventiel, die zich vóór dit 2 bar-ventiel bevindt, elektronisch worden uitgeschakeld Het 2- weg overstortventiel wordt tijdens een uitgiftecyclus uitgeschakeld. Als het systeem in stand-by staat, wordt het overstortventiel geactiveerd (geopend) als de verwarmingselementen worden ingeschakeld. De maximale druk in het systeem is tijdens stand-by dan ook 2 bar.",
+  "afb": "img/p55.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 55
+ },
+ {
+  "nr": "4.1.16.2",
+  "titel": "Veiligheidsdrukventiel 12 bar",
+  "pagina": 55,
+  "tekst": "Het 12 bar-drukventiel is een mechanisch drukventiel in open verbinding met het watersysteem na de pompen. Het ventiel opent automatisch als een druk van 12 bar is bereikt. Daarom kan de maximale druk in het systeem, als het ventiel naar behoren functioneert, nooit hoger zijn dan 12 bar.",
+  "afb": "img/p55.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 55
+ },
+ {
+  "nr": "4.1.17",
+  "titel": "Mixer",
+  "pagina": 56,
+  "tekst": "De mixer bestaat uit een mixermotor, een mixerpropeller en een mixerbehuizing. De mixer wordt geregeld door de besturingsprint en zorgt voor een juiste mix van de ingrediënt(en) en water. Door het roteren van de mixerpropeller wordt lucht door het water en de ingrediënten gemixt waardoor een schuimlaag ontstaat. Deze verbetert de smaak en de uitstraling van de consumptie. Motorspecificatie: 24VDC, 14.000 TPM. In geval van een blokkade wordt een veiligheidsvoorziening op de IO-print geactiveerd en wordt de melding “mixer geblokkeerd” op het scherm weergegeven. Een beperkte inlaatdiameter van de mixerbehuizing zorgt voor een mooie stroming in de mengbak. Overzicht mixeronderdelen (kleine en medium modellen) 1. Zuigkom 2. Adapter (*) 3. Afdichting 4. Bajonetsluiting mixer 5. Mixerbehuizing (*) 6. Mixerpropeller 7. Mixermotor *) Kleuren mixerbehuizing en adapter: zwart voor het drukboilersysteem, grijs voor het open-boilersysteem. TIP Om de levensduur van de groene afdichting (3) op de mixermotor verder te verlengen, wordt aangeraden om elke drie maanden een klein beetje Molykote-smeermiddel op de as van de mixermotor (7) aan te brengen. Mixeraansluitingen / bedradingskleuren (CoEx-brewer klein en medium) Mixer Functie Bedradingskleur 1 mixer Violet / Rood common (+) Oranje 2 mixer Violet / Blauw common (+) Oranje 3 mixer Geel / Rood common (+) Oranje",
+  "afb": "img/p56.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 57
+ },
+ {
+  "nr": "4.1.18.1",
+  "titel": "D-molen",
+  "pagina": 58,
+  "tekst": "Algemeen De D-molen heeft high-performance maalschijven die consistent malen en die voor het malen van bonen voor koffie en espresso twee keer sneller werken dan de Schaerer-molen. Dit betekent dat in de helft van de tijd dezelfde hoeveelheid koffie kan worden gemalen. Zie de specificaties aan het einde van dit hoofdstuk voor meer informatie. De D-molen is eenvoudig schoon te maken en de instellingen (zoals de maalgrofheid) blijft behouden als de molen voor reiniging wordt geopend. De maalgrofheid van de D- molen wordt niet door pinnen of tanden gemeten, maar wordt op een indicatiescherm op de molen weergegeven. Op het indicatiescherm is een schaal van 0 tot 12 te zien (werkelijke grofheid gedeeld door 10). De D-molen staat af fabriek standaard op een maalgrofheid van 6. Let op: door het soort gebruikte bonen en de (lokale) smaakvoorkeuren kan het zijn dat de instellingen van de molen in de koffiemachine moeten worden aangepast. OPMERKING Bestaande recepten/configuraties met koffie moeten worden gewijzigd als de D-molen wordt gebruikt terwijl ze voor de Schaerer-molen gemaakt zijn (vanwege meer uitgifte van gemalen koffie). 1. Schroef 10. Motoraandrijving molen 2. Bovenstel molenhuis 11. Instelschroef maalgrofheid 3. Bovenste maalschijf (stilstaand) 12. Schaalvenster maalgrofheid 4. Schroef bovenste maalschijf 13. Afstelkap molen 5. Schroeven onderste maalschijf 14. Schroeven wormwiel 6. Onderste maalschijf (roterend) 15. Afstelwiel 7. Molenbasis / Motorafdekking 16. Molenuitlaat 8. Molenhouder 17. Aandrijfas 9. Molenhuis 18. Onderstel maalschijf De molen bestaat uit een bovenstel (2) met daarin de stilstaande (niet-bewegende) bovenste maalschijf (3). Het bovenstel is op het molenhuis vastgezet met een bayonetsluiting voor gemakkelijke toegang. In het molenhuis (9) zit het onderstel met de roterende onderste maalschijf (6). Door de onderste maalschijf naar onder en boven te verstellen, kunt u de luchtopening tussen de twee maalschijven zeer nauwkeurig instellen. De opening tussen de twee maalschijven bepaalt de grofheid van de gemalen koffie, ook wel de maalgrofheid genoemd. De maalgrofheid is handmatig in te stellen door het afstelwiel (15) via de instelschroef (11) te draaien. Deze schroef is bereikbaar als de molen in de koffiemachine is geplaatst. Het afstelwiel is voorzien van een maalgrofheidschaal die door een klein venster (12) is af te lezen. Een 24V-motor in de basis drijft de onderste maalschijf aan via een tandwielkast naar de aandrijfas (17). De maalgrofheid aanpassen De maalgrofheid kan zonder de molen uit de koffiemachine te halen, worden aangepast. De werkelijke maalgrofheid is af te lezen in het kleine venster linksonder in de molen. 1. Pas de maalgrofheid aan met de schroef (type Philips), rechtsonder in de basis. ▪ Draai naar links (+) voor een grovere maling / hoger getal. ▪ Draai naar rechts (-) voor een fijnere maling / lager getal. ▪ Draai de schroef in de gewenste richting en bekijk de indicator voor de huidige maalgrofheid. TIP Pas de maalgrofheid aan als de molen draait. Voer bijvoorbeeld een testmaling uit of schenk een recept op basis van bonen. Na aanpassing: voer twee testmalingen uit om zeker te weten dat de molen de koffiebonen met de juiste maalgrofheid bereidt. Stel de maalgrofheid in op 6 (fabrieksinstelling) of op de voorkeurswaarde die al bekend was. Neem een testdrank om de smaak te testen en schrijf ter referentie de definitief ingestelde maalgrofheid op. De buitenste zones van de schaal zijn roodgekleurd (waardes lager dan 1,5 en hoger dan 10,5). Opmerking Stel de maalgrofheid niet in op de rode zones. Malen met een waarde onder 1,5 resulteert in een inconsistente uitgiftehoeveelheid van gemalen koffie. Een waarde hoger dan 10,5 kan verstopping in de molen veroorzaken. BELANGRIJK Een nieuwe molen heeft een zogenaamde inloopperiode nodig. Na ongeveer 1.000 kopjes koffie stelt u de maalgrofheid opnieuw in (zie boven). Dit hoeft maar één keer (of wanneer een nieuwe molen of nieuwe maalschijven worden geplaatst). De brewer verwijderen en plaatsen 1. Om bij de koffiemolen te komen, moet u eerst de container voor koffiebonen verwijderen. ▪ De molen wordt op molenhouders in de basis geplaatst en alleen met de aandrijfas vastgezet. 2. Om de molen te verwijderen, tilt u hem uit de basis in de richting van de pijl. 3. Plaats de molen in de basis en zorg dat de molenuitlaat in de juiste richting wijst. ▪ Draai de schroef van de molen zodat de aandrijfas ‘past’ en helemaal naar beneden gaat. De aandrijfas moet in de motoraandrijving ‘passen’. De koffiemolen schoonmaken Geadviseerd wordt de molen regelmatig (maandelijks) schoon te maken om verstopping door oude, gemalen koffie in het molenhuis te voorkomen. Ook verbrande bonen en ‘vreemde’ voorwerpen (zoals hout en stenen) kunnen de molen blokkeren en moeten worden verwijderd. LET OP Open de molen niet in de koffiemachine. Haal hem eerst uit de machine. Procedure Voer de volgende stappen uit: 1. Verwijder de koffiemolen uit de machine. 2. Open het molenhuis. 3. Reinig de maalschijven en de binnenkant van het molenhuis (vergeet de inkeping rondom de schijven niet). 4. Sluit het molenhuis. 5. Plaats de koffiemolen in de machine. De maalschijven vervangen OPMERKING De maalschijven moeten na het malen van 750 kg koffiebonen worden vervangen. De bovenste en onderste schijven zijn identiek. De schroeven in de onderste en bovenste schijf zijn NIET identiek. Benodigd gereedschap • Philips-schroevendraaier Procedure Voer de volgende stappen uit: 1. Verwijder de koffiemolen uit de machine. 2. Verwijder de molenuitlaat. ▪ Spreid de twee borgclips (1) waarmee de uitlaat aan de molen is bevestigd. ▪ Schuif de uitlaat in de richting van de pijl (2) en neem hem uit de molen. 3. Verwijder het bovenstel van het molenhuis. ▪ Draai de kap van het bovenstel in de richting van de pijl (met de klok mee!) om de bayonetsluiting te openen en verwijder de bovenkant van de koffiemolen. 4. Verwijder de schroeven uit de bovenste maalschijf. 5. Verwijder de bovenste schijf. 6. Zorg dat het montage-oppervlak schoon is, voordat u de nieuwe bovenste maalschijf plaatst. 7. Plaats de bovenste maalschijf. OPMERKING De bovenste en onderste schijven zijn identiek. 8. Bevestig de bovenste schijf met drie schroeven. LET OP Zorg dat u de juiste schroef pakt (zie foto). Draai de schroef voorzichtig maar stevig vast. 9. Draai de drie schroeven in de onderste schijf los en verwijder ze. 10. Verwijder de onderste schijf. 11. Reinig het molenhuis en zorg dat het montageoppervlak voor de onderste maalschijf schoon is (ter voorkoming van een andere maalgrofheid). 12. Plaats de nieuwe, onderste maalschijf. OPMERKING De bovenste en onderste schijven zijn identiek. 13. Bevestig de onderste maalschijf met drie schroeven. LET OP Zorg dat u de juiste schroef pakt (zie foto). Draai de schoef voorzichtig maar stevig vast. 14. Sluit het molenhuis. ▪ Installeer het bovenstel van het molenhuis. ▪ Plaats het bovenstel van het molenhuis bovenop de molen een draai het in de richting van de pijl (tegen de klok in!) om het te sluiten en op het molenhuis vast te zetten. 15. Installeer de molenuitlaat. ▪ Schuif de molenuitlaat in de richting van de pijl op de buitenkant van het molenhuis en zorg ervoor dat de borgclips van de uitlaat goed vastklikken. De D-molen afstellen De D-molen staat af fabriek op de standaard maalgrofheid van 6. Deze waarde komt overeen met de ruimte van ca. 0,25 mm tussen de twee maalschijven. Opnieuw afstellen is mogelijk als deze waarde, die af te lezen is in venstertje op de molen, niet overeenkomt met de werkelijke ruimte tussen de maalschijven. Dit kan gebeuren: • wanneer nieuwe maalschijven zijn geplaatst. • na de eerste inloopperiode van de maalschijven (na het malen van bonen voor 1.000 kopjes koffie). Benodigd gereedschap • Torx schroevendraaier maat 15 Procedure Voer de volgende stappen uit. 1. Verwijder de afstelkap. ▪ Buig de vier borgclips (1) in de richting van de pijp en trek de afstelkap (2) van het molenhuis. 2. Verwijder de schroeven van het afstelwiel. ▪ Trek het afstelwiel uit de aandrijfas in de richting van de pijl. De afstelschijf is nu zichtbaar. 3. Om de afstelschijf te kunnen draaien, steekt u er twee schroeven in en draait u ze een paar keer. 4. Draai de afstelschijf voorzichtig in de richting van de pijl totdat de twee maalschijven elkaar raken. 5. Controleer of de aandrijfas niet meer kan worden gedraaid. ▪ De maalschijven zijn nu gereset en staan op 0 (nul). 6. Verwijder de twee steunschroeven uit de afstelschijf. ▪ Zorg ervoor dat de huidige positie van de aftelschijf niet verandert. 7. Schuif het afstelwiel over de aandrijfas. Het afstelwiel bevat een restrictor (1) die in een sleuf aan de buitenkant van het molenhuis (2) past. De restrictiesleuf beperkt de rotatie van het afstelwiel tot 120º. ▪ Duw het afstelwiel over de as naar beneden en draai het naar rechts totdat de restrictor in de linkerhoek van de sleuf van het molenhuis zit. 8. Een tweede controle: zorg dat de waarde 0 op de schaal op het afstelwiel boven de kleine verticale markering in de buitenkant van het molenhuis vlakbij de molenuitlaat zit. 9. Bevestig het afstelwiel met drie schroeven. ▪ Draai de schroeven voorzichtig maar stevig vast. 10. Plaats de kap. De nummers 1 en 2 zijn in reliëfdruk aan de onderzijde van de afstelkap aangebracht. Zorg dat nummer 1 in lijn is met de molenuitlaat. ▪ Schuif de afstelkap in de richting van de pijlen en zorg ervoor dat de vier borgclips goed in de uitsparingen aan de buitenkant van het molenhuis klikken. 11. Het afstellen is nu voltooid. Ga verder naar het hoofdstuk Maalgrofheid (zie De maalgrofheid aanpassen op pagina 60) om de koffiemolen op de gewenste (en al eerder genoteerde) maalgrofheid in te stellen. Specificaties D-molen Specificaties D-molen Vermogen Hoofdmotor 24VDC Dosering Snelheid 2 – 3,5 g/s Afwijking (SD 11 g) 0,25 g Afstelling Bereik 0-0,5 mm Schijven Diameter 64 mm Materiaal gehard staal Rotatiesnelheid 900 TPM Bedrijfsomstandigheden Temperatuur +15 tot +60 °C Relatieve luchtvochtigheid tot 90% (niet condenserend) D-molen - diagram met doseersnelheid in gram per seconde. Verticale as: uitlaat van gemalen koffie in gram per seconde voor verschillende soorten koffiebonen. Horizontale as: maalgrofheid van de molen. De stippellijn toont een gemiddelde en kan voor andere boonsoorten als richtlijn worden gebruikt.",
+  "afb": "img/p58.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 74
+ },
+ {
+  "nr": "4.1.19",
+  "titel": "Ingrediëntencontainers",
+  "pagina": 75,
+  "tekst": "De containers zijn voorzien van een metalen of kunststof schroef. De metalen schroef wordt gebruikt voor instant koffie, instant thee en bladthee. De kunststof schroef wordt gebruikt voor andere ingrediënten. Er zijn speciale schroeven beschikbaar voor speciale ingrediënten of uitgiftes met een laag gewicht. Alle containers worden aangedreven door een 24VDC-motor met 120TPM. Containerplaat koffiebonencontainer Verwijder de koffiebonencontainer Voer de volgende stappen uit: 1. Trek het containerslot in de richting van de pijl om de bonencontainer van de bonencontainer los te maken. 2. Til de containers van de molenbasis en neem ze uit de machine. 3. Installeer de bonencontainers - Plaats de bonencontainer op de molenbasis en druk het containerslot in de richting van de pijl.",
+  "afb": "img/p75.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 76
+ },
+ {
+  "nr": "4.2.1",
+  "titel": "CoEx®-brewingsysteem",
+  "pagina": 77,
+  "tekst": "De combinatie van een koffie- en espresso-brewer. De brewer is een van de belangrijkste onderdelen in de machine. De kwaliteit van de koffie is heel erg afhankelijk van de staat van de brewer. Het is heel belangrijk om de unit schoon te houden, ook voor een goede werking. 1. Koffie-trechter 2. Restwisser 3. Uitlaat 1: - met gele filterkop: Koffie 4. Uitlaat 2: - met gele filterkop: Espresso - met witte filterkop: Koffie en Espresso 5. Handgreep 6. Brewergrendel 7. Cilinder 8. Knop voor het verwijderen voor de filterkop / bovenzuiger 1. Waterinlaat 2. CoEx-beugel 3. Motorkoppeling",
+  "afb": "img/p77.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 78
+ },
+ {
+  "nr": "4.2.2",
+  "titel": "Brewercyclus",
+  "pagina": 78,
+  "tekst": "Startpositie Na dosering van de koffie wordt de brewer geactiveerd. De motor draait met de klok mee tot gesloten positie. Gesloten positie De gedoseerde koffie wordt tussen de boven- en onderzuiger samengeperst. Hierna wordt water via de zuiger door de samengeperste koffie geperst. Het stroomt vervolgens door het filter in de bovenkant en uitlaat van de brewer. De druk van de zuiger op de samengeperste koffie wordt geregeld door de regelbare stroom van de motor. Open positie Als er voldoende water is gedoseerd, draait de brewer tegen de klok in naar de open positie. Restwisser De brewer loopt door, waarbij de onderzuiger naar de bovenste positie beweegt. Nu draait de brewer met de klok mee en wordt de samengeperste koffie van de zuiger in de afvalbak geveegd. Terug naar start Nadat de koffieresten zijn weggeveegd, draait de brewer met de klok mee naar de startpositie. Startpositie De brewer is klaar voor een nieuwe cyclus.",
+  "afb": "img/p78.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 80
+ },
+ {
+  "nr": "4.2.3",
+  "titel": "De CoEx®-brewer verwijderen en plaatsen",
+  "pagina": 80,
+  "tekst": "Verwijderingsprocedure Voer de volgende stappen uit: 1. Haal de breweruitlaat los van de brewer. 2. Zoek de grendel op de brewer. 3. Duw de hendel omhoog en trek en til de brewer, terwijl u de hendel omhoog houdt, in de richting van de pijl uit de koffiemachine. Plaatsingsprocedure Voer de volgende stappen uit: 1. Zorg dat de brewerbeugel in de koffiemachine schoon is. 2. Plaats de brewer op de beugel en druk de brewer stevig in de beugel, totdat u een klik hoort. • Let erop dat de grendel omlaag is gedraaid. LET OP Wanneer de brewer niet correct is geïnstalleerd, kunnen er fouten optreden of kan de brewer tijdens het proces uit de houder schieten.",
+  "afb": "img/p80.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 82
+ },
+ {
+  "nr": "4.2.4",
+  "titel": "Brewermotor en microschakelaar",
+  "pagina": 83,
+  "tekst": "De brewermotor en microschakelaar zijn op een beugel gemonteerd Specificatie brewermotor Voltage 24VDC. Geen belasting 32 TPM, 0,10A ± 0,05A Normale belasting 25 TPM, 0,45A, 1,5 Nm Stilstand 1,8A ± 10% De motor wordt in twee richtingen geregeld, met de klok mee en tegen de klok in. De positie van de brewer wordt geregeld door de microschakelaar en timers in het regelsysteem. Elektrische aansluitingen / bedradingskleuren Bedradingskleur Bedradingskleur Functie (motor) (hoofd) Paars/Rood Grijs Motor Oranje Grijs / Wit Motor Zwart Paars / Groen (2x) Microschakelaar Blauw Grijs / Zwart Microschakelaar",
+  "afb": "img/p83.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 83
+ },
+ {
+  "nr": "4.2.5",
+  "titel": "Bovenste zuiger / filterkop",
+  "pagina": 83,
+  "tekst": "De bovenzuiger, ook wel filterkop genoemd, is op de bovenkant van de CoEx®-brewer gemonteerd. De bovenzuiger is verwijderbaar via de grendel aan de bovenkant van de brewer. Interne lay-out bovenzuiger 1. Quad-ring (reserveonderdeel) 2. Bovenzuiger 3. Veer (alleen gele filterkop) 4. Drukschakelaar 5. Koffierestrictor 6. O-ring 7. U-cupafdichting 8. Gaashouder 9. Filtergaas 10. Schroeven OPMERKING Haal, om garantieproblemen te voorkomen, de bovenzuiger niet uit elkaar. Bovenzuiger verwijderen en installeren De bovenzuiger is verwijderbaar via de grendel aan de bovenkant van de brewer. 1. Draai de knop naar rechts om de filterkop te verwijderen. 2. Op de brewer plaatsen: Plaats eerst de volledige bovenzuiger in de juiste positie, draai de knop daarna naar links. OPMERKING Controleer na het terugplaatsen of de bovenzuiger correct is geplaatst. Als de bovenzuiger niet correct is geplaatst, slaat de brewer tijdens uitgifte af.",
+  "afb": "img/p83.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 85
+ },
+ {
+  "nr": "4.2.6",
+  "titel": "Drukschakelaar voor koffie/espresso regelen",
+  "pagina": 85,
+  "tekst": "Dankzij het unieke, gepatenteerde systeem kan de CoEx®-brewer met één systeem koffie en espresso zetten. De druk is voor koffie en espresso verschillend; koffie wordt met een druk van 3 - 4 bar bereid, espresso met een druk van 9 bar. Het volume van een consumptie is eenvoudig te wijzigen in de software-instellingen van de machine. De contactduur tussen het water en het koffiepoeder is een heel belangrijke factor in de prestatie van de brewer en is voor koffie en espresso nagenoeg hetzelfde. De optimale contactduur tussen water en koffie is 15 - 25 seconden. Om deze waarde te bereiken moet het systeem een restrictor gebruiken. Door de combinatie van hogere druk, lagere volume en een gelijke koffiecontactduur moet de uitstroom van espresso veel kleiner zijn dan de uitstroom van koffie. In de volgende afbeeldingen wordt de oplossing voor het maken van deze twee dranken in één systeem weergegeven. 1. Koffietoevoer Wanneer gekozen is voor koffie is de toevoer in het begin laag en wordt de drukschakelaar niet geactiveerd. (Veer is sterk genoeg om de drukschakelaar in de koffiestand te houden). De koffie passeert de eerste restrictor en stroomt dan door de grote koffie-uitlaat. 2. Espressotoevoer Wanner gekozen is voor espresso dan is de toevoer eerst hoog en wordt de drukschakelaar geactiveerd. (Veer is niet sterk genoeg om de drukschakelaar in de koffiestand te houden). De koffie-uitlaat wordt gesloten en de espresso moet door de tweede restrictie worden geperst, waardoor de toevoer wordt beperkt en de druk naar 9 bar wordt verhoogd. Het drukverschil tussen koffie en espresso is alleen van toepassing op B2C-espressomachines. De CoEx® Fresh Brew- machines (zonder papieren filter) hebben geen veer om tussen koffie- of espresso-druk te schakelen. De bovenzuiger heeft een gekleurde stip die verwijst naar de gatmaat/-maten en drukschakelaar. Machinetype Stipkleur Gatmaten B2C espresso Geel 1,5mm/0,3mm Fresh brew papierloos Wit 0,5mm",
+  "afb": "img/p85.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 86
+ },
+ {
+  "nr": "4.2.7",
+  "titel": "Afdichtingen in onderzuiger vervangen",
+  "pagina": 86,
+  "tekst": "Benodigd gereedschap Schroevendraaier Procedure Voer de volgende stappen uit: 1. Draai de bout (1) van de brewer uit en draai de andere twee bouten (2) los. 2. Draai de onderste bouten (2) slechts 1,5 slag. Verwijder ze niet. 3. Trek de linker en rechter behuizing aan beide kanten van de cilinder (1) uit elkaar en trek de cilinder en de zuiger opwaarts uit de brewer (2). 4. Verwijder de zuiger uit de cilinder. 5. Vervang de onderdelen (zie volgend hoofdstuk) en installeer ze in omgekeerde volgorde.",
+  "afb": "img/p86.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 88
+ },
+ {
+  "nr": "4.2.8",
+  "titel": "Afdichtingen",
+  "pagina": 89,
+  "tekst": "De brewer heeft twee zuigers; de bovenzuiger (beter bekend als filterkop) en de onderzuiger. Drie afdichtringen zijn verantwoordelijk voor het afdichten van de drukruimte: twee in de onderzuiger en één in de bovenzuiger. 1. Onderzuiger 2. Afdichtring (onderzuiger) 3. U-cupafdichtring - ROOD (onderzuiger) 4. U-cupafdichtring - BLAUW (bovenzuiger) 5. Bovenzuiger / filterkop Heet water komt de cilinder binnen (via de onderzuiger) tussen de twee afdichtringen in de zuiger. De mix van water en koffiepoeder wordt door het gaas in de bovenzuiger gefilterd en verlaat vervolgens de cilinder. De afdichting in de bovenzuiger en de onderzuiger moeten tijdens het brewingproces bestand zijn tegen de druk van heet water (10 bar). De vorm van de u- cupring (3) voorkomt krassen in de cilinder door koffiekorrels. De bovenste afdichtring (2) hoeft niet bestand te zijn tegen hoge druk, maar is slechts een schraapring. Elektronica De hardware - MoVeC Modulaire verkoopcontroller voor intelligente aangesloten apparatuur Het elektrische systeem bestaat uit de volgende hoofdcomponenten: • Voedingsprintplaat • IO-print • Besturingsprint • Display met touchscreen Overzicht hoofdcomponenten elektronica C. KAST D. DEUR IOB. IO-print CB. Besturingsprint PS. Voeding TS. Touchscreen DIS. Display CS. Sensoren voor bekers DS. Deurschakelaar SP. Speaker(s)",
+  "afb": "img/p89.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 90
+ },
+ {
+  "nr": "5.1",
+  "titel": "Voeding",
+  "pagina": 91,
+  "tekst": "De stroomvoorziening bevindt zich op het achterpaneel van de machine, achter de ingrediëntencontainers. De netspanning is op de stroomvoorziening aangesloten. De printplaat voorziet de IO-print en alle andere elektrische componenten van stroom. De stroomvoorziening is met een zekering beveiligd tegen overbelasting. OPMERKING De verwarmingselementen van de boilers zijn rechtstreeks aangesloten op de netspanning (en worden geregeld door de temperatuursensor, en alleen onderbroken door middel van een deurschakelaar). BELANGRIJK Gebruik altijd een ESD-armband om elektrostatische ontlading te voorkomen. Koppel deze aan de aardingskabel van de koffiemachinedeur voordat u met de elektronica aan de slag gaat. 5EPR076 5EPR076 - Voedingsprintplaat 1. J1 - Input 230VAC of 120VAC (*) 2. J2 - Output 24VDC / 120W *) Als de stroomvoorziening wordt gebruikt voor 120VAC moet een jumper in de printplaat worden toegevoegd.",
+  "afb": "img/p91.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 91
+ },
+ {
+  "nr": "5.2",
+  "titel": "Besturingsprint",
+  "pagina": 92,
+  "tekst": "De besturingsprint (ICEQ) bevindt zich aan de binnenkant van de deur. De besturingsprint regelt de werking van verschillende componenten. De signalen worden naar de IO-print verzonden. Op de besturingsprint vindt u ook de aansluitingen voor andere PCB's. deur- en betalingssystemen. Het besturingssysteem, de tellers en instellingen worden op de besturingsprint opgeslagen. BELANGRIJK Gebruik altijd een ESD-armband om elektrostatische ontlading te voorkomen. Koppel deze aan de aardingskabel van de koffiemachinedeur voordat u met de elektronica aan de slag gaat. Besturingsprint ICEQ3 (9EPRxxx) - Het werkelijke onderdeelnummer van het ICEQ3-besturingsprint is afhankelijk van de geladen software / het model koffiemachine. Zie de handleidingen voor reserveonderdelen voor het correcte onderdeelnummer. J1. IrDA-paneel J10. I2C J17. Display J2. Speaker L J11. Display J18. N.v.t. J3. Mechanische teller J12-A. HDMI IOB J19. N.v.t. J4/ J5. USB (*) J12-B. Platte kabel IOB J20. I2C J6. Touchscreen J13. Combi J22. USB reserve J7-A. Backlight J14. Netwerkverbinding J23. N.v.t. J8. Speaker R J15. MDB-betalingssysteem J9. USB J16. USB *) USB J4 en d USB J5 zijn intern parallel geschakeld. Gebruik één aansluiting tegelijkertijd.",
+  "afb": "img/p92.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 92
+ },
+ {
+  "nr": "5.3",
+  "titel": "IO-print",
+  "pagina": 93,
+  "tekst": "De IO-print (IOB) wordt door de besturingsprint geregeld. De IO- print regelt de mechanische componenten zoals de doseermotoren, boiler(s), brewermotor, mixers en ventielen. BELANGRIJK Gebruik altijd een ESD-armband om elektrostatische ontlading te voorkomen. Koppel deze aan de aardingskabel van de koffiemachinedeur voordat u met de elektronica aan de slag gaat. 5EPR132 IO-print 5EPR132 (met 27 uitgangen - 2 verwarmingselementen) J1/J2 - Schakeldraden boiler 1 J3/J4 - Schakeldraden boiler 2 J5 - 24VDC in J6, J8, J9, J10, J11 - IO voor algemene doeleinden J12 - IO voor algemene doeleinden (vrij contact) J13 - naar besturingsprint IO-print 5EPR132 aansluitingen Aansluiting Component Bedradingskleur J1-J4 J1 Verwarmingselement 1 Blauw J2 Verwarmingselement 1 Blauw J3 Verwarmingselement 2 Blauw / Wit J4 Verwarmingselement 2 Blauw / Wit J5 J5-1 +24V DC-voeding Rood J5-2 +24V DC-voeding Rood J5-3 - Zwart J5-4 - Zwart J6 J6-1 +24V DC common Oranje J6-2 Pomp 1 common Grijs / Blauw J6-3 Pomp 2 algemeen Zwart / Roze J6-4 Voeding waterstroommeter Rood / Wit J6-5 Signaal waterstroommeter Zwart / Blauw J6-6 Waterstroommeter common Groen / Violet J6-7 Niveau 2 Bruin / Zwart J6-8 Drukventiel (2 bar) Blauw / Geel J6-9 Pomp 1 Geel / Bruin J6-10 Pomp 2 Oranje / Wit J6-11 - J6-12 Temperatuur 2 Roze / Wit J6-13 Temp 2 common Groen / Violet J6-14 Niveau 2 common Geel / Grijs J8 J8-1 +24V DC common Oranje J8-2 Ventiel uitgifte / mix 1 Violet / Wit J8-3 Ingrediëntmotor 3 Blauw / Wit J8-4 Ingrediëntmotor 4 Wit J8-5 Uitgifte / mix 1 Violet / Rood J8-6 Ventiel uitgifte / mix 3 Oranje / Bruin J8-7 Inlaatventiel gekoeld water Zwart / Oranje J8-8 Ingrediëntmotor 5 Blauw / Groen J8-9 Ingrediëntmotor 6 Violet / Zwart J8-10 Mixer 2 Blauw / Violet J9 J9-1 +24V DC Common Oranje J9-2 Ingrediëntmotor 1 koffie of molen Violet J9-3 Ingrediëntmotor 2 koffie of molen Bruin / Rood J9-4 Brewermotor + Grijs / Wit J9-5 Brewermotor - Grijs J9-6 Brewermicro Grijs / Zwart J9-7 Papierschakelaar leeg J9-8 Sensoren common Groen / Violet J9-9 Detectie lekbak Zwart / Geel J9-10 Detectie lekbak vol Geel J9-11 Detectie lekbak common Groen / Wit J9-12 Inlaatventielen open boiler Rood / Groen J9-13 Ventilator Zwart/ Wit J9-14 Koffieventiel Geel / Wit J9-15 Heetwaterventiel Rood / Blauw J9-16 Micro-afvalbak Geel / Oranje J9-17 Thee-brewer micro Bruin / Grijs J9-18 - J9-19 Temp 1 common Groen / Violet J9-20 Temperatuur 1 Roze J9-21 Niveaudetectie 1 Rood / Zwart J9-22 Niveaudetectie 1 common Geel / Grijs J10 J10-1 + 24V DC common Oranje J10-2 Uitgang 23 reserve Groen / Rood J10-3 Uitgang 24 reserve Groen / Grijs J10-4 Ventiel koolzuurhoudend water Bruin / Blauw J10-5 Uitgang 26 reserve J10-6 Uitgifte / mix 4 J11 J11-1 +24V DC Common Oranje J11-2 Uitlaatarm Violet / Geel J11-3 Microschakelaar bekersplitter Grijs / Violet J11-4 Microschakelaar uitlaatarm Oranje / Rood J11-5 Bekersplitter Grijs / Oranje J11-6 Mover bekerkolom Grijs / Roze J11-7 Microschakelaar bekers Bruin / Roze J11-8 Sensoren common Groen / Violet",
+  "afb": "img/p93.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 96
+ },
+ {
+  "nr": "5.4",
+  "titel": "Display",
+  "pagina": 97,
+  "tekst": "BELANGRIJK Gebruik altijd een ESD-armband om elektrostatische ontlading te voorkomen. Koppel deze aan de aardingskabel van de koffiemachinedeur voordat u met de elektronica aan de slag gaat. Avy-display en touchscreen-paneel 1. Capacitief besturingsprint 2. Cap. kabel besturingsprint 3. Kabel touch-paneel 4. Display 5. Touchscreen Specificaties Specificaties Avy-display • a-Si 14 inch TFT-LCD-paneel • Resolutie: 1920 × 1080, FH • Stroomverbruik (VDD-kabel + LED-kabel) 16,5W • Schermdiagonaal: 469,16 mm • Schermafmeting: 409,8 × 230,4 mm / Componentafmeting: 430,4 x 254,6 x 12,4 mm",
+  "afb": "img/p97.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 97
+ },
+ {
+  "nr": "5.5",
+  "titel": "Bekersensor",
+  "pagina": 98,
+  "tekst": "De bekersensor detecteert een beker op het bekerplateau. Er kunnen maximaal twee bekersensoren op de machine worden aangesloten. Een voor de rechter en een voor de linker uitlaat. Een beker moet op de juiste positie op het bekerplateau worden geplaatst voordat de startknop beschikbaar is en de cyclus kan beginnen. De gevoeligheid van de sensor is in te stellen via het servicemenu, zie Bekersensor (op pagina 112). PCB bekersensor (alle kleine en medium modellen) De sensorbehuizing kan, afhankelijk van het machinetype, variëren. Zie voor meer informatie de handleidingen voor reserveonderdelen.",
+  "afb": "img/p98.webp",
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "pagina_tot": 98
+ }
+]
