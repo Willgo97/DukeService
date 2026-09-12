@@ -42,7 +42,21 @@ procedure — apart voor CoEx en CoEx XL.
 Onderaan: **Vastzetten** en **Delen** — de storing als tekst naar een collega
 of de klant.
 
-## 4. Techniek (45 sec)
+## 4. Onderdelen: de tekening werkt mee (60 sec)
+
+Onderdelen → *1014 Cabinet 9CEC*.
+
+De explosietekening uit het onderdelenboek staat erbij, en de ballonnummers zijn
+aanklikbaar: tik nummer 1 aan en het onderdeel verschijnt eronder —
+`5MAF101-RAL9005`, back bracket. Andersom werkt ook: tik een onderdeel in de
+lijst en de ballon licht op. Eén tik op het nummer zet het op het klembord.
+
+> "De nummers stonden als pixels in de tekening. Die zijn er één keer uit
+> gelezen en getoetst aan de onderdelentabel, dus wat je aantikt klopt."
+
+1.990 van de 2.765 posities zijn zo aanklikbaar.
+
+## 5. Techniek (45 sec)
 
 Machines → **Hoe de machine werkt** → *Schematisch diagram van het
 watersysteem*.
@@ -51,7 +65,7 @@ Het complete schema met legenda, inzoombaar. 32 componenten: inlaatventiel,
 drukregelaar, waterstroommeter, clixon, besturingsprint. Elk met de
 bijbehorende pagina uit de technische handleiding.
 
-## 5. Onderhoud en servicemenu (45 sec)
+## 6. Onderhoud en servicemenu (45 sec)
 
 **Onderhoud**: de checklists per brewer, afvinkbaar. Vinkjes gelden voor
 vandaag; morgen staat de lijst weer open.
@@ -59,13 +73,20 @@ vandaag; morgen staat de lijst weer open.
 **Servicemenu**: wat elke functie doet, met wachtwoordniveaus. Zoek op
 `ontkalken` — 46 stappen plus de vijf originele handleidingpagina's.
 
-## 6. Machines (30 sec)
+## 7. Machines (30 sec)
 
 Foto's van het hele assortiment. Per machine: uitvoeringen (Avy heeft er drie),
 typecodes, en — wat bij storingzoeken als eerste telt — **welk servicemenu
 erop draait**: oud (ICeQ2), nieuw, of allebei vanaf software 6.30/6.40.
 
 Onderaan elke machine een notitieveld voor serienummer en locatie.
+
+## 8. Instellingen (20 sec)
+
+Het tandwiel rechtsboven: licht/donker, en — nuttiger — **taal van de
+meldingen**. Staat de machine op Engels, dan wil je de Engelse schermtekst
+bovenaan zien; staat hij op Nederlands, andersom. De andere taal blijft eronder
+staan.
 
 ---
 
@@ -93,3 +114,6 @@ van de handleidingen blijft van De Jong DUKE en zit niet in de repo.
 - Lina, Nio Next, Blu, Edge en Vareo: alleen brochuregegevens
 - Geen koppeling met ConnectMe of het onderdelenbestelsysteem
 - De scanner leest tekst, geen barcodes of QR
+- Geen chatbot: elke regel in de app is herleidbaar tot een handleiding, en dat
+  is precies wat een taalmodel van telefoonformaat niet kan garanderen
+- 3D-modellen zouden STEP-bestanden vragen; de explosietekeningen doen nu het werk
