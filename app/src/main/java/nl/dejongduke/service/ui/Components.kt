@@ -137,6 +137,7 @@ fun PartNumber(text: String, modifier: Modifier = Modifier) {
 fun Card(
     onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    highlight: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     Surface(
@@ -144,8 +145,14 @@ fun Card(
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 4.dp)
             .clip(RoundedCornerShape(14.dp))
+            .then(
+                if (highlight) Modifier.border(
+                    2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(14.dp)
+                ) else Modifier
+            )
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
-        color = MaterialTheme.colorScheme.surfaceContainer,
+        color = if (highlight) MaterialTheme.colorScheme.surfaceContainerHigh
+        else MaterialTheme.colorScheme.surfaceContainer,
         content = { Box(Modifier.padding(14.dp)) { content() } },
     )
 }

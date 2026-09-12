@@ -16,6 +16,15 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import nl.dejongduke.service.BuildConfig
+import nl.dejongduke.service.data.DrawingIndexer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -124,6 +133,31 @@ fun SettingsScreen(
         item {
             TextButton(onClick = onResetTicks, modifier = Modifier.padding(horizontal = 12.dp)) {
                 Text("Vinkjes van vandaag wissen")
+            }
+        }
+
+        if (BuildConfig.DEBUG) {
+            item { SectionHeader("Ontwikkelen") }
+            item {
+                var stand by remember { mutableStateOf("") }
+                val bereik = rememberCoroutineScope()
+                val context = LocalContext.current
+                Column(Modifier.padding(horizontal = 12.dp)) {
+                    TextButton(onClick = {
+                        bereik.launch {
+                            stand = "bezig…"
+                            stand = DrawingIndexer.run(context) { stand = it }
+                        }
+                    }) { Text("Tekeningen indexeren") }
+                    if (stand.isNotEmpty()) {
+                        Text(
+                            stand,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(start = 12.dp, bottom = 8.dp),
+                        )
+                    }
+                }
             }
         }
 

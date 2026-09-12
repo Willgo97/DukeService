@@ -60,6 +60,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     // The bundled OCR library is ~11 MB of native code per architecture, and

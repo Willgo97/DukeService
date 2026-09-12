@@ -180,3 +180,12 @@ data class MenuItem(
     /** Chapter 6 is the menu itself, 7 the step-by-step jobs. */
     val hoofdstuk: String get() = nr.substringBefore('.')
 }
+
+/** A balloon number on an exploded drawing, in fractions of the image. */
+@Serializable
+data class Hotspot(
+    @SerialName("n") val pos: String,
+    val x: Float,
+    val y: Float,
+    val r: Float,
+)

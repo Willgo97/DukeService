@@ -21,6 +21,8 @@ class Catalog(
     val menu: List<MenuItem> = emptyList(),
     /** "machine|section" -> the exploded drawing that goes with it. */
     val drawings: Map<String, String> = emptyMap(),
+    /** drawing name -> the balloon numbers found on it. */
+    val hotspots: Map<String, List<Hotspot>> = emptyMap(),
 ) {
     /** Faults collapsed by screen message; the list screens show these. */
     val faultGroups: List<FaultGroup> = faults
@@ -58,6 +60,12 @@ class Catalog(
     fun menuItem(nr: String): MenuItem? = menu.firstOrNull { it.nr == nr }
 
     fun drawing(machine: String, sectie: String): String? = drawings["$machine|$sectie"]
+
+    /** Balloons on the drawing for this section, keyed by position. */
+    fun balloons(machine: String, sectie: String): List<Hotspot> {
+        val path = drawing(machine, sectie) ?: return emptyList()
+        return hotspots[path.substringAfterLast('/').removeSuffix(".webp")].orEmpty()
+    }
 
     fun machine(id: String): Machine? = machineById[id]
 
@@ -146,6 +154,7 @@ class Catalog(
                 components = read("components.json") { json.decodeFromString(it) },
                 menu = read("servicemenu.json") { json.decodeFromString(it) },
                 drawings = read("drawings.json") { json.decodeFromString(it) },
+                hotspots = read("hotspots.json") { json.decodeFromString(it) },
             )
         }
 
@@ -204,6 +213,8 @@ data class SearchResult(
     val menu: List<MenuItem> = emptyList(),
     /** "machine|section" -> the exploded drawing that goes with it. */
     val drawings: Map<String, String> = emptyMap(),
+    /** drawing name -> the balloon numbers found on it. */
+    val hotspots: Map<String, List<Hotspot>> = emptyMap(),
 ) {
     val empty: Boolean
         get() = faults.isEmpty() && procedures.isEmpty() && parts.isEmpty() &&

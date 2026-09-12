@@ -78,6 +78,7 @@ def main():
 
     by_hash = {}           # image hash -> filename, so a shared drawing is stored once
     mapping = {}           # "machine|section" -> "tek/xxx.webp"
+    sources = {}           # image hash -> where it came from, for re-rendering
     for machine, filename in BOOKS.items():
         pdf = os.path.join(ROOT, "manuals", filename)
         if not os.path.exists(pdf):
@@ -119,6 +120,7 @@ def main():
                 name = f"{digest}.webp"
                 open(os.path.join(OUT, name), "wb").write(buf.tobytes())
                 by_hash[digest] = name
+                sources[digest] = {"pdf": filename, "page": page}
             mapping[key] = "tek/" + name
             found += 1
         print(f"  {machine:6} {found} tekeningen", file=sys.stderr)
@@ -128,6 +130,8 @@ def main():
               ensure_ascii=False, indent=1, sort_keys=True)
     json.dump(mapping, open(os.path.join(ROOT, "app/src/main/assets/drawings.json"), "w"),
               ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+    json.dump(sources, open(os.path.join(ROOT, "data", "drawing_sources.json"), "w"),
+              ensure_ascii=False, indent=1, sort_keys=True)
     size = sum(os.path.getsize(os.path.join(OUT, f)) for f in os.listdir(OUT))
     print(f"{len(mapping)} secties, {len(by_hash)} unieke tekeningen, {size // 1024} kB")
 

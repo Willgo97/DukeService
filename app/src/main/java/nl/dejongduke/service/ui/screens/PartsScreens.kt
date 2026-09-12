@@ -119,8 +119,17 @@ fun PartsScreen(
 
 @Composable
 fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
-    val parts = catalog.parts.filter { it.machine == machine && it.sectie == sectie }
+    val parts = remember(machine, sectie) {
+        catalog.parts.filter { it.machine == machine && it.sectie == sectie }
+    }
     val tekening = catalog.drawing(machine, sectie)
+    val balloons = remember(machine, sectie) { catalog.balloons(machine, sectie) }
+    var gekozen by remember(machine, sectie) { mutableStateOf<String?>(null) }
+
+    /** Position as the balloons write it: "05" in the table is "5" on the drawing. */
+    fun kort(p: String) = p.trimStart('0').lowercase().ifEmpty { "0" }
+
+
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -129,28 +138,56 @@ fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(catalog.machine(machine)?.naam ?: machine)
                     Pill("${parts.size} onderdelen")
+                    if (balloons.isNotEmpty()) Pill("${balloons.size} aanklikbaar")
                 }
             }
         }
         if (tekening != null) {
             item {
-                // The drawing the paper manual puts opposite the table: the
-                // balloon numbers are the positions in the list below.
-                AssetImage(tekening)
-                Spacer(Modifier.height(6.dp))
-                Text(
-                    "De nummers in de tekening zijn de posities hieronder. Knijp om in te zoomen.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
-                )
-                Spacer(Modifier.height(8.dp))
+                Column {
+                    DrawingView(
+                        path = tekening,
+                        balloons = balloons,
+                        geselecteerd = gekozen,
+                        // No scrolling: the answer appears under the drawing, so
+                        // the picture you are reading stays in view.
+                        onSelect = { pos -> gekozen = if (gekozen == pos) null else pos },
+                    )
+                    val gekozenDelen = parts.filter { gekozen != null && kort(it.pos) == gekozen }
+                    if (gekozenDelen.isNotEmpty()) {
+                        Spacer(Modifier.height(8.dp))
+                        gekozenDelen.forEach { part ->
+                            PartRow(part, showSection = false, actief = true)
+                        }
+                    }
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        if (balloons.isEmpty())
+                            "Knijp om in te zoomen. De nummers in de tekening zijn de posities hieronder."
+                        else
+                            "Tik een nummer in de tekening aan, of tik een onderdeel in de lijst.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+                    )
+                    Spacer(Modifier.height(8.dp))
+                }
             }
         }
-        items(parts.size) { index -> PartRow(parts[index], showSection = false) }
+        items(parts.size) { index ->
+            val part = parts[index]
+            PartRow(
+                part = part,
+                showSection = false,
+                actief = gekozen != null && kort(part.pos) == gekozen,
+                onClick = if (balloons.any { it.pos == kort(part.pos) }) {
+                    { gekozen = kort(part.pos) }
+                } else null,
+            )
+        }
         item {
             Text(
-                "SE = monteursvoorraad · SW = magazijnvoorraad · pos verwijst naar het nummer in de tekening in het onderdelenboek.",
+                "SE = monteursvoorraad · SW = magazijnvoorraad · pos verwijst naar het nummer in de tekening.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
@@ -160,8 +197,13 @@ fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
 }
 
 @Composable
-private fun PartRow(part: Part, showSection: Boolean) {
-    Card {
+private fun PartRow(
+    part: Part,
+    showSection: Boolean,
+    actief: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    Card(onClick = onClick, highlight = actief) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (part.leverbaar) PartNumber(part.nummer) else Pill("niet los leverbaar")

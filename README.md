@@ -15,7 +15,7 @@ want in een kelder of serverruimte heb je dat toch niet.
 | 49 servicemenu-onderwerpen | wat elke functie doet, met wachtwoordniveaus |
 | 4.602 onderdeelregels | 1.547 unieke nummers uit zes onderdelenboeken |
 | 11 machines | foto, afmetingen, typecodes, uitvoeringen, welk servicemenu |
-| 89 explosietekeningen | bij 166 onderdelensecties, met de ballonnummers uit het boek |
+| 89 explosietekeningen | aanklikbare ballonnen: 1990 van 2765 posities in 149 secties |
 | Scanner | leest labels, typeplaatjes en schermmeldingen met de camera |
 
 Eén zoekveld gaat overal tegelijk doorheen: schermmeldingen, procedures,
@@ -73,7 +73,17 @@ python3 tools/parse_components.py   # hoofdstuk 4-5 -> components.json + paginab
 python3 tools/parse_servicemenu.py  # hoofdstuk 6-7 -> servicemenu.json + paginabeelden
 python3 tools/parse_drawings.py     # explosietekeningen -> tek/ + drawings.json
 python3 tools/parse_photos.py       # machinefoto's uit de brochurecovers
+python3 tools/render_hires.py       # tekeningen op 200 dpi, voor de herkenning
+python3 tools/index_balloons.py     # ballonnummers -> hotspots.json
 ```
+
+De ballonnummers op de tekeningen zijn pixels, geen tekst. Ze worden in twee
+stappen gelezen: de tekstherkenning die de app zelf al meedraagt leest de
+tweecijferige ballonnen (`DrawingIndexer`, alleen in een debug-build,
+Instellingen → Ontwikkelen), en `index_balloons.py` gebruikt die als voorbeeld
+om de rest te herkennen — alle ballonnen in een boek komen uit dezelfde
+CAD-export, dus de cijfers zijn identiek. Wat eruit komt wordt getoetst aan de
+posities in de onderdelentabel, dus een verkeerde lezing valt af.
 
 `faults.json`, `machines.json`, `procedures.json`, `maintenance.json` en
 `specs.json` zijn met de hand samengesteld; `procedures.json` komt uit
