@@ -80,6 +80,19 @@ class Prefs(context: Context) {
         get() = sp.getString("theme", "System")!!
         set(value) = sp.edit().putString("theme", value).apply()
 
+    /**
+     * Which language leads on a fault card. A machine set to English shows
+     * English on its display, so that is what you want to read first.
+     */
+    var meldingTaal: String
+        get() = sp.getString("melding_taal", "nl")!!
+        set(value) = sp.edit().putString("melding_taal", value).apply()
+
+    /** Open a single scan result straight away instead of listing it. */
+    var scanDirect: Boolean
+        get() = sp.getBoolean("scan_direct", false)
+        set(value) = sp.edit().putBoolean("scan_direct", value).apply()
+
     // --- Last used machine ------------------------------------------------
 
     var machine: String?

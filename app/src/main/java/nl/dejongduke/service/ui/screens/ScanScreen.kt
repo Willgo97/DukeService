@@ -78,7 +78,7 @@ import java.util.concurrent.Executors
  * plant rooms these machines live in.
  */
 @Composable
-fun ScanScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
+fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
     val context = LocalContext.current
     var granted by remember {
         mutableStateOf(
@@ -154,6 +154,8 @@ fun ScanScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
                 hits = found
                 uitFoto = false
                 melding = ""
+                // One unambiguous hit and the setting on: skip the list.
+                if (direct && found.size == 1) routeFor(found.first())?.let(onOpen)
             }
         }
 
@@ -352,4 +354,12 @@ private fun analyse(
             if (lines.isNotEmpty()) onText(lines)
         }
         .addOnCompleteListener { proxy.close() }
+}
+
+/** Where a scan result leads. */
+private fun routeFor(hit: ScanHit): Route? = when (hit) {
+    is ScanHit.Onderdeel -> Route.PartSection(hit.part.machine, hit.part.sectie)
+    is ScanHit.Storing -> Route.Fault(hit.groep.melding)
+    is ScanHit.MachineHit -> Route.Machine(hit.machine.id)
+    is ScanHit.Typeplaat -> hit.machine?.let { Route.Machine(it.id) }
 }

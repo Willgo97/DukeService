@@ -16,6 +16,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ListAlt
 import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.Search
@@ -65,6 +66,7 @@ import nl.dejongduke.service.ui.screens.ProcedureList
 import nl.dejongduke.service.ui.screens.SchemaDetail
 import nl.dejongduke.service.ui.screens.ScanScreen
 import nl.dejongduke.service.ui.screens.SearchScreen
+import nl.dejongduke.service.ui.screens.SettingsScreen
 import nl.dejongduke.service.ui.screens.SpecsScreen
 
 private fun tabIcon(tab: Tab): ImageVector = when (tab) {
@@ -103,7 +105,11 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                         }
                     }
                 },
-                actions = { ThemeSwitch(vm) },
+                actions = {
+                    IconButton(onClick = { vm.open(Route.Instellingen) }) {
+                        Icon(Icons.Filled.Settings, "Instellingen")
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                 ),
@@ -163,28 +169,6 @@ fun AppShell(vm: AppViewModel = viewModel()) {
 }
 
 @Composable
-private fun ThemeSwitch(vm: AppViewModel) {
-    var open by remember { mutableStateOf(false) }
-    val current by vm.theme.collectAsStateWithLifecycle()
-    Box {
-        IconButton(onClick = { open = true }) {
-            Icon(Icons.Filled.Brightness4, "Weergave")
-        }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-            ThemeMode.entries.forEach { mode ->
-                DropdownMenuItem(
-                    text = { Text(mode.label) },
-                    leadingIcon = {
-                        RadioButton(selected = mode == current, onClick = { vm.setTheme(mode); open = false })
-                    },
-                    onClick = { vm.setTheme(mode); open = false },
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?) {
     val query by vm.query.collectAsStateWithLifecycle()
     val results by vm.results.collectAsStateWithLifecycle()
@@ -192,6 +176,7 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
     val recent by vm.recent.collectAsStateWithLifecycle()
     val today by vm.today.collectAsStateWithLifecycle()
     val pins by vm.pins.collectAsStateWithLifecycle()
+    val taal by vm.meldingTaal.collectAsStateWithLifecycle()
 
     when (tab) {
         Tab.Zoek -> SearchScreen(
@@ -201,6 +186,7 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
             recent = recent,
             pins = pins,
             ticks = ticks,
+            taal = taal,
             onQuery = vm::setQuery,
             onCommit = vm::commitQuery,
             onClearRecent = vm::clearRecent,
@@ -208,7 +194,7 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
             onTab = vm::selectTab,
         )
 
-        Tab.Storingen -> FaultsScreen(cat, filter, vm::setFilter, vm::open)
+        Tab.Storingen -> FaultsScreen(cat, filter, taal, vm::setFilter, vm::open)
 
         Tab.Onderhoud -> MaintenanceScreen(cat, filter, vm::setFilter, ticks, today, vm::open)
 
@@ -229,7 +215,10 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
         is Route.Fault -> {
             val group = cat.faultGroup(route.key)
             if (group != null) {
-                FaultDetail(cat, group, pins.contains("fault:" + group.melding), vm::togglePin, vm::open)
+                val taal by vm.meldingTaal.collectAsStateWithLifecycle()
+                FaultDetail(
+                    cat, group, pins.contains("fault:" + group.melding), taal, vm::togglePin, vm::open,
+                )
             }
         }
 
@@ -246,7 +235,29 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
 
         Route.Servicemenu -> MenuList(cat, vm::open)
 
-        Route.Scan -> ScanScreen(cat, vm::open)
+        Route.Scan -> {
+            val direct by vm.scanDirect.collectAsStateWithLifecycle()
+            ScanScreen(cat, direct, vm::open)
+        }
+
+        Route.Instellingen -> {
+            val thema by vm.theme.collectAsStateWithLifecycle()
+            val taal by vm.meldingTaal.collectAsStateWithLifecycle()
+            val direct by vm.scanDirect.collectAsStateWithLifecycle()
+            SettingsScreen(
+                catalog = cat,
+                thema = thema,
+                onThema = vm::setTheme,
+                meldingTaal = taal,
+                onMeldingTaal = vm::setMeldingTaal,
+                standaardMachine = filter,
+                onMachine = vm::setFilter,
+                scanDirect = direct,
+                onScanDirect = vm::setScanDirect,
+                onResetTicks = vm::resetAlleTicks,
+                onOpen = vm::open,
+            )
+        }
 
         is Route.MenuItem -> {
             val item = cat.menuItem(route.nr)
@@ -302,6 +313,7 @@ private fun titleFor(catalog: Catalog?, tab: Tab, route: Route?): String = when 
     Route.Components -> "Techniek"
     Route.Servicemenu -> "Servicemenu"
     Route.Scan -> "Scannen"
+    Route.Instellingen -> "Instellingen"
     is Route.MenuItem -> "Servicemenu"
     is Route.Component -> "Techniek"
     is Route.Machine -> catalog?.machine(route.id)?.naam ?: "Machine"

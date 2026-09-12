@@ -44,6 +44,7 @@ import nl.dejongduke.service.ui.WarnBanner
 fun FaultsScreen(
     catalog: Catalog,
     filter: String?,
+    taal: String,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
@@ -88,14 +89,25 @@ fun FaultsScreen(
         }
 
         items(shown, key = { it.melding }) { group ->
-            FaultCard(catalog, group, showMachines = filter == null) { onOpen(Route.Fault(group.melding)) }
+            FaultCard(catalog, group, showMachines = filter == null, taal = taal) {
+                onOpen(Route.Fault(group.melding))
+            }
         }
         item { Spacer(Modifier.height(24.dp)) }
     }
 }
 
 @Composable
-fun FaultCard(catalog: Catalog, group: FaultGroup, showMachines: Boolean, onClick: () -> Unit) {
+fun FaultCard(
+    catalog: Catalog,
+    group: FaultGroup,
+    showMachines: Boolean,
+    taal: String = "nl",
+    onClick: () -> Unit,
+) {
+    // Which line leads depends on what the machine in front of you displays.
+    val kop = if (taal == "en") group.melding else group.eerste.nl
+    val onder = if (taal == "en") group.eerste.nl else group.melding
     Card(onClick = onClick) {
         Column {
             Row {
@@ -107,11 +119,11 @@ fun FaultCard(catalog: Catalog, group: FaultGroup, showMachines: Boolean, onClic
                         )
                 )
                 Spacer(Modifier.width(10.dp))
-                Text(group.melding, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                Text(kop, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             }
             Spacer(Modifier.height(4.dp))
             Text(
-                group.eerste.nl,
+                onder,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 18.dp),
@@ -134,9 +146,12 @@ fun FaultDetail(
     catalog: Catalog,
     group: FaultGroup,
     pinned: Boolean,
+    taal: String,
     onPin: (String) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
+    val kop = if (taal == "en") group.melding else group.eerste.nl
+    val onder = if (taal == "en") group.eerste.nl else group.melding
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -146,10 +161,10 @@ fun FaultDetail(
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Spacer(Modifier.height(4.dp))
-                Text(group.melding, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(kop, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    group.eerste.nl,
+                    onder,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

@@ -24,11 +24,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
+import nl.dejongduke.service.data.LetOp
 import nl.dejongduke.service.data.MenuItem
 import nl.dejongduke.service.ui.Card
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
+import nl.dejongduke.service.ui.WarnBanner
 
 @Composable
 fun MenuList(catalog: Catalog, onOpen: (Route) -> Unit) {
@@ -187,6 +189,27 @@ fun MenuDetail(item: MenuItem) {
                 )
             }
         }
+        if (item.punten.isNotEmpty()) {
+            item {
+                Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp)) {
+                    item.punten.forEach { punt ->
+                        Text(
+                            punt,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(vertical = 3.dp),
+                        )
+                    }
+                }
+            }
+        }
+
+        items(item.opmerkingen.size) { index ->
+            WarnBanner(
+                LetOp("let op", item.opmerkingen[index]),
+                Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+            )
+        }
+
         if (item.afbs.isNotEmpty()) {
             item { SectionHeader("Uit de handleiding", "${item.afbs.size} pagina's") }
             items(item.afbs.size) { index ->

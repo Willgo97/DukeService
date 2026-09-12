@@ -56,7 +56,30 @@ def sections():
         s["niveau"] = lvl.group(1) if lvl else ""
         s["titel"] = LEVEL.sub("", s["titel"]).strip()
         s.setdefault("pad", "")
-        s["tekst"] = text.lstrip('. ').strip()
+        body = text.lstrip('. ').strip()
+        # The manual drops NOTE blocks inside the running text; pull them out so
+        # they can be shown as what they are.
+        notes = []
+        while True:
+            m = re.search(r'\s*OPMERKING\s+', body)
+            if not m:
+                break
+            rest = body[m.end():]
+            # a note runs until the next sentence that clearly starts a new topic
+            cut = re.search(r'(?<=\.)\s+(?=[A-Z][a-z]{3,})', rest)
+            note = rest[:cut.start()] if cut else rest
+            notes.append(note.strip())
+            body = (body[:m.start()] + ' ' + (rest[cut.start():] if cut else '')).strip()
+        s["opmerkingen"] = [re.sub(r'\s+', ' ', n).strip() for n in notes if len(n) > 10]
+        # Numbered enumerations read as a list, not as one long line.
+        punten = re.findall(r'(?:(?<=\s)|^)(\d{1,2})\.\s+([^0-9]{4,120}?)(?=\s+\d{1,2}\.\s|$)', body)
+        if len(punten) >= 3:
+            s["punten"] = [f"{n}. {t.strip()}" for n, t in punten]
+            first = body.find(punten[0][0] + '.')
+            body = body[:first].strip()
+        else:
+            s["punten"] = []
+        s["tekst"] = body
         if s["nr"].startswith("7"):
             structure(s)
         s.pop("ruw", None)
@@ -176,7 +199,8 @@ def render(secs, wanted):
 def main():
     sys.path.insert(0, os.path.join(ROOT, "tools"))
     secs = [s for s in sections()
-            if len(s["tekst"]) > 60 or s["pad"] or s.get("stappen") or s.get("doel")]
+            if len(s["tekst"]) > 60 or s["pad"] or s.get("stappen") or s.get("doel")
+            or s.get("punten") or s.get("opmerkingen")]
     render(secs, pages_with_images())
     for s in secs:
         s["bron"] = BRON

@@ -19,6 +19,8 @@ class Catalog(
     val specs: List<SpecGroep>,
     val components: List<Component> = emptyList(),
     val menu: List<MenuItem> = emptyList(),
+    /** "machine|section" -> the exploded drawing that goes with it. */
+    val drawings: Map<String, String> = emptyMap(),
 ) {
     /** Faults collapsed by screen message; the list screens show these. */
     val faultGroups: List<FaultGroup> = faults
@@ -54,6 +56,8 @@ class Catalog(
     fun component(nr: String): Component? = components.firstOrNull { it.nr == nr }
 
     fun menuItem(nr: String): MenuItem? = menu.firstOrNull { it.nr == nr }
+
+    fun drawing(machine: String, sectie: String): String? = drawings["$machine|$sectie"]
 
     fun machine(id: String): Machine? = machineById[id]
 
@@ -141,6 +145,7 @@ class Catalog(
                 specs = read("specs.json") { json.decodeFromString(it) },
                 components = read("components.json") { json.decodeFromString(it) },
                 menu = read("servicemenu.json") { json.decodeFromString(it) },
+                drawings = read("drawings.json") { json.decodeFromString(it) },
             )
         }
 
@@ -197,6 +202,8 @@ data class SearchResult(
     val machines: List<Machine> = emptyList(),
     val components: List<Component> = emptyList(),
     val menu: List<MenuItem> = emptyList(),
+    /** "machine|section" -> the exploded drawing that goes with it. */
+    val drawings: Map<String, String> = emptyMap(),
 ) {
     val empty: Boolean
         get() = faults.isEmpty() && procedures.isEmpty() && parts.isEmpty() &&

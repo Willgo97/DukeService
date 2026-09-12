@@ -14,7 +14,9 @@ want in een kelder of serverruimte heb je dat toch niet.
 | 32 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken |
 | 49 servicemenu-onderwerpen | wat elke functie doet, met wachtwoordniveaus |
 | 4.602 onderdeelregels | 1.547 unieke nummers uit zes onderdelenboeken |
-| 11 machines | afmetingen, aansluitwaarden, typecodes, uitvoeringen, servicemenu |
+| 11 machines | foto, afmetingen, typecodes, uitvoeringen, welk servicemenu |
+| 89 explosietekeningen | bij 166 onderdelensecties, met de ballonnummers uit het boek |
+| Scanner | leest labels, typeplaatjes en schermmeldingen met de camera |
 
 Eén zoekveld gaat overal tegelijk doorheen: schermmeldingen, procedures,
 onderdeelnummers, componenten, servicemenu en machines.
@@ -69,6 +71,8 @@ De scripts in `tools/` lezen de PDF's uit `manuals/` en schrijven zowel `data/`
 python3 tools/parse_parts.py        # onderdelenboeken -> parts.json
 python3 tools/parse_components.py   # hoofdstuk 4-5 -> components.json + paginabeelden
 python3 tools/parse_servicemenu.py  # hoofdstuk 6-7 -> servicemenu.json + paginabeelden
+python3 tools/parse_drawings.py     # explosietekeningen -> tek/ + drawings.json
+python3 tools/parse_photos.py       # machinefoto's uit de brochurecovers
 ```
 
 `faults.json`, `machines.json`, `procedures.json`, `maintenance.json` en

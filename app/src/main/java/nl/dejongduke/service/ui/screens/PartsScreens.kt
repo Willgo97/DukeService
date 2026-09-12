@@ -120,6 +120,7 @@ fun PartsScreen(
 @Composable
 fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
     val parts = catalog.parts.filter { it.machine == machine && it.sectie == sectie }
+    val tekening = catalog.drawing(machine, sectie)
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -129,6 +130,21 @@ fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
                     Pill(catalog.machine(machine)?.naam ?: machine)
                     Pill("${parts.size} onderdelen")
                 }
+            }
+        }
+        if (tekening != null) {
+            item {
+                // The drawing the paper manual puts opposite the table: the
+                // balloon numbers are the positions in the list below.
+                AssetImage(tekening)
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    "De nummers in de tekening zijn de posities hieronder. Knijp om in te zoomen.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+                )
+                Spacer(Modifier.height(8.dp))
             }
         }
         items(parts.size) { index -> PartRow(parts[index], showSection = false) }

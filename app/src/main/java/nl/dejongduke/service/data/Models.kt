@@ -174,6 +174,8 @@ data class MenuItem(
     val nodig: List<String> = emptyList(),
     val interval: String = "",
     val stappen: List<String> = emptyList(),
+    val punten: List<String> = emptyList(),
+    val opmerkingen: List<String> = emptyList(),
 ) {
     /** Chapter 6 is the menu itself, 7 the step-by-step jobs. */
     val hoofdstuk: String get() = nr.substringBefore('.')

@@ -34,6 +34,7 @@ sealed interface Route {
     data class MenuItem(val nr: String) : Route
     data object Servicemenu : Route
     data object Scan : Route
+    data object Instellingen : Route
     data object Procedures : Route
     data object Specs : Route
     data object Bronnen : Route
@@ -80,6 +81,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _recent = MutableStateFlow(prefs.recent())
     val recent: StateFlow<List<String>> = _recent.asStateFlow()
+
+    private val _meldingTaal = MutableStateFlow(prefs.meldingTaal)
+    val meldingTaal: StateFlow<String> = _meldingTaal.asStateFlow()
+
+    private val _scanDirect = MutableStateFlow(prefs.scanDirect)
+    val scanDirect: StateFlow<Boolean> = _scanDirect.asStateFlow()
 
     private val _pins = MutableStateFlow(prefs.pins())
     val pins: StateFlow<List<String>> = _pins.asStateFlow()
@@ -157,6 +164,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun setFilter(machineId: String?) {
         _filter.value = machineId
         prefs.machine = machineId
+    }
+
+    fun setMeldingTaal(taal: String) {
+        _meldingTaal.value = taal
+        prefs.meldingTaal = taal
+    }
+
+    fun setScanDirect(aan: Boolean) {
+        _scanDirect.value = aan
+        prefs.scanDirect = aan
+    }
+
+    /** Clears today's ticks on every checklist. */
+    fun resetAlleTicks() {
+        _catalog.value?.schemas?.forEach { prefs.setTicked(it.id, _today.value, emptySet()) }
+        _ticks.value = emptyMap()
     }
 
     fun setTheme(mode: ThemeMode) {

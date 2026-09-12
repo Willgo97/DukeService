@@ -50,6 +50,7 @@ fun SearchScreen(
     recent: List<String>,
     pins: List<String>,
     ticks: Map<String, Set<Int>>,
+    taal: String,
     onQuery: (String) -> Unit,
     onCommit: () -> Unit,
     onClearRecent: () -> Unit,
@@ -108,7 +109,9 @@ fun SearchScreen(
 
             item { SectionHeader("Vaak nodig") }
             items(veelVoorkomend(catalog)) { group ->
-                FaultCard(catalog, group, showMachines = false) { onOpen(Route.Fault(group.melding)) }
+                FaultCard(catalog, group, showMachines = false, taal = taal) {
+                    onOpen(Route.Fault(group.melding))
+                }
             }
 
             catalogSummary(catalog)
@@ -123,7 +126,9 @@ fun SearchScreen(
         if (results.faults.isNotEmpty()) {
             item { SectionHeader("Storingen", "${results.faults.size}") }
             items(results.faults, key = { it.melding }) { group ->
-                FaultCard(catalog, group, showMachines = true) { openResult(Route.Fault(group.melding)) }
+                FaultCard(catalog, group, showMachines = true, taal = taal) {
+                    openResult(Route.Fault(group.melding))
+                }
             }
         }
 
