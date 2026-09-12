@@ -6,11 +6,14 @@ gewoon door.
 
 ## 1. Waar het om draait (30 sec)
 
-Open de app. Het startscherm laat zien wat erin zit: **44 storingen,
-32 componenten, 49 servicemenu-onderwerpen, 4.602 onderdeelregels.**
+Open de app. Het startscherm laat zien wat erin zit: **50 storingen,
+130 componenten, 148 servicemenu-onderwerpen, 4.602 onderdeelregels.**
 
 > "Dit is alles wat in de handleidingen en onderdelenboeken staat, doorzoekbaar
 > op de telefoon, zonder internet."
+
+Uit tien handleidingen: de CoEx, de CoEx XL, de Uni-Brewer en de Instant staan
+er allemaal in, elk met zijn eigen watersysteem en brewer.
 
 ## 2. De scanner (90 sec) — het sterkste stuk
 
@@ -61,17 +64,26 @@ lijst en de ballon licht op. Eén tik op het nummer zet het op het klembord.
 Machines → **Hoe de machine werkt** → *Schematisch diagram van het
 watersysteem*.
 
-Het complete schema met legenda, inzoombaar. 32 componenten: inlaatventiel,
+Het complete schema met legenda, inzoombaar. 130 componenten: inlaatventiel,
 drukregelaar, waterstroommeter, clixon, besturingsprint. Elk met de
-bijbehorende pagina uit de technische handleiding.
+bijbehorende pagina's uit de technische handleiding.
+
+Zet bovenin het filter op **Nio** en de lijst wordt die van de Nio: CoEx
+XL-brewer, en het verse-melksysteem dat de andere machines niet hebben. Zet hem
+op **Rosa** en je krijgt de Uni-Brewer, die door filterpapier brouwt.
 
 ## 6. Onderhoud en servicemenu (45 sec)
 
 **Onderhoud**: de checklists per brewer, afvinkbaar. Vinkjes gelden voor
 vandaag; morgen staat de lijst weer open.
 
-**Servicemenu**: wat elke functie doet, met wachtwoordniveaus. Zoek op
-`ontkalken` — 46 stappen plus de vijf originele handleidingpagina's.
+**Servicemenu**: wat elke functie doet, met wachtwoordniveaus, ook per machine
+te filteren. Zoek op `ontkalken` — 46 stappen plus de vijf originele
+handleidingpagina's.
+
+Bij **Onderhoud** staat ook *Nieuw filterpapier plaatsen* voor de Rosa, en bij
+de procedures de vijf klussen rond de **Touchless Interface** — van de software
+op twee USB-sticks zetten tot de QR-code testen met je eigen telefoon.
 
 ## 7. Machines (30 sec)
 

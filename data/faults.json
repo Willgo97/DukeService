@@ -3,7 +3,9 @@
   "melding": "Brewer not in home position",
   "nl": "Brewer niet in startpositie",
   "machines": [
-   "virtu"
+   "virtu",
+   "avy",
+   "rosa"
   ],
   "cat": "Brewer",
   "oorzaak": "De microschakelaar heeft de startpositie van de brewer niet op het vereiste moment gedetecteerd.",
@@ -18,7 +20,11 @@
    "brewer-schoonmaken"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Brewer out of position",
@@ -36,13 +42,17 @@
    "brewer-schoonmaken"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": []
  },
  {
   "melding": "Brewer out of position",
   "nl": "Brewer niet in positie",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "virtu"
   ],
   "cat": "Brewer",
   "oorzaak": "De brewer zit niet goed vergrendeld in de machine.",
@@ -54,13 +64,19 @@
    "brewer-schoonmaken-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Brewer is turning the wrong way, check the wiring",
   "nl": "Brewer draait de verkeerde kant op, controleer de bedrading",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Brewer",
   "oorzaak": "De brewermotor draait verkeerd om — vrijwel altijd een bedradingsfout na een reparatie of vervanging.",
@@ -69,13 +85,18 @@
   ],
   "monteur": "Dit is een servicemelding: laat het na door een monteur controleren.",
   "proc": [],
-  "zelf": false
+  "zelf": false,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "The brewer blocked during recipe, did not reach position",
   "nl": "Brewer geblokkeerd tijdens recept, positie niet bereikt",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Brewer",
   "oorzaak": "De brewer is tijdens het zetten vastgelopen.",
@@ -87,13 +108,18 @@
   "proc": [
    "brewer-schoonmaken-xl"
   ],
-  "zelf": true
+  "zelf": true,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Initialization failed, the brewer did not reach maximum movement",
   "nl": "Initialisatie mislukt, brewer bereikte maximale beweging niet",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Brewer",
   "oorzaak": "De brewer kon bij het opstarten zijn volledige slag niet maken.",
@@ -105,13 +131,18 @@
   "proc": [
    "brewer-schoonmaken-xl"
   ],
-  "zelf": true
+  "zelf": true,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Piston blocked, dosage too high",
   "nl": "Zuiger geblokkeerd, dosering te hoog",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Brewer",
   "oorzaak": "Te veel gemalen koffie in de brewer waardoor de zuiger vastloopt.",
@@ -123,13 +154,18 @@
   "proc": [
    "brewer-schoonmaken-xl"
   ],
-  "zelf": true
+  "zelf": true,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Error occurred during recipe cycle",
   "nl": "Fout tijdens receptcyclus",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Brewer",
   "oorzaak": "Er ging iets mis tijdens het bereiden van een drank.",
@@ -139,14 +175,20 @@
   ],
   "monteur": "Blijft het probleem, dan is het een servicemelding.",
   "proc": [],
-  "zelf": true
+  "zelf": true,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "No coffee detected in brewer",
   "nl": "Geen koffie gedetecteerd in brewer",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Brewer",
   "oorzaak": "De brewer krijgt geen gemalen koffie.",
@@ -161,13 +203,20 @@
    "molen-vrijmaken-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Wrong brewer defined in the software",
   "nl": "Verkeerde brewer ingesteld in de software",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Brewer",
   "oorzaak": "De softwareconfiguratie komt niet overeen met de gemonteerde brewer.",
@@ -176,14 +225,20 @@
   ],
   "monteur": "Dit is een servicemelding.",
   "proc": [],
-  "zelf": false
+  "zelf": false,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Grinder blocked",
   "nl": "Koffiemolen blokkeert",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Molen",
   "oorzaak": "Er is een te hoge stroom naar de koffiemolen gedetecteerd.",
@@ -196,14 +251,23 @@
    "molen-vrijmaken-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Mixer blocked",
   "nl": "Mixer geblokkeerd",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Mixer",
   "oorzaak": "Er is een te hoge stroom naar de mixer gedetecteerd.",
@@ -216,14 +280,23 @@
    "mixsysteem-reinigen"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Enough water?",
   "nl": "Voldoende water?",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "De uitgegeven drank heeft de aangepaste hoeveelheid water niet op tijd bereikt (pulsen gemeten door waterstroommeter).",
@@ -240,14 +313,23 @@
    "brewer-tablet-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "No water connected / No water in boiler",
   "nl": "Geen water aangesloten / Geen water in boiler",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "Er is langer dan 2 minuten geen water gedetecteerd.",
@@ -261,14 +343,23 @@
   "monteur": "Blijft het probleem, dan is het een servicemelding.",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Water level too low",
   "nl": "Waterniveau te laag",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "De niveausensor in de boiler heeft heen waterniveau gedetecteerd.",
@@ -282,14 +373,23 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Filling boiler",
   "nl": "Vullen boiler",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "Normale opstartmelding: de boiler loopt vol.",
@@ -303,14 +403,23 @@
   "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Replace water filter",
   "nl": "Vervang waterfilter",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "De teller heeft het aantal cycli bereikt.",
@@ -320,14 +429,23 @@
   "monteur": "Dit doet de monteur.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Water filter installed? / Water filter settings not set!",
   "nl": "Waterfilter geïnstalleerd?",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "In de servicemodus moet de juiste selectie worden gemaakt.",
@@ -337,14 +455,23 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Heating boiler",
   "nl": "Opwarmen boiler",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Temperatuur",
   "oorzaak": "Normale opstartmelding.",
@@ -356,14 +483,21 @@
   "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Wait, Heating boiler",
   "nl": "Opwarmen boiler",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "rosa"
   ],
   "cat": "Temperatuur",
   "oorzaak": "Normale opstartmelding.",
@@ -375,14 +509,23 @@
   "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "Instant",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Temperature boiler (too) high",
   "nl": "Temperatuur van de boiler te hoog",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Temperatuur",
   "oorzaak": "Een temperatuur van 10 graden hoger dan de ingestelde temperatuur is gedetecteerd.",
@@ -399,14 +542,23 @@
    "mixers-spoelen-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Temp. sensor disconnected",
   "nl": "Temp. sensor los",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Temperatuur",
   "oorzaak": "Er is een te hoge weerstand gedetecteerd op de ingang van de IO-print.",
@@ -416,14 +568,23 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Drip tray full",
   "nl": "Lekbak vol",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Afval",
   "oorzaak": "De niveausensor in de lekbak of drupbak is aangesproken.",
@@ -439,14 +600,22 @@
    "afvalemmer-reinigen-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Install drip tray",
   "nl": "Installeer lekbak",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Afval",
   "oorzaak": "Externe lekbak is niet gedetecteerd.",
@@ -460,14 +629,23 @@
    "lekbak-reinigen-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Waste bucket full / Empty waste bucket",
   "nl": "Afvalbak vol / Maak afvalbak leeg",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Afval",
   "oorzaak": "De emmer met koffiedik is vol, of de detectieschakelaar is vervuild.",
@@ -486,14 +664,22 @@
    "afvalbak-onderkast-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Empty waste bucket",
   "nl": "Maak de afvalbak leeg",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Afval",
   "oorzaak": "Het aantal cycli voor het genereren van de melding is bereikt. Afvalbak is vol.",
@@ -509,14 +695,23 @@
   ],
   "zelf": true,
   "opmerking": "Deze melding en teller worden gereset door de microschakelaar achter de afvalbak voor minstens 3 seconden te activeren (verwijder de afvalbak tenminste 3 seconden).",
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Install waste bucket",
   "nl": "Plaats afvalbak",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Afval",
   "oorzaak": "De microschakelaar achter de afvalbak detecteert de afvalbak niet.",
@@ -529,14 +724,22 @@
    "afvalemmer-reinigen-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Clean screen",
   "nl": "Reinig scherm",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Reiniging",
   "oorzaak": "Na een bepaald aantal consumpties moet het touchscreen worden gereinigd. Zie het hoofdstuk Errorinstellingen voor meer informatie.",
@@ -550,13 +753,20 @@
   ],
   "zelf": true,
   "opmerking": "Het is mogelijk om deze functie in het servicemenu uit te schakelen.",
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Cleaning Error",
   "nl": "Reinigingsfout",
   "machines": [
-   "virtu"
+   "virtu",
+   "avy"
   ],
   "cat": "Reiniging",
   "oorzaak": "De reinigingscyclus van de CoEx®-brewer is niet correct afgesloten of werd onderbroken.",
@@ -569,14 +779,20 @@
   ],
   "zelf": true,
   "opmerking": "Het is mogelijk om deze melding in het servicemenu te verwijderen.",
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx"
+  ]
  },
  {
   "melding": "Rinse brewer with tablet",
   "nl": "Spoel de brewer met tablet",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Reiniging",
   "oorzaak": "Reinigingscyclus is vereist, de tijd (ingesteld in het servicemenu) is verstreken.",
@@ -589,14 +805,22 @@
    "brewer-tablet-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Not all ingredients available",
   "nl": "Niet alle ingrediënten beschikbaar",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Ingrediënten",
   "oorzaak": "Een of meer canisters zijn leeg.",
@@ -608,7 +832,13 @@
    "canisters-vullen"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Place cup in center",
@@ -624,13 +854,18 @@
   "monteur": "",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": []
  },
  {
   "melding": "Place cup in center",
   "nl": "Plaats beker in midden",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa",
+   "virtu"
   ],
   "cat": "Beker",
   "oorzaak": "De beker moet onder de juiste tuit worden geplaatst voordat de [Start]-knop beschikbaar is.",
@@ -640,7 +875,13 @@
   "monteur": "",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Place cup right",
@@ -656,13 +897,17 @@
   "monteur": "",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": []
  },
  {
   "melding": "Place cup right",
   "nl": "Plaats beker rechts",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "rosa",
+   "virtu"
   ],
   "cat": "Beker",
   "oorzaak": "De beker moet onder de waterschenktuit worden geplaatst voordat de knop beschikbaar is.",
@@ -672,14 +917,22 @@
   "monteur": "",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Ready, take your cup",
   "nl": "Klaar, pak je beker",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "rosa"
   ],
   "cat": "Bediening",
   "oorzaak": "De bereiding is klaar. Geen storing.",
@@ -688,14 +941,22 @@
   ],
   "monteur": "",
   "proc": [],
-  "zelf": true
+  "zelf": true,
+  "brewers": [
+   "CoEx XL",
+   "Uni-Brewer",
+   "CoEx"
+  ]
  },
  {
   "melding": "Door open",
   "nl": "Deur open",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Bediening",
   "oorzaak": "De deur staat open of de deurschakelaar is niet bekrachtigd.",
@@ -709,14 +970,23 @@
    "deur-sluiten-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Insert coins",
   "nl": "Geld inwerpen",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Betaling",
   "oorzaak": "De betaling is nog niet compleet.",
@@ -726,14 +996,23 @@
   "monteur": "",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Machine Blocked",
   "nl": "Bediening geblokkeerd",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Bediening",
   "oorzaak": "De koffiemachine wordt gedurende deze tijd door de planner geblokkeerd en is niet beschikbaar voor gebruik.",
@@ -744,14 +1023,23 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Machine is temporarily out of order",
   "nl": "Machine is tijdelijk buiten gebruik",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Bediening",
   "oorzaak": "De operator heeft deze melding bewust gezet, bijvoorbeeld omdat er geen ingrediënten zijn.",
@@ -761,14 +1049,23 @@
   "monteur": "",
   "proc": [],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Startup problem",
   "nl": "Opstartprobleem",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Bediening",
   "oorzaak": "De hoeveelheid pulses voor de waterstroommeter tijdens het opstarten is niet op tijd bereikt.",
@@ -783,13 +1080,21 @@
    "inschakelen-xl"
   ],
   "zelf": true,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "General error",
   "nl": "Algemene fout",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Bediening",
   "oorzaak": "De machine is nog bezig.",
@@ -798,14 +1103,20 @@
   ],
   "monteur": "Staat de melding er na 10 minuten nog: servicemelding.",
   "proc": [],
-  "zelf": true
+  "zelf": true,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Communication error",
   "nl": "Communicatiefout",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Besturing",
   "oorzaak": "Communicatie tussen besturingsprint en IO-print is niet correct.",
@@ -816,14 +1127,23 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Please load configuration",
   "nl": "Laad de configuratie",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Besturing",
   "oorzaak": "De configuratie is niet gevonden.",
@@ -833,14 +1153,23 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Please load the User Interface",
   "nl": "Laad de gebruikersinterface",
   "machines": [
    "virtu",
-   "lua"
+   "lua",
+   "avy",
+   "nio",
+   "rosa"
   ],
   "cat": "Besturing",
   "oorzaak": "De bestanden van de Gebruikersinterface komen niet overeen met deze configuratie of het bestand is corrupt / ontbreekt.",
@@ -850,13 +1179,21 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Instant",
+   "Uni-Brewer"
+  ]
  },
  {
   "melding": "Recipe error, contact tech. support",
   "nl": "Receptfout, neem contact op met tech. support",
   "machines": [
-   "lua"
+   "lua",
+   "avy",
+   "nio"
   ],
   "cat": "Besturing",
   "oorzaak": "Er zit een fout in het receptenbestand.",
@@ -865,14 +1202,18 @@
   ],
   "monteur": "Dit is een servicemelding.",
   "proc": [],
-  "zelf": false
+  "zelf": false,
+  "brewers": [
+   "CoEx XL"
+  ]
  },
  {
   "melding": "Open boiler leaking, inlet closed",
   "nl": "Open boiler lekt, inlaat gesloten",
   "machines": [
    "avy",
-   "lua"
+   "lua",
+   "rosa"
   ],
   "cat": "Water",
   "oorzaak": "Er is een lek gedetecteerd.",
@@ -883,6 +1224,143 @@
   "monteur": "Dit is een servicemelding.",
   "proc": [],
   "zelf": false,
-  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)"
+  "bron": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
+  "brewers": [
+   "CoEx",
+   "Instant",
+   "Uni-Brewer"
+  ]
+ },
+ {
+  "melding": "Open boiler leaking, inlet valve closed",
+  "nl": "Open boiler leaking, inlet valve closed",
+  "machines": [
+   "avy",
+   "nio",
+   "rosa"
+  ],
+  "brewers": [
+   "CoEx",
+   "CoEx XL",
+   "Uni-Brewer"
+  ],
+  "cat": "Water",
+  "oorzaak": "A leak is detected.",
+  "oplossing": [
+   "Close the water tap.",
+   "If open boiler not detected full after 3 minutes of filling:",
+   "Check for leaks to or from the open boiler, including drain tube, inlet fill tube above the boiler and outlet valves.",
+   "Check ground cable that connects door to cabinet. Ensure that both ends are connected and that the screw on the cabinet connector is tight.",
+   "Inspect open boiler level sensor (wiring/connector, scale buildup/corrosion).",
+   "Replace open boiler level sensor.",
+   "Check inlet water supply and/or external filters."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "opmerking": "",
+  "bron": "TM Avy CoEx Small EN V1.1 (5DTCNT20M)"
+ },
+ {
+  "melding": "Lekbak vol / Afvalbak vol!!!",
+  "nl": "Lekbak vol / Afvalbak vol!!!",
+  "machines": [
+   "lua"
+  ],
+  "brewers": [
+   "Instant"
+  ],
+  "cat": "Afval",
+  "oorzaak": "",
+  "oplossing": [
+   "Reinig de lekbak aan de voorkant van de machine.",
+   "Zorg ervoor dat de waterniveausensoren in de lekbak droog zijn. Zie het gedeelte Dagelijks onderhoud."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "opmerking": "",
+  "bron": "TM Lua Instant Small NL V1.0 (5DTINS10M)"
+ },
+ {
+  "melding": "Clean the milk system",
+  "nl": "Clean the milk system",
+  "machines": [
+   "nio"
+  ],
+  "brewers": [
+   "CoEx XL"
+  ],
+  "cat": "Reiniging",
+  "oorzaak": "The last time the milk system was cleaned was at least 20 hours ago.",
+  "oplossing": [
+   "Clean the fresh milk system. The cleaning cycle resets the timer counter."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "opmerking": "",
+  "bron": "TM Nio CoEx XL EN V1.1.1 (5DTXKA20M)"
+ },
+ {
+  "melding": "Place coffee funnel in the machine",
+  "nl": "Place coffee funnel in the machine",
+  "machines": [
+   "nio"
+  ],
+  "brewers": [
+   "CoEx XL"
+  ],
+  "cat": "Bediening",
+  "oorzaak": "The funnel magnet is not detected by the switch.",
+  "oplossing": [
+   "Place the coffee funnel.",
+   "Check the funnel switch / check the wiring."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "opmerking": "",
+  "bron": "TM Nio CoEx XL EN V1.1.1 (5DTXKA20M)"
+ },
+ {
+  "melding": "Place cup left",
+  "nl": "Place cup left",
+  "machines": [
+   "nio"
+  ],
+  "brewers": [
+   "CoEx XL"
+  ],
+  "cat": "Water",
+  "oorzaak": "Cup needs to be placed under the water dispensing nozzle before the [Start] button is available.",
+  "oplossing": [
+   "If cup is placed in the correct position clean the cup sensor."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "opmerking": "",
+  "bron": "TM Nio CoEx XL EN V1.1.1 (5DTXKA20M)"
+ },
+ {
+  "melding": "Install new filter paper",
+  "nl": "Install new filter paper",
+  "machines": [
+   "rosa"
+  ],
+  "brewers": [
+   "Uni-Brewer"
+  ],
+  "cat": "Water",
+  "oorzaak": "Filter paper roll is empty.",
+  "oplossing": [
+   "Place new filter paper."
+  ],
+  "monteur": "",
+  "proc": [],
+  "zelf": true,
+  "opmerking": "",
+  "bron": "TM Rosa Filterfresh EN V1.1 (5DTFNV20M)"
  }
 ]

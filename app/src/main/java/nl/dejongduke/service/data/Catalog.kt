@@ -55,9 +55,9 @@ class Catalog(
 
     fun faultGroup(melding: String): FaultGroup? = groupByMessage[melding]
 
-    fun component(nr: String): Component? = components.firstOrNull { it.nr == nr }
+    fun component(id: String): Component? = components.firstOrNull { it.id == id }
 
-    fun menuItem(nr: String): MenuItem? = menu.firstOrNull { it.nr == nr }
+    fun menuItem(id: String): MenuItem? = menu.firstOrNull { it.id == id }
 
     fun drawing(machine: String, sectie: String): String? = drawings["$machine|$sectie"]
 

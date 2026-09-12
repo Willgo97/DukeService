@@ -1,156 +1,706 @@
 [
  {
-  "id": "coex-dag", "brewer": "CoEx", "interval": "dag", "titel": "Dagelijks onderhoud",
-  "machines": ["virtu"],
+  "id": "coex-dag",
+  "brewer": "CoEx",
+  "interval": "dag",
+  "titel": "Dagelijks onderhoud",
+  "machines": [
+   "virtu"
+  ],
   "let": "Sla je onderhoud over, dan gaat de drankkwaliteit achteruit en gaat de machine storen. Reinig aan het eind van de dag, en voordat de machine langer uit gaat.",
   "taken": [
-   {"t": "Deur van de machine openen", "p": "deur-openen"},
-   {"t": "Mixers en brewer doorspoelen", "p": "mixers-spoelen"},
-   {"t": "Afvalemmer reinigen", "p": "afvalemmer-reinigen"},
-   {"t": "Lekbak reinigen", "p": "lekbak-reinigen"},
-   {"t": "Bekerstandaard in de deur reinigen", "p": "bekerstandaard-reinigen"},
-   {"t": "Afvalbak in de onderkast reinigen", "p": "afvalbak-onderkast"},
-   {"t": "Bekerdispenser vullen (optie)", "p": "bekerdispenser-vullen"},
-   {"t": "Ingrediëntcanisters vullen", "p": "canisters-vullen"},
-   {"t": "Canisterniveaus invoeren (optie)", "p": "niveaus-invoeren"},
-   {"t": "Deur sluiten", "p": "deur-sluiten"},
-   {"t": "Buitenkant reinigen", "p": "buitenkant-reinigen"},
-   {"t": "Touchscreen reinigen (optie)", "p": "touchscreen-reinigen"},
-   {"t": "Testdrank tappen en werking controleren", "p": ""}
+   {
+    "t": "Deur van de machine openen",
+    "p": "deur-openen"
+   },
+   {
+    "t": "Mixers en brewer doorspoelen",
+    "p": "mixers-spoelen"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen"
+   },
+   {
+    "t": "Bekerstandaard in de deur reinigen",
+    "p": "bekerstandaard-reinigen"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast"
+   },
+   {
+    "t": "Bekerdispenser vullen (optie)",
+    "p": "bekerdispenser-vullen"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen"
+   },
+   {
+    "t": "Canisterniveaus invoeren (optie)",
+    "p": "niveaus-invoeren"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten"
+   },
+   {
+    "t": "Buitenkant reinigen",
+    "p": "buitenkant-reinigen"
+   },
+   {
+    "t": "Touchscreen reinigen (optie)",
+    "p": "touchscreen-reinigen"
+   },
+   {
+    "t": "Testdrank tappen en werking controleren",
+    "p": ""
+   }
   ]
  },
  {
-  "id": "coex-week", "brewer": "CoEx", "interval": "week", "titel": "Wekelijks onderhoud",
-  "machines": ["virtu"],
+  "id": "coex-week",
+  "brewer": "CoEx",
+  "interval": "week",
+  "titel": "Wekelijks onderhoud",
+  "machines": [
+   "virtu"
+  ],
   "let": "Tapt de machine meer dan 250 koffiedranken per dag, reinig de brewer dan om de dag met een tablet.",
   "taken": [
-   {"t": "Deur van de machine openen", "p": "deur-openen"},
-   {"t": "Mixsysteem reinigen", "p": "mixsysteem-reinigen"},
-   {"t": "Theebrewer reinigen (optie)", "p": "theebrewer-reinigen"},
-   {"t": "Brewer uitnemen en reinigen", "p": "brewer-schoonmaken"},
-   {"t": "Brewer reinigen met tablet", "p": "brewer-tablet"},
-   {"t": "Afvalemmer reinigen", "p": "afvalemmer-reinigen"},
-   {"t": "Lekbak reinigen", "p": "lekbak-reinigen"},
-   {"t": "Bekerstandaard in de deur reinigen", "p": "bekerstandaard-reinigen"},
-   {"t": "Afvalbak in de onderkast reinigen", "p": "afvalbak-onderkast"},
-   {"t": "Koudwateruitloop reinigen (optie)", "p": "koudwater-uitloop"},
-   {"t": "Bekerdispenser vullen (optie)", "p": "bekerdispenser-vullen"},
-   {"t": "Ingrediëntcanisters vullen", "p": "canisters-vullen"},
-   {"t": "Canisterniveaus invoeren (optie)", "p": "niveaus-invoeren"},
-   {"t": "Deur sluiten", "p": "deur-sluiten"},
-   {"t": "Buitenkant reinigen", "p": "buitenkant-reinigen"},
-   {"t": "Touchscreen reinigen (optie)", "p": "touchscreen-reinigen"},
-   {"t": "Testdrank tappen en werking controleren", "p": ""}
+   {
+    "t": "Deur van de machine openen",
+    "p": "deur-openen"
+   },
+   {
+    "t": "Mixsysteem reinigen",
+    "p": "mixsysteem-reinigen"
+   },
+   {
+    "t": "Theebrewer reinigen (optie)",
+    "p": "theebrewer-reinigen"
+   },
+   {
+    "t": "Brewer uitnemen en reinigen",
+    "p": "brewer-schoonmaken"
+   },
+   {
+    "t": "Brewer reinigen met tablet",
+    "p": "brewer-tablet"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen"
+   },
+   {
+    "t": "Bekerstandaard in de deur reinigen",
+    "p": "bekerstandaard-reinigen"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast"
+   },
+   {
+    "t": "Koudwateruitloop reinigen (optie)",
+    "p": "koudwater-uitloop"
+   },
+   {
+    "t": "Bekerdispenser vullen (optie)",
+    "p": "bekerdispenser-vullen"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen"
+   },
+   {
+    "t": "Canisterniveaus invoeren (optie)",
+    "p": "niveaus-invoeren"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten"
+   },
+   {
+    "t": "Buitenkant reinigen",
+    "p": "buitenkant-reinigen"
+   },
+   {
+    "t": "Touchscreen reinigen (optie)",
+    "p": "touchscreen-reinigen"
+   },
+   {
+    "t": "Testdrank tappen en werking controleren",
+    "p": ""
+   }
   ]
  },
  {
-  "id": "coex-maand", "brewer": "CoEx", "interval": "maand", "titel": "Maandelijks onderhoud",
-  "machines": ["virtu"],
+  "id": "coex-maand",
+  "brewer": "CoEx",
+  "interval": "maand",
+  "titel": "Maandelijks onderhoud",
+  "machines": [
+   "virtu"
+  ],
   "let": "Bovenop het wekelijks onderhoud komen de canisterreiniging en de diepreiniging van de koudwateruitloop erbij.",
   "taken": [
-   {"t": "Deur van de machine openen", "p": "deur-openen"},
-   {"t": "Mixsysteem reinigen", "p": "mixsysteem-reinigen"},
-   {"t": "Theebrewer reinigen (optie)", "p": "theebrewer-reinigen"},
-   {"t": "Brewer uitnemen en reinigen", "p": "brewer-schoonmaken"},
-   {"t": "Brewer reinigen met tablet", "p": "brewer-tablet"},
-   {"t": "Afvalemmer reinigen", "p": "afvalemmer-reinigen"},
-   {"t": "Lekbak reinigen", "p": "lekbak-reinigen"},
-   {"t": "Bekerstandaard in de deur reinigen", "p": "bekerstandaard-reinigen"},
-   {"t": "Afvalbak in de onderkast reinigen", "p": "afvalbak-onderkast"},
-   {"t": "Koudwateruitloop diepreinigen (optie)", "p": "koudwater-diepreiniging"},
-   {"t": "Bekerdispenser vullen (optie)", "p": "bekerdispenser-vullen"},
-   {"t": "Canisters reinigen", "p": "canisters-reinigen"},
-   {"t": "Ingrediëntcanisters vullen", "p": "canisters-vullen"},
-   {"t": "Canisterniveaus invoeren (optie)", "p": "niveaus-invoeren"},
-   {"t": "Deur sluiten", "p": "deur-sluiten"},
-   {"t": "Buitenkant reinigen", "p": "buitenkant-reinigen"},
-   {"t": "Touchscreen reinigen (optie)", "p": "touchscreen-reinigen"},
-   {"t": "Testdrank tappen en werking controleren", "p": ""}
+   {
+    "t": "Deur van de machine openen",
+    "p": "deur-openen"
+   },
+   {
+    "t": "Mixsysteem reinigen",
+    "p": "mixsysteem-reinigen"
+   },
+   {
+    "t": "Theebrewer reinigen (optie)",
+    "p": "theebrewer-reinigen"
+   },
+   {
+    "t": "Brewer uitnemen en reinigen",
+    "p": "brewer-schoonmaken"
+   },
+   {
+    "t": "Brewer reinigen met tablet",
+    "p": "brewer-tablet"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen"
+   },
+   {
+    "t": "Bekerstandaard in de deur reinigen",
+    "p": "bekerstandaard-reinigen"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast"
+   },
+   {
+    "t": "Koudwateruitloop diepreinigen (optie)",
+    "p": "koudwater-diepreiniging"
+   },
+   {
+    "t": "Bekerdispenser vullen (optie)",
+    "p": "bekerdispenser-vullen"
+   },
+   {
+    "t": "Canisters reinigen",
+    "p": "canisters-reinigen"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen"
+   },
+   {
+    "t": "Canisterniveaus invoeren (optie)",
+    "p": "niveaus-invoeren"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten"
+   },
+   {
+    "t": "Buitenkant reinigen",
+    "p": "buitenkant-reinigen"
+   },
+   {
+    "t": "Touchscreen reinigen (optie)",
+    "p": "touchscreen-reinigen"
+   },
+   {
+    "t": "Testdrank tappen en werking controleren",
+    "p": ""
+   }
   ]
  },
  {
-  "id": "coex-halfjaar", "brewer": "CoEx", "interval": "halfjaar", "titel": "Halfjaarlijks (koudwatersysteem)",
-  "machines": ["virtu"],
+  "id": "coex-halfjaar",
+  "brewer": "CoEx",
+  "interval": "halfjaar",
+  "titel": "Halfjaarlijks (koudwatersysteem)",
+  "machines": [
+   "virtu"
+  ],
   "let": "Deze twee stappen mag alleen een gecertificeerde dealer uitvoeren; ze staan niet in de gebruikershandleiding beschreven.",
   "taken": [
-   {"t": "Algemene reiniging koudwatersysteem", "p": ""},
-   {"t": "Sanitatie koudwatersysteem", "p": ""}
+   {
+    "t": "Algemene reiniging koudwatersysteem",
+    "p": ""
+   },
+   {
+    "t": "Sanitatie koudwatersysteem",
+    "p": ""
+   }
   ]
  },
-
  {
-  "id": "coexxl-dag", "brewer": "CoEx XL", "interval": "dag", "titel": "Dagelijks onderhoud",
-  "machines": ["lua"],
+  "id": "coexxl-dag",
+  "brewer": "CoEx XL",
+  "interval": "dag",
+  "titel": "Dagelijks onderhoud",
+  "machines": [
+   "lua",
+   "avy"
+  ],
   "let": "Sla je onderhoud over, dan gaat de drankkwaliteit achteruit en gaat de machine storen. Reinig aan het eind van de dag.",
   "taken": [
-   {"t": "Deur van de machine openen", "p": "deur-openen"},
-   {"t": "Mixers en brewer doorspoelen", "p": "mixers-spoelen-xl"},
-   {"t": "Afvalemmer reinigen", "p": "afvalemmer-reinigen-xl"},
-   {"t": "Lekbak reinigen", "p": "lekbak-reinigen-xl"},
-   {"t": "Bekerstandaard in de deur reinigen", "p": "bekerstandaard-reinigen-xl"},
-   {"t": "Afvalbak in de onderkast reinigen", "p": "afvalbak-onderkast-xl"},
-   {"t": "Ingrediëntcanisters vullen", "p": "canisters-vullen"},
-   {"t": "Canisterniveaus invoeren (optie)", "p": "niveaus-invoeren-xl"},
-   {"t": "Deur sluiten", "p": "deur-sluiten-xl"},
-   {"t": "Buitenkant reinigen", "p": "buitenkant-reinigen"},
-   {"t": "Touchscreen reinigen (optie)", "p": "touchscreen-reinigen-xl"},
-   {"t": "Testdrank tappen en werking controleren", "p": ""}
+   {
+    "t": "Deur van de machine openen",
+    "p": "deur-openen"
+   },
+   {
+    "t": "Mixers en brewer doorspoelen",
+    "p": "mixers-spoelen-xl"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen-xl"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen-xl"
+   },
+   {
+    "t": "Bekerstandaard in de deur reinigen",
+    "p": "bekerstandaard-reinigen-xl"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast-xl"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen"
+   },
+   {
+    "t": "Canisterniveaus invoeren (optie)",
+    "p": "niveaus-invoeren-xl"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten-xl"
+   },
+   {
+    "t": "Buitenkant reinigen",
+    "p": "buitenkant-reinigen"
+   },
+   {
+    "t": "Touchscreen reinigen (optie)",
+    "p": "touchscreen-reinigen-xl"
+   },
+   {
+    "t": "Testdrank tappen en werking controleren",
+    "p": ""
+   }
   ]
  },
  {
-  "id": "coexxl-week", "brewer": "CoEx XL", "interval": "week", "titel": "Wekelijks onderhoud",
-  "machines": ["lua"],
+  "id": "coexxl-week",
+  "brewer": "CoEx XL",
+  "interval": "week",
+  "titel": "Wekelijks onderhoud",
+  "machines": [
+   "lua",
+   "avy"
+  ],
   "let": "Tapt de machine meer dan 250 koffiedranken per dag, reinig de brewer dan om de dag met een tablet.",
   "taken": [
-   {"t": "Deur van de machine openen", "p": "deur-openen"},
-   {"t": "Mixsysteem reinigen", "p": "mixsysteem-reinigen"},
-   {"t": "Theebrewer reinigen (optie)", "p": "theebrewer-reinigen"},
-   {"t": "Brewer uitnemen en reinigen", "p": "brewer-schoonmaken-xl"},
-   {"t": "Brewer reinigen met tablet", "p": "brewer-tablet-xl"},
-   {"t": "Afvalemmer reinigen", "p": "afvalemmer-reinigen-xl"},
-   {"t": "Lekbak reinigen", "p": "lekbak-reinigen-xl"},
-   {"t": "Bekerstandaard in de deur reinigen", "p": "bekerstandaard-reinigen-xl"},
-   {"t": "Afvalbak in de onderkast reinigen", "p": "afvalbak-onderkast-xl"},
-   {"t": "Koudwateruitloop reinigen (optie)", "p": "koudwater-uitloop"},
-   {"t": "Ingrediëntcanisters vullen", "p": "canisters-vullen"},
-   {"t": "Canisterniveaus invoeren (optie)", "p": "niveaus-invoeren-xl"},
-   {"t": "Deur sluiten", "p": "deur-sluiten-xl"},
-   {"t": "Buitenkant reinigen", "p": "buitenkant-reinigen"},
-   {"t": "Touchscreen reinigen (optie)", "p": "touchscreen-reinigen-xl"},
-   {"t": "Testdrank tappen en werking controleren", "p": ""}
+   {
+    "t": "Deur van de machine openen",
+    "p": "deur-openen"
+   },
+   {
+    "t": "Mixsysteem reinigen",
+    "p": "mixsysteem-reinigen"
+   },
+   {
+    "t": "Theebrewer reinigen (optie)",
+    "p": "theebrewer-reinigen"
+   },
+   {
+    "t": "Brewer uitnemen en reinigen",
+    "p": "brewer-schoonmaken-xl"
+   },
+   {
+    "t": "Brewer reinigen met tablet",
+    "p": "brewer-tablet-xl"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen-xl"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen-xl"
+   },
+   {
+    "t": "Bekerstandaard in de deur reinigen",
+    "p": "bekerstandaard-reinigen-xl"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast-xl"
+   },
+   {
+    "t": "Koudwateruitloop reinigen (optie)",
+    "p": "koudwater-uitloop"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen"
+   },
+   {
+    "t": "Canisterniveaus invoeren (optie)",
+    "p": "niveaus-invoeren-xl"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten-xl"
+   },
+   {
+    "t": "Buitenkant reinigen",
+    "p": "buitenkant-reinigen"
+   },
+   {
+    "t": "Touchscreen reinigen (optie)",
+    "p": "touchscreen-reinigen-xl"
+   },
+   {
+    "t": "Testdrank tappen en werking controleren",
+    "p": ""
+   }
   ]
  },
  {
-  "id": "coexxl-maand", "brewer": "CoEx XL", "interval": "maand", "titel": "Maandelijks onderhoud",
-  "machines": ["lua"],
+  "id": "coexxl-maand",
+  "brewer": "CoEx XL",
+  "interval": "maand",
+  "titel": "Maandelijks onderhoud",
+  "machines": [
+   "lua",
+   "avy"
+  ],
   "let": "Bovenop het wekelijks onderhoud komen de canisterreiniging en de diepreiniging van de koudwateruitloop erbij.",
   "taken": [
-   {"t": "Deur van de machine openen", "p": "deur-openen"},
-   {"t": "Mixsysteem reinigen", "p": "mixsysteem-reinigen"},
-   {"t": "Theebrewer reinigen (optie)", "p": "theebrewer-reinigen"},
-   {"t": "Brewer uitnemen en reinigen", "p": "brewer-schoonmaken-xl"},
-   {"t": "Brewer reinigen met tablet", "p": "brewer-tablet-xl"},
-   {"t": "Afvalemmer reinigen", "p": "afvalemmer-reinigen-xl"},
-   {"t": "Lekbak reinigen", "p": "lekbak-reinigen-xl"},
-   {"t": "Bekerstandaard in de deur reinigen", "p": "bekerstandaard-reinigen-xl"},
-   {"t": "Afvalbak in de onderkast reinigen", "p": "afvalbak-onderkast-xl"},
-   {"t": "Koudwateruitloop diepreinigen (optie)", "p": "koudwater-diepreiniging"},
-   {"t": "Canisters reinigen", "p": "canisters-reinigen"},
-   {"t": "Ingrediëntcanisters vullen", "p": "canisters-vullen"},
-   {"t": "Canisterniveaus invoeren (optie)", "p": "niveaus-invoeren-xl"},
-   {"t": "Deur sluiten", "p": "deur-sluiten-xl"},
-   {"t": "Buitenkant reinigen", "p": "buitenkant-reinigen"},
-   {"t": "Touchscreen reinigen (optie)", "p": "touchscreen-reinigen-xl"},
-   {"t": "Testdrank tappen en werking controleren", "p": ""}
+   {
+    "t": "Deur van de machine openen",
+    "p": "deur-openen"
+   },
+   {
+    "t": "Mixsysteem reinigen",
+    "p": "mixsysteem-reinigen"
+   },
+   {
+    "t": "Theebrewer reinigen (optie)",
+    "p": "theebrewer-reinigen"
+   },
+   {
+    "t": "Brewer uitnemen en reinigen",
+    "p": "brewer-schoonmaken-xl"
+   },
+   {
+    "t": "Brewer reinigen met tablet",
+    "p": "brewer-tablet-xl"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen-xl"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen-xl"
+   },
+   {
+    "t": "Bekerstandaard in de deur reinigen",
+    "p": "bekerstandaard-reinigen-xl"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast-xl"
+   },
+   {
+    "t": "Koudwateruitloop diepreinigen (optie)",
+    "p": "koudwater-diepreiniging"
+   },
+   {
+    "t": "Canisters reinigen",
+    "p": "canisters-reinigen"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen"
+   },
+   {
+    "t": "Canisterniveaus invoeren (optie)",
+    "p": "niveaus-invoeren-xl"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten-xl"
+   },
+   {
+    "t": "Buitenkant reinigen",
+    "p": "buitenkant-reinigen"
+   },
+   {
+    "t": "Touchscreen reinigen (optie)",
+    "p": "touchscreen-reinigen-xl"
+   },
+   {
+    "t": "Testdrank tappen en werking controleren",
+    "p": ""
+   }
   ]
  },
  {
-  "id": "coexxl-halfjaar", "brewer": "CoEx XL", "interval": "halfjaar", "titel": "Halfjaarlijks (koudwatersysteem)",
-  "machines": ["lua"],
+  "id": "coexxl-halfjaar",
+  "brewer": "CoEx XL",
+  "interval": "halfjaar",
+  "titel": "Halfjaarlijks (koudwatersysteem)",
+  "machines": [
+   "lua",
+   "avy"
+  ],
   "let": "Deze twee stappen mag alleen een gecertificeerde dealer uitvoeren.",
   "taken": [
-   {"t": "Algemene reiniging koudwatersysteem", "p": ""},
-   {"t": "Sanitatie koudwatersysteem", "p": ""}
+   {
+    "t": "Algemene reiniging koudwatersysteem",
+    "p": ""
+   },
+   {
+    "t": "Sanitatie koudwatersysteem",
+    "p": ""
+   }
+  ]
+ },
+ {
+  "id": "unibrewer-dag",
+  "brewer": "Uni-Brewer",
+  "interval": "dag",
+  "titel": "Dagelijks onderhoud",
+  "machines": [
+   "rosa"
+  ],
+  "let": "",
+  "taken": [
+   {
+    "t": "Deur openen",
+    "p": "deur-openen-ff"
+   },
+   {
+    "t": "Mixers en brewer doorspoelen",
+    "p": "mixers-spoelen-ff"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen-ff"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen-ff"
+   },
+   {
+    "t": "Bekerstandaard reinigen",
+    "p": "bekerstandaard-reinigen-ff"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast-ff"
+   },
+   {
+    "t": "Nieuw filterpapier plaatsen",
+    "p": "filterpapier-ff"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen-ff"
+   },
+   {
+    "t": "Canisterniveaus invoeren",
+    "p": "niveaus-invoeren-ff"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten-ff"
+   },
+   {
+    "t": "Buitenkant van de machine reinigen",
+    "p": "buitenkant-reinigen-ff"
+   },
+   {
+    "t": "Touchscreen reinigen",
+    "p": "touchscreen-reinigen-ff"
+   },
+   {
+    "t": "Controleer de werking met een testdrank",
+    "p": ""
+   }
+  ]
+ },
+ {
+  "id": "unibrewer-week",
+  "brewer": "Uni-Brewer",
+  "interval": "week",
+  "titel": "Wekelijks onderhoud",
+  "machines": [
+   "rosa"
+  ],
+  "let": "",
+  "taken": [
+   {
+    "t": "Deur openen",
+    "p": "deur-openen-ff"
+   },
+   {
+    "t": "Mixsysteem reinigen",
+    "p": "mixsysteem-reinigen-ff"
+   },
+   {
+    "t": "Brewer uitnemen en reinigen",
+    "p": "brewer-schoonmaken-ff"
+   },
+   {
+    "t": "Brewer reinigen met reinigingstablet",
+    "p": "brewer-tablet-ff"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen-ff"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen-ff"
+   },
+   {
+    "t": "Bekerstandaard reinigen",
+    "p": "bekerstandaard-reinigen-ff"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast-ff"
+   },
+   {
+    "t": "Koudwateruitloop reinigen",
+    "p": "koudwater-uitloop-ff"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen-ff"
+   },
+   {
+    "t": "Canisterniveaus invoeren",
+    "p": "niveaus-invoeren-ff"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten-ff"
+   },
+   {
+    "t": "Buitenkant van de machine reinigen",
+    "p": "buitenkant-reinigen-ff"
+   },
+   {
+    "t": "Touchscreen reinigen",
+    "p": "touchscreen-reinigen-ff"
+   },
+   {
+    "t": "Controleer de werking met een testdrank",
+    "p": ""
+   }
+  ]
+ },
+ {
+  "id": "unibrewer-maand",
+  "brewer": "Uni-Brewer",
+  "interval": "maand",
+  "titel": "Maandelijks onderhoud",
+  "machines": [
+   "rosa"
+  ],
+  "let": "",
+  "taken": [
+   {
+    "t": "Deur openen",
+    "p": "deur-openen-ff"
+   },
+   {
+    "t": "Mixsysteem reinigen",
+    "p": "mixsysteem-reinigen-ff"
+   },
+   {
+    "t": "Brewer uitnemen en reinigen",
+    "p": "brewer-schoonmaken-ff"
+   },
+   {
+    "t": "Brewer reinigen met reinigingstablet",
+    "p": "brewer-tablet-ff"
+   },
+   {
+    "t": "Afvalemmer reinigen",
+    "p": "afvalemmer-reinigen-ff"
+   },
+   {
+    "t": "Lekbak reinigen",
+    "p": "lekbak-reinigen-ff"
+   },
+   {
+    "t": "Bekerstandaard reinigen",
+    "p": "bekerstandaard-reinigen-ff"
+   },
+   {
+    "t": "Afvalbak in de onderkast reinigen",
+    "p": "afvalbak-onderkast-ff"
+   },
+   {
+    "t": "Koudwateruitloop diepreinigen",
+    "p": "koudwater-diepreiniging-ff"
+   },
+   {
+    "t": "Nieuw filterpapier plaatsen",
+    "p": "filterpapier-ff"
+   },
+   {
+    "t": "Canisters reinigen",
+    "p": "canisters-reinigen-ff"
+   },
+   {
+    "t": "Ingrediëntcanisters vullen",
+    "p": "canisters-vullen-ff"
+   },
+   {
+    "t": "Canisterniveaus invoeren",
+    "p": "niveaus-invoeren-ff"
+   },
+   {
+    "t": "Deur sluiten",
+    "p": "deur-sluiten-ff"
+   },
+   {
+    "t": "Buitenkant van de machine reinigen",
+    "p": "buitenkant-reinigen-ff"
+   },
+   {
+    "t": "Touchscreen reinigen",
+    "p": "touchscreen-reinigen-ff"
+   },
+   {
+    "t": "Controleer de werking met een testdrank",
+    "p": ""
+   }
   ]
  }
 ]

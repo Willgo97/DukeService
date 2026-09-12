@@ -2,6 +2,8 @@ package nl.dejongduke.service.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -141,6 +143,7 @@ fun FaultCard(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FaultDetail(
     catalog: Catalog,
@@ -169,9 +172,13 @@ fun FaultDetail(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(12.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
                     Pill(group.eerste.cat)
                     Pill(catalog.machineNames(group.machines))
+                    group.varianten.flatMap { it.brewers }.distinct().forEach { Pill(it) }
                 }
             }
         }

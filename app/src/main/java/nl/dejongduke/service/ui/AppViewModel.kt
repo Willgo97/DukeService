@@ -29,9 +29,9 @@ sealed interface Route {
     data class Machine(val id: String) : Route
     data class Schema(val id: String) : Route
     data class PartSection(val machine: String, val sectie: String) : Route
-    data class Component(val nr: String) : Route
+    data class Component(val id: String) : Route
     data object Components : Route
-    data class MenuItem(val nr: String) : Route
+    data class MenuItem(val id: String) : Route
     data object Servicemenu : Route
     data object Scan : Route
     data object Instellingen : Route

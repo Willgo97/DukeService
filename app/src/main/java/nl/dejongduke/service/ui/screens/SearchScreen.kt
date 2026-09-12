@@ -159,7 +159,7 @@ fun SearchScreen(
         if (results.components.isNotEmpty()) {
             item { SectionHeader("Techniek", "${results.components.size}") }
             items(results.components, key = { it.nr }) { c ->
-                Card(onClick = { openResult(Route.Component(c.nr)) }) {
+                Card(onClick = { openResult(Route.Component(c.id)) }) {
                     Column {
                         Text(c.titel, style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
@@ -177,7 +177,7 @@ fun SearchScreen(
         if (results.menu.isNotEmpty()) {
             item { SectionHeader("Servicemenu", "${results.menu.size}") }
             items(results.menu, key = { it.nr }) { m ->
-                Card(onClick = { openResult(Route.MenuItem(m.nr)) }) {
+                Card(onClick = { openResult(Route.MenuItem(m.id)) }) {
                     Column {
                         Text(m.titel, style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))

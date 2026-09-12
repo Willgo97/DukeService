@@ -44,7 +44,8 @@
    {
     "t": "Na een paar minuten verdwijnt 'Heating boilers' en is de machine klaar voor gebruik."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "uitschakelen",
@@ -74,7 +75,8 @@
      "De exacte plek staat op de binnenaanzicht-tekening."
     ]
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "deur-openen",
@@ -107,7 +109,8 @@
      "Het servicemenu verschijnt op het scherm."
     ]
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "deur-sluiten",
@@ -149,7 +152,8 @@
    {
     "t": "Optioneel — servicemenu verlaten: tik op [Exit] en daarna op [Sluit de deur en druk hier om service te verlaten]."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "bovenklep",
@@ -176,7 +180,8 @@
    {
     "t": "Sluiten: zwaai de klep terug naar beneden. Zorg dat hij helemaal zakt en vergrendelt als de deur dichtgaat."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "servicesleutel",
@@ -191,7 +196,8 @@
   "doel": "Uit veiligheid schakelt de machine alle afgiftefuncties uit als de deur opengaat. Met de groene servicesleutel omzeil je die beveiliging voor onderhoud waarbij de machine moet blijven werken.",
   "nodig": [],
   "let": [],
-  "stappen": []
+  "stappen": [],
+  "taal": "nl"
  },
  {
   "id": "servicesleutel-plaatsen",
@@ -228,7 +234,8 @@
      "De sleutel blijft vergrendeld in de opening zitten."
     ]
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "servicesleutel-verwijderen",
@@ -252,7 +259,8 @@
    {
     "t": "Haal de servicesleutel uit de deur."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "geplande-spoeling",
@@ -292,7 +300,8 @@
    {
     "t": "De machine keert terug naar het hoofdmenu en is klaar voor gebruik."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "mixers-spoelen",
@@ -327,7 +336,8 @@
    {
     "t": "Herhaal de vorige stap tot er schoon water uit de machine komt."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "afvalemmer-reinigen",
@@ -365,7 +375,8 @@
    {
     "t": "Controleer dat de waterniveausensor in de drupbak hangt."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "bekerstandaard-reinigen",
@@ -406,7 +417,8 @@
    {
     "t": "Herhaal de laatste stappen voor de tweede bekerstandaard."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "afvalbak-onderkast",
@@ -439,7 +451,8 @@
    {
     "t": "Staat de melding 'Waste bucket full / Empty waste bucket' op het scherm: tik in het servicemenu op [Maintenance] en daarna op [Reset waste bin] om de teller te resetten en de melding weg te halen."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "lekbak-reinigen",
@@ -490,7 +503,8 @@
    {
     "t": "Afhankelijk van het model: leg het metalen inlegrooster terug."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "mixsysteem-reinigen",
@@ -579,7 +593,8 @@
    {
     "t": "Sluit de uitloopslangen weer op de mixers aan."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "brewer-schoonmaken",
@@ -639,7 +654,8 @@
      "Duw de CoEx-uitloop helemaal op de uitloopbuisjes van de brewerkop, anders gaat hij lekken."
     ]
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "brewer-tablet",
@@ -703,7 +719,8 @@
    {
     "t": "Haal de spoelbak weg en leeg hem."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "molen-vrijmaken",
@@ -786,7 +803,8 @@
    {
     "t": "Controleer de werking met een testkoffie."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "bekerdispenser-vullen",
@@ -829,7 +847,8 @@
    {
     "t": "Sluit de dispenserdeur en vergrendel hem."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "theebrewer-reinigen",
@@ -878,7 +897,8 @@
    {
     "t": "Steek de slang in de uitlooparm."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "canisters-reinigen",
@@ -928,7 +948,8 @@
    {
     "t": "Droog de canisters grondig aan de binnen- en buitenkant."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "canisters-vullen",
@@ -997,7 +1018,8 @@
    {
     "t": "Sluit de bovenklep."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "bonencanister-vullen",
@@ -1064,7 +1086,8 @@
    {
     "t": "Herhaal de procedure voor eventuele andere bonencanisters."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "koudwater-uitloop",
@@ -1119,7 +1142,8 @@
    {
     "t": "Kies een volle kan koud water en tap minimaal 1 liter, zodat alle resten reinigingsmiddel wegspoelen."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "koudwater-diepreiniging",
@@ -1191,7 +1215,8 @@
    {
     "t": "Kies een volle kan koud water en tap minimaal 1 liter, zodat alle resten wegspoelen."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "niveaus-invoeren",
@@ -1229,7 +1254,8 @@
    {
     "t": "Herhaal dit voor elke bijgevulde canister (of waar de waarde niet klopt), of tik op [Exit]."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "buitenkant-reinigen",
@@ -1255,7 +1281,8 @@
    {
     "t": "Neem alle buitenvlakken af met een zachte, vochtige doek."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "touchscreen-reinigen",
@@ -1291,14 +1318,16 @@
    {
     "t": "Na korte tijd gaat het scherm weer aan, keert de machine terug naar het hoofdmenu en is hij klaar voor gebruik."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "inschakelen-xl",
   "titel": "Machine inschakelen",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "nodig",
   "intervalTekst": "",
@@ -1338,14 +1367,16 @@
    {
     "t": "Na een paar minuten verdwijnt 'Heating boilers' en is de machine klaar voor gebruik."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "deur-sluiten-xl",
   "titel": "Deur sluiten",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "nodig",
   "intervalTekst": "",
@@ -1380,14 +1411,16 @@
    {
     "t": "Optioneel — servicemenu verlaten: tik op [Exit] en beantwoord de vraag 'Do you want to leave the service menu' met [OK]."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "mixers-spoelen-xl",
   "titel": "Mixers en brewer doorspoelen",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "dag",
   "intervalTekst": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
@@ -1418,14 +1451,16 @@
    {
     "t": "Herhaal de vorige stap tot er schoon water uit de machine komt."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "afvalemmer-reinigen-xl",
   "titel": "Afvalemmer reinigen",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "dag",
   "intervalTekst": "Dagelijks",
@@ -1464,14 +1499,16 @@
    {
     "t": "Klap de uitlooparm terug in de normale stand."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "bekerstandaard-reinigen-xl",
   "titel": "Bekerstandaard reinigen",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "dag",
   "intervalTekst": "Dagelijks",
@@ -1488,14 +1525,16 @@
    {
     "t": "Zet de bekerstandaard terug op het magnetische ophangpunt in de deur."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "afvalbak-onderkast-xl",
   "titel": "Afvalbak in de onderkast reinigen",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "week",
   "intervalTekst": "Wekelijks, vaker als het nodig is",
@@ -1530,14 +1569,16 @@
    {
     "t": "Staat de melding 'Waste bucket full / Empty waste bucket' op het scherm: tik in het servicemenu op [Reset waste bin] om de teller te resetten en de melding weg te halen."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "lekbak-reinigen-xl",
   "titel": "Lekbak reinigen",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "dag",
   "intervalTekst": "Dagelijks",
@@ -1572,14 +1613,16 @@
    {
     "t": "Zet het kannenplateau op de geleiders (2) en schuif het in de richting van de pijl tegen de deur aan."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "brewer-schoonmaken-xl",
   "titel": "Brewer uitnemen en reinigen (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "week",
   "intervalTekst": "Minimaal één keer per week, vaker als het nodig is",
@@ -1653,14 +1696,16 @@
    {
     "t": "Tik in het servicemenu op [Done] om de procedure af te sluiten."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "brewer-tablet-xl",
   "titel": "Brewer reinigen met reinigingstablet (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "week",
   "intervalTekst": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
@@ -1735,14 +1780,16 @@
    {
     "t": "Haal de spoelbak weg en leeg hem."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "molen-vrijmaken-xl",
   "titel": "Molen vrijmaken (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "nodig",
   "intervalTekst": "Bij de melding 'Grinder blocked'",
@@ -1797,14 +1844,16 @@
    {
     "t": "Controleer de werking met een testkoffie."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "niveaus-invoeren-xl",
   "titel": "Canisterniveaus invoeren (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "dag",
   "intervalTekst": "Verschijnt bij het openen van de deur, als deze optie aanstaat",
@@ -1841,14 +1890,16 @@
    {
     "t": "Tik op [Exit] om het servicemenu te verlaten."
    }
-  ]
+  ],
+  "taal": "nl"
  },
  {
   "id": "touchscreen-reinigen-xl",
   "titel": "Touchscreen reinigen (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
-   "lua"
+   "lua",
+   "avy"
   ],
   "interval": "dag",
   "intervalTekst": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
@@ -1877,6 +1928,1807 @@
    {
     "t": "Na korte tijd gaat het scherm weer aan, keert de machine terug naar het hoofdmenu en is hij klaar voor gebruik."
    }
-  ]
+  ],
+  "taal": "nl"
+ },
+ {
+  "id": "inschakelen-ff",
+  "titel": "Machine inschakelen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "",
+  "nodig": [],
+  "let": [
+   {
+    "n": "note",
+    "t": "If the door was left open for too long the Service menu is shown. Tap the [Exit] button and then the [OK] button to answer the question 'Do you want to leave the service menu' to leave the Service menu."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Turn on the water supply.",
+    "s": []
+   },
+   {
+    "t": "Connect the power cord to an earthed power socket.",
+    "s": []
+   },
+   {
+    "t": "Open the door.",
+    "s": []
+   },
+   {
+    "t": "Switch the [ON/OFF] power switch to the ON position.",
+    "s": [
+     "check the drawing of the inside view for the precise location."
+    ]
+   },
+   {
+    "t": "Close the door.",
+    "s": []
+   },
+   {
+    "t": "The coffee machine will start up.",
+    "s": []
+   },
+   {
+    "t": "The main screen is displayed with the message 'Filling boiler' and then 'Heating boilers' in the User message area.",
+    "s": []
+   },
+   {
+    "t": "After a few minutes the message 'Heating boilers' disappears and the machine is ready for use.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "deur-openen-ff",
+  "titel": "Deur openen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "",
+  "nodig": [],
+  "let": [
+   {
+    "n": "note",
+    "t": "Do not leave the door open unattended to prevent unauthorized access to the inside of the machine."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Insert the key in the lock of the door of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Turn the key 90 degrees.",
+    "s": []
+   },
+   {
+    "t": "Open the door.",
+    "s": [
+     "The Service menu is displayed on the screen."
+    ]
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "deur-sluiten-ff",
+  "titel": "Deur sluiten",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "",
+  "nodig": [],
+  "let": [
+   {
+    "n": "warning",
+    "t": "Make sure all canisters are installed."
+   },
+   {
+    "n": "note",
+    "t": "Always remove the key from the coffee machine and optional base cabinet to prevent unauthorized opening of the door."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Insert the key in the lock of the door of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Turn the key 90 degrees.",
+    "s": []
+   },
+   {
+    "t": "Close the door.",
+    "s": []
+   },
+   {
+    "t": "Turn the key 90 degrees to lock the door.",
+    "s": []
+   },
+   {
+    "t": "Remove the key and store it in a safe place.",
+    "s": []
+   },
+   {
+    "t": "(Optional) To leave the Service menu: Tap the [Exit] button and then the [OK] button to answer the question 'Do you want to leave the service menu' to leave the Service menu.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "bovenklep-ff",
+  "titel": "Bovenklep openen of sluiten",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "To fill up or clean the canisters they need to be removed from the coffee machine. To allow easy access to the canisters, the top lid of the coffee machine can be opened.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "note",
+    "t": "The top lid locks inside the door and can only be opened if the door is opened. Depending on the model, the top lid can contain cut outs for one or two (bean) canisters."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "To open, lift the top lid in the front and swing it open to the back. The top lid stays open in the upright position.",
+    "s": []
+   },
+   {
+    "t": "To close, swing the opened top lid back down. Make sure it is lowered completely and locks when the door is closed.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "uitschakelen-ff",
+  "titel": "Machine uitschakelen / buiten gebruik stellen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "",
+  "nodig": [],
+  "let": [],
+  "stappen": [
+   {
+    "t": "Open the door.",
+    "s": []
+   },
+   {
+    "t": "Switch the [ON/OFF] power switch to the OFF position.",
+    "s": [
+     "check the drawing of the inside view for the precise location.",
+     "If the coffee machine is not used for a longer period of time (more than one week) it is recommended to:",
+     "perform daily maintenance or, if the machine is not used for a longer time, it is recommended to perform monthly maintenance.",
+     "turn off the water supply.",
+     "switch off the power supply (pulling the plug from the wall socket is sufficient). This will also prevent unnecessary use of energy. Also see section Extended down time."
+    ]
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "geplande-spoeling-ff",
+  "titel": "Geplande spoeling",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "Daily, announced on screen",
+  "doel": "Cleaning the coffee machine can be skipped or forgotten. The scheduled rinse is forced every day using a scheduler. When activated follow the procedure below to perform the rinse. Instead you can also run the daily maintenance or weekly maintenance.",
+  "nodig": [
+   "A rinsing tub or 1 liter jug"
+  ],
+  "let": [],
+  "stappen": [
+   {
+    "t": "Place a rinsing tub or jug under the outlet nozzle to collect the rinse water.",
+    "s": []
+   },
+   {
+    "t": "Tap the button [Place cup and press here] on the screen.",
+    "s": [
+     "Hot water from the boiler flows through the mixers and brewer."
+    ]
+   },
+   {
+    "t": "A progress screen is shown.",
+    "s": [
+     "Wait until the rinse procedure is finished.",
+     "Total time to rinse is 1 to 2 minutes."
+    ]
+   },
+   {
+    "t": "Remove the rinsing tub.",
+    "s": []
+   },
+   {
+    "t": "The machine returns to the Main menu and is ready for use.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "mixers-spoelen-ff",
+  "titel": "Mixers en brewer doorspoelen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "At least daily, increase the frequency if needed Total time • Total time needed to rinse is 1 to 2 minutes.",
+  "doel": "The Rinse process flushes hot water through the mixers and the brewer to remove any residue.",
+  "nodig": [
+   "Rinsing tub."
+  ],
+  "let": [],
+  "stappen": [
+   {
+    "t": "If needed open the door to show the Service menu on the touchscreen.",
+    "s": []
+   },
+   {
+    "t": "Insert the service key in the door or close the door.",
+    "s": []
+   },
+   {
+    "t": "Place a rinsing tub underneath the outlet nozzle to collect the hot waste water.",
+    "s": []
+   },
+   {
+    "t": "Tap the [Daily rinse] button and follow the instructions on the screen.",
+    "s": []
+   },
+   {
+    "t": "Tap the [Next] button to start the rinsing process.",
+    "s": [
+     "Hot water from the boiler flows through the mixers and brewer."
+    ]
+   },
+   {
+    "t": "Repeat the previous step until clean water comes out of the machine.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "afvalemmer-reinigen-ff",
+  "titel": "Afvalemmer reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "Daily.",
+  "doel": "Used coffee filter paper and coffee residue is transported into the waste bucket. A metal waste disposer inside the waste bucket ensures a better distribution of the waste. Regular cleaning is needed. If an external waste bin is used, the waste bucket and disposer (B) are replaced by a waste guide (G). Perform the following steps:",
+  "nodig": [],
+  "let": [],
+  "stappen": [
+   {
+    "t": "Depending on your model:",
+    "s": [
+     "(B) remove the waste bucket and metal waste disposer.",
+     "(G) remove the waste guide."
+    ]
+   },
+   {
+    "t": "Rinse the removed item(s) with clean warm water.",
+    "s": []
+   },
+   {
+    "t": "Dry the item(s) completely.",
+    "s": []
+   },
+   {
+    "t": "Depending on your model:",
+    "s": [
+     "(B) Install the waste bucket and hang the metal waste disposer on the left side of the waste bucket.",
+     "(G) Install the waste guide."
+    ]
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "bekerstandaard-reinigen-ff",
+  "titel": "Bekerstandaard reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "Daily",
+  "doel": "The cup stand needs to be removed from the machine and cleaned regularly.",
+  "nodig": [],
+  "let": [],
+  "stappen": [
+   {
+    "t": "Pull the cup stand from the magnetic suspension point and remove it from the door.",
+    "s": []
+   },
+   {
+    "t": "Rinse the cup stand with clean warm water and dry it thoroughly afterwards.",
+    "s": []
+   },
+   {
+    "t": "Place the cup stand back in the magnetic suspension point in the door.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "afvalbak-onderkast-ff",
+  "titel": "Afvalbak in de onderkast reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "week",
+  "intervalTekst": "Weekly, increase the frequency if needed",
+  "doel": "If waste bins in a base cabinet (or other external cabinet) are installed, excess water from the brewer and waste water from the drip tray is captured in the left waste bin and coffee residue in the right waste bin. Both bins must be cleaned regularly.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "note",
+    "t": "If a fixed waste water connection is used, a waste water bin is not installed."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Remove the waste bin(s) from the base cabinet.",
+    "s": []
+   },
+   {
+    "t": "Rinse the removed bin(s) with clean warm water.",
+    "s": []
+   },
+   {
+    "t": "Dry the bin(s) completely.",
+    "s": []
+   },
+   {
+    "t": "Place the waste bin(s) in the base cabinet.",
+    "s": []
+   },
+   {
+    "t": "When used, make sure that the sensor for the waste water level is placed inside the left waste water bin.",
+    "s": []
+   },
+   {
+    "t": "If the coffee machine displays the message 'Waste bucket full / Empty waste bucket', tap the [Reset waste bin] button in the Service menu to reset the counter and remove the message.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "lekbak-reinigen-ff",
+  "titel": "Lekbak reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "Daily",
+  "doel": "The drip tray collects waste water from the coffee machine and waste water during the dispense of products and needs to be cleaned regularly. The drip tray is covered by the jug stand.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "note",
+    "t": "If the drip tray is connected to a larger waste bucket/bin or directly into the main waste water disposal, the cleaning interval can be lowered to once a week."
+   },
+   {
+    "n": "note",
+    "t": "Make sure that the ledge on the back of the jug stand (3) fits inside the notch in the door (1)."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Pull the jug stand from the door in the direction of the arrow and remove it from the support guides in the door.",
+    "s": []
+   },
+   {
+    "t": "Pull the drip tray in the direction of the arrow and remove it from the machine.",
+    "s": []
+   },
+   {
+    "t": "Rinse all removed items with clean warm water.",
+    "s": []
+   },
+   {
+    "t": "Dry all items.",
+    "s": []
+   },
+   {
+    "t": "Place the drip tray.",
+    "s": []
+   },
+   {
+    "t": "Place the jug stand on the guides (2), slide it in the direction of the arrow against the door.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "mixsysteem-reinigen-ff",
+  "titel": "Mixsysteem reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "week",
+  "intervalTekst": "Weekly, increase the frequency if needed",
+  "doel": "To prevent clogging of ingredients the mixers must be removed from the coffee machine and cleaned.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "caution",
+    "t": "Make sure the exhaust filter is completely dry before installing it in the filter drawer."
+   },
+   {
+    "n": "note",
+    "t": "Make sure that the arrow on the mixer propeller points in the direction of the flat side of the shaft."
+   },
+   {
+    "n": "note",
+    "t": "Make sure that the mixer suction trap connects properly to the opening in the filter drawer."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Remove the outlet hoses from the mixers.",
+    "s": []
+   },
+   {
+    "t": "Remove the canister outlets and remember the correct position and location of each outlet.",
+    "s": []
+   },
+   {
+    "t": "Turn the bayonet catches counterclockwise (approx. 10º).",
+    "s": []
+   },
+   {
+    "t": "Pull the mixer houses in the direction of the arrow and remove them from the machine.",
+    "s": []
+   },
+   {
+    "t": "Pull the mixer propellers in the direction of the arrow and away from the shaft.",
+    "s": []
+   },
+   {
+    "t": "Turn the bayonet catches counterclockwise (approx. 10º) again to release and pull them in the direction of the arrow away from the machine.",
+    "s": []
+   },
+   {
+    "t": "Pull the exhaust filter drawer in the direction of the arrow and remove it from the machine.",
+    "s": []
+   },
+   {
+    "t": "Remove the exhaust filter from the drawer.",
+    "s": []
+   },
+   {
+    "t": "Rinse out all removed parts of the mixing system with clean warm water.",
+    "s": [
+     "Make sure to clean the inside of the hoses with a hose cleaning brush and pay attention to inside corners in the hoses."
+    ]
+   },
+   {
+    "t": "Clean the parts of the mixing system that remain in the machine with a brush.",
+    "s": []
+   },
+   {
+    "t": "Before continuing with the installation of the mixing system make sure ALL parts are dry. TIP When available, use the clean and dry parts from the hygiene kit. The cleaning of the removed parts can be done after the machine has been put in operation again.",
+    "s": []
+   },
+   {
+    "t": "Insert the mixer exhaust filter in the filter drawer.",
+    "s": []
+   },
+   {
+    "t": "Install the filter drawer.",
+    "s": []
+   },
+   {
+    "t": "Install the bayonet catches and turn clockwise (approx. 10º).",
+    "s": []
+   },
+   {
+    "t": "Install the mixer propellers.",
+    "s": []
+   },
+   {
+    "t": "Install the mixer houses.",
+    "s": []
+   },
+   {
+    "t": "Turn the bayonet catches clockwise to lock the mixer houses.",
+    "s": []
+   },
+   {
+    "t": "Install the canister outlets on the canisters and make sure the locations and positions are correct.",
+    "s": []
+   },
+   {
+    "t": "Connect the outlet hoses to the mixers.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "brewer-schoonmaken-ff",
+  "titel": "Brewer uitnemen en reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "At least once a week, increase the frequency if needed.",
+  "doel": "Removal of the brewer is necessary for performing the cleaning procedure.",
+  "nodig": [
+   "Blue brewer key",
+   "Green service key"
+  ],
+  "let": [
+   {
+    "n": "warning",
+    "t": "Do not take the brewer itself apart. Only properly trained personnel may work on the brewer itself. Instructions for performing work on the brewer itself is found in the technical manual."
+   },
+   {
+    "n": "caution",
+    "t": "When the machine is switched on take utmost care when performing maintenance."
+   },
+   {
+    "n": "note",
+    "t": "You can turn the main shaft of the brewer with the blue brewer key (delivered with the machine)."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Tear off the filter paper on the left and right of the brewer.",
+    "s": []
+   },
+   {
+    "t": "Insert the service key in the door.",
+    "s": []
+   },
+   {
+    "t": "In the Service menu tap the [Replace filter paper] button.",
+    "s": [
+     "The brewer chamber will move up to the open position."
+    ]
+   },
+   {
+    "t": "Remove the service key from the door.",
+    "s": []
+   },
+   {
+    "t": "Remove the brewer chamber by pulling it in the direction of the arrow.",
+    "s": []
+   },
+   {
+    "t": "Remove the remaining old filter paper from the brewer.",
+    "s": [
+     "Lift the transport wheels with the cantilever if needed."
+    ]
+   },
+   {
+    "t": "Remove the nozzle / outlet pipe from the brewer.",
+    "s": []
+   },
+   {
+    "t": "Take the brewer out of the machine. First tilt the lower part of the brewer towards you to release the main shaft from the motor interlocking.",
+    "s": [
+     "Tilting the lower part about 10 cm is enough."
+    ]
+   },
+   {
+    "t": "Lift the brewer a little to release the studs from the suspension and remove the brewer from the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Rinse the brewer with clean warm water.",
+    "s": []
+   },
+   {
+    "t": "Before installing, make sure the brewer chamber is still in the open position.",
+    "s": [
+     "If needed, adjust the position of the main shaft to fit the motor interlocking."
+    ]
+   },
+   {
+    "t": "Place the studs at the back of the brewer in both suspension holes.",
+    "s": []
+   },
+   {
+    "t": "Lower the brewer down and make sure that the main shaft fits the motor interlocking.",
+    "s": [
+     "Some force is needed to lock the brewer properly."
+    ]
+   },
+   {
+    "t": "Place the nozzle / outlet pipe on the brewer.",
+    "s": []
+   },
+   {
+    "t": "Guide the filter paper through the brewer, lift the transport wheels with the cantilever if needed.",
+    "s": [
+     "for details, see section Place new filter paper."
+    ]
+   },
+   {
+    "t": "Install the brewer chamber. Press the brewer chamber with the two pins into position.",
+    "s": []
+   },
+   {
+    "t": "Insert the service key in the door.",
+    "s": []
+   },
+   {
+    "t": "In the Service menu tap the [Replace filter paper] button.",
+    "s": [
+     "This will move the brewer through a cycle. Check if the filter paper is being transported properly and runs smoothly."
+    ]
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "brewer-tablet-ff",
+  "titel": "Brewer reinigen met reinigingstablet",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "At least once a week, increase the frequency if needed.",
+  "doel": "Cleaning of the brewer with a tablet removes all coffee residue.",
+  "nodig": [
+   "Cleaning tablet.",
+   "Rinsing tub or 1 liter jug.",
+   "Protective clothing, gloves and safety glasses.",
+   "Green service key."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "Failure to clean the brewer weekly with the cleaning tablet available from the manufacturer will void the warranty on related parts. Not cleaning the brewer can cause the machine to malfunction!"
+   },
+   {
+    "n": "note",
+    "t": "• Total time for the cleaning cycle is 8 minutes. • A message is shown if the brewer is not cleaned after 7 days. • A message is shown and coffee dispense is disabled if the brewer is not cleaned after 9 days."
+   },
+   {
+    "n": "note",
+    "t": "Depending on the model the button text can be different. ▪ Follow the instructions shown on-screen and described in the next steps."
+   },
+   {
+    "n": "warning",
+    "t": "Wear protective clothing, gloves and safety glasses when working with cleaning tablets."
+   },
+   {
+    "n": "warning",
+    "t": "Never cancel or interrupt the cleaning cycle. Repeat the full cleaning procedure if the cleaning cycle is not completely finished."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Open the door of the machine if not already opened.",
+    "s": []
+   },
+   {
+    "t": "Insert the service key in the door.",
+    "s": []
+   },
+   {
+    "t": "Tear off and remove the used filter paper from the brewer. Check section Place new filter paper step 3, 4 and 5 for details.",
+    "s": []
+   },
+   {
+    "t": "From the Service Menu, tap the [Brewer Cleaning Cycle] button.",
+    "s": []
+   },
+   {
+    "t": "In the Service menu, tap [Next] to close the brewer chamber.",
+    "s": []
+   },
+   {
+    "t": "Wait until the next menu is displayed.",
+    "s": []
+   },
+   {
+    "t": "Place a cleaning tablet in the brewer chamber.",
+    "s": []
+   },
+   {
+    "t": "Place a rinsing tub or a 1 liter jug under the outlet nozzle.",
+    "s": []
+   },
+   {
+    "t": "In the Service Menu tap the button [Next] to start the actual cleaning cycle.",
+    "s": [
+     "Wait until the cleaning cycle is completely finished and make sure the cleaning tablet is fully dissolved."
+    ]
+   },
+   {
+    "t": "Remove the service key from the door.",
+    "s": []
+   },
+   {
+    "t": "Guide the filter paper through the brewer. Check section Place new filter paper starting at step 7 for details.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "molen-vrijmaken-ff",
+  "titel": "Molen vrijmaken",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "Occasionally small twigs or small rocks (known as foreign objects) are in between the fresh beans. The grinder will stop if these objects are blocking the grinder. A message 'Grinder blocked' is displayed in the warning message area.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "warning",
+    "t": "To prevent possible activation of the grinder(s), keep the door open and never place the service key."
+   },
+   {
+    "n": "note",
+    "t": "Check the section Fill up the bean canister for details about the removal of the canisters. When the canister is removed, the grinder itself is visible."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Locate the grinder that needs cleaning up.",
+    "s": []
+   },
+   {
+    "t": "Remove the canister to get access to the grinder.",
+    "s": []
+   },
+   {
+    "t": "To clean the grinder, lift and remove the grinder from the base.",
+    "s": []
+   },
+   {
+    "t": "Pull out the clips (1) of the grinder outlet, slide the outlet (2) from the grinder house and remove it from the grinder.",
+    "s": []
+   },
+   {
+    "t": "Loosen the bayonet locked grinder house top in the direction of the arrow and remove it from the grinder.",
+    "s": []
+   },
+   {
+    "t": "Clean both grinder discs and the inside of the grinder house.",
+    "s": []
+   },
+   {
+    "t": "Place the grinder house top assembly, and turn it in the direction of the arrow to lock.",
+    "s": []
+   },
+   {
+    "t": "Slide the outlet on the grinder house in the direction of the arrow.",
+    "s": [
+     "Make sure the clips lock properly."
+    ]
+   },
+   {
+    "t": "Place the grinder back into the grinder base.",
+    "s": []
+   },
+   {
+    "t": "Place the canister back. TIP Check the last steps of the section Fill up the bean canister for more details.",
+    "s": []
+   },
+   {
+    "t": "Close the door and lock with the key.",
+    "s": []
+   },
+   {
+    "t": "Leave the Service menu. TIP Dispense two cups of coffee to fill up the grinder with fresh coffee and throw the contents of the cups away.",
+    "s": []
+   },
+   {
+    "t": "Check correct functioning by taking a test coffee.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "filterpapier-ff",
+  "titel": "Nieuw filterpapier plaatsen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "When needed.",
+  "doel": "Follow this procedure when the machine runs out of paper and a new roll of filter paper must be placed.",
+  "nodig": [
+   "Green Service key.",
+   "Roll of recommended coffee filter paper."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "Make sure the filter paper roll unrolls counter clock wise."
+   },
+   {
+    "n": "caution",
+    "t": "Make sure that the brewer is not moved down during lifting of the transport wheels. Push the cantilever down with your thumb while supporting the brewer with your index finger."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Open the door of the machine.",
+    "s": []
+   },
+   {
+    "t": "Insert the service key in the door.",
+    "s": []
+   },
+   {
+    "t": "In the Service menu tap the [Replace filter paper] button.",
+    "s": [
+     "Wait until the brewer chamber has moved to the open position."
+    ]
+   },
+   {
+    "t": "Remove the service key from the door.",
+    "s": []
+   },
+   {
+    "t": "Remove the old filter paper from the brewer.",
+    "s": [
+     "Lift the transport wheels with the cantilever if needed."
+    ]
+   },
+   {
+    "t": "Place the new roll of filter paper.",
+    "s": []
+   },
+   {
+    "t": "Guide the filter paper to the brewer around the guiding wheels (6).",
+    "s": []
+   },
+   {
+    "t": "Lift the transport wheels (2) with the cantilever if needed.",
+    "s": []
+   },
+   {
+    "t": "Insert the service key in the door.",
+    "s": []
+   },
+   {
+    "t": "In the Service menu tap the [Replace filter paper] button.",
+    "s": [
+     "The brewer moves a cycle and stops."
+    ]
+   },
+   {
+    "t": "Check if the filter paper is being transported correctly and that no folds or creases are in the paper.",
+    "s": []
+   },
+   {
+    "t": "Remove the service key from the door.",
+    "s": []
+   },
+   {
+    "t": "Check the functioning of the machine by taking a test drink (coffee).",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "canisters-reinigen-ff",
+  "titel": "Canisters reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "maand",
+  "intervalTekst": "Monthly, increase the frequency if needed",
+  "doel": "All ingredients leave residue inside the canister. To clean the canisters they need to be removed from the machine.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "warning",
+    "t": "To prevent possible activation of the machine, never place the service key."
+   },
+   {
+    "n": "note",
+    "t": "Use a mild detergent if warm water only is not sufficient."
+   },
+   {
+    "n": "warning",
+    "t": "Do not fill the canisters until they are completely dry. The product may form lumps which makes the system unusable."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Open the door.",
+    "s": []
+   },
+   {
+    "t": "Open the top lid of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Remove the canisters from the machine.",
+    "s": [
+     "Check the first steps in the section Fill up the ingredient canisters for more details about the removal of the canisters."
+    ]
+   },
+   {
+    "t": "Unlock (optional) and remove the lid from the canisters.",
+    "s": []
+   },
+   {
+    "t": "Empty the canisters.",
+    "s": []
+   },
+   {
+    "t": "Clean the canisters with warm water.",
+    "s": []
+   },
+   {
+    "t": "Dry the canisters thoroughly on the inside and outside.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "koudwater-uitloop-ff",
+  "titel": "Koudwateruitloop reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "week",
+  "intervalTekst": "Weekly, increase the frequency if needed (depending on machine usage and environmental conditions)",
+  "doel": "The cold water outlet nozzle must be cleaned regularly to prevent bacteria growth.",
+  "nodig": [
+   "Multi purpose, disposable cloth.",
+   "Cleaning agent.",
+   "Disposable paper towels.",
+   "Rinsing tub or 1 liter jug.",
+   "Protective clothing, gloves and safety glasses."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "Do not use aggressive cleaning products or abrasives to clean (parts of) the machine."
+   },
+   {
+    "n": "warning",
+    "t": "Wear protective clothing, gloves and safety glasses when working with cleaning chemicals."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Use the cloth to apply the cleaning agent. Submerge a clean cloth into the cleaning agent (concentration recommended by cleaning agent manufacturer’s instructions). Remove the cloth and remove excess water.",
+    "s": []
+   },
+   {
+    "t": "Clean the cold water outlet nozzle wiping the cloth over the entire area re-submerging the cloth as necessary.",
+    "s": []
+   },
+   {
+    "t": "Rinse the cloth in clean warm water and wipe off excess cleaning agent residue and soil.",
+    "s": []
+   },
+   {
+    "t": "Dry cold water nozzle using disposable paper towels.",
+    "s": []
+   },
+   {
+    "t": "Close the door of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Place a rinse tub below the cold water outlet nozzle.",
+    "s": []
+   },
+   {
+    "t": "Leave the Service menu: Tap the [Exit] button and then the [OK] button to answer the question 'Do you want to leave the service menu' to leave the Service menu.",
+    "s": []
+   },
+   {
+    "t": "Select a full jug of cold water and dispense at least 1 liter of cold water and ensure any cleaning residue is flushed out.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "koudwater-diepreiniging-ff",
+  "titel": "Koudwateruitloop diepreinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "maand",
+  "intervalTekst": "Monthly, increase the frequency if needed (depending on machine usage and environmental conditions)",
+  "doel": "The cold water outlet nozzle must be cleaned and disinfected regularly to prevent bacteria growth.",
+  "nodig": [
+   "Multi purpose, disposable cloth.",
+   "Cleaning agent.",
+   "Protective clothing, gloves and safety glasses.",
+   "Disinfectant solution.",
+   "Disposable paper towels.",
+   "Rinsing tub or 1 liter jug.",
+   "Brush."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "Do not use aggressive cleaning products or abrasives to clean (parts of) the machine."
+   },
+   {
+    "n": "warning",
+    "t": "Wear protective clothing, gloves and safety glasses when working with cleaning chemicals."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Submerge a clean cloth in warm water. Pre clean the cold water outlet nozzle using the cloth.",
+    "s": []
+   },
+   {
+    "t": "Submerge a clean cloth into the cleaning agent (concentration recommended by cleaning agent manufacturer’s instructions). Remove the cloth and remove excess water.",
+    "s": []
+   },
+   {
+    "t": "Clean the cold water outlet nozzle wiping the cloth over the entire area re-submerging the cloth as necessary.",
+    "s": []
+   },
+   {
+    "t": "Using a brush, brush around the cold water nozzle to dislodge any dried on soil. Remove the soil with a cloth.",
+    "s": []
+   },
+   {
+    "t": "Soak a clean disposable cloth in clean warm water and rinse the outlet nozzle until all soil and cleaning agent residues are removed.",
+    "s": []
+   },
+   {
+    "t": "Soak a clean disposable cloth in disinfectant solution, ensure that the whole area is wiped.",
+    "s": []
+   },
+   {
+    "t": "Leave for 10 minutes.",
+    "s": []
+   },
+   {
+    "t": "Rinse off disinfectant using disposable cloth in clean warm water.",
+    "s": []
+   },
+   {
+    "t": "Dry cold water nozzle with disposable paper towels.",
+    "s": []
+   },
+   {
+    "t": "Close the door of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Place a rinse tub below the cold water outlet nozzle.",
+    "s": []
+   },
+   {
+    "t": "Leave the Service menu: Tap the [Exit] button and then the [OK] button to answer the question 'Do you want to leave the service menu' to leave the Service menu.",
+    "s": []
+   },
+   {
+    "t": "Select a full jug of cold water and dispense at least 1 liter of cold water and ensure any cleaning residue is flushed out.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "canisters-vullen-ff",
+  "titel": "Ingrediëntcanisters vullen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "To prevent that the machine can no longer dispense drinks due to a lack of ingredients, the machine must be refilled in time.",
+  "nodig": [
+   "Ingredients."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "• Make sure that the canisters remain filled with a layer of at least (4 cm) of product. • Only use ingredients recommended by the supplier of the machine. • To fill up a bean canister (optional) check the section Fill up the bean canister."
+   },
+   {
+    "n": "warning",
+    "t": "To prevent possible activation of the machine, never place the service key."
+   },
+   {
+    "n": "note",
+    "t": "Filling the canisters must be done outside the machine."
+   },
+   {
+    "n": "caution",
+    "t": "Make sure the drive at the back of the canister fits well on the motor drive."
+   },
+   {
+    "n": "caution",
+    "t": "Check the position of the outlet of the canister. It must be positioned towards the correct mixing bowl."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Open the door.",
+    "s": []
+   },
+   {
+    "t": "Open the top lid of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Remember (or write down) the position of the outlets and turn the outlets of the canisters upwards.",
+    "s": []
+   },
+   {
+    "t": "Slightly lift the canister at the front until the small locking ridge (see inset) is visible.",
+    "s": []
+   },
+   {
+    "t": "Pull the canister towards you and take it out of the machine.",
+    "s": []
+   },
+   {
+    "t": "Remove the lid and place the canister on a stable surface.",
+    "s": []
+   },
+   {
+    "t": "Fill the canister with the ingredient indicated on the canister. TIP Do not fill the canisters more than necessary for one or two days. This will keep the products fresh.",
+    "s": []
+   },
+   {
+    "t": "Place the lid back on the canister and position the canister back into the machine.",
+    "s": []
+   },
+   {
+    "t": "Turn the outlets of the canister downwards.",
+    "s": []
+   },
+   {
+    "t": "Close the top lid of the machine.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "bonencanister-vullen-ff",
+  "titel": "Bonencanister vullen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "In order to prevent that the machine can no longer dispense drinks due to a lack of ingredients, the machine must be refilled in time.",
+  "nodig": [
+   "Coffee beans."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "• Make sure that the canisters remain filled with a layer of at least 4 cm of product. • Only use ingredients recommended by the supplier of the machine. • To fill up an ingredient canister (optional) check the section Fill up the ingredient canisters."
+   },
+   {
+    "n": "warning",
+    "t": "To prevent possible activation of the grinder(s), never place the service key."
+   },
+   {
+    "n": "note",
+    "t": "Filling the canisters must be done outside the machine."
+   },
+   {
+    "n": "caution",
+    "t": "When the canister locking slider is not fully pulled out, coffee beans will fall out of the canister."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Open the door.",
+    "s": []
+   },
+   {
+    "t": "Open the top lid of the coffee machine.",
+    "s": []
+   },
+   {
+    "t": "Locate the canister locking slider in between the grinder and the bean canister.",
+    "s": []
+   },
+   {
+    "t": "Pull the canister locking slider in the direction of the arrow. The bean canister will be closed and unlocked from the grinder base.",
+    "s": []
+   },
+   {
+    "t": "Lift the bean canister from the grinder base and take it out of the machine.",
+    "s": []
+   },
+   {
+    "t": "Place the bean canister on a stable and flat surface for refilling.",
+    "s": []
+   },
+   {
+    "t": "Unlock the lid (optional). Lift the lid in the front and then pull the lid from the canister in the direction of the arrow.",
+    "s": []
+   },
+   {
+    "t": "Fill the canister with fresh coffee beans. TIP Fill the canister with beans sufficient for one or two days. This will keep the products fresh.",
+    "s": []
+   },
+   {
+    "t": "Place the back side of the lid on the canister and then lower the front side. Lock the lid (optional).",
+    "s": []
+   },
+   {
+    "t": "Place the bean canister back into the coffee machine on the four position ridges of the grinder base.",
+    "s": []
+   },
+   {
+    "t": "Push the canister locking slider back in the direction of the arrow to open the bean canister and secure it to the grinder base.",
+    "s": []
+   },
+   {
+    "t": "Repeat the procedure if more bean canisters must be filled up.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "niveaus-invoeren-ff",
+  "titel": "Canisterniveaus invoeren",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "When this option is active, the Enter ingredient level screen is displayed when the door is opened.",
+  "doel": "When activated the coffee machine displays a message 'Canister % almost empty' when the ingredient canisters are almost empty. Based on the number of beverages taken, the machine calculates the amount of ingredients left in the canisters. When the canisters are filled up the counters need to be reset. Follow the steps in the procedure below to reset the counters.",
+  "nodig": [],
+  "let": [
+   {
+    "n": "note",
+    "t": "A completely filled canister is filled 100%. To keep ingredients fresh it is also possible to fill the canister for 50%."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "When the door is opened, the Enter ingredients levels screen is displayed.",
+    "s": [
+     "The current fill level of each canister is displayed (only the fill levels of the canisters activated for this option are shown)."
+    ]
+   },
+   {
+    "t": "To change a canister fill level, first tap the [Edit fill levels] button (A) on the screen.",
+    "s": [
+     "or tap the [Exit] button to leave the Service menu."
+    ]
+   },
+   {
+    "t": "Fill level sliders are shown for each activated canister. Tap the level or move the slider to the correct fill level.",
+    "s": []
+   },
+   {
+    "t": "Repeat the previous step for each canister that is filled up (or where the shown value is not correct).",
+    "s": []
+   },
+   {
+    "t": "Tap the [Save fill levels] button (B) to save the current setting.",
+    "s": []
+   },
+   {
+    "t": "Tap [Exit] to leave the Service menu.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "buitenkant-reinigen-ff",
+  "titel": "Buitenkant van de machine reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "Daily",
+  "doel": "To clean all outside areas of the coffee machine that are not cleaned in any other procedure.",
+  "nodig": [
+   "Soft damp cloth."
+  ],
+  "let": [
+   {
+    "n": "note",
+    "t": "Do not use aggressive cleaning products or abrasives to clean (parts of) the machine."
+   }
+  ],
+  "stappen": [],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "touchscreen-reinigen-ff",
+  "titel": "Touchscreen reinigen",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "dag",
+  "intervalTekst": "At least daily. When announced on screen.",
+  "doel": "The touchscreen is the main interface between user and coffee machine. To ensure a hygienic and flawless use, the touchscreen must be cleaned regularly.",
+  "nodig": [
+   "A clean soft cloth for disinfection purposes.",
+   "(Isopropyl) alcohol."
+  ],
+  "let": [
+   {
+    "n": "caution",
+    "t": "- Do not use any other (aggressive) chemicals to clean the surface of the touchscreen. - Prevent dripping, do not use too much cleaning liquid on the cloth."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Tap one of the buttons with the message [PRESS here to start cleaning]. The screen will be switched off now.",
+    "s": [
+     "or tap [Cancel] to return to the Main menu. TIP If the Clean Screen window is not shown, open the door of the machine. The Service menu is now shown. Tap the [Shiny hand] in the top of the screen. The available time to clean the screen is shown with a countdown timer."
+    ]
+   },
+   {
+    "t": "Clean the touchscreen with some (Isopropyl) alcohol on a clean soft cloth.",
+    "s": []
+   },
+   {
+    "t": "After some time, the touchscreen is switched on again. The machine returns to the Main menu and is ready for use.",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "servicesleutel-ff",
+  "titel": "De servicesleutel",
+  "brewer": "Uni-Brewer",
+  "machines": [
+   "rosa"
+  ],
+  "interval": "",
+  "intervalTekst": "",
+  "doel": "For safety reasons all dispense functions are disabled if the door of the machine is opened. Use the green service key to override this safety for maintenance procedures that need a fully functioning machine. 5.6.25.1 Insert the service key",
+  "nodig": [
+   "Green service key.",
+   "Green service key."
+  ],
+  "let": [
+   {
+    "n": "warning",
+    "t": "When the service key is inserted, the machine is powered up with open door. Parts in the machine can move and hot water can flow out. Only insert the service key when requested. 5.6.25.2 Remove the service key"
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Locate the entry for the Service key on the inside of the door.",
+    "s": []
+   },
+   {
+    "t": "Insert the Service key in the service key entry.",
+    "s": []
+   },
+   {
+    "t": "Turn the Service key a quarter turn (90°).",
+    "s": [
+     "The grey options in the Service menu change to yellow/ green.",
+     "The coffee machine is now fully functional with an open door.",
+     "The key remains locked in the entry."
+    ]
+   },
+   {
+    "t": "Turn the Service key a quarter turn (90°).",
+    "s": []
+   },
+   {
+    "t": "Remove the Service key from the door. Troubleshooting",
+    "s": []
+   }
+  ],
+  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "taal": "en"
+ },
+ {
+  "id": "touchless-software",
+  "titel": "Touchless Interface: software klaarzetten",
+  "brewer": "beide",
+  "machines": [
+   "virtu",
+   "zia",
+   "nio",
+   "lua",
+   "avy",
+   "rosa",
+   "edge",
+   "vareo"
+  ],
+  "interval": "nodig",
+  "intervalTekst": "Eenmalig, voordat je naar de klant gaat.",
+  "doel": "De Touchless Interface laat de klant een drank bestellen door een QR-code op de machine te scannen met zijn telefoon. Daarvoor moeten MoVeC 5.30 of hoger, de bijbehorende interface-versie en twee .ipk-bestanden op de machine komen. Je zet ze thuis of op kantoor op twee lege USB-sticks klaar.",
+  "nodig": [
+   "Twee lege USB-sticks, FAT32 geformatteerd",
+   "Toegang tot 'My DJD' op www.dejongduke.nl",
+   "MoVeC-applicatie 5.30 of hoger",
+   "Flash 3.11 voor dit machinemodel",
+   "Touchless-enable_1.0.ipk",
+   "Restclient-disable_1.0.ipk"
+  ],
+  "let": [
+   {
+    "n": "let op",
+    "t": "Controleer bij de eigenschappen van de stick dat hij echt FAT32 is; met een ander bestandssysteem leest de machine hem niet."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Steek de eerste lege USB-stick in de computer.",
+    "s": []
+   },
+   {
+    "t": "Ga naar www.dejongduke.nl en log in op de 'My DJD'-omgeving.",
+    "s": []
+   },
+   {
+    "t": "Open het tabblad 'Software' van het machinemodel waarop de Touchless Interface komt.",
+    "s": []
+   },
+   {
+    "t": "Open de balk 'MoVeC application' en klik op 'Download ICEQ2 movec application 5.30'.",
+    "s": []
+   },
+   {
+    "t": "Kopieer het gedownloade bestand naar de eerste USB-stick.",
+    "s": []
+   },
+   {
+    "t": "Verwijder de eerste USB-stick veilig uit de computer.",
+    "s": []
+   },
+   {
+    "t": "Steek de tweede lege USB-stick in de computer.",
+    "s": []
+   },
+   {
+    "t": "Open de balk 'MoVeC Flash Interface' en download 'xxxx interface 3.11'.",
+    "s": [
+     "xxxx is de naam van het machinemodel waarop je installeert."
+    ]
+   },
+   {
+    "t": "Open de balk 'Programs' en klik op 'Download touchless ENABLE'.",
+    "s": []
+   },
+   {
+    "t": "Scroll onderaan de pagina naar ConnectMe, open het tabblad 'Software', open de balk 'Activation files' en download 'restclient DISABLE'.",
+    "s": [
+     "Dit bestand zet de standaardverbinding met de ConnectMe-servers uit, die anders elke 5 minuten data verbruikt."
+    ]
+   },
+   {
+    "t": "Kopieer de drie bestanden naar de tweede USB-stick.",
+    "s": []
+   },
+   {
+    "t": "Verwijder de tweede USB-stick veilig uit de computer.",
+    "s": []
+   }
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-installeren",
+  "titel": "Touchless Interface installeren op de machine",
+  "brewer": "beide",
+  "machines": [
+   "virtu",
+   "zia",
+   "nio",
+   "lua",
+   "avy",
+   "rosa",
+   "edge",
+   "vareo"
+  ],
+  "interval": "nodig",
+  "intervalTekst": "Bij de machine, nadat de sticks klaar zijn.",
+  "doel": "De software van beide USB-sticks op de machine zetten, zodat de QR-code op het hoofdscherm verschijnt.",
+  "nodig": [
+   "De twee voorbereide USB-sticks"
+  ],
+  "let": [
+   {
+    "n": "let op",
+    "t": "De machine moet minstens 6 minuten aan staan voordat je met installeren begint."
+   },
+   {
+    "n": "let op",
+    "t": "Installeer eerst de software en pas daarna een eventuele GPRS-dongle. Andersom verbruik je onnodig databundel."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Open de deur van de machine.",
+    "s": [
+     "Bij een Nio hoeft dat niet."
+    ]
+   },
+   {
+    "t": "Steek de eerste USB-stick (met de MoVeC-applicatie) in de USB-poort van de machine.",
+    "s": []
+   },
+   {
+    "t": "De machine begint zelf met de update.",
+    "s": []
+   },
+   {
+    "t": "Volg de aanwijzingen op het scherm en haal daarna de stick uit de machine.",
+    "s": []
+   },
+   {
+    "t": "Steek de tweede USB-stick in de machine.",
+    "s": []
+   },
+   {
+    "t": "De .ipk-bestanden worden automatisch geïnstalleerd.",
+    "s": [
+     "xxxx interface 3.11",
+     "touchless-enable_1.0.ipk",
+     "restclient-disable_1.0.ipk"
+    ]
+   },
+   {
+    "t": "Haal de USB-stick uit de machine.",
+    "s": []
+   },
+   {
+    "t": "Sluit de deur en verlaat het servicemenu.",
+    "s": []
+   },
+   {
+    "t": "De QR-code hoort nu op het hoofdscherm te staan.",
+    "s": []
+   },
+   {
+    "t": "Sluit de machine aan op internet: installeer de GPRS-dongle (hoofdstuk 'Installation of the dongle' in de handleiding) of hang er een netwerkkabel aan.",
+    "s": []
+   },
+   {
+    "t": "Test de Touchless Interface.",
+    "s": []
+   }
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-gprs",
+  "titel": "GPRS-verbinding instellen in het servicemenu",
+  "brewer": "beide",
+  "machines": [
+   "virtu",
+   "zia",
+   "nio",
+   "lua",
+   "avy",
+   "rosa",
+   "edge",
+   "vareo"
+  ],
+  "interval": "nodig",
+  "intervalTekst": "Na het plaatsen van de GPRS-dongle.",
+  "doel": "De dongle aan de praat krijgen: serienummer controleren, pincode en APN invullen en de verbinding nakijken.",
+  "nodig": [
+   "Servicesleutel of toegang tot het hoogste niveau van het servicemenu"
+  ],
+  "let": [
+   {
+    "n": "let op",
+    "t": "Heb je de simkaart niet bij De Jong DUKE besteld, gebruik dan de pincode en APN van je eigen provider."
+   }
+  ],
+  "stappen": [
+   {
+    "t": "Ga het servicemenu in door de deur te openen en log in op het hoogste niveau.",
+    "s": [
+     "Bij een Nio: houd het logo 5 seconden ingedrukt op het touchscreen."
+    ]
+   },
+   {
+    "t": "Kies in het hoofdmenu 'Software-informatie' en controleer of het serienummer op het scherm klopt met het typeplaatje.",
+    "s": [
+     "Klopt het niet, kies dan 'Machine serienummer' in het hoofdmenu en vul het juiste nummer in."
+    ]
+   },
+   {
+    "t": "Kies in het hoofdmenu 'Connectivity' en daarna 'GPRS settings'.",
+    "s": []
+   },
+   {
+    "t": "Vul het veld PIN code: druk eerst op CLEAR, voer 0000 in en kies SAVE.",
+    "s": []
+   },
+   {
+    "t": "Vul het veld APN: druk eerst op CLEAR, voer fast.m2m in en kies SAVE.",
+    "s": []
+   },
+   {
+    "t": "Ga een menu terug, kies 'Connectivity' en dan 'View Network info'. Er moet 'Server connection OK' staan.",
+    "s": [
+     "Het kan een paar minuten duren voordat de verbinding staat."
+    ]
+   }
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-testen",
+  "titel": "Touchless Interface testen",
+  "brewer": "beide",
+  "machines": [
+   "virtu",
+   "zia",
+   "nio",
+   "lua",
+   "avy",
+   "rosa",
+   "edge",
+   "vareo"
+  ],
+  "interval": "nodig",
+  "intervalTekst": "Na installatie, voordat je de klant afmeldt.",
+  "doel": "Controleren of de klant echt een drank kan bestellen met zijn telefoon.",
+  "nodig": [
+   "Een smartphone met camera en internet"
+  ],
+  "let": [],
+  "stappen": [
+   {
+    "t": "Scan de QR-code op de machine met een smartphone.",
+    "s": []
+   },
+   {
+    "t": "De QR-code geeft een link naar een webpagina. Open die link.",
+    "s": []
+   },
+   {
+    "t": "Op de pagina staan de dranken die via de Touchless Interface besteld kunnen worden.",
+    "s": []
+   },
+   {
+    "t": "Kies een drank, zet een beker of kan onder de uitloop en tik op 'Order'.",
+    "s": []
+   },
+   {
+    "t": "De drank wordt afgegeven.",
+    "s": []
+   }
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-storing",
+  "titel": "QR-code zichtbaar maar Touchless werkt niet",
+  "brewer": "beide",
+  "machines": [
+   "virtu",
+   "zia",
+   "nio",
+   "lua",
+   "avy",
+   "rosa",
+   "edge",
+   "vareo"
+  ],
+  "interval": "nodig",
+  "intervalTekst": "Bij een storingsmelding over de Touchless Interface.",
+  "doel": "Wat je zelf nakijkt voordat je technische ondersteuning belt.",
+  "nodig": [],
+  "let": [],
+  "stappen": [
+   {
+    "t": "Herstart de machine: zet hem uit, wacht 10 seconden en zet hem weer aan.",
+    "s": []
+   },
+   {
+    "t": "Wacht minstens 5 minuten en probeer of de Touchless Interface het nu doet.",
+    "s": []
+   },
+   {
+    "t": "Werkt het nog niet, controleer dan de internetverbinding van de dongle.",
+    "s": [
+     "Servicemenu -> Connectivity -> View Network info; er moet 'Server connection OK' staan."
+    ]
+   },
+   {
+    "t": "Controleer of het serienummer in 'Software-informatie' klopt met het typeplaatje.",
+    "s": []
+   },
+   {
+    "t": "Helpt dat niet, bel dan technische ondersteuning.",
+    "s": []
+   }
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
  }
 ]

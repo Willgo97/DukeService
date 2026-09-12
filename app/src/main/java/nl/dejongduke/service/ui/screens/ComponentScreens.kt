@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalLayoutApi::class)
+
 package nl.dejongduke.service.ui.screens
 
 import android.graphics.BitmapFactory
@@ -10,9 +12,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,46 +50,92 @@ import kotlinx.coroutines.withContext
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Component
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.ChipRow
+import nl.dejongduke.service.ui.EmptyState
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 
-/** Titles of the numbered groups, so the list reads as chapters and not as digits. */
-private fun groepNaam(nr: String, catalog: Catalog): String =
-    catalog.components.firstOrNull { it.nr == nr }?.titel ?: when (nr) {
-        "4" -> "Onderdelen"
-        "5" -> "Elektronica"
-        else -> "Hoofdstuk $nr"
-    }
+/**
+ * The order the machine is built in, not the order the books number things:
+ * every manual chapters this differently, so the parser tags each section with
+ * a subject and the list follows that.
+ */
+/** "4.1.16.2" -> 4001600200, so numbers sort the way the book reads. */
+private fun nummer(nr: String): Long =
+    nr.split('.').take(4).fold(0L) { acc, part -> acc * 100 + (part.toLongOrNull() ?: 0L) }
+
+private val VOLGORDE = listOf(
+    "Watersysteem", "Brewer", "Molen", "Mixer", "Ingrediënten", "Verse melk", "Elektronica",
+)
 
 @Composable
-fun ComponentList(catalog: Catalog, onOpen: (Route) -> Unit) {
-    val groups = remember(catalog) {
-        catalog.components.groupBy { it.groep }.toList().sortedBy { (nr, _) ->
-            nr.split('.').map { it.toIntOrNull() ?: 0 }.let { p ->
-                p.getOrElse(0) { 0 } * 10000 + p.getOrElse(1) { 0 } * 100 + p.getOrElse(2) { 0 }
-            }
-        }
+fun ComponentList(
+    catalog: Catalog,
+    filter: String?,
+    onFilter: (String?) -> Unit,
+    onOpen: (Route) -> Unit,
+) {
+    val documented = remember(catalog) {
+        catalog.machines.filter { m -> catalog.components.any { m.id in it.machines } }
+    }
+    val shown = remember(catalog, filter) {
+        catalog.components.filter { filter == null || filter in it.machines }
+    }
+    val groups = remember(shown) {
+        shown.groupBy { it.groep }.toList()
+            .sortedBy { (naam, _) -> VOLGORDE.indexOf(naam).let { if (it < 0) VOLGORDE.size else it } }
+            // Books number the same subject differently, so sort on the number
+            // itself; that keeps the water system running from inlet to boiler
+            // even when two manuals are mixed.
+            .map { (naam, items) -> naam to items.sortedBy { nummer(it.nr) } }
     }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    "Hoe de machine werkt: watersysteem, boilers, ventielen, brewer, molen en elektronica — " +
-                        "met de bijbehorende pagina uit de technische handleiding.",
+                    "Hoe de machine werkt: watersysteem, boilers, ventielen, brewer, molen en " +
+                        "elektronica — met de bijbehorende pagina's uit de technische handleiding.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
+        item {
+            ChipRow(
+                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                    documented.map { it.id as String? to it.naam },
+                selected = filter,
+                onSelect = onFilter,
+            )
+        }
+        item { Spacer(Modifier.height(4.dp)) }
+
+        if (shown.isEmpty()) {
+            item {
+                EmptyState(
+                    "Geen techniek",
+                    "Voor deze machine staat de technische handleiding nog niet in de app.",
+                )
+            }
+        }
+
         groups.forEach { (groep, items) ->
-            item { SectionHeader(groepNaam(groep, catalog), "${items.size}") }
-            items(items, key = { it.nr }) { c ->
-                Card(onClick = { onOpen(Route.Component(c.nr)) }) {
+            item { SectionHeader(groep, "${items.size}") }
+            items(items, key = { it.id }) { c ->
+                Card(onClick = { onOpen(Route.Component(c.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(c.titel, style = MaterialTheme.typography.titleMedium)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(c.titel, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f, false))
+                                // Which brewer this section describes only matters
+                                // while looking across machines.
+                                if (filter == null && c.brewer.isNotEmpty()) {
+                                    Spacer(Modifier.width(8.dp))
+                                    Pill(c.brewer)
+                                }
+                            }
                             Spacer(Modifier.height(2.dp))
                             Text(
                                 c.tekst.take(90).let { if (c.tekst.length > 90) "$it…" else it },
@@ -103,20 +154,25 @@ fun ComponentList(catalog: Catalog, onOpen: (Route) -> Unit) {
 }
 
 @Composable
-fun ComponentDetail(component: Component) {
+fun ComponentDetail(catalog: Catalog, component: Component) {
+    val machines = remember(component) {
+        component.machines.mapNotNull { catalog.machine(it)?.naam }
+    }
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(component.titel, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(10.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Pill(component.nr)
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    if (component.brewer.isNotEmpty()) Pill(component.brewer, selected = true)
+                    machines.forEach { Pill(it) }
                     if (component.pagina > 0) Pill("pagina ${component.pagina}")
                 }
             }
         }
-        if (component.afb.isNotEmpty()) {
-            item { AssetImage(component.afb) }
+        items(component.afbs, key = { it }) { afb ->
+            AssetImage(afb)
+            Spacer(Modifier.height(10.dp))
         }
         item {
             Text(
@@ -139,10 +195,6 @@ fun ComponentDetail(component: Component) {
     }
 }
 
-/**
- * A manual page from the assets, pinch- and drag-able: the schematics carry
- * detail that is unreadable at phone width.
- */
 @Composable
 fun AssetImage(path: String) {
     val context = LocalContext.current

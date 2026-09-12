@@ -44,6 +44,7 @@ data class Fault(
     val melding: String,
     val nl: String,
     val machines: List<String>,
+    val brewers: List<String> = emptyList(),
     val cat: String,
     val oorzaak: String = "",
     val oplossing: List<String> = emptyList(),
@@ -80,6 +81,9 @@ data class Procedure(
     val nodig: List<String> = emptyList(),
     @SerialName("let") val letOp: List<LetOp> = emptyList(),
     val stappen: List<Stap> = emptyList(),
+    val bron: String = "",
+    /** Dutch unless the machine's only manual is English, as with the Uni-Brewer. */
+    val taal: String = "nl",
 )
 
 @Serializable
@@ -140,27 +144,34 @@ data class SpecItem(
 )
 
 /**
- * A component from the technical manual: how it works, and the page it is
- * drawn on. The page render is what an engineer actually wants next to a
+ * A component from the technical manual: how it works, and the pages it is
+ * drawn on. The page renders are what an engineer actually wants next to a
  * schematic description.
+ *
+ * Every brewer has its own book, so the same subject appears more than once --
+ * an open boiler behaves differently behind a Uni-Brewer than behind a CoEx.
+ * [brewer] and [machines] say which machine a section belongs to; [nr] is the
+ * number in its own book and is therefore not unique, [id] is.
  */
 @Serializable
 data class Component(
+    val id: String,
     val nr: String,
     val titel: String,
     val tekst: String,
+    val groep: String = "",
     val pagina: Int = 0,
-    @SerialName("pagina_tot") val paginaTot: Int = 0,
-    val afb: String = "",
+    val afbs: List<String> = emptyList(),
+    val machines: List<String> = emptyList(),
+    val brewer: String = "",
     val bron: String = "",
-) {
-    /** "4.1.2" -> "4.1": the group this component belongs to. */
-    val groep: String get() = nr.substringBeforeLast('.', nr)
-}
+    val taal: String = "nl",
+)
 
 /** One entry of the service menu, as the technical manual documents it. */
 @Serializable
 data class MenuItem(
+    val id: String,
     val nr: String,
     val titel: String,
     val tekst: String,
@@ -176,6 +187,8 @@ data class MenuItem(
     val stappen: List<String> = emptyList(),
     val punten: List<String> = emptyList(),
     val opmerkingen: List<String> = emptyList(),
+    val machines: List<String> = emptyList(),
+    val taal: String = "nl",
 ) {
     /** Chapter 6 is the menu itself, 7 the step-by-step jobs. */
     val hoofdstuk: String get() = nr.substringBefore('.')

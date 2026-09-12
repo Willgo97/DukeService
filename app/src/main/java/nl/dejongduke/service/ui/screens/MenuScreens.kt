@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,17 +28,31 @@ import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.LetOp
 import nl.dejongduke.service.data.MenuItem
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import nl.dejongduke.service.ui.WarnBanner
 
 @Composable
-fun MenuList(catalog: Catalog, onOpen: (Route) -> Unit) {
+fun MenuList(
+    catalog: Catalog,
+    filter: String?,
+    onFilter: (String?) -> Unit,
+    onOpen: (Route) -> Unit,
+) {
     val chapters = listOf(
         "6" to "Servicemenu",
         "7" to "Klussen stap voor stap",
     )
+    val documented = remember(catalog) {
+        catalog.machines.filter { m -> catalog.menu.any { m.id in it.machines } }
+    }
+    // Every book documents the menu of its own machine; without a machine
+    // picked the same topic shows up once per manual.
+    val shown = remember(catalog, filter) {
+        catalog.menu.filter { filter == null || filter in it.machines }
+    }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
@@ -50,12 +65,22 @@ fun MenuList(catalog: Catalog, onOpen: (Route) -> Unit) {
                 )
             }
         }
+        item {
+            ChipRow(
+                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                    documented.map { it.id as String? to it.naam },
+                selected = filter,
+                onSelect = onFilter,
+            )
+        }
+        item { Spacer(Modifier.height(4.dp)) }
+
         chapters.forEach { (nr, naam) ->
-            val items = catalog.menu.filter { it.hoofdstuk == nr }
+            val items = shown.filter { it.hoofdstuk == nr }
             if (items.isEmpty()) return@forEach
             item { SectionHeader(naam, "${items.size}") }
-            items(items, key = { it.nr }) { m ->
-                Card(onClick = { onOpen(Route.MenuItem(m.nr)) }) {
+            items(items, key = { it.id }) { m ->
+                Card(onClick = { onOpen(Route.MenuItem(m.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(m.titel, style = MaterialTheme.typography.titleMedium)
@@ -91,7 +116,7 @@ fun MenuList(catalog: Catalog, onOpen: (Route) -> Unit) {
 }
 
 @Composable
-fun MenuDetail(item: MenuItem) {
+fun MenuDetail(catalog: Catalog, item: MenuItem) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {

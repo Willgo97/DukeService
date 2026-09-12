@@ -1,0 +1,130 @@
+[
+ {
+  "id": "touchless-software",
+  "titel": "Touchless Interface: software klaarzetten",
+  "brewer": "beide",
+  "machines": ["virtu", "zia", "nio", "lua", "avy", "rosa", "edge", "vareo"],
+  "interval": "nodig",
+  "intervalTekst": "Eenmalig, voordat je naar de klant gaat.",
+  "doel": "De Touchless Interface laat de klant een drank bestellen door een QR-code op de machine te scannen met zijn telefoon. Daarvoor moeten MoVeC 5.30 of hoger, de bijbehorende interface-versie en twee .ipk-bestanden op de machine komen. Je zet ze thuis of op kantoor op twee lege USB-sticks klaar.",
+  "nodig": [
+   "Twee lege USB-sticks, FAT32 geformatteerd",
+   "Toegang tot 'My DJD' op www.dejongduke.nl",
+   "MoVeC-applicatie 5.30 of hoger",
+   "Flash 3.11 voor dit machinemodel",
+   "Touchless-enable_1.0.ipk",
+   "Restclient-disable_1.0.ipk"
+  ],
+  "let": [
+   {"n": "let op", "t": "Controleer bij de eigenschappen van de stick dat hij echt FAT32 is; met een ander bestandssysteem leest de machine hem niet."}
+  ],
+  "stappen": [
+   {"t": "Steek de eerste lege USB-stick in de computer.", "s": []},
+   {"t": "Ga naar www.dejongduke.nl en log in op de 'My DJD'-omgeving.", "s": []},
+   {"t": "Open het tabblad 'Software' van het machinemodel waarop de Touchless Interface komt.", "s": []},
+   {"t": "Open de balk 'MoVeC application' en klik op 'Download ICEQ2 movec application 5.30'.", "s": []},
+   {"t": "Kopieer het gedownloade bestand naar de eerste USB-stick.", "s": []},
+   {"t": "Verwijder de eerste USB-stick veilig uit de computer.", "s": []},
+   {"t": "Steek de tweede lege USB-stick in de computer.", "s": []},
+   {"t": "Open de balk 'MoVeC Flash Interface' en download 'xxxx interface 3.11'.", "s": ["xxxx is de naam van het machinemodel waarop je installeert."]},
+   {"t": "Open de balk 'Programs' en klik op 'Download touchless ENABLE'.", "s": []},
+   {"t": "Scroll onderaan de pagina naar ConnectMe, open het tabblad 'Software', open de balk 'Activation files' en download 'restclient DISABLE'.", "s": ["Dit bestand zet de standaardverbinding met de ConnectMe-servers uit, die anders elke 5 minuten data verbruikt."]},
+   {"t": "Kopieer de drie bestanden naar de tweede USB-stick.", "s": []},
+   {"t": "Verwijder de tweede USB-stick veilig uit de computer.", "s": []}
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-installeren",
+  "titel": "Touchless Interface installeren op de machine",
+  "brewer": "beide",
+  "machines": ["virtu", "zia", "nio", "lua", "avy", "rosa", "edge", "vareo"],
+  "interval": "nodig",
+  "intervalTekst": "Bij de machine, nadat de sticks klaar zijn.",
+  "doel": "De software van beide USB-sticks op de machine zetten, zodat de QR-code op het hoofdscherm verschijnt.",
+  "nodig": ["De twee voorbereide USB-sticks"],
+  "let": [
+   {"n": "let op", "t": "De machine moet minstens 6 minuten aan staan voordat je met installeren begint."},
+   {"n": "let op", "t": "Installeer eerst de software en pas daarna een eventuele GPRS-dongle. Andersom verbruik je onnodig databundel."}
+  ],
+  "stappen": [
+   {"t": "Open de deur van de machine.", "s": ["Bij een Nio hoeft dat niet."]},
+   {"t": "Steek de eerste USB-stick (met de MoVeC-applicatie) in de USB-poort van de machine.", "s": []},
+   {"t": "De machine begint zelf met de update.", "s": []},
+   {"t": "Volg de aanwijzingen op het scherm en haal daarna de stick uit de machine.", "s": []},
+   {"t": "Steek de tweede USB-stick in de machine.", "s": []},
+   {"t": "De .ipk-bestanden worden automatisch geïnstalleerd.", "s": ["xxxx interface 3.11", "touchless-enable_1.0.ipk", "restclient-disable_1.0.ipk"]},
+   {"t": "Haal de USB-stick uit de machine.", "s": []},
+   {"t": "Sluit de deur en verlaat het servicemenu.", "s": []},
+   {"t": "De QR-code hoort nu op het hoofdscherm te staan.", "s": []},
+   {"t": "Sluit de machine aan op internet: installeer de GPRS-dongle (hoofdstuk 'Installation of the dongle' in de handleiding) of hang er een netwerkkabel aan.", "s": []},
+   {"t": "Test de Touchless Interface.", "s": []}
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-gprs",
+  "titel": "GPRS-verbinding instellen in het servicemenu",
+  "brewer": "beide",
+  "machines": ["virtu", "zia", "nio", "lua", "avy", "rosa", "edge", "vareo"],
+  "interval": "nodig",
+  "intervalTekst": "Na het plaatsen van de GPRS-dongle.",
+  "doel": "De dongle aan de praat krijgen: serienummer controleren, pincode en APN invullen en de verbinding nakijken.",
+  "nodig": ["Servicesleutel of toegang tot het hoogste niveau van het servicemenu"],
+  "let": [
+   {"n": "let op", "t": "Heb je de simkaart niet bij De Jong DUKE besteld, gebruik dan de pincode en APN van je eigen provider."}
+  ],
+  "stappen": [
+   {"t": "Ga het servicemenu in door de deur te openen en log in op het hoogste niveau.", "s": ["Bij een Nio: houd het logo 5 seconden ingedrukt op het touchscreen."]},
+   {"t": "Kies in het hoofdmenu 'Software-informatie' en controleer of het serienummer op het scherm klopt met het typeplaatje.", "s": ["Klopt het niet, kies dan 'Machine serienummer' in het hoofdmenu en vul het juiste nummer in."]},
+   {"t": "Kies in het hoofdmenu 'Connectivity' en daarna 'GPRS settings'.", "s": []},
+   {"t": "Vul het veld PIN code: druk eerst op CLEAR, voer 0000 in en kies SAVE.", "s": []},
+   {"t": "Vul het veld APN: druk eerst op CLEAR, voer fast.m2m in en kies SAVE.", "s": []},
+   {"t": "Ga een menu terug, kies 'Connectivity' en dan 'View Network info'. Er moet 'Server connection OK' staan.", "s": ["Het kan een paar minuten duren voordat de verbinding staat."]}
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-testen",
+  "titel": "Touchless Interface testen",
+  "brewer": "beide",
+  "machines": ["virtu", "zia", "nio", "lua", "avy", "rosa", "edge", "vareo"],
+  "interval": "nodig",
+  "intervalTekst": "Na installatie, voordat je de klant afmeldt.",
+  "doel": "Controleren of de klant echt een drank kan bestellen met zijn telefoon.",
+  "nodig": ["Een smartphone met camera en internet"],
+  "let": [],
+  "stappen": [
+   {"t": "Scan de QR-code op de machine met een smartphone.", "s": []},
+   {"t": "De QR-code geeft een link naar een webpagina. Open die link.", "s": []},
+   {"t": "Op de pagina staan de dranken die via de Touchless Interface besteld kunnen worden.", "s": []},
+   {"t": "Kies een drank, zet een beker of kan onder de uitloop en tik op 'Order'.", "s": []},
+   {"t": "De drank wordt afgegeven.", "s": []}
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ },
+ {
+  "id": "touchless-storing",
+  "titel": "QR-code zichtbaar maar Touchless werkt niet",
+  "brewer": "beide",
+  "machines": ["virtu", "zia", "nio", "lua", "avy", "rosa", "edge", "vareo"],
+  "interval": "nodig",
+  "intervalTekst": "Bij een storingsmelding over de Touchless Interface.",
+  "doel": "Wat je zelf nakijkt voordat je technische ondersteuning belt.",
+  "nodig": [],
+  "let": [],
+  "stappen": [
+   {"t": "Herstart de machine: zet hem uit, wacht 10 seconden en zet hem weer aan.", "s": []},
+   {"t": "Wacht minstens 5 minuten en probeer of de Touchless Interface het nu doet.", "s": []},
+   {"t": "Werkt het nog niet, controleer dan de internetverbinding van de dongle.", "s": ["Servicemenu -> Connectivity -> View Network info; er moet 'Server connection OK' staan."]},
+   {"t": "Controleer of het serienummer in 'Software-informatie' klopt met het typeplaatje.", "s": []},
+   {"t": "Helpt dat niet, bel dan technische ondersteuning.", "s": []}
+  ],
+  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "taal": "nl"
+ }
+]

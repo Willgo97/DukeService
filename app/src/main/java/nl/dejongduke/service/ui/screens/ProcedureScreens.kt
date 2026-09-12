@@ -111,6 +111,9 @@ fun ProcedureDetail(
                     Pill(intervalLabel(procedure.interval))
                     if (procedure.brewer.isNotEmpty()) Pill(procedure.brewer)
                     Pill(catalog.machineNames(procedure.machines))
+                    // Of this machine there is no Dutch manual; say so rather
+                    // than let the engineer wonder about the translation.
+                    if (procedure.taal == "en") Pill("Engelse tekst")
                 }
             }
         }
@@ -220,6 +223,16 @@ fun ProcedureDetail(
                         }
                     }
                 }
+            }
+        }
+        if (procedure.bron.isNotEmpty()) {
+            item {
+                Text(
+                    "Bron: ${procedure.bron}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+                )
             }
         }
         item { Spacer(Modifier.height(32.dp)) }

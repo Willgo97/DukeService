@@ -231,9 +231,9 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
 
         Route.Procedures -> ProcedureList(cat, filter, vm::setFilter, vm::open)
 
-        Route.Components -> ComponentList(cat, vm::open)
+        Route.Components -> ComponentList(cat, filter, vm::setFilter, vm::open)
 
-        Route.Servicemenu -> MenuList(cat, vm::open)
+        Route.Servicemenu -> MenuList(cat, filter, vm::setFilter, vm::open)
 
         Route.Scan -> {
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
@@ -260,13 +260,13 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
         }
 
         is Route.MenuItem -> {
-            val item = cat.menuItem(route.nr)
-            if (item != null) MenuDetail(item)
+            val item = cat.menuItem(route.id)
+            if (item != null) MenuDetail(cat, item)
         }
 
         is Route.Component -> {
-            val component = cat.component(route.nr)
-            if (component != null) ComponentDetail(component)
+            val component = cat.component(route.id)
+            if (component != null) ComponentDetail(cat, component)
         }
 
         is Route.Machine -> {
