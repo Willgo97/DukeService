@@ -2,6 +2,7 @@ package nl.dejongduke.service
 
 import kotlinx.serialization.json.Json
 import nl.dejongduke.service.data.Catalog
+import nl.dejongduke.service.data.Content
 import nl.dejongduke.service.data.Fault
 import nl.dejongduke.service.data.Machine
 import nl.dejongduke.service.data.Part
@@ -27,7 +28,7 @@ class ScannerTest {
     private val catalog by lazy {
         Catalog(
             machines = read<List<Machine>>("machines.json"),
-            faults = read<List<Fault>>("faults.json"),
+            faults = read<Content>("content-nl.json").faults,
             procedures = emptyList(),
             parts = read<List<Part>>("parts.json"),
             specs = emptyList(),

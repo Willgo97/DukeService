@@ -34,10 +34,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.ui.Pill
 
@@ -96,11 +98,11 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                         )
                         Spacer(Modifier.width(14.dp))
                     }
-                    if (done.contains(index)) Pill("afgevinkt")
+                    if (done.contains(index)) Pill(stringResource(R.string.afgevinkt))
                 }
                 Spacer(Modifier.height(10.dp))
                 step.points.forEach { point ->
-                    Text("•  $point", style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.x_6, point), style = MaterialTheme.typography.headlineSmall)
                     Spacer(Modifier.height(10.dp))
                 }
                 step.notes.forEach { note ->
@@ -139,7 +141,7 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                 ) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, null, Modifier.height(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("Terug")
+                    Text(stringResource(R.string.terug))
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -163,7 +165,7 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                         null, Modifier.height(18.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text(if (pager.currentPage == steps.size - 1) "Klaar" else "Volgende")
+                    Text(if (pager.currentPage == steps.size - 1) stringResource(R.string.klaar) else stringResource(R.string.volgende))
                 }
             }
         }
@@ -177,7 +179,7 @@ private fun EmptyStepState() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text("Geen stappen", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.geen_stappen), style = MaterialTheme.typography.titleMedium)
     }
 }
 

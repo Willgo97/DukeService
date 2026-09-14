@@ -188,6 +188,23 @@ data class MenuItem(
     val chapter: String get() = number.substringBefore('.')
 }
 
+/**
+ * Everything that is written in a language, for one language.
+ *
+ * The manuals exist in nine; the app ships one file per language and reads the
+ * one the engineer asked for, falling back to English where a book was never
+ * translated.
+ */
+@Serializable
+data class Content(
+    val faults: List<Fault> = emptyList(),
+    val components: List<Component> = emptyList(),
+    val menu: List<MenuItem> = emptyList(),
+    val procedures: List<Procedure> = emptyList(),
+    val specs: List<SpecGroup> = emptyList(),
+    val views: List<MachineView> = emptyList(),
+)
+
 /** A view of the machine with the numbered call-outs that belong to it. */
 @Serializable
 data class MachineView(
@@ -236,32 +253,3 @@ data class MaintenanceStep(
     @SerialName("a") val images: List<String> = emptyList(),
 )
 
-/** One of the manufacturer's books, so the app can name its source. */
-@Serializable
-data class Book(
-    val id: String,
-    val kind: String = "",
-    val brand: String = "",
-    val code: String = "",
-    val brewer: String = "",
-    val cabinet: String = "",
-    val language: String = "",
-    val version: String = "",
-    val number: String = "",
-    val pages: Int = 0,
-    val title: String = "",
-    val file: String = "",
-    val superseded: Boolean = false,
-) {
-    val kindName: String
-        get() = when (kind) {
-            "TM" -> "Technische handleiding"
-            "SMI" -> "Onderhoudskaart"
-            "UM" -> "Gebruikershandleiding"
-            "QSG" -> "Snelstartgids"
-            "SPM" -> "Onderdelenboek"
-            "IM" -> "Installatiehandleiding"
-            "BR" -> "Brochure"
-            else -> kind
-        }
-}

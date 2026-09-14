@@ -24,13 +24,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Procedure
 import nl.dejongduke.service.ui.ActionRow
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.languageName
+import nl.dejongduke.service.ui.appLanguage
+import nl.dejongduke.service.ui.count
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
@@ -39,12 +44,13 @@ import nl.dejongduke.service.ui.WarnBanner
 
 private val intervalOrder = listOf("dag", "week", "maand", "halfjaar", "nodig")
 
+@Composable
 private fun intervalLabel(key: String) = when (key) {
-    "dag" -> "Dagelijks"
-    "week" -> "Wekelijks"
-    "maand" -> "Maandelijks"
-    "halfjaar" -> "Halfjaarlijks"
-    else -> "Wanneer nodig"
+    "dag" -> stringResource(R.string.dagelijks)
+    "week" -> stringResource(R.string.wekelijks)
+    "maand" -> stringResource(R.string.maandelijks)
+    "halfjaar" -> stringResource(R.string.halfjaarlijks)
+    else -> stringResource(R.string.wanneer_nodig)
 }
 
 @Composable
@@ -62,7 +68,7 @@ fun ProcedureList(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -88,7 +94,7 @@ fun ProcedureList(
                         }
                         Spacer(Modifier.height(8.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Pill("${procedures.steps.size} stappen")
+                            Pill(count(R.plurals.n_steps, procedures.steps.size))
                             if (procedures.brewer.isNotEmpty() && procedures.brewer != "beide") Pill(procedures.brewer)
                         }
                     }
@@ -107,6 +113,7 @@ fun ProcedureDetail(
     onPin: (String) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
+    val spelled = intervalLabel(procedure.interval)
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -118,14 +125,16 @@ fun ProcedureDetail(
                     Pill(catalog.machineNames(procedure.machines))
                     // Of this machine there is no Dutch manual; say so rather
                     // than let the engineer wonder about the translation.
-                    if (procedure.language == "en") Pill("Engelse tekst")
+                    // The manuals were not all translated; say so rather than
+                    // leave the reader wondering why this one is in English.
+                    if (procedure.language != appLanguage()) Pill(languageName(procedure.language))
                 }
                 if (procedure.steps.isNotEmpty()) {
                     Spacer(Modifier.height(12.dp))
                     FilledTonalButton(onClick = { onOpen(Route.Steps("procedure", procedure.id)) }) {
                         Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
                         Spacer(Modifier.width(8.dp))
-                        Text("Stap voor stap")
+                        Text(stringResource(R.string.stap_voor_stap))
                     }
                 }
             }
@@ -154,14 +163,15 @@ fun ProcedureDetail(
                     if (procedure.intervalText.isNotEmpty()) appendLine(procedure.intervalText)
                     appendLine()
                     procedure.steps.forEachIndexed { i, step -> appendLine("${i + 1}. ${step.text}") }
-                    append("— DUKE Service")
+                    append(stringResource(R.string.duke_service))
                 },
             )
         }
 
-        if (procedure.intervalText.isNotEmpty() &&
-            !procedure.intervalText.equals(intervalLabel(procedure.interval), ignoreCase = true)
-        ) {
+        // The chip above already carries the interval; only spell it out when
+        // the manual says something the chip does not.
+        val intervalText = procedure.intervalText
+        if (intervalText.isNotEmpty() && !intervalText.equals(spelled, ignoreCase = true)) {
             item {
                 Text(
                     procedure.intervalText,
@@ -173,7 +183,7 @@ fun ProcedureDetail(
         }
 
         if (procedure.purpose.isNotEmpty()) {
-            item { SectionHeader("Waarom") }
+            item { SectionHeader(stringResource(R.string.waarom)) }
             item {
                 Text(
                     procedure.purpose,
@@ -184,7 +194,7 @@ fun ProcedureDetail(
         }
 
         if (procedure.needed.isNotEmpty()) {
-            item { SectionHeader("Nodig") }
+            item { SectionHeader(stringResource(R.string.nodig)) }
             item {
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     procedure.needed.forEach { item ->
@@ -212,7 +222,7 @@ fun ProcedureDetail(
         }
 
         if (procedure.steps.isNotEmpty()) {
-            item { SectionHeader("Stappen", "${procedure.steps.size}") }
+            item { SectionHeader(stringResource(R.string.stappen), "${procedure.steps.size}") }
             items(procedure.steps.size) { index ->
                 val step = procedure.steps[index]
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 7.dp)) {
@@ -252,7 +262,7 @@ fun ProcedureDetail(
         if (procedure.source.isNotEmpty()) {
             item {
                 Text(
-                    "Bron: ${procedure.source}",
+                    stringResource(R.string.bron_x_3, procedure.source),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

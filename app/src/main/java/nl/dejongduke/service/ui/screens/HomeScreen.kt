@@ -18,10 +18,10 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ListAlt
-import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.Memory
+import androidx.compose.material.icons.filled.Straighten
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.WarningAmber
@@ -33,12 +33,15 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.count
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
@@ -64,7 +67,7 @@ fun LazyListScope.homeSections(
     // are then one tap away instead of four.
     val machine = filter?.let { catalog.machine(it) }
     if (machine != null) {
-        item { SectionHeader("Deze machine") }
+        item { SectionHeader(stringResource(R.string.deze_machine)) }
         item {
             Card {
                 Column {
@@ -96,7 +99,7 @@ fun LazyListScope.homeSections(
                                 maxLines = 2,
                             )
                         }
-                        TextButton(onClick = { onFilter(null) }) { Text("Alle") }
+                        TextButton(onClick = { onFilter(null) }) { Text(stringResource(R.string.alle)) }
                     }
                 }
             }
@@ -104,24 +107,24 @@ fun LazyListScope.homeSections(
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Tile(Icons.Filled.CleaningServices, "Onderhoud",
-                         "${catalog.cardsFor(machine.id, variant).size} kaarten",
+                    Tile(Icons.Filled.CleaningServices, stringResource(R.string.onderhoud),
+                         count(R.plurals.n_cards, catalog.cardsFor(machine.id, variant).size),
                          Modifier.weight(1f)) { onTab(Tab.Maintenance) }
-                    Tile(Icons.Filled.Build, "Onderdelen",
-                         "${catalog.partCount(machine.id, variant)} regels",
+                    Tile(Icons.Filled.Build, stringResource(R.string.onderdelen),
+                         count(R.plurals.n_rows, catalog.partCount(machine.id, variant)),
                          Modifier.weight(1f)) { onTab(Tab.Parts) }
                 }
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Tile(Icons.Filled.WarningAmber, "Storingen",
+                    Tile(Icons.Filled.WarningAmber, stringResource(R.string.storingen),
                          "${catalog.faultGroups.count { group ->
                              machine.id in group.machines &&
                                  group.variants.any { catalog.forVariant(it.codes, variant) }
                          }} meldingen",
                          Modifier.weight(1f)) { onTab(Tab.Faults) }
-                    Tile(Icons.AutoMirrored.Filled.MenuBook, "Handleidingen",
-                         "${catalog.booksFor(machine.id, variant).size} boeken",
-                         Modifier.weight(1f)) { onOpen(Route.Books) }
+                    Tile(Icons.Filled.Memory, stringResource(R.string.techniek),
+                         count(R.plurals.n_parts, catalog.components.count { machine.id in it.machines }),
+                         Modifier.weight(1f)) { onOpen(Route.Components) }
                 }
             }
         }
@@ -145,7 +148,7 @@ fun LazyListScope.homeSections(
         }
     }
     if (pinned.isNotEmpty()) {
-        item { SectionHeader("Vastgezet", "${pinned.size}") }
+        item { SectionHeader(stringResource(R.string.vastgezet), "${pinned.size}") }
         items(pinned.size) { index ->
             val (icon, title, route) = pinned[index]
             Card(onClick = { onOpen(route) }) {
@@ -159,39 +162,42 @@ fun LazyListScope.homeSections(
     }
 
     // --- the four ways in -------------------------------------------------
-    item { SectionHeader(if (machine == null) "Waar wil je heen" else "Alles") }
+    item { SectionHeader(if (machine == null) stringResource(R.string.waar_wil_je_heen) else stringResource(R.string.alles)) }
     item {
         Column(Modifier.padding(horizontal = 12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Tile(Icons.Filled.WarningAmber, "Storingen",
-                    "${catalog.faultGroups.size} meldingen", Modifier.weight(1f)) {
+                Tile(Icons.Filled.WarningAmber, stringResource(R.string.storingen),
+                    count(R.plurals.n_messages, catalog.faultGroups.size), Modifier.weight(1f)) {
                     onTab(Tab.Faults)
                 }
-                Tile(Icons.Filled.Memory, "Techniek",
-                    "${catalog.components.size} onderdelen", Modifier.weight(1f)) {
+                Tile(Icons.Filled.Memory, stringResource(R.string.techniek),
+                    count(R.plurals.n_parts, catalog.components.size), Modifier.weight(1f)) {
                     onOpen(Route.Components)
                 }
             }
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Tile(Icons.Filled.Tune, "Servicemenu",
-                    "${catalog.menu.size} onderwerpen", Modifier.weight(1f)) {
+                Tile(Icons.Filled.Tune, stringResource(R.string.servicemenu),
+                    count(R.plurals.n_topics, catalog.menu.size), Modifier.weight(1f)) {
                     onOpen(Route.ServiceMenu)
                 }
-                Tile(Icons.Filled.Build, "Onderdelen",
-                    "${catalog.parts.size} regels", Modifier.weight(1f)) {
+                Tile(Icons.Filled.Build, stringResource(R.string.onderdelen),
+                    // The parts table is read after the app is already usable;
+                    // "0 rows" would read as an empty book.
+                    if (catalog.parts.isEmpty()) stringResource(R.string.bezig)
+                    else count(R.plurals.n_rows, catalog.parts.size), Modifier.weight(1f)) {
                     onTab(Tab.Parts)
                 }
             }
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Tile(Icons.Filled.CleaningServices, "Onderhoudskaarten",
-                    "${catalog.cards.size} kaarten", Modifier.weight(1f)) {
+                Tile(Icons.Filled.CleaningServices, stringResource(R.string.onderhoudskaarten),
+                    count(R.plurals.n_cards, catalog.cards.size), Modifier.weight(1f)) {
                     onOpen(Route.Cards)
                 }
-                Tile(Icons.AutoMirrored.Filled.MenuBook, "Handleidingen",
-                    "${catalog.books.size} boeken", Modifier.weight(1f)) {
-                    onOpen(Route.Books)
+                Tile(Icons.Filled.Straighten, stringResource(R.string.technische_gegevens),
+                    count(R.plurals.n_tables, catalog.specs.size), Modifier.weight(1f)) {
+                    onOpen(Route.Specs)
                 }
             }
         }
@@ -228,26 +234,25 @@ private fun Tile(
 /** A short "what is in here" line for the bottom of the home screen. */
 @OptIn(ExperimentalLayoutApi::class)
 fun LazyListScope.catalogSummary(catalog: Catalog) {
-    item { SectionHeader("In deze app") }
+    item { SectionHeader(stringResource(R.string.in_deze_app)) }
     item {
         FlowRow(
             Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            Pill("${catalog.faultGroups.size} storingen")
-            Pill("${catalog.procedures.count { it.steps.isNotEmpty() }} procedures")
-            Pill("${catalog.cards.size} onderhoudskaarten")
-            Pill("${catalog.books.size} handleidingen")
-            Pill("${catalog.components.size} componenten")
-            Pill("${catalog.menu.size} servicemenu")
-            Pill("${catalog.parts.size} onderdelen")
-            Pill("${catalog.machines.size} machines")
+            Pill(count(R.plurals.n_faults, catalog.faultGroups.size))
+            Pill(count(R.plurals.n_procedures, catalog.procedures.count { it.steps.isNotEmpty() }))
+            Pill(count(R.plurals.n_maintenance_cards, catalog.cards.size))
+            Pill(count(R.plurals.n_parts, catalog.components.size))
+            Pill(count(R.plurals.n_topics, catalog.menu.size))
+            Pill(count(R.plurals.n_parts, catalog.parts.size))
+            Pill(stringResource(R.string.machines_x, catalog.machines.size))
         }
     }
     item {
         Text(
-            "Alles offline. Gebouwd uit de handleidingen, onderdelenboeken en technische documentatie.",
+            stringResource(R.string.alles_offline_gebouwd_uit_de_handleidingen_o),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 14.dp),

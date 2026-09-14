@@ -1,6 +1,7 @@
 package nl.dejongduke.service.ui
 
 import android.app.Application
+import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -11,18 +12,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
+import nl.dejongduke.service.data.Locales
 import nl.dejongduke.service.data.Prefs
 import nl.dejongduke.service.data.SearchResult
 import nl.dejongduke.service.ui.theme.ThemeMode
 import java.time.LocalDate
 
-enum class Tab(val label: String) {
-    Search("Zoek"),
-    Faults("Storingen"),
-    Maintenance("Onderhoud"),
-    Parts("Onderdelen"),
-    Machines("Machines"),
+enum class Tab(@StringRes val label: Int) {
+    Search(R.string.zoek),
+    Faults(R.string.storingen),
+    Maintenance(R.string.onderhoud),
+    Parts(R.string.onderdelen),
+    Machines(R.string.machines),
 }
 
 sealed interface Route {
@@ -34,7 +37,6 @@ sealed interface Route {
     /** A job walked through one step at a time; kind is "card" or "procedure". */
     data class Steps(val kind: String, val id: String) : Route
     data object Cards : Route
-    data object Books : Route
     data class Component(val id: String) : Route
     data object Components : Route
     data class MenuItem(val id: String) : Route
@@ -85,7 +87,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _recent = MutableStateFlow(prefs.recent())
     val recent: StateFlow<List<String>> = _recent.asStateFlow()
 
-    private val _messageLanguage = MutableStateFlow(prefs.messageLanguage)
+    // Dutch leads on a fault card for a Dutch engineer; everyone else reads the
+    // message the way it stands on the machine, which is English.
+    private val _messageLanguage = MutableStateFlow(
+        prefs.messageLanguage ?: if (Locales.wanted(app) == "nl") "nl" else "en")
     val messageLanguage: StateFlow<String> = _messageLanguage.asStateFlow()
 
     private val _scanDirect = MutableStateFlow(prefs.scanDirect)
@@ -99,9 +104,39 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     )
     val notes: StateFlow<Map<String, String>> = _notes.asStateFlow()
 
+    /** The language everything is read in: the setting, else the phone's. */
+    private val _language = MutableStateFlow(Locales.wanted(app))
+    val language: StateFlow<String> = _language.asStateFlow()
+
+    /** Null follows the phone; the activity restarts itself to re-read its
+     *  resources, the content is reloaded here. */
+    fun setLanguage(code: String?) {
+        prefs.language = code
+        _languageSetting.value = code
+        val wanted = code ?: Locales.device()
+        if (wanted == _language.value) return
+        _language.value = wanted
+        // Unless it was set by hand, which message leads follows the app.
+        if (prefs.messageLanguage == null) {
+            _messageLanguage.value = if (wanted == "nl") "nl" else "en"
+        }
+        load()
+    }
+
+    /** What the setting itself is set to, which is not the same as [language]:
+     *  null means the phone decides. */
+    private val _languageSetting = MutableStateFlow(prefs.language)
+    val languageSetting: StateFlow<String?> = _languageSetting.asStateFlow()
+
     init {
+        load()
+    }
+
+    private fun load() {
         viewModelScope.launch {
-            val loaded = withContext(Dispatchers.IO) { Catalog.load(getApplication()) }
+            val loaded = withContext(Dispatchers.IO) {
+                Catalog.load(getApplication(), _language.value)
+            }
             _catalog.value = loaded
             // The parts table is five megabytes; the app is usable without it.
             // Both the reading and the indexing that follows belong off the

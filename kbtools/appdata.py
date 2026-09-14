@@ -8,6 +8,7 @@ only added to. Everything that was generated is generated again, now from all
 
 Writes app/src/main/assets/
 """
+import glob
 import io
 import json
 import os
@@ -20,26 +21,52 @@ from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import BUILD, KB, MODEL_CODES, ROOT, read_json, write_json
+from text import clean, prose
 
 ASSETS = os.path.join(ROOT, "app", "src", "main", "assets")
 DATA = os.path.join(ROOT, "data")
 LANG = ["NL", "EN", "DE"]
+# The manuals exist in nine languages, so the app does too. The key is the
+# Android locale, the value the language code the knowledge base uses.
+LOCALES = {"nl": "NL", "en": "EN", "de": "DE", "fr": "FRCA", "sv": "SV",
+           "no": "NO", "da": "DA", "fi": "FI", "cs": "CZ"}
+# The other way round: the knowledge base says FRCA and CZ, Android says fr and cs.
+LOCALE_OF = {code.lower(): locale for locale, code in LOCALES.items()}
 # How wide a picture needs to be on a phone.
 WIDTH = {"tek": 1400, "img": 900, "stap": 700}
 QUALITY = {"tek": 78, "img": 74, "stap": 74}
 
 
 def first(mapping, langs=LANG):
-    """Dutch if the manual has it, otherwise English."""
+    """The wanted language if the manual has it, otherwise English, otherwise Dutch."""
     if not isinstance(mapping, dict):
         return mapping, "nl"
     for lang in langs:
         if mapping.get(lang):
-            return mapping[lang], lang.lower()
+            return mapping[lang], LOCALE_OF.get(lang.lower(), lang.lower())
     for lang, value in mapping.items():
         if value:
-            return value, lang.lower()
+            return value, LOCALE_OF.get(lang.lower(), lang.lower())
     return None, "nl"
+
+
+def heading(topic, langs, fallback):
+    """The section heading in the reader's language.
+
+    Topics carry one title, in whichever language the book was first read in;
+    a Finnish engineer should not be looking at a Dutch heading. The body text
+    per language starts with that language's own heading, so it is taken from
+    there and the section number in front of it dropped.
+    """
+    text, _ = first(topic.get("text") or {}, langs)
+    if not text:
+        return fallback
+    line = clean(text.split("\n", 1)[0])
+    line = re.sub(r"^\d+(\.\d+)*\.?\s*", "", line).strip()
+    # A section without its own heading starts straight into a sentence.
+    if not line or len(line) > 80 or line.endswith("."):
+        return fallback
+    return line
 
 
 def brand_of(product_id):
@@ -155,54 +182,62 @@ def build_machines(products, pictures):
     return out
 
 
-def build_books(documents):
-    """The source books, so the app can say where something comes from."""
-    out = []
-    for d in documents:
-        out.append(dict(
-            id=d["doc_id"], kind=d.get("doctype") or "", brand=d.get("brand") or "",
-            code=d.get("model_code") or "", brewer=d.get("brewer") or "",
-            cabinet=d.get("size") or "", language=(d.get("lang") or "").lower(),
-            version=d.get("version") or d.get("doc_date") or "",
-            number=d.get("doc_code") or d.get("series_code") or "",
-            pages=d.get("pages") or 0,
-            title=d.get("pdf_title") or os.path.basename(d.get("path", "")),
-            file=os.path.basename(d.get("path", "")),
-            superseded=bool(d.get("superseded_by"))))
-    return out
+def build_faults(kb_faults, langs=LANG):
+    """Screen messages in one language, with the hand-written notes kept.
 
+    The Dutch texts in data/faults.json are written by hand and stay the Dutch
+    version. For the other eight languages the manufacturer's own translation
+    of the same message is used, with the curation — which category it is,
+    whether the operator can solve it, which procedure belongs to it — carried
+    over, because that part is not language-bound.
+    """
+    dutch_first = bool(langs) and langs[0] == "NL"
+    out = [dict(f, codes=f.get("codes", [])) for f in
+           read_json(os.path.join(DATA, "faults.json"), [])]
 
-def build_faults(kb_faults):
-    """Curated Dutch messages first, then everything the books add to them."""
-    curated = read_json(os.path.join(DATA, "faults.json"), [])
-    seen = {re.sub(r"\W+", "", (f.get("message") or "").lower()) for f in curated}
-    out = []
-    for f in curated:
-        f.setdefault("codes", [])
-        out.append(f)
+    def key_of(text):
+        return re.sub(r"\W+", "", (text or "").lower())
+
+    by_key = {key_of(f["message"]): f for f in out}
+
     for topic in sorted(kb_faults, key=lambda t: t["number"] or ""):
         english, _ = first(topic["message"], ["EN"])
-        dutch, lang = first(topic["message"])
-        message = english or dutch or topic["title"]
-        key = re.sub(r"\W+", "", message.lower())
-        if key in seen:
-            hit = next((f for f in out if re.sub(r"\W+", "", f["message"].lower()) == key), None)
-            if hit is not None:
-                hit["codes"] = sorted(set(hit.get("codes", [])) | set(codes(topic["applies_to"])))
-                hit["machines"] = sorted(set(hit["machines"]) | set(brands(topic["applies_to"])))
+        local, lang = first(topic["message"], langs)
+        message = clean(english or local or topic["title"])
+        cause, _ = first(topic["cause"], langs)
+        solution, _ = first(topic["solution"], langs) or ([], "")
+        notes, _ = first(topic["notes"], langs) or ([], "")
+        cause = clean(cause or "")
+        solution = [clean(s) for s in (solution or [])]
+        note = clean(" ".join(n["text"] for n in (notes or []))[:400])
+        local = clean(local or "")
+        machines = brands(topic["applies_to"])
+        model_codes = codes(topic["applies_to"])
+
+        row = by_key.get(key_of(message))
+        if row is not None:
+            row["codes"] = sorted(set(row["codes"]) | set(model_codes))
+            row["machines"] = sorted(set(row["machines"]) | set(machines))
+            if not dutch_first:
+                # The manufacturer translated this message themselves.
+                row["dutch"] = local or message
+                if cause:
+                    row["cause"] = cause
+                if solution:
+                    row["solution"] = solution
+                row["note"] = note
+                row["engineerNote"] = ""
+                row["language"] = lang
             continue
-        seen.add(key)
-        cause, _ = first(topic["cause"])
-        solution, _ = first(topic["solution"]) or ([], "nl")
-        notes, _ = first(topic["notes"]) or ([], "nl")
-        out.append(dict(
-            message=message, dutch=dutch or message, machines=brands(topic["applies_to"]),
-            codes=codes(topic["applies_to"]), brewers=[], category=category(message),
-            cause=cause or "", solution=solution or [],
-            note=" ".join(n["text"] for n in (notes or []))[:400],
+
+        by_key[key_of(message)] = row = dict(
+            message=message, dutch=local or message, machines=machines,
+            codes=model_codes, brewers=[], category=category(message),
+            cause=cause or "", solution=solution or [], note=note,
             selfService=False,
-            source=topic["number"] + " " + (topic["sources"] or [""])[0],
-            language=lang))
+            source=(topic["number"] or "") + " " + (topic["sources"] or [""])[0],
+            language=lang)
+        out.append(row)
     return out
 
 
@@ -224,24 +259,56 @@ def category(message):
     return "Overig"
 
 
-def build_components(kb_components, pictures):
+# Which subject a section belongs to, from where it sits in the manual:
+# 4.1 is the water system, 4.2 the brewer, 5 the electronics.
+GROUPS = [("5", "electronics"), ("4.1", "water"), ("4.2", "brewer"), ("4.3", "grinder"),
+          ("4.4", "mixer"), ("4.5", "ingredients"), ("4.6", "ingredients")]
+
+
+def component_group(topic):
+    if topic["kind"] == "electronics":
+        return "electronics"
+    title = (topic.get("title") or "").lower()
+    if "melk" in title or "milk" in title:
+        return "milk"
+    number = topic.get("number") or ""
+    for prefix, name in GROUPS:
+        if number == prefix or number.startswith(prefix + "."):
+            return name
+    return "other"
+
+
+def has_body(topic, minimum=25):
+    """Whether any language has something to read.
+
+    Decided over all languages at once, not per language: the same sections
+    have to be in the app whatever it is set to, or a screen that exists in
+    Dutch would be missing in Finnish — and a link to it would dead-end.
+    """
+    return any(len((body or "").strip()) >= minimum
+               for body in (topic.get("body") or {}).values())
+
+
+def build_components(kb_components, pictures, langs=LANG):
     out = []
     for topic in kb_components:
         # The body is the section minus its own heading. A chapter that only
         # introduces its subsections has none, and would otherwise show up as a
         # component whose whole text is its own title.
-        text, lang = first(topic["body"])
-        if not text or len(text.strip()) < 25:
+        if not has_body(topic):
             continue
+        text, lang = first(topic["body"], langs)
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         out.append(dict(
-            id=topic["id"], number=topic["number"] or "", title=topic["title"],
-            text=text, group=topic.get("group") or "component",
+            id=topic["id"], number=topic["number"] or "",
+            title=heading(topic, langs, topic["title"]),
+            text=prose(text or ""), group=component_group(topic),
             page=0, images=[i for i in images if i],
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
             brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
                                      for c in codes(topic["applies_to"])} - {""})),
-            source=(topic["sources"] or [""])[0], language=lang))
+            source=(topic["sources"] or [""])[0], language=lang,
+            key=topic["title"], size=sum(len(v or "") for v in topic["body"].values())))
     return label_duplicates(out)
 
 
@@ -261,7 +328,9 @@ def label_duplicates(rows, extra=None):
     title, which is no help when you are looking at a list of them.
     """
     def key_of(row):
-        return (row["title"], tuple(row["machines"]),
+        # The title is translated, so it cannot decide what counts as the same
+        # row: that has to come out the same in all nine languages.
+        return (row.get("key") or row["title"], tuple(row["machines"]),
                 row.get(extra, "") if extra else "")
 
     groups = defaultdict(list)
@@ -278,59 +347,76 @@ def label_duplicates(rows, extra=None):
             # ("2-way outlet valve (Open boiler)"); a second one reads badly.
             row["title"] = (f"{row['title']} — {label}" if row["title"].endswith(")")
                             else f"{row['title']} ({label})")
+            # What was told apart here has to stay apart below, in every
+            # language: the key carries the same distinction as the title.
+            row["key"] = f"{row.get('key') or row['title']} ({label})"
 
     # Whatever still collides says the same thing twice: keep the fullest one.
+    # "Fullest" is measured over all languages at once — measured in the one
+    # being built, a different one of the two would win per language and the
+    # same list would hold different sections in Czech than in Dutch.
+    def size_of(row):
+        return row.get("size", len(row.get("text", "")))
+
     best = {}
     for row in rows:
         current = best.get(key_of(row))
-        if current is None or len(row.get("text", "")) > len(current.get("text", "")):
+        if current is None or size_of(row) > size_of(current):
             best[key_of(row)] = row
-    return [row for row in rows if best[key_of(row)] is row]
+    kept = [row for row in rows if best[key_of(row)] is row]
+    for row in kept:
+        row.pop("key", None)
+        row.pop("size", None)
+    return kept
 
 
-def build_menu(kb_menu, pictures):
+def build_menu(kb_menu, pictures, langs=LANG):
     out = []
     for topic in kb_menu:
-        body, lang = first(topic["body"])
-        steps, _ = first(topic["steps"]) or ([], "nl")
-        notes, _ = first(topic["notes"]) or ([], "nl")
+        body, lang = first(topic["body"], langs)
+        steps, _ = first(topic["steps"], langs) or ([], "nl")
+        notes, _ = first(topic["notes"], langs) or ([], "nl")
         text = body or ""
         if not text and not steps:
-            text, lang = first(topic.get("text", {}))
+            text, lang = first(topic.get("text", {}), langs)
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         out.append(dict(
-            id=topic["id"], number=topic["number"] or "", title=topic["title"],
-            text=text or "", path=topic.get("path") or "", level="",
-            images=[i for i in images if i], steps=steps or [],
-            notes=[n["text"] for n in (notes or [])],
+            id=topic["id"], number=topic["number"] or "",
+            title=heading(topic, langs, topic["title"]), key=topic["title"],
+            size=sum(len(v or "") for v in topic["body"].values()),
+            text=prose(text or ""), path=topic.get("path") or "", level="",
+            images=[i for i in images if i], steps=[clean(s) for s in (steps or [])],
+            notes=[clean(n["text"]) for n in (notes or [])],
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
             source=(topic["sources"] or [""])[0], language=lang))
     return label_duplicates(out, extra="path")
 
 
-def build_procedures(kb_procedures, pictures):
+def build_procedures(kb_procedures, pictures, langs=LANG):
     curated = read_json(os.path.join(DATA, "procedures.json"), [])
     out = list(curated)
     have = {p["title"].lower() for p in curated}
     for topic in kb_procedures:
-        steps, lang = first(topic["steps"]) or ([], "nl")
-        body, body_lang = first(topic["body"])
-        notes, _ = first(topic["notes"]) or ([], "nl")
-        if not steps and len((body or "").strip()) < 40:
+        # Present in every language or in none, so a procedure cannot go
+        # missing on a phone that is set to Czech.
+        if not any(topic["steps"].values()) and not has_body(topic, 40):
             continue
-        title = topic["title"]
-        if title.lower() in have:
+        steps, lang = first(topic["steps"], langs) or ([], "nl")
+        body, body_lang = first(topic["body"], langs)
+        notes, _ = first(topic["notes"], langs) or ([], "nl")
+        if topic["title"].lower() in have:
             continue
-        have.add(title.lower())
+        have.add(topic["title"].lower())
+        title = heading(topic, langs, topic["title"])
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         out.append(dict(
             id=topic["id"], title=title, images=[i for i in images if i],
             brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
                                      for c in codes(topic["applies_to"])} - {""})),
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
-            interval="", intervalText="", purpose=body or "",
-            needed=[], warnings=[dict(n=n["level"], t=n["text"]) for n in (notes or [])],
-            steps=[dict(t=s) for s in (steps or [])],
+            interval="", intervalText="", purpose=prose(body or ""),
+            needed=[], warnings=[dict(n=n["level"], t=clean(n["text"])) for n in (notes or [])],
+            steps=[dict(t=clean(s)) for s in (steps or [])],
             source=(topic["number"] or "") + " " + (topic["sources"] or [""])[0],
             language=lang or body_lang))
     return out
@@ -355,8 +441,8 @@ def build_cards(maintenance, pictures):
         steps = []
         for step in card["steps"]:
             images = [pictures.add(i["file"], "stap") for i in step["images"]]
-            points = [p for p in step["points"] if p.strip()]
-            notes = [note["text"] for note in step["notes"]]
+            points = [clean(p) for p in step["points"] if p.strip()]
+            notes = [clean(note["text"]) for note in step["notes"]]
             if not points and not notes and not images:
                 continue
             steps.append(dict(n=step["step"] or "", t=points, o=notes,
@@ -378,7 +464,7 @@ def build_parts(parts):
                         s=row["section"] or "", d=row["drawing"] or "",
                         p=row["pos"] or "", n=row["part_nr"] or "",
                         q=row["qty"] or "", v=row["stock"] or "",
-                        t=row["description"] or ""))
+                        t=clean(row["description"] or "")))
     return out
 
 
@@ -435,36 +521,124 @@ def build_drawings(drawings, pictures):
     return out, titles
 
 
-def build_views(kb_views, pictures):
+def build_views(kb_views, pictures, langs=LANG):
     """The front, back and inside views with their numbered call-outs."""
     out = []
     for topic in kb_views:
-        callouts, lang = first(topic["callouts"]) or ([], "nl")
+        callouts, lang = first(topic["callouts"], langs) or ([], "nl")
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         images = [i for i in images if i]
-        if not callouts and not images:
+        if not any(topic["callouts"].values()) and not images:
             continue
         out.append(dict(id=topic["id"], number=topic["number"] or "",
-                        title=topic["title"], callouts=callouts or [],
+                        title=heading(topic, langs, topic["title"]),
+                        key=topic["title"],
+                        callouts=[clean(c) for c in (callouts or [])],
                         images=images, machines=brands(topic["applies_to"]),
                         codes=codes(topic["applies_to"]),
                         source=(topic["sources"] or [""])[0], language=lang))
     return label_duplicates(out)
 
 
-def build_specs(kb_specs):
-    out = []
-    for topic in kb_specs:
-        rows, lang = first(topic["rows"]) or ([], "nl")
-        if not rows:
+NUMBERED = re.compile(r"^(\d{1,2})[.)]\s*(.+)$")
+CONTINUES = re.compile(r"^[a-z0-9\u00b1\u00b0<>\u2264\u2265~\u00a3+\u2013-]")
+MARKER = re.compile(r"^[A-Z\u00c4\u00d6\u00dc]{4,}[.:]?$")
+
+
+def repair_rows(rows):
+    """Put a specification table back together.
+
+    A table is read out of the page cell by cell, and a printed table does not
+    only hold pairs: it has headings that run across both columns, values that
+    wrap onto the next line, and numbered call-outs printed in two columns
+    beside a picture. Read as pairs those come out as nonsense — call-out 1
+    paired with call-out 5 — so they are sorted back out here.
+
+    An item with an empty value is a heading inside the table; an item with an
+    empty key is a sentence that belongs to the whole table.
+    """
+    pairs = [(clean(r.get("key") or ""), clean(r.get("value") or "")) for r in rows]
+    pairs = [(k, v) for k, v in pairs if k or v]
+
+    items, numbered, at, last = [], [], None, None
+    for key, value in pairs:
+        left, right = NUMBERED.match(key), NUMBERED.match(value)
+        if left and right:
+            # Two columns of one numbered legend, printed beside the picture.
+            if at is None:
+                at = len(items)
+            for match in (left, right):
+                last = dict(n=int(match.group(1)), k=f"{match.group(1)}.",
+                            v=match.group(2))
+                numbered.append(last)
             continue
-        out.append(dict(group=f"{topic['title']} ({', '.join(codes(topic['applies_to'])) or 'algemeen'})",
-                        brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
-                                                 for c in codes(topic["applies_to"])} - {""})),
-                        machines=brands(topic["applies_to"]),
-                        codes=codes(topic["applies_to"]),
-                        items=[dict(k=r["key"], v=r.get("value") or "") for r in rows]))
-    return out
+        if last is not None and CONTINUES.match(key) and (not value or MARKER.match(value)):
+            # The line before ran on into this one. "OPMERKING" beside it is
+            # the start of a note whose text is somewhere else on the page.
+            field = "k" if key.startswith("(") else "v"
+            last[field] = (last[field] + " " + key).strip()
+            continue
+        if not key:
+            last = dict(k="", v=value)
+        elif not value:
+            # A heading names what follows; a sentence ends in a full stop.
+            last = (dict(k="", v=key) if key.endswith(".") or len(key.split()) > 8
+                    else dict(k=key, v=""))
+        elif len(key) > 45 and len(key.split()) > 6:
+            last = dict(k="", v=f"{key} {value}".strip())   # a sentence the column cut in two
+        else:
+            last = dict(k=key, v=value)
+        items.append(last)
+
+    if numbered:
+        seen, block = set(), []
+        for entry in sorted(numbered, key=lambda e: e["n"]):
+            if entry["n"] in seen:
+                continue
+            seen.add(entry["n"])
+            block.append(dict(k=entry["k"], v=entry["v"]))
+        items[at:at] = block
+    return [i for i in items if i["k"] or i["v"]]
+
+
+def build_specs(kb_specs, langs=LANG):
+    out = {}
+    for topic in kb_specs:
+        if not any(topic["rows"].values()):
+            continue
+        # A table the extractor could make little of in one language is read
+        # in another rather than left out, so every language lists the same
+        # tables.
+        def pairs_in(rows):
+            # A real table has short keys: "Height", "Working pressure". Two
+            # halves of a sentence, split where the column was, do not.
+            return sum(1 for i in rows if i["k"] and i["v"] and len(i["k"]) <= 40)
+
+        items, chosen = [], langs[0]
+        for language in list(langs) + sorted(topic["rows"]):
+            items = repair_rows(topic["rows"].get(language) or [])
+            chosen = language
+            if pairs_in(items) >= 2:
+                break
+        # A section of running text that the column cut in two is not a table,
+        # however much it looks like one on the page. It is already in the app
+        # as part of its own chapter; here it would only read as broken.
+        if pairs_in(items) < 2:
+            continue
+        model_codes = codes(topic["applies_to"])
+        # The heading comes from the same book as the rows below it.
+        title = heading(topic, [chosen] + list(langs), topic["title"])
+        row = dict(group=f"{title} ({', '.join(model_codes)})" if model_codes else title,
+                   brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
+                                            for c in model_codes} - {""})),
+                   machines=brands(topic["applies_to"]),
+                   codes=model_codes,
+                   items=items)
+        # The same table is printed in every book; keep the fullest reading of it.
+        key = (topic["title"], tuple(model_codes))
+        if key not in out or len(items) > len(out[key]["items"]):
+            out[key] = row
+    return list(out.values())
 
 
 def compact(name, data):
@@ -481,43 +655,55 @@ def main():
                        "safety", "views")}
     for bucket in ("img", "tek", "stap"):
         shutil.rmtree(os.path.join(ASSETS, bucket), ignore_errors=True)
+    for stale in glob.glob(os.path.join(ASSETS, "content-*.json")):
+        os.remove(stale)
     pictures = Pictures()
 
+    # --- the same for everyone ---------------------------------------------
     machines = build_machines(kb["products"], pictures)
-    faults = build_faults(kb["faults"])
-    components = build_components(kb["components"], pictures)
-    menu = build_menu(kb["menu"], pictures)
-    procedures = build_procedures(kb["procedures"], pictures)
     cards = build_cards(kb["maintenance"], pictures)
     parts = build_parts(kb["parts"])
     drawings, drawing_titles = build_drawings(kb["drawings"], pictures)
-    specs = build_specs(kb["specs"])
-    views = build_views(kb["views"], pictures)
-    books = build_books(kb["documents"])
 
     sizes = {}
     sizes["machines.json"] = compact("machines.json", machines)
-    sizes["faults.json"] = compact("faults.json", faults)
-    sizes["components.json"] = compact("components.json", components)
-    sizes["servicemenu.json"] = compact("servicemenu.json", menu)
-    sizes["procedures.json"] = compact("procedures.json", procedures)
     sizes["cards.json"] = compact("cards.json", cards)
     sizes["parts.json"] = compact("parts.json", parts)
     sizes["drawings.json"] = compact("drawings.json", drawings)
     sizes["drawingnames.json"] = compact("drawingnames.json", drawing_titles)
-    sizes["specs.json"] = compact("specs.json", specs)
-    sizes["views.json"] = compact("views.json", views)
-    sizes["books.json"] = compact("books.json", books)
 
-    print(f"{len(machines)} machines, {len(faults)} messages, {len(components)} components,")
-    print(f"{len(menu)} menu topics, {len(procedures)} procedures, {len(cards)} maintenance cards,")
-    print(f"{len(parts)} part rows, {len(drawings)} drawings, {len(views)} views, "
-          f"{len(books)} books")
-    for name, size in sorted(sizes.items(), key=lambda kv: -kv[1]):
+    # --- once per language --------------------------------------------------
+    # The manuals were translated by the manufacturer; the app hands the
+    # engineer the language their machine and their manual are in, and falls
+    # back to English where a book was never translated.
+    counts = {}
+    for locale, code in LOCALES.items():
+        langs = [code, "EN", "NL"]
+        content = dict(
+            faults=build_faults(kb["faults"], langs),
+            components=build_components(kb["components"], pictures, langs),
+            menu=build_menu(kb["menu"], pictures, langs),
+            procedures=build_procedures(kb["procedures"], pictures, langs),
+            specs=build_specs(kb["specs"], langs),
+            views=build_views(kb["views"], pictures, langs),
+        )
+        name = f"content-{locale}.json"
+        sizes[name] = compact(name, content)
+        counts[locale] = {k: len(v) for k, v in content.items()}
+        native = sum(1 for row in content["components"] if row["language"] == locale)
+        print(f"  {locale}  {sizes[name]/1024:7.0f} KB   "
+              f"{native}/{len(content['components'])} componenten in eigen taal")
+
+    print(f"\n{len(machines)} machines, {len(cards)} maintenance cards, "
+          f"{len(parts)} part rows, {len(drawings)} drawings")
+    print("per language:", counts["nl"])
+    for name, size in sorted(sizes.items(), key=lambda kv: -kv[1])[:6]:
         print(f"  {name:22} {size/1024:8.0f} KB")
     print(f"  pictures               {pictures.bytes/1e6:8.1f} MB "
           f"({len(pictures.done)} files)")
-    print(f"  assets total           {sum(os.path.getsize(os.path.join(dp, f)) for dp, _, fs in os.walk(ASSETS) for f in fs)/1e6:8.1f} MB")
+    total = sum(os.path.getsize(os.path.join(dp, f))
+                for dp, _, fs in os.walk(ASSETS) for f in fs)
+    print(f"  assets total           {total/1e6:8.1f} MB")
 
 
 if __name__ == "__main__":

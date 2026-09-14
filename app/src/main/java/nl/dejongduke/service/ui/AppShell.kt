@@ -43,13 +43,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.ui.theme.ThemeMode
-import nl.dejongduke.service.ui.screens.BookList
 import nl.dejongduke.service.ui.screens.SourcesScreen
 import nl.dejongduke.service.ui.screens.ComponentDetail
 import nl.dejongduke.service.ui.screens.ComponentList
@@ -123,13 +124,13 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                 navigationIcon = {
                     if (current != null) {
                         IconButton(onClick = { vm.back() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Terug")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.terug))
                         }
                     }
                 },
                 actions = {
                     IconButton(onClick = { vm.open(Route.Settings) }) {
-                        Icon(Icons.Filled.Settings, "Instellingen")
+                        Icon(Icons.Filled.Settings, stringResource(R.string.instellingen))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -142,7 +143,7 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                 ExtendedFloatingActionButton(
                     onClick = { vm.open(Route.Scan) },
                     icon = { Icon(Icons.Filled.CameraAlt, null) },
-                    text = { Text("Scan") },
+                    text = { Text(stringResource(R.string.scan)) },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 )
@@ -155,7 +156,7 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                         selected = tab == entry && current == null,
                         onClick = { vm.selectTab(entry) },
                         icon = { Icon(tabIcon(entry), null) },
-                        label = { Text(entry.label, maxLines = 1) },
+                        label = { Text(stringResource(entry.label), maxLines = 1) },
                     )
                 }
             }
@@ -272,12 +273,15 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         Route.Settings -> {
             val thema by vm.theme.collectAsStateWithLifecycle()
+            val languageSetting by vm.languageSetting.collectAsStateWithLifecycle()
             val language by vm.messageLanguage.collectAsStateWithLifecycle()
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
             SettingsScreen(
                 catalog = loaded,
                 thema = thema,
                 onThema = vm::setTheme,
+                language = languageSetting,
+                onLanguage = vm::setLanguage,
                 messageLanguage = language,
                 onMessageLanguage = vm::setMessageLanguage,
                 defaultMachine = filter,
@@ -316,53 +320,51 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         is Route.MaintenanceCard -> {
             val card = loaded.card(route.id)
-            if (card == null) EmptyState("Niet gevonden", "Deze onderhoudskaart staat niet in de app.")
+            if (card == null) EmptyState(stringResource(R.string.niet_gevonden), stringResource(R.string.deze_onderhoudskaart_staat_niet_in_de_app))
             else CardDetail(loaded, card, vm::open)
         }
-
-        Route.Books -> BookList(loaded, filter, vm::setFilter)
 
         is Route.Steps -> when (route.kind) {
             "card" -> {
                 val card = loaded.card(route.id)
-                StepPlayer(card?.title ?: "Stappen",
+                StepPlayer(card?.title ?: stringResource(R.string.stappen),
                            loaded.machineNames(card?.machines.orEmpty()),
                            loaded.cardSteps(route.id))
             }
             else -> {
                 val procedure = loaded.procedure(route.id)
-                StepPlayer(procedure?.title ?: "Stappen",
+                StepPlayer(procedure?.title ?: stringResource(R.string.stappen),
                            loaded.machineNames(procedure?.machines.orEmpty()),
                            loaded.procedureSteps(route.id))
             }
         }
 
-        Route.Specs -> SpecsScreen(loaded)
+        Route.Specs -> SpecsScreen(loaded, filter, variant, vm::setFilter)
 
         Route.Sources -> SourcesScreen(loaded, vm::open)
     }
 }
 
+@Composable
 private fun titleFor(catalog: Catalog?, tab: Tab, route: Route?): String = when (route) {
     null -> when (tab) {
         Tab.Search -> "DUKE Service"
-        else -> tab.label
+        else -> stringResource(tab.label)
     }
-    is Route.Fault -> "Storing"
-    is Route.Procedure -> "Procedure"
-    Route.Procedures -> "Procedures"
-    Route.Components -> "Techniek"
-    Route.ServiceMenu -> "Servicemenu"
-    Route.Scan -> "Scannen"
-    Route.Settings -> "Instellingen"
-    is Route.MenuItem -> "Servicemenu"
-    is Route.Component -> "Techniek"
-    is Route.Machine -> catalog?.machine(route.id)?.name ?: "Machine"
-    is Route.PartSection -> "Onderdelen"
-    is Route.MaintenanceCard -> "Onderhoudskaart"
-    Route.Cards -> "Onderhoudskaarten"
-    Route.Books -> "Handleidingen"
-    is Route.Steps -> "Stap voor stap"
-    Route.Specs -> "Technisch"
-    Route.Sources -> "Bronnen"
+    is Route.Fault -> stringResource(R.string.storing)
+    is Route.Procedure -> stringResource(R.string.procedure)
+    Route.Procedures -> stringResource(R.string.procedures)
+    Route.Components -> stringResource(R.string.techniek)
+    Route.ServiceMenu -> stringResource(R.string.servicemenu)
+    Route.Scan -> stringResource(R.string.scannen)
+    Route.Settings -> stringResource(R.string.instellingen)
+    is Route.MenuItem -> stringResource(R.string.servicemenu)
+    is Route.Component -> stringResource(R.string.techniek)
+    is Route.Machine -> catalog?.machine(route.id)?.name ?: stringResource(R.string.machine)
+    is Route.PartSection -> stringResource(R.string.onderdelen)
+    is Route.MaintenanceCard -> stringResource(R.string.onderhoudskaart)
+    Route.Cards -> stringResource(R.string.onderhoudskaarten)
+    is Route.Steps -> stringResource(R.string.stap_voor_stap)
+    Route.Specs -> stringResource(R.string.technisch)
+    Route.Sources -> stringResource(R.string.bronnen)
 }

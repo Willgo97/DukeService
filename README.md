@@ -5,7 +5,7 @@ Android, Kotlin, Jetpack Compose. Alles zit in de APK — geen netwerk nodig,
 want in een kelder of serverruimte heb je dat toch niet.
 
 Achter de app ligt een kennisbank die uit álle servicedocumentatie is
-opgebouwd: 207 boeken, 16.498 pagina's, negen talen. Die kennisbank staat los
+opgebouwd: 207 boeken, 16.912 pagina's, negen talen. Die kennisbank staat los
 van de app en is ook door andere programma's te gebruiken — zie
 [`kb/README.md`](kb/README.md).
 
@@ -16,14 +16,16 @@ van de app en is ook door andere programma's te gebruiken — zie
 | 11 machinelijnen, 59 uitvoeringen | merk × brewer × kastmaat, met serienummers en welk servicemenu |
 | 53 schermmeldingen | Nederlandse displaytekst, oorzaak en wat je controleert, met de machines waarvoor ze gelden |
 | 100 onderhoudskaarten | de kaart van de fabrikant zelf: genummerde stappen met de tekening die erbij hoort |
-| 150 procedures | stap voor stap, met waarschuwingen en benodigdheden |
-| 475 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
-| 513 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
+| 194 procedures | stap voor stap, met waarschuwingen en benodigdheden |
+| 248 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
+| 279 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
 | 40.475 onderdeelregels | 1.935 unieke nummers uit 62 onderdelenboeken |
-| 1.773 explosietekeningen | met de onderdelentabel ernaast; op 83 ervan zijn de ballonnummers aanklikbaar |
-| 63 aanzichten | voor-, achter- en binnenkant met genummerde verwijzingen |
+| 1.773 explosietekeningen | met de onderdelentabel ernaast; op 89 ervan zijn de ballonnummers aanklikbaar |
+| 52 aanzichten | voor-, achter- en binnenkant met genummerde verwijzingen |
 | 207 boeken | welke handleiding waar vandaan komt |
+| 40 tabellen technische gegevens | maten, aansluitwaarden, waterkwaliteit, geluidsdruk |
 | Scanner | leest labels, typeplaatjes en schermmeldingen met de camera |
+| 9 talen | de app zelf en de teksten uit de handleidingen: nl, en, de, fr, sv, no, da, fi, cs |
 
 Eén zoekveld gaat overal tegelijk doorheen: schermmeldingen, procedures,
 onderdeelnummers, componenten, servicemenu, onderhoudskaarten en machines.
@@ -54,6 +56,18 @@ scherm niet.
 Servicemenu per machine: **oud** (ICeQ2) bij Virtu, Zia, Nio en Edge, **oud of
 nieuw** bij Lua, Avy, Blu en Rosa (vanaf software 6.30/6.40 is het nieuwe
 verplicht), **alleen nieuw** bij Lina en Nio Next.
+
+## Talen
+
+De handleidingen bestaan in negen talen, dus de app ook: Nederlands, English,
+Deutsch, Français, Svenska, Norsk, Dansk, Suomi en Čeština. De app volgt de
+taal van de telefoon en is in Instellingen om te zetten; die keuze geldt voor
+zowel de knoppen als de tekst uit de handleidingen. Waar de fabrikant een boek
+nooit vertaald heeft, staat de tekst in de taal die er het dichtst bij zit, met
+een label dat zegt welke dat is.
+
+Elk scherm bestaat in elke taal uit dezelfde onderwerpen: wat de Finse monteur
+ziet is dezelfde lijst als bij de Nederlandse, alleen in zijn eigen woorden.
 
 ## Thema
 

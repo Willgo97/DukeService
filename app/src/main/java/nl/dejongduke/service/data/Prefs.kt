@@ -10,6 +10,16 @@ import java.time.LocalDate
 class Prefs(context: Context) {
     private val sp = context.getSharedPreferences("duke", Context.MODE_PRIVATE)
 
+    // --- Language ---------------------------------------------------------
+    // Null means "whatever the phone is set to"; the manuals cover nine
+    // languages and a machine in Helsinki is serviced by someone reading Finnish.
+
+    var language: String?
+        get() = sp.getString("language", null)
+        set(value) =
+            if (value == null) sp.edit().remove("language").apply()
+            else sp.edit().putString("language", value).apply()
+
     // --- The machine being worked on --------------------------------------
     // Which build of a machine was last looked at, so walking back into the
     // parts book lands on the right book instead of the first one.
@@ -70,10 +80,11 @@ class Prefs(context: Context) {
 
     /**
      * Which language leads on a fault card. A machine set to English shows
-     * English on its display, so that is what you want to read first.
+     * English on its display, so that is what you want to read first. Unset,
+     * it follows the language the app is being read in.
      */
-    var messageLanguage: String
-        get() = sp.getString("melding_taal", "nl")!!
+    var messageLanguage: String?
+        get() = sp.getString("melding_taal", null)
         set(value) = sp.edit().putString("melding_taal", value).apply()
 
     /** Open a single scan result straight away instead of listing it. */

@@ -22,8 +22,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 
 /**
  * The three things an engineer does with a find: pin it for later, copy the
@@ -46,7 +48,7 @@ fun ActionRow(
         FilledTonalButton(onClick = { onPin(pinKey) }, modifier = Modifier.weight(1f)) {
             Icon(Icons.Filled.PushPin, null, Modifier.size(17.dp))
             Spacer(Modifier.width(7.dp))
-            Text(if (pinned) "Vastgezet" else "Vastzetten", style = MaterialTheme.typography.labelLarge)
+            Text(if (pinned) stringResource(R.string.vastgezet) else stringResource(R.string.vastzetten), style = MaterialTheme.typography.labelLarge)
         }
         if (copyText != null) {
             FilledTonalButton(
@@ -55,7 +57,7 @@ fun ActionRow(
             ) {
                 Icon(Icons.Filled.ContentCopy, null, Modifier.size(17.dp))
                 Spacer(Modifier.width(7.dp))
-                Text("Kopieer", style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(R.string.kopieer), style = MaterialTheme.typography.labelLarge)
             }
         }
         FilledTonalButton(
@@ -64,7 +66,7 @@ fun ActionRow(
         ) {
             Icon(Icons.Filled.Share, null, Modifier.size(17.dp))
             Spacer(Modifier.width(7.dp))
-            Text("Delen", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.delen), style = MaterialTheme.typography.labelLarge)
         }
     }
 }
@@ -74,7 +76,7 @@ fun copyToClipboard(context: Context, text: String) {
     clipboard.setPrimaryClip(ClipData.newPlainText("DUKE Service", text))
     // Android 13 and up shows its own confirmation; older versions need one.
     if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.TIRAMISU) {
-        Toast.makeText(context, "$text gekopieerd", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.x_gekopieerd, text), Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -83,5 +85,5 @@ fun share(context: Context, text: String) {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
     }
-    context.startActivity(Intent.createChooser(intent, "Delen"))
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.delen)))
 }

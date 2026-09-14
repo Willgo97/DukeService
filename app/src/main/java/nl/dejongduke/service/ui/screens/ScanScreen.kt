@@ -49,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -65,10 +66,12 @@ import kotlinx.coroutines.withContext
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.ScanHit
 import nl.dejongduke.service.data.Scanner
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.categoryLabel
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import java.util.concurrent.Executors
@@ -128,16 +131,15 @@ fun ScanScreen(
                 modifier = Modifier.height(40.dp),
             )
             Spacer(Modifier.height(16.dp))
-            Text("Camera nodig", style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(R.string.camera_nodig), style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(8.dp))
             Text(
-                "Richt op een onderdeellabel, het typeplaatje of het scherm van de machine. " +
-                    "De app leest de tekst op het toestel zelf — er gaat niets naar buiten.",
+                stringResource(R.string.richt_op_een_onderdeellabel_het_typeplaatje_),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(24.dp))
-            Button(onClick = { ask.launch(Manifest.permission.CAMERA) }) { Text("Camera toestaan") }
+            Button(onClick = { ask.launch(Manifest.permission.CAMERA) }) { Text(stringResource(R.string.camera_toestaan)) }
         }
         return
     }
@@ -157,13 +159,19 @@ fun ScanScreen(
 
     val recognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
     var message by remember { mutableStateOf("") }
+    // Read here: the callbacks below run outside composition.
+    val readingPhoto = stringResource(R.string.foto_lezen)
+    val cannotOpenPhoto = stringResource(R.string.kan_de_foto_niet_openen)
+    val noTextInPhoto = stringResource(R.string.geen_tekst_in_de_foto)
+    val readNothingFound = stringResource(R.string.tekst_gelezen_niets_herkend)
+    val readFailed = stringResource(R.string.lezen_mislukt_x, "")
     val pickPhoto = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri == null) return@rememberLauncherForActivityResult
-        message = "Foto lezen…"
+        message = readingPhoto
         runCatching { InputImage.fromFilePath(context, uri) }
-            .onFailure { message = "Kan de foto niet openen" }
+            .onFailure { message = cannotOpenPhoto }
             .onSuccess { image ->
                 recognizer.process(image)
                     .addOnSuccessListener { result ->
@@ -177,11 +185,11 @@ fun ScanScreen(
                         fromPhoto = true
                         photoUntil = System.currentTimeMillis() + PHOTO_PAUSE_MS
                         message = if (found.isEmpty()) {
-                            if (lines.isEmpty()) "Geen tekst in de foto"
-                            else "Tekst gelezen, niets herkend: " + lines.take(3).joinToString(" · ")
+                            if (lines.isEmpty()) noTextInPhoto
+                            else readNothingFound + lines.take(3).joinToString(" · ")
                         } else ""
                     }
-                    .addOnFailureListener { message = "Lezen mislukt: ${it.message}" }
+                    .addOnFailureListener { message = readFailed + (it.message ?: "") }
             }
     }
 
@@ -245,10 +253,10 @@ fun ScanScreen(
                 Text(
                     when {
                         message.isNotEmpty() -> message
-                        hits.isEmpty() && seen.isNotEmpty() -> "Even stilhouden…"
-                        hits.isEmpty() -> "Richt op een label, typeplaatje of het scherm"
-                        fromPhoto -> "${hits.size} gevonden in de foto"
-                        else -> "${hits.size} gevonden"
+                        hits.isEmpty() && seen.isNotEmpty() -> stringResource(R.string.even_stilhouden)
+                        hits.isEmpty() -> stringResource(R.string.richt_op_een_label_typeplaatje_of_het_scherm)
+                        fromPhoto -> stringResource(R.string.x_gevonden_in_de_foto, hits.size)
+                        else -> stringResource(R.string.x_gevonden, hits.size)
                     },
                     style = MaterialTheme.typography.labelLarge,
                     color = Color.White,
@@ -260,7 +268,7 @@ fun ScanScreen(
             }) {
                 Icon(Icons.Filled.PhotoLibrary, null, modifier = Modifier.height(18.dp))
                 Spacer(Modifier.width(8.dp))
-                Text("Uit foto")
+                Text(stringResource(R.string.uit_foto))
             }
         }
 
@@ -313,7 +321,7 @@ private fun HitCard(
             Icons.Filled.WarningAmber,
             hit.group.message,
             hit.group.first.dutch,
-            "Storing  ·  ${hit.group.first.category}",
+            stringResource(R.string.storing_x, categoryLabel(hit.group.first.category)),
             hit.confidence,
         ) { onOpen(Route.Fault(hit.group.message)) }
 
@@ -321,7 +329,7 @@ private fun HitCard(
             Icons.Filled.CoffeeMaker,
             hit.machine.name,
             hit.machine.summary,
-            "Machine  ·  tik om de app hierop te zetten",
+            stringResource(R.string.machine_tik_om_de_app_hierop_te_zetten),
             hit.confidence,
         ) {
             onUseMachine(hit.machine.id, null)
@@ -333,10 +341,10 @@ private fun HitCard(
         // machine's list, without anyone picking it from a row of chips.
         is ScanHit.TypePlate -> HitRow(
             Icons.Filled.Info,
-            hit.machine?.name ?: "Typeplaatje",
-            "Serienummer ${hit.serienummer}",
-            if (hit.code.isNotEmpty()) "Typecode ${hit.code} — tik om de app hierop te zetten"
-            else "Van het typeplaatje",
+            hit.machine?.name ?: stringResource(R.string.typeplaatje),
+            stringResource(R.string.serienummer_x, hit.serienummer),
+            if (hit.code.isNotEmpty()) stringResource(R.string.typecode_x_tik_om_de_app_hierop_te_zetten, hit.code)
+            else stringResource(R.string.van_het_typeplaatje),
             hit.confidence,
         ) {
             hit.machine?.let { machine ->

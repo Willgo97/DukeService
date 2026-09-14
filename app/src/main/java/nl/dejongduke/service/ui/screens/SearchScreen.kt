@@ -27,13 +27,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.SearchResult
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.count
+import nl.dejongduke.service.ui.cardTitle
 import nl.dejongduke.service.ui.EmptyState
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.PartNumber
@@ -74,11 +78,11 @@ fun SearchScreen(
                 value = query,
                 onValueChange = onQuery,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
-                placeholder = { Text("Melding, nummer of procedure") },
+                placeholder = { Text(stringResource(R.string.melding_nummer_of_procedure)) },
                 leadingIcon = { Icon(Icons.Filled.Search, null) },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
-                        IconButton(onClick = { onQuery("") }) { Icon(Icons.Filled.Close, "Wissen") }
+                        IconButton(onClick = { onQuery("") }) { Icon(Icons.Filled.Close, stringResource(R.string.wissen)) }
                     }
                 },
                 singleLine = true,
@@ -89,7 +93,7 @@ fun SearchScreen(
 
         if (query.length < 2) {
             if (recent.isNotEmpty()) {
-                item { SectionHeader("Recent gezocht") }
+                item { SectionHeader(stringResource(R.string.recent_gezocht)) }
                 item {
                     // Wrapping, so every stored term shows and a long one cannot
                     // run off the edge of the screen.
@@ -103,13 +107,13 @@ fun SearchScreen(
                 }
                 item {
                     TextButton(onClick = onClearRecent, modifier = Modifier.padding(start = 8.dp)) {
-                        Text("Geschiedenis wissen")
+                        Text(stringResource(R.string.geschiedenis_wissen))
                     }
                 }
             }
             homeSections(catalog, pins, filter, variant, onFilter, onOpen, onTab)
 
-            item { SectionHeader("Vaak nodig") }
+            item { SectionHeader(stringResource(R.string.vaak_nodig)) }
             items(commonFaults(catalog)) { group ->
                 FaultCard(catalog, group, showMachines = false, language = language) {
                     onOpen(Route.Fault(group.message))
@@ -123,19 +127,19 @@ fun SearchScreen(
         if (results.empty) {
             item {
                 EmptyState(
-                    "Niets gevonden",
+                    stringResource(R.string.niets_gevonden),
                     // The parts table is read after the first screen is up; a
                     // number typed in that second would otherwise look missing.
                     if (catalog.parts.isEmpty())
-                        "De onderdelenlijst wordt nog geladen — probeer het zo nog eens."
-                    else "Probeer een deel van het woord, of zoek op onderdeelnummer.",
+                        stringResource(R.string.de_onderdelenlijst_wordt_nog_geladen_probeer)
+                    else stringResource(R.string.probeer_een_deel_van_het_woord_of_zoek_op_on),
                 )
             }
             return@LazyColumn
         }
 
         if (results.faults.isNotEmpty()) {
-            item { SectionHeader("Storingen", "${results.faults.size}") }
+            item { SectionHeader(stringResource(R.string.storingen), "${results.faults.size}") }
             items(results.faults, key = { it.message }) { group ->
                 FaultCard(catalog, group, showMachines = true, language = language) {
                     openResult(Route.Fault(group.message))
@@ -144,7 +148,7 @@ fun SearchScreen(
         }
 
         if (results.procedures.isNotEmpty()) {
-            item { SectionHeader("Procedures", "${results.procedures.size}") }
+            item { SectionHeader(stringResource(R.string.procedures), "${results.procedures.size}") }
             items(results.procedures, key = { it.id }) { procedures ->
                 Card(onClick = { openResult(Route.Procedure(procedures.id)) }) {
                     Column {
@@ -159,7 +163,7 @@ fun SearchScreen(
                         }
                         Spacer(Modifier.height(8.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Pill("${procedures.steps.size} stappen")
+                            Pill(count(R.plurals.n_steps, procedures.steps.size))
                             if (procedures.brewer.isNotEmpty()) Pill(procedures.brewer)
                         }
                     }
@@ -168,7 +172,7 @@ fun SearchScreen(
         }
 
         if (results.components.isNotEmpty()) {
-            item { SectionHeader("Techniek", "${results.components.size}") }
+            item { SectionHeader(stringResource(R.string.techniek), "${results.components.size}") }
             items(results.components, key = { it.id }) { c ->
                 Card(onClick = { openResult(Route.Component(c.id)) }) {
                     Column {
@@ -186,7 +190,7 @@ fun SearchScreen(
         }
 
         if (results.menu.isNotEmpty()) {
-            item { SectionHeader("Servicemenu", "${results.menu.size}") }
+            item { SectionHeader(stringResource(R.string.servicemenu), "${results.menu.size}") }
             items(results.menu, key = { it.id }) { m ->
                 Card(onClick = { openResult(Route.MenuItem(m.id)) }) {
                     Column {
@@ -204,11 +208,11 @@ fun SearchScreen(
         }
 
         if (results.cards.isNotEmpty()) {
-            item { SectionHeader("Onderhoudskaarten", "${results.cards.size}") }
+            item { SectionHeader(stringResource(R.string.onderhoudskaarten), "${results.cards.size}") }
             items(results.cards, key = { it.id }) { card ->
                 Card(onClick = { openResult(Route.MaintenanceCard(card.id)) }) {
                     Column {
-                        Text(card.title, style = MaterialTheme.typography.titleMedium)
+                        Text(cardTitle(card.title), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
                             "${catalog.machineNames(card.machines)}  ·  ${card.steps.size} stappen",
@@ -222,7 +226,7 @@ fun SearchScreen(
         }
 
         if (results.machines.isNotEmpty()) {
-            item { SectionHeader("Machines", "${results.machines.size}") }
+            item { SectionHeader(stringResource(R.string.machines), "${results.machines.size}") }
             items(results.machines, key = { it.id }) { machine ->
                 Card(onClick = { openResult(Route.Machine(machine.id)) }) {
                     Column {
@@ -239,7 +243,7 @@ fun SearchScreen(
         }
 
         if (results.parts.isNotEmpty()) {
-            item { SectionHeader("Onderdelen", "${results.parts.size}") }
+            item { SectionHeader(stringResource(R.string.onderdelen), "${results.parts.size}") }
             items(results.parts.size) { index ->
                 val part = results.parts[index]
                 Card {
@@ -248,7 +252,7 @@ fun SearchScreen(
                             if (part.available) {
                                 PartNumber(part.number)
                             } else {
-                                Pill("niet los leverbaar")
+                                Pill(stringResource(R.string.niet_los_leverbaar))
                             }
                             Spacer(Modifier.width(8.dp))
                             Text(
@@ -263,9 +267,9 @@ fun SearchScreen(
                         Text(
                             buildString {
                                 append(part.section)
-                                if (part.pos.isNotEmpty()) append("  ·  pos ${part.pos}")
-                                if (part.quantity.isNotEmpty()) append("  ·  ${part.quantity}×")
-                                if (part.stock.isNotEmpty()) append("  ·  ${stockLabel(part.stock)}")
+                                if (part.pos.isNotEmpty()) append(stringResource(R.string.pos_x_3, part.pos))
+                                if (part.quantity.isNotEmpty()) append(stringResource(R.string.x_4, part.quantity))
+                                if (part.stock.isNotEmpty()) append(stringResource(R.string.x_5, stockLabel(part.stock)))
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,

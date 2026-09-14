@@ -20,8 +20,6 @@ class Catalog(
     val menu: List<MenuItem> = emptyList(),
     /** The manufacturer's maintenance sheets, step by step with pictures. */
     val cards: List<MaintenanceCard> = emptyList(),
-    /** Every book the knowledge base was built from. */
-    val books: List<Book> = emptyList(),
     /** Front, back and inside views with their call-outs. */
     val views: List<MachineView> = emptyList(),
     /** "machine|build|section" -> the exploded drawing sheets of that section. */
@@ -118,15 +116,11 @@ class Catalog(
         .sortedWith(compareBy({ it.machines.firstOrNull() ?: "" },
                               { it.codes.firstOrNull() ?: "" }))
 
-    fun booksFor(machineId: String?, code: String? = null): List<Book> = books.filter { b ->
-        (machineId == null || b.brand == machineId) && (code == null || b.code == code)
-    }
-
     /** The same catalog with the parts table filled in. */
     fun withParts(rows: List<Part>) = Catalog(
         machines = machines, faults = faults, procedures = procedures, parts = rows,
         specs = specs, components = components, menu = menu, cards = cards,
-        books = books, views = views, drawings = drawings,
+        views = views, drawings = drawings,
         drawingNames = drawingNames, hotspots = hotspots,
     )
 
@@ -243,21 +237,26 @@ class Catalog(
          * phone, and the engineer opening the app is usually after a message or
          * a procedure. [parts] follows in the background.
          */
-        fun load(context: Context): Catalog {
+        /** The languages the manuals — and therefore the app — exist in. */
+        val LANGUAGES = listOf("nl", "en", "de", "fr", "sv", "no", "da", "fi", "cs")
+
+        fun load(context: Context, language: String = "nl"): Catalog {
             fun <T> read(name: String, parse: (String) -> T): T =
                 parse(context.assets.open(name).bufferedReader().use { it.readText() })
+
+            val wanted = if (language in LANGUAGES) language else "nl"
+            val content: Content = read("content-$wanted.json") { json.decodeFromString(it) }
 
             return Catalog(
                 parts = emptyList(),
                 machines = read("machines.json") { json.decodeFromString(it) },
-                faults = read("faults.json") { json.decodeFromString(it) },
-                procedures = read("procedures.json") { json.decodeFromString(it) },
-                specs = read("specs.json") { json.decodeFromString(it) },
-                components = read("components.json") { json.decodeFromString(it) },
-                menu = read("servicemenu.json") { json.decodeFromString(it) },
+                faults = content.faults,
+                procedures = content.procedures,
+                specs = content.specs,
+                components = content.components,
+                menu = content.menu,
                 cards = read("cards.json") { json.decodeFromString(it) },
-                books = read("books.json") { json.decodeFromString(it) },
-                views = read("views.json") { json.decodeFromString(it) },
+                views = content.views,
                 drawings = read("drawings.json") { json.decodeFromString(it) },
                 drawingNames = read("drawingnames.json") { json.decodeFromString(it) },
                 hotspots = read("hotspots.json") { json.decodeFromString(it) },

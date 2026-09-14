@@ -18,18 +18,20 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import nl.dejongduke.service.data.Book
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.MaintenanceCard
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.languageName
+import nl.dejongduke.service.ui.appLanguage
+import nl.dejongduke.service.ui.count
+import nl.dejongduke.service.ui.cardTitle
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
 import nl.dejongduke.service.ui.Pill
@@ -56,22 +58,21 @@ fun CardList(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle") + withCards.map { it.id as String? to it.name },
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle)) + withCards.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
             )
         }
         item {
             Text(
-                "De onderhoudskaart van de fabrikant, stap voor stap met de tekeningen " +
-                    "die erbij horen.",
+                stringResource(R.string.de_onderhoudskaart_van_de_fabrikant_stap_voo),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             )
         }
         if (cards.isEmpty()) {
-            item { EmptyState("Geen kaart", "Voor deze machine zit er geen onderhoudskaart in de app.") }
+            item { EmptyState(stringResource(R.string.geen_kaart), stringResource(R.string.voor_deze_machine_zit_er_geen_onderhoudskaar)) }
         }
         for ((interval, group) in perInterval) {
             item { SectionHeader(intervalName(interval), "${group.size}") }
@@ -79,7 +80,7 @@ fun CardList(
                 Card(onClick = { onOpen(Route.MaintenanceCard(card.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(card.title, style = MaterialTheme.typography.titleMedium)
+                            Text(cardTitle(card.title), style = MaterialTheme.typography.titleMedium)
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 buildString {
@@ -89,7 +90,8 @@ fun CardList(
                                             catalog.variantLabel(card.machines.firstOrNull(), it)
                                         })
                                     }
-                                    append("  ·  ${card.steps.size} stappen")
+                                    append("  \u00b7  ")
+                                    append(count(R.plurals.n_steps, card.steps.size))
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -104,14 +106,15 @@ fun CardList(
     }
 }
 
+@Composable
 fun intervalName(interval: String) = when (interval) {
-    "dag" -> "Dagelijks"
-    "week" -> "Wekelijks"
-    "maand" -> "Maandelijks"
-    "kwartaal" -> "Per kwartaal"
-    "jaar" -> "Jaarlijks"
-    "periodiek" -> "Periodiek onderhoud"
-    else -> "Overig"
+    "dag" -> stringResource(R.string.dagelijks)
+    "week" -> stringResource(R.string.wekelijks)
+    "maand" -> stringResource(R.string.maandelijks)
+    "kwartaal" -> stringResource(R.string.per_kwartaal)
+    "jaar" -> stringResource(R.string.jaarlijks)
+    "periodiek" -> stringResource(R.string.periodiek_onderhoud)
+    else -> stringResource(R.string.overig)
 }
 
 @Composable
@@ -119,19 +122,21 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(card.title, style = MaterialTheme.typography.headlineSmall,
+                Text(cardTitle(card.title), style = MaterialTheme.typography.headlineSmall,
                      fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(intervalName(card.interval))
                     Pill(catalog.machineNames(card.machines))
-                    if (card.language != "nl") Pill(card.language.uppercase())
+                    // The sheets were printed in one language per machine;
+                    // say which, unless it is the one being read.
+                    if (card.language != appLanguage()) Pill(languageName(card.language))
                 }
                 Spacer(Modifier.height(12.dp))
                 FilledTonalButton(onClick = { onOpen(Route.Steps("card", card.id)) }) {
                     Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Stap voor stap")
+                    Text(stringResource(R.string.stap_voor_stap))
                 }
             }
         }
@@ -151,7 +156,7 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
                         }
                         Column(Modifier.weight(1f)) {
                             step.points.forEach { punt ->
-                                Text("• $punt", style = MaterialTheme.typography.bodyLarge)
+                                Text(stringResource(R.string.x, punt), style = MaterialTheme.typography.bodyLarge)
                                 Spacer(Modifier.height(4.dp))
                             }
                             step.notes.forEach { note ->
@@ -173,83 +178,10 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
         }
         item {
             Text(
-                "Bron: ${card.source}. Bij twijfel is de kaart in de machine leidend.",
+                stringResource(R.string.bron_x_bij_twijfel_is_de_kaart_in_de_machine, card.source),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
-            )
-        }
-    }
-}
-
-/** Which books the app was built from, per machine. */
-@Composable
-fun BookList(catalog: Catalog, filter: String?, onFilter: (String?) -> Unit) {
-    var kind by remember { mutableStateOf<String?>(null) }
-    val merken = catalog.machines.filter { m -> catalog.books.any { it.brand == m.id } }
-    val books = catalog.books.filter { b ->
-        (filter == null || b.brand == filter) && (kind == null || b.kind == kind)
-    }
-    val soorten = catalog.books.map { it.kind }.distinct().sorted()
-
-    LazyColumn(Modifier.fillMaxWidth()) {
-        item {
-            ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle") + merken.map { it.id as String? to it.name },
-                selected = filter,
-                onSelect = onFilter,
-            )
-        }
-        item {
-            ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alles") +
-                    soorten.map { s -> s as String? to (catalog.books.first { it.kind == s }.kindName) },
-                selected = kind,
-                onSelect = { kind = it },
-            )
-        }
-        item { SectionHeader("Boeken", "${books.size}") }
-        items(books, key = { it.id }) { book -> BookRow(book) }
-        item {
-            Text(
-                "De handleidingen zelf zitten niet in de app: ze zijn auteursrechtelijk " +
-                    "beschermd. Wat je hier ziet is waar de informatie vandaan komt.",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
-            )
-        }
-    }
-}
-
-@Composable
-private fun BookRow(book: Book) {
-    Card {
-        Column {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Pill(book.kindName)
-                Spacer(Modifier.width(8.dp))
-                if (book.language.isNotEmpty()) Pill(book.language.uppercase())
-                Spacer(Modifier.weight(1f))
-                if (book.superseded) Pill("oude druk")
-            }
-            Spacer(Modifier.height(6.dp))
-            Text(book.title, style = MaterialTheme.typography.bodyLarge)
-            Spacer(Modifier.height(4.dp))
-            Text(
-                buildString {
-                    if (book.number.isNotEmpty()) append(book.number)
-                    if (book.version.isNotEmpty()) {
-                        if (isNotEmpty()) append("  ·  ")
-                        append(book.version)
-                    }
-                    if (book.pages > 0) {
-                        if (isNotEmpty()) append("  ·  ")
-                        append("${book.pages} pagina's")
-                    }
-                },
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

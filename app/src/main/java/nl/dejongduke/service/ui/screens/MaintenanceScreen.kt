@@ -16,9 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.count
+import nl.dejongduke.service.ui.cardTitle
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
 import nl.dejongduke.service.ui.Pill
@@ -28,7 +33,13 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-private val dayFormat = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.forLanguageTag("nl"))
+/** "Monday 14 September", in whatever language the app is being read in. */
+@Composable
+private fun dayLabel(date: java.time.LocalDate): String {
+    val locale = LocalConfiguration.current.locales[0]
+    return DateTimeFormatter.ofPattern("EEEE d MMMM", locale).format(date)
+        .replaceFirstChar { it.titlecase(locale) }
+}
 
 /**
  * Maintenance: the manufacturer's own cards, per machine and per interval.
@@ -53,7 +64,7 @@ fun MaintenanceScreen(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -61,7 +72,7 @@ fun MaintenanceScreen(
         }
         item {
             Text(
-                dayFormat.format(today).replaceFirstChar { it.uppercase() },
+                dayLabel(today),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
@@ -69,8 +80,8 @@ fun MaintenanceScreen(
         }
         if (cards.isEmpty()) {
             item {
-                EmptyState("Geen onderhoudskaart",
-                           "Voor deze machine zit er geen kaart van de fabrikant in de app.")
+                EmptyState(stringResource(R.string.geen_onderhoudskaart),
+                           stringResource(R.string.voor_deze_machine_zit_er_geen_kaart_van_de_f))
             }
         }
         cards.groupBy { it.interval }.forEach { (interval, group) ->
@@ -79,7 +90,7 @@ fun MaintenanceScreen(
                 Card(onClick = { onOpen(Route.MaintenanceCard(card.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(card.title, style = MaterialTheme.typography.titleMedium)
+                            Text(cardTitle(card.title), style = MaterialTheme.typography.titleMedium)
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 buildString {
@@ -89,7 +100,8 @@ fun MaintenanceScreen(
                                             catalog.variantLabel(card.machines.firstOrNull(), it)
                                         })
                                     }
-                                    append("  ·  ${card.steps.size} stappen")
+                                    append("  \u00b7  ")
+                                    append(count(R.plurals.n_steps, card.steps.size))
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -101,15 +113,15 @@ fun MaintenanceScreen(
                 }
             }
         }
-        item { SectionHeader("Procedures") }
+        item { SectionHeader(stringResource(R.string.procedures)) }
         item {
             Card(onClick = { onOpen(Route.Procedures) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text("Alle procedures", style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(R.string.alle_procedures), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            "$procedures stap-voor-stap instructies",
+                            count(R.plurals.n_step_by_step, procedures),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

@@ -34,6 +34,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -51,6 +52,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Hotspot
 import nl.dejongduke.service.ui.decodeAsset
 
@@ -173,7 +175,7 @@ fun DrawingView(
             ) {
                 Image(
                     bitmap = image,
-                    contentDescription = "Explosietekening",
+                    contentDescription = stringResource(R.string.explosietekening),
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -215,7 +217,7 @@ fun DrawingView(
                     .padding(horizontal = 8.dp, vertical = 3.dp),
             ) {
                 Text(
-                    "pos $selected",
+                    stringResource(R.string.pos_x, selected),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold,

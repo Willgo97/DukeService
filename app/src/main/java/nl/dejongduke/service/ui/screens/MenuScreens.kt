@@ -20,10 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.SafetyNote
 import nl.dejongduke.service.data.MenuItem
@@ -43,7 +45,7 @@ fun MenuList(
     onOpen: (Route) -> Unit,
 ) {
     val chapters = listOf(
-        "6" to "Servicemenu",
+        "6" to stringResource(R.string.servicemenu),
     )
     val documented = remember(catalog) {
         catalog.machines.filter { m -> catalog.menu.any { m.id in it.machines } }
@@ -60,9 +62,7 @@ fun MenuList(
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    "Wat er in het servicemenu zit en wat elke functie doet, met het pad " +
-                        "erheen. De klussen die je via het menu uitvoert — ontkalken, " +
-                        "kalibreren, software laden — staan bij de procedures.",
+                    stringResource(R.string.wat_er_in_het_servicemenu_zit_en_wat_elke_fu),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -70,7 +70,7 @@ fun MenuList(
         }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -106,7 +106,7 @@ fun MenuList(
                             }
                         }
                         if (m.level.isNotEmpty()) {
-                            Pill("niveau ${m.level}")
+                            Pill(stringResource(R.string.niveau_x, m.level))
                             Spacer(Modifier.height(0.dp))
                         }
                         Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -128,9 +128,9 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(item.number)
                     if (item.level.isNotEmpty()) {
-                        Pill("wachtwoordniveau ${item.level}", tone = MaterialTheme.colorScheme.primary)
+                        Pill(stringResource(R.string.wachtwoordniveau_x, item.level), tone = MaterialTheme.colorScheme.primary)
                     }
-                    if (item.page > 0) Pill("pagina ${item.page}")
+                    if (item.page > 0) Pill(stringResource(R.string.pagina_x_2, item.page))
                 }
             }
         }
@@ -143,7 +143,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                         .padding(14.dp),
                 ) {
                     Text(
-                        "IN HET MENU",
+                        stringResource(R.string.in_het_menu),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -161,7 +161,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             item { Spacer(Modifier.height(8.dp)); AssetImage(item.image) }
         }
         if (item.purpose.isNotEmpty()) {
-            item { SectionHeader("Waarom") }
+            item { SectionHeader(stringResource(R.string.waarom)) }
             item {
                 Text(
                     item.purpose,
@@ -171,7 +171,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
         if (item.interval.isNotEmpty()) {
-            item { SectionHeader("Wanneer") }
+            item { SectionHeader(stringResource(R.string.wanneer)) }
             item {
                 Text(
                     item.interval,
@@ -181,7 +181,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
         if (item.needed.isNotEmpty()) {
-            item { SectionHeader("Nodig") }
+            item { SectionHeader(stringResource(R.string.nodig)) }
             item {
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     item.needed.forEach { n ->
@@ -195,7 +195,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
         if (item.steps.isNotEmpty()) {
-            item { SectionHeader("Stappen", "${item.steps.size}") }
+            item { SectionHeader(stringResource(R.string.stappen), "${item.steps.size}") }
             items(item.steps.size) { index ->
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
                     Text(
@@ -239,7 +239,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
         }
 
         if (item.images.isNotEmpty()) {
-            item { SectionHeader("Uit de handleiding", "${item.images.size} pagina's") }
+            item { SectionHeader(stringResource(R.string.uit_de_handleiding), "${item.images.size} pagina's") }
             items(item.images.size) { index ->
                 Column {
                     AssetImage(item.images[index])
@@ -251,7 +251,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
         if (item.source.isNotEmpty()) {
             item {
                 Text(
-                    "Bron: ${item.source}",
+                    stringResource(R.string.bron_x_2, item.source),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

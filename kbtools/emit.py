@@ -19,9 +19,39 @@ from datetime import date
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import (BUILD, DOCTYPES, KB, LANGS, MODEL_CODES, read_json, write_json,
                     write_jsonl)
+from text import clean
 
 VERSION = "1.0"
 LANG_ORDER = ["NL", "EN", "DE", "FRCA", "SV", "NO", "DA", "FI", "CZ"]
+
+
+# Names, codes and paths are what they are; repairing them would only break
+# the links between the collections.
+VERBATIM = {
+    "id", "doc_id", "topic_id", "code", "codes", "file", "path", "sha1", "sha256",
+    "digest", "hash", "lang", "language", "languages", "title_lang", "kind",
+    "doctype", "scope", "applies_to", "platforms", "sources", "part_nr", "pos",
+    "stock", "qty", "drawing", "number", "url", "superseded_by", "duplicate_of",
+    "model_code", "brand", "series", "series_code", "product_id", "media", "images",
+    "pictures", "page", "pages", "box", "step",
+}
+
+
+def scrub(value, key=None):
+    """Run the text repair over everything a reader will read.
+
+    The knowledge base is read by other programs as well as by the app, so the
+    words are put right here rather than in one of them.
+    """
+    if key in VERBATIM:
+        return value
+    if isinstance(value, str):
+        return clean(value)
+    if isinstance(value, list):
+        return [scrub(v, key) for v in value]
+    if isinstance(value, dict):
+        return {k: scrub(v, k) for k, v in value.items()}
+    return value
 
 
 def pick(by_lang, field, order=LANG_ORDER):
@@ -414,6 +444,9 @@ def main():
                 licence=("Derived from De Jong DUKE service documentation. "
                          "The manufacturer's manuals are copyrighted; this database "
                          "is for private service use and must not be republished."))
+
+    collections = {name: scrub(rows) for name, rows in collections.items()}
+    topics = scrub(topics)
 
     os.makedirs(os.path.join(KB, "json"), exist_ok=True)
     os.makedirs(os.path.join(KB, "jsonl"), exist_ok=True)

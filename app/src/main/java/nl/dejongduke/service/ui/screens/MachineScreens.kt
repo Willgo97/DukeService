@@ -33,13 +33,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Machine
 import nl.dejongduke.service.ui.AssetPhoto
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.count
+import nl.dejongduke.service.ui.EmptyState
+import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
@@ -51,15 +56,15 @@ fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
     val older = catalog.machines.filterNot { it.active }
 
     LazyColumn(Modifier.fillMaxWidth()) {
-        item { SectionHeader("Techniek") }
+        item { SectionHeader(stringResource(R.string.techniek)) }
         item {
             Card(onClick = { onOpen(Route.Components) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text("Hoe de machine werkt", style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(R.string.hoe_de_machine_werkt), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            "${catalog.components.size} onderdelen met schema's uit de technische handleiding",
+                            count(R.plurals.n_components_with_diagrams, catalog.components.size),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -68,9 +73,9 @@ fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
                 }
             }
         }
-        item { SectionHeader("Huidig assortiment", "${current.size}") }
+        item { SectionHeader(stringResource(R.string.huidig_assortiment), "${current.size}") }
         items(current, key = { it.id }) { machine -> MachineCard(catalog, machine, onOpen) }
-        item { SectionHeader("Ouder / uitlopend", "${older.size}") }
+        item { SectionHeader(stringResource(R.string.ouder_uitlopend), "${older.size}") }
         items(older, key = { it.id }) { machine -> MachineCard(catalog, machine, onOpen) }
         item { Spacer(Modifier.height(24.dp)) }
     }
@@ -116,9 +121,9 @@ private fun MachineCard(catalog: Catalog, machine: Machine, onOpen: (Route) -> U
                             tone = if (machine.serviceMenu == "nieuw") MaterialTheme.colorScheme.primary else null,
                         )
                     }
-                    if (faults > 0) Pill("$faults storingen")
-                    if (procs > 0) Pill("$procs procedures")
-                    if (parts > 0) Pill("$parts onderdelen")
+                    if (faults > 0) Pill(count(R.plurals.n_faults, faults))
+                    if (procs > 0) Pill(count(R.plurals.n_procedures, procs))
+                    if (parts > 0) Pill(count(R.plurals.n_parts, parts))
                     }
                 }
             }
@@ -186,7 +191,7 @@ fun MachineDetail(
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (machine.typeCode.isNotEmpty()) Pill(machine.typeCode)
-                    if (machine.brewer.isNotEmpty()) Pill("${machine.brewer}-brewer")
+                    if (machine.brewer.isNotEmpty()) Pill(stringResource(R.string.x_brewer, machine.brewer))
                 }
             }
         }
@@ -202,7 +207,7 @@ fun MachineDetail(
         }
 
         if (machine.serviceMenu.isNotEmpty()) {
-            item { SectionHeader("Servicemenu") }
+            item { SectionHeader(stringResource(R.string.servicemenu)) }
             item {
                 Card {
                     Column {
@@ -226,24 +231,20 @@ fun MachineDetail(
         }
 
 
-        item { SectionHeader("In de app") }
+        item { SectionHeader(stringResource(R.string.in_de_app)) }
         item {
             Column {
-                JumpRow("Storingen", if (faults > 0) "$faults meldingen" else "nog niets vastgelegd", faults > 0) {
+                JumpRow(stringResource(R.string.storingen), if (faults > 0) count(R.plurals.n_messages, faults) else stringResource(R.string.nog_niets_vastgelegd), faults > 0) {
                     onJump(Tab.Faults, machine.id)
                 }
                 val cards = catalog.cardsFor(machine.id).size
-                JumpRow("Onderhoudskaart", if (cards > 0) "$cards kaarten van de fabrikant" else "geen kaart", cards > 0) {
+                JumpRow(stringResource(R.string.onderhoudskaart), if (cards > 0) count(R.plurals.n_cards_from_manufacturer, cards) else stringResource(R.string.geen_kaart_2), cards > 0) {
                     onOpen(Route.Cards)
                 }
-                val books = catalog.booksFor(machine.id).size
-                JumpRow("Handleidingen", if (books > 0) "$books boeken" else "geen boeken", books > 0) {
-                    onOpen(Route.Books)
-                }
-                JumpRow("Onderhoud en procedures", if (procs > 0) "$procs procedures" else "nog niets vastgelegd", procs > 0) {
+                JumpRow(stringResource(R.string.onderhoud_en_procedures), if (procs > 0) count(R.plurals.n_procedures, procs) else stringResource(R.string.nog_niets_vastgelegd), procs > 0) {
                     onJump(Tab.Maintenance, machine.id)
                 }
-                JumpRow("Onderdelen", if (parts > 0) "$parts regels uit het onderdelenboek" else "geen onderdelenboek", parts > 0) {
+                JumpRow(stringResource(R.string.onderdelen), if (parts > 0) count(R.plurals.n_rows_from_parts_book, parts) else stringResource(R.string.geen_onderdelenboek), parts > 0) {
                     onJump(Tab.Parts, machine.id)
                 }
             }
@@ -253,7 +254,7 @@ fun MachineDetail(
         // so an aanzicht opens when it is asked for.
         val views = catalog.viewsFor(machine.id)
         if (views.isNotEmpty()) {
-            item { SectionHeader("Aanzichten", "${views.size}") }
+            item { SectionHeader(stringResource(R.string.aanzichten), "${views.size}") }
             items(views, key = { it.id }) { view ->
                 var open by rememberSaveable(view.id) { mutableStateOf(false) }
                 Card(onClick = { open = !open }) {
@@ -296,19 +297,19 @@ fun MachineDetail(
         item { Spacer(Modifier.height(24.dp)) }
 
         if (machine.specs.isNotEmpty()) {
-            item { SectionHeader("Afmetingen en aansluiting") }
+            item { SectionHeader(stringResource(R.string.afmetingen_en_aansluiting)) }
             item {
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp)) {
                         Spacer(Modifier.weight(1.2f))
                         Text(
-                            "Small",
+                            stringResource(R.string.small),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.weight(1f),
                         )
                         Text(
-                            "Medium",
+                            stringResource(R.string.medium),
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.weight(1f),
@@ -351,12 +352,11 @@ fun MachineDetail(
 
         if (machine.variants.isNotEmpty()) {
             item {
-                SectionHeader("Uitvoeringen", "${machine.variants.size}")
+                SectionHeader(stringResource(R.string.uitvoeringen), "${machine.variants.size}")
             }
             item {
                 Text(
-                    "Tik de uitvoering aan die voor je staat — de typecode staat op het " +
-                        "typeplaatje. De lijsten in de app gaan dan alleen nog daarover.",
+                    stringResource(R.string.tik_de_uitvoering_aan_die_voor_je_staat_de_t),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
@@ -411,17 +411,22 @@ fun MachineDetail(
             }
         }
 
-        val properties = buildList {
-            if (machine.cabinet.isNotEmpty()) add("Kast" to machine.cabinet)
-            if (machine.screen.isNotEmpty()) add("Scherm" to machine.screen)
-            if (machine.brewer.isNotEmpty()) add("Brewer" to machine.brewer)
-            if (machine.typeCode.isNotEmpty()) add("Typecode" to machine.typeCode)
-        }
-        if (properties.isNotEmpty()) {
-            item { SectionHeader("Kenmerken") }
+        // Which of the four is filled in differs per machine, so the list is
+        // built where it is drawn: only there can it read the labels.
+        val hasProperties = listOf(machine.cabinet, machine.screen, machine.brewer,
+                                   machine.typeCode).any { it.isNotEmpty() }
+        if (hasProperties) {
+            item { SectionHeader(stringResource(R.string.kenmerken)) }
             item {
+                val properties = buildList {
+                    if (machine.cabinet.isNotEmpty()) add(R.string.kast to machine.cabinet)
+                    if (machine.screen.isNotEmpty()) add(R.string.scherm to machine.screen)
+                    if (machine.brewer.isNotEmpty()) add(R.string.brewer to machine.brewer)
+                    if (machine.typeCode.isNotEmpty()) add(R.string.typecode to machine.typeCode)
+                }
                 Column(Modifier.padding(horizontal = 20.dp)) {
-                    properties.forEach { (key, value) ->
+                    properties.forEach { (label, value) ->
+                        val key = stringResource(label)
                         Row(Modifier.fillMaxWidth().padding(vertical = 5.dp)) {
                             Text(
                                 key,
@@ -437,18 +442,18 @@ fun MachineDetail(
         }
 
         if (machine.docs.isNotEmpty()) {
-            item { SectionHeader("Bron van deze gegevens") }
+            item { SectionHeader(stringResource(R.string.bron_van_deze_gegevens)) }
             item {
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 2.dp)) {
                     machine.docs.forEach { doc ->
-                        Text("· $doc", style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(R.string.x_3, doc), style = MaterialTheme.typography.bodyMedium)
                         Spacer(Modifier.height(4.dp))
                     }
                 }
             }
         }
 
-        item { SectionHeader("Mijn notitie") }
+        item { SectionHeader(stringResource(R.string.mijn_notitie)) }
         item {
             var text by remember(machine.id) { mutableStateOf(note) }
             Column(Modifier.padding(horizontal = 12.dp)) {
@@ -459,24 +464,24 @@ fun MachineDetail(
                         onNote(machine.id, it)
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text("Serienummer, locatie, wat je hebt vervangen…") },
+                    placeholder = { Text(stringResource(R.string.serienummer_locatie_wat_je_hebt_vervangen)) },
                     minLines = 3,
                     textStyle = MaterialTheme.typography.bodyLarge,
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "Blijft op deze telefoon staan.",
+                    stringResource(R.string.blijft_op_deze_telefoon_staan),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                 )
             }
         }
 
-        item { SectionHeader("Algemeen") }
+        item { SectionHeader(stringResource(R.string.algemeen)) }
         item {
             Card(onClick = { onOpen(Route.Specs) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Technische gegevens", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.technische_gegevens), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                     Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
@@ -510,39 +515,108 @@ private fun JumpRow(title: String, sub: String, enabled: Boolean, onClick: () ->
     }
 }
 
+/** "1.", "12." — a call-out number rather than the name of a value. */
+private val NUMBER = Regex("\\d{1,2}\\.")
+
 @Composable
-fun SpecsScreen(catalog: Catalog) {
+fun SpecsScreen(
+    catalog: Catalog,
+    filter: String?,
+    variant: String?,
+    onFilter: (String?) -> Unit,
+) {
+    val documented = remember(catalog) {
+        catalog.machines.filter { m -> catalog.specs.any { m.id in it.machines } }
+    }
+    // Fifty tables, of which at most a handful belong to the machine in front
+    // of you; without this the screen is a scroll through other people's
+    // machines.
+    val shown = remember(catalog, filter, variant) {
+        catalog.specs.filter {
+            (filter == null || filter in it.machines) && catalog.forVariant(it.codes, variant)
+        }
+    }
+
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text("Technische gegevens", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.technische_gegevens), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "Waarden uit de gebruikershandleidingen van Virtu en Lua, omgerekend naar metrisch. Gelden in grote lijnen voor de hele CoEx-familie; het typeplaatje in de machine is altijd leidend.",
+                    stringResource(R.string.waarden_uit_de_gebruikershandleidingen_van_v),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
-        catalog.specs.forEach { group ->
+        item {
+            ChipRow(
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                    documented.map { it.id as String? to it.name },
+                selected = filter,
+                onSelect = onFilter,
+            )
+        }
+        item { Spacer(Modifier.height(4.dp)) }
+
+        if (shown.isEmpty()) {
+            item {
+                EmptyState(
+                    stringResource(R.string.geen_techniek),
+                    stringResource(R.string.voor_deze_machine_staat_de_technische_handle),
+                )
+            }
+        }
+
+        shown.forEach { group ->
             item { SectionHeader(group.group) }
             item {
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     group.items.forEach { item ->
-                        Column(
-                            Modifier.fillMaxWidth()
-                                .padding(vertical = 1.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(MaterialTheme.colorScheme.surfaceContainer)
-                                .padding(horizontal = 14.dp, vertical = 10.dp),
-                        ) {
-                            Text(
+                        when {
+                            // A line that runs across both columns of the
+                            // printed table: a heading, or a sentence about the
+                            // whole table. Neither is a value, so neither gets
+                            // the two-line treatment.
+                            item.value.isBlank() -> Text(
                                 item.key,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                style = MaterialTheme.typography.titleSmall,
+                                modifier = Modifier.padding(start = 2.dp, top = 14.dp, bottom = 4.dp),
                             )
-                            Spacer(Modifier.height(2.dp))
-                            Text(item.value, style = MaterialTheme.typography.bodyLarge)
+                            item.key.isBlank() -> Text(
+                                item.value,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(horizontal = 2.dp, vertical = 6.dp),
+                            )
+                            // A numbered call-out beside a picture: one line,
+                            // the way it is printed under the drawing.
+                            NUMBER.matches(item.key) -> Row(
+                                Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 5.dp),
+                            ) {
+                                Text(
+                                    item.key,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.width(34.dp),
+                                )
+                                Text(item.value, style = MaterialTheme.typography.bodyLarge)
+                            }
+                            else -> Column(
+                                Modifier.fillMaxWidth()
+                                    .padding(vertical = 1.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                                    .padding(horizontal = 14.dp, vertical = 10.dp),
+                            ) {
+                                Text(
+                                    item.key,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                Spacer(Modifier.height(2.dp))
+                                Text(item.value, style = MaterialTheme.typography.bodyLarge)
+                            }
                         }
                     }
                 }
@@ -554,86 +628,39 @@ fun SpecsScreen(catalog: Catalog) {
 
 @Composable
 fun SourcesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
-    val perKind = catalog.books.groupingBy { it.kindName }.eachCount()
-        .toList().sortedByDescending { it.second }
-    val languages = catalog.books.map { it.language }.filter { it.isNotEmpty() }.distinct()
-
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text("Waar komt dit vandaan?", style = MaterialTheme.typography.headlineSmall,
+                Text(stringResource(R.string.waar_komt_dit_vandaan), style = MaterialTheme.typography.headlineSmall,
                      fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    "Alles in deze app is overgenomen uit de servicedocumentatie van De Jong " +
-                        "DUKE: ${catalog.books.size} boeken in ${languages.size} talen. De " +
-                        "handleidingen zelf zitten er niet in — die zijn van de fabrikant.",
+                    stringResource(R.string.alles_in_deze_app_is_overgenomen_uit_de_serv),
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
-        item { SectionHeader("De boeken", "${catalog.books.size}") }
-        item {
-            Column(Modifier.padding(horizontal = 20.dp)) {
-                perKind.forEach { (kind, count) ->
-                    Column(Modifier.padding(vertical = 6.dp)) {
-                        Text("$count × $kind", style = MaterialTheme.typography.titleMedium)
-                    }
-                }
-                Spacer(Modifier.height(8.dp))
-            }
-        }
-        item {
-            Card(onClick = { onOpen(Route.Books) }) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Column(Modifier.weight(1f)) {
-                        Text("Alle handleidingen", style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            "Per machine en per soort, met versie en documentnummer",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Icon(Icons.Filled.ChevronRight, null,
-                         tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-        }
-        item { SectionHeader("Hoe het is samengevoegd") }
+        item { SectionHeader(stringResource(R.string.hoe_het_is_samengevoegd)) }
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp)) {
                 Text(
-                    "De techniek achter de deur hangt aan de modelcode, niet aan het merk: een " +
-                        "Avy CND en een Zia CND zijn dezelfde machine in een andere kast. Tekst " +
-                        "uit een technische handleiding geldt daarom voor elk merk met dezelfde " +
-                        "code; bij elke melding, elk component en elke procedure staat voor welke " +
-                        "machines dat is. Wat wél over de kast of het scherm gaat — de " +
-                        "aanzichten, de onderhoudskaarten, de tekeningen — blijft bij zijn " +
-                        "eigen merk.",
+                    stringResource(R.string.de_techniek_achter_de_deur_hangt_aan_de_mode),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Nederlandse schermmeldingen komen uit de Nederlandstalige handleiding; de " +
-                        "Engelse tekst staat erbij omdat een machine ook op Engels kan staan. " +
-                        "Waar alleen een Engels boek bestaat, staat er een taallabel bij.",
+                    stringResource(R.string.nederlandse_schermmeldingen_komen_uit_de_ned),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Onafhankelijk hulpmiddel, privé gemaakt. Geen uitgave van De Jong DUKE " +
-                        "en niet door hen goedgekeurd, onderschreven of gesponsord. Merk- en " +
-                        "productnamen zijn van hun eigenaren en staan hier alleen om aan te " +
-                        "geven over welke machines het gaat.",
+                    stringResource(R.string.onafhankelijk_hulpmiddel_prive_gemaakt_geen_),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Werken aan deze machines is werken met heet water, stoom, druk en " +
-                        "netspanning. Bij twijfel zijn de handleiding van de fabrikant en het " +
-                        "typeplaatje in de machine leidend.",
+                    stringResource(R.string.werken_aan_deze_machines_is_werken_met_heet_),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -643,9 +670,10 @@ fun SourcesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
     }
 }
 
+@Composable
 fun serviceMenuLabel(kind: String) = when (kind) {
-    "oud" -> "oud servicemenu"
-    "nieuw" -> "nieuw servicemenu"
-    "beide" -> "oud of nieuw servicemenu"
-    else -> "servicemenu onbekend"
+    "oud" -> stringResource(R.string.oud_servicemenu)
+    "nieuw" -> stringResource(R.string.nieuw_servicemenu)
+    "beide" -> stringResource(R.string.oud_of_nieuw_servicemenu)
+    else -> stringResource(R.string.servicemenu_onbekend)
 }

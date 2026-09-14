@@ -27,12 +27,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Part
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.count
 import nl.dejongduke.service.ui.copyToClipboard
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
@@ -99,11 +102,11 @@ fun PartsScreen(
                 value = term,
                 onValueChange = { term = it },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
-                placeholder = { Text("Nummer of omschrijving") },
+                placeholder = { Text(stringResource(R.string.nummer_of_omschrijving)) },
                 leadingIcon = { Icon(Icons.Filled.Search, null) },
                 trailingIcon = {
                     if (term.isNotEmpty()) {
-                        IconButton(onClick = { term = "" }) { Icon(Icons.Filled.Close, "Wissen") }
+                        IconButton(onClick = { term = "" }) { Icon(Icons.Filled.Close, stringResource(R.string.wissen)) }
                     }
                 },
                 singleLine = true,
@@ -111,21 +114,21 @@ fun PartsScreen(
         }
 
         if (machine == null) {
-            item { EmptyState("Geen onderdelenboek", "Voor deze machine staat nog geen onderdelenlijst in de app.") }
+            item { EmptyState(stringResource(R.string.geen_onderdelenboek_2), stringResource(R.string.voor_deze_machine_staat_nog_geen_onderdelenl)) }
             return@LazyColumn
         }
 
         if (searching) {
-            item { SectionHeader("Gevonden", "${hits.size}") }
+            item { SectionHeader(stringResource(R.string.gevonden), "${hits.size}") }
             if (hits.isEmpty()) {
-                item { EmptyState("Niets gevonden", "Probeer een deel van het nummer of een Engelse term, zoals \"boiler\".") }
+                item { EmptyState(stringResource(R.string.niets_gevonden), stringResource(R.string.probeer_een_deel_van_het_nummer_of_een_engel)) }
             }
             items(hits.size) { index -> PartRow(hits[index], showSection = true) }
             item { Spacer(Modifier.height(24.dp)) }
             return@LazyColumn
         }
 
-        item { SectionHeader("Tekeningen", "${sections.size}") }
+        item { SectionHeader(stringResource(R.string.tekeningen), "${sections.size}") }
         items(sections.keys.toList()) { section ->
             val count = sections[section]?.size ?: 0
             val name = catalog.drawingName(machine, selectedBuild.orEmpty(), section)
@@ -138,7 +141,7 @@ fun PartsScreen(
                         )
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            "$count onderdelen",
+                            count(R.plurals.n_parts, count),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -182,9 +185,9 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(catalog.machine(machine)?.name ?: machine)
                     if (variant.isNotEmpty()) Pill(variant)
-                    Pill("tek. $section")
-                    Pill("${parts.size} onderdelen")
-                    if (balloons.isNotEmpty()) Pill("${balloons.size} aanklikbaar")
+                    Pill(stringResource(R.string.tek_x, section))
+                    Pill(count(R.plurals.n_parts, parts.size))
+                    if (balloons.isNotEmpty()) Pill(stringResource(R.string.x_aanklikbaar, balloons.size))
                 }
             }
         }
@@ -209,9 +212,9 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
                     Spacer(Modifier.height(6.dp))
                     Text(
                         if (balloons.isEmpty())
-                            "Knijp om in te zoomen. De nummers in de tekening zijn de posities hieronder."
+                            stringResource(R.string.knijp_om_in_te_zoomen_de_nummers_in_de_teken)
                         else
-                            "Tik een nummer in de tekening aan, of tik een onderdeel in de lijst.",
+                            stringResource(R.string.tik_een_nummer_in_de_tekening_aan_of_tik_een),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.outline,
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
@@ -249,7 +252,7 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
         }
         item {
             Text(
-                "SE = monteursvoorraad · SW = magazijnvoorraad · pos verwijst naar het nummer in de tekening.",
+                stringResource(R.string.se_monteursvoorraad_sw_magazijnvoorraad_pos_),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
@@ -277,7 +280,7 @@ private fun PartRow(
     ) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (part.available) PartNumber(part.number) else Pill("niet los leverbaar")
+                if (part.available) PartNumber(part.number) else Pill(stringResource(R.string.niet_los_leverbaar))
                 Spacer(Modifier.width(8.dp))
                 if (part.stock.isNotEmpty()) {
                     Pill(
@@ -289,7 +292,7 @@ private fun PartRow(
                 Spacer(Modifier.weight(1f))
                 if (part.pos.isNotEmpty()) {
                     Text(
-                        "pos ${part.pos}",
+                        stringResource(R.string.pos_x_2, part.pos),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

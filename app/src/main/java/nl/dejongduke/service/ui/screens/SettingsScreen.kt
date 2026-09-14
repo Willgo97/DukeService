@@ -16,6 +16,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import nl.dejongduke.service.R
 import nl.dejongduke.service.BuildConfig
 import nl.dejongduke.service.data.DrawingIndexer
 import androidx.compose.runtime.getValue
@@ -28,10 +29,13 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
+import nl.dejongduke.service.data.Locales
 import nl.dejongduke.service.ui.ChipRow
+import nl.dejongduke.service.ui.count
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import nl.dejongduke.service.ui.theme.ThemeMode
@@ -41,6 +45,8 @@ fun SettingsScreen(
     catalog: Catalog,
     thema: ThemeMode,
     onThema: (ThemeMode) -> Unit,
+    language: String?,
+    onLanguage: (String?) -> Unit,
     messageLanguage: String,
     onMessageLanguage: (String) -> Unit,
     defaultMachine: String?,
@@ -50,16 +56,34 @@ fun SettingsScreen(
     onOpen: (Route) -> Unit,
 ) {
     LazyColumn(Modifier.fillMaxWidth()) {
-        item { SectionHeader("Weergave") }
+        item { SectionHeader(stringResource(R.string.taal)) }
+        item {
+            ChipRow(
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.taal_van_de_telefoon)) +
+                    Catalog.LANGUAGES.map { it as String? to (Locales.NAMES[it] ?: it) },
+                selected = language,
+                onSelect = onLanguage,
+            )
+        }
+        item {
+            Text(
+                stringResource(R.string.de_hele_app_volgt_deze_keuze_teksten_uit_de),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline,
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+            )
+        }
+
+        item { SectionHeader(stringResource(R.string.weergave)) }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
                 ThemeMode.entries.forEach { mode ->
                     Choice(
-                        title = mode.label,
+                        title = stringResource(mode.label),
                         onder = when (mode) {
-                            ThemeMode.System -> "Volgt de stand van je telefoon"
-                            ThemeMode.Light -> "Altijd licht"
-                            ThemeMode.Dark -> "Altijd donker — prettiger in een donkere ruimte"
+                            ThemeMode.System -> stringResource(R.string.volgt_de_stand_van_je_telefoon)
+                            ThemeMode.Light -> stringResource(R.string.altijd_licht)
+                            ThemeMode.Dark -> stringResource(R.string.altijd_donker_prettiger_in_een_donkere_ruimt)
                         },
                         selected = mode == thema,
                     ) { onThema(mode) }
@@ -67,34 +91,34 @@ fun SettingsScreen(
             }
         }
 
-        item { SectionHeader("Taal van de meldingen") }
+        item { SectionHeader(stringResource(R.string.taal_van_de_meldingen)) }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
                 Choice(
-                    "Nederlands voorop",
-                    "Zoals een machine die op Nederlands staat het toont",
+                    stringResource(R.string.nederlands_voorop),
+                    stringResource(R.string.zoals_een_machine_die_op_nederlands_staat_he),
                     messageLanguage == "nl",
                 ) { onMessageLanguage("nl") }
                 Choice(
-                    "Engels voorop",
-                    "Zoals de handleiding en een machine die op Engels staat",
+                    stringResource(R.string.engels_voorop),
+                    stringResource(R.string.zoals_de_handleiding_en_een_machine_die_op_e),
                     messageLanguage == "en",
                 ) { onMessageLanguage("en") }
             }
         }
         item {
             Text(
-                "Beide talen blijven zichtbaar; dit bepaalt alleen welke bovenaan staat.",
+                stringResource(R.string.beide_talen_blijven_zichtbaar_dit_bepaalt_al),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
             )
         }
 
-        item { SectionHeader("Standaardmachine") }
+        item { SectionHeader(stringResource(R.string.standaardmachine)) }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
                     catalog.machinesWithParts
                         .map { it.id as String? to it.name },
                 selected = defaultMachine,
@@ -103,23 +127,23 @@ fun SettingsScreen(
         }
         item {
             Text(
-                "Waar de lijsten mee openen. Je kunt altijd wisselen bovenin een lijst.",
+                stringResource(R.string.waar_de_lijsten_mee_openen_je_kunt_altijd_wi),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
             )
         }
 
-        item { SectionHeader("Scanner") }
+        item { SectionHeader(stringResource(R.string.scanner)) }
         item {
             Row(
                 Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(Modifier.weight(1f)) {
-                    Text("Direct openen", style = MaterialTheme.typography.bodyLarge)
+                    Text(stringResource(R.string.direct_openen), style = MaterialTheme.typography.bodyLarge)
                     Text(
-                        "Bij één treffer meteen de pagina openen",
+                        stringResource(R.string.bij_een_treffer_meteen_de_pagina_openen),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -129,18 +153,19 @@ fun SettingsScreen(
         }
 
         if (BuildConfig.DEBUG) {
-            item { SectionHeader("Ontwikkelen") }
+            item { SectionHeader(stringResource(R.string.ontwikkelen)) }
             item {
                 var status by remember { mutableStateOf("") }
                 val scope = rememberCoroutineScope()
                 val context = LocalContext.current
+                val busy = stringResource(R.string.bezig)
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     TextButton(onClick = {
                         scope.launch {
-                            status = "bezig…"
+                            status = busy
                             status = DrawingIndexer.run(context) { status = it }
                         }
-                    }) { Text("Tekeningen indexeren") }
+                    }) { Text(stringResource(R.string.tekeningen_indexeren)) }
                     if (status.isNotEmpty()) {
                         Text(
                             status,
@@ -153,24 +178,24 @@ fun SettingsScreen(
             }
         }
 
-        item { SectionHeader("Over") }
+        item { SectionHeader(stringResource(R.string.over)) }
         item {
             Column(Modifier.padding(horizontal = 20.dp)) {
-                InfoRow("Versie", "1.1")
-                InfoRow("Inhoud", "${catalog.faultGroups.size} storingen · ${catalog.parts.size} onderdelen")
-                InfoRow("Werkt offline", "Ook de tekstherkenning van de scanner")
+                InfoRow(stringResource(R.string.versie), "1.1")
+                InfoRow(stringResource(R.string.inhoud), count(R.plurals.n_faults, catalog.faultGroups.size) + " · " +
+                    count(R.plurals.n_parts, catalog.parts.size))
+                InfoRow(stringResource(R.string.werkt_offline), stringResource(R.string.ook_de_tekstherkenning_van_de_scanner))
                 Spacer(Modifier.height(10.dp))
             }
         }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
-                TextButton(onClick = { onOpen(Route.Sources) }) { Text("Waar komt dit vandaan?") }
+                TextButton(onClick = { onOpen(Route.Sources) }) { Text(stringResource(R.string.waar_komt_dit_vandaan)) }
             }
         }
         item {
             Text(
-                "Privéwerk, geen officiële uitgave van De Jong DUKE. Bij twijfel zijn de handleiding " +
-                    "en het typeplaatje in de machine leidend.",
+                stringResource(R.string.privewerk_geen_officiele_uitgave_van_de_jong),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

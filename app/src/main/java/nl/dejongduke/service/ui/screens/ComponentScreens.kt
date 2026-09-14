@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -49,9 +50,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Component
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.languageName
+import nl.dejongduke.service.ui.appLanguage
 import nl.dejongduke.service.ui.decodeAsset
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
@@ -68,9 +72,22 @@ import nl.dejongduke.service.ui.SectionHeader
 private fun number(number: String): Long =
     number.split('.').take(4).fold(0L) { acc, part -> acc * 100 + (part.toLongOrNull() ?: 0L) }
 
-private val VOLGORDE = listOf(
-    "Watersysteem", "Brewer", "Molen", "Mixer", "Ingrediënten", "Verse melk", "Elektronica",
+/** Water first, then what it flows into, then the electronics that drive it. */
+private val GROUP_ORDER = listOf(
+    "water", "brewer", "grinder", "mixer", "ingredients", "milk", "electronics", "other",
 )
+
+@Composable
+private fun groupLabel(key: String): String = when (key) {
+    "water" -> stringResource(R.string.watersysteem)
+    "brewer" -> stringResource(R.string.brewer)
+    "grinder" -> stringResource(R.string.molen)
+    "mixer" -> stringResource(R.string.mixer)
+    "ingredients" -> stringResource(R.string.ingredienten)
+    "milk" -> stringResource(R.string.verse_melk)
+    "electronics" -> stringResource(R.string.elektronica)
+    else -> stringResource(R.string.overig)
+}
 
 @Composable
 fun ComponentList(
@@ -90,7 +107,7 @@ fun ComponentList(
     }
     val groups = remember(shown) {
         shown.groupBy { it.group }.toList()
-            .sortedBy { (name, _) -> VOLGORDE.indexOf(name).let { if (it < 0) VOLGORDE.size else it } }
+            .sortedBy { (name, _) -> GROUP_ORDER.indexOf(name).let { if (it < 0) GROUP_ORDER.size else it } }
             // Books number the same subject differently, so sort on the number
             // itself; that keeps the water system running from inlet to boiler
             // even when two manuals are mixed.
@@ -101,8 +118,7 @@ fun ComponentList(
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    "Hoe de machine werkt: watersysteem, boilers, ventielen, brewer, molen en " +
-                        "elektronica — met de bijbehorende pagina's uit de technische handleiding.",
+                    stringResource(R.string.hoe_de_machine_werkt_watersysteem_boilers_ve),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -110,7 +126,7 @@ fun ComponentList(
         }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to "Alle machines") +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -121,8 +137,8 @@ fun ComponentList(
         if (shown.isEmpty()) {
             item {
                 EmptyState(
-                    "Geen techniek",
-                    "Voor deze machine staat de technische handleiding nog niet in de app.",
+                    stringResource(R.string.geen_techniek),
+                    stringResource(R.string.voor_deze_machine_staat_de_technische_handle),
                 )
             }
         }
@@ -172,7 +188,10 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (component.brewer.isNotEmpty()) Pill(component.brewer, selected = true)
                     machines.forEach { Pill(it) }
-                    if (component.page > 0) Pill("pagina ${component.page}")
+                    if (component.page > 0) Pill(stringResource(R.string.pagina_x, component.page))
+                    // Not every book exists in every language; this one is read
+                    // in whichever came closest.
+                    if (component.language != appLanguage()) Pill(languageName(component.language))
                 }
             }
         }
@@ -190,7 +209,7 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
         if (component.source.isNotEmpty()) {
             item {
                 Text(
-                    "Bron: ${component.source}",
+                    stringResource(R.string.bron_x, component.source),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -232,7 +251,7 @@ fun AssetImage(path: String) {
         }
         Image(
             bitmap = image,
-            contentDescription = "Pagina uit de handleiding",
+            contentDescription = stringResource(R.string.pagina_uit_de_handleiding),
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .fillMaxWidth()

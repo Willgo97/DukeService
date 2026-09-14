@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.annotation.StringRes
+import nl.dejongduke.service.R
 
 /**
  * Loosely after the new DUKE service menu: near-black panels (#101010) with a
@@ -95,10 +97,10 @@ private val AppTypography = Typography().let { base ->
     )
 }
 
-enum class ThemeMode(val label: String) {
-    System("Systeem"),
-    Light("Licht"),
-    Dark("Donker"),
+enum class ThemeMode(@StringRes val label: Int) {
+    System(R.string.systeem),
+    Light(R.string.licht),
+    Dark(R.string.donker),
 }
 
 @Composable

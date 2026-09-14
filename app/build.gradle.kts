@@ -17,7 +17,6 @@ android {
         targetSdk = 36
         versionCode = 2
         versionName = "2.0"
-        resourceConfigurations += listOf("nl")
     }
 
     // Release signing comes from ~/.gradle/gradle.properties (or the matching
