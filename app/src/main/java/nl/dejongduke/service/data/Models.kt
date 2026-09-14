@@ -6,34 +6,34 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Machine(
     val id: String,
-    val naam: String,
-    val serie: String = "",
-    val typecode: String = "",
+    val name: String,
+    val series: String = "",
+    val typeCode: String = "",
     val brewer: String = "",
-    val kast: String = "",
-    val scherm: String = "",
-    val actief: Boolean = true,
-    val foto: String = "",
-    val servicemenu: String = "",
-    val servicemenuUitleg: String = "",
-    val kort: String = "",
-    val omschrijving: String = "",
-    val specs: List<SpecRij> = emptyList(),
+    val cabinet: String = "",
+    val screen: String = "",
+    val active: Boolean = true,
+    val photo: String = "",
+    val serviceMenu: String = "",
+    val serviceMenuNote: String = "",
+    val summary: String = "",
+    val description: String = "",
+    val specs: List<SpecRow> = emptyList(),
     val docs: List<String> = emptyList(),
-    val uitvoeringen: List<Uitvoering> = emptyList(),
+    val variants: List<Variant> = emptyList(),
 )
 
 /** One build of a machine: the manuals treat these as separate documents. */
 @Serializable
-data class Uitvoering(
+data class Variant(
     val code: String,
-    val kast: String = "",
+    val cabinet: String = "",
     val brewer: String = "",
     val doc: String = "",
 )
 
 @Serializable
-data class SpecRij(
+data class SpecRow(
     val label: String,
     val small: String = "",
     val medium: String = "",
@@ -41,18 +41,21 @@ data class SpecRij(
 
 @Serializable
 data class Fault(
-    val melding: String,
-    val nl: String,
+    val message: String,
+    val dutch: String,
     val machines: List<String>,
+    /** Model codes the message is documented for: CEC, CND, XEA … */
+    val codes: List<String> = emptyList(),
     val brewers: List<String> = emptyList(),
-    val cat: String,
-    val oorzaak: String = "",
-    val oplossing: List<String> = emptyList(),
-    val monteur: String = "",
-    val proc: List<String> = emptyList(),
-    val zelf: Boolean = true,
-    val opmerking: String = "",
-    val bron: String = "",
+    val category: String,
+    val cause: String = "",
+    val solution: List<String> = emptyList(),
+    val engineerNote: String = "",
+    val procedures: List<String> = emptyList(),
+    val selfService: Boolean = true,
+    val note: String = "",
+    val source: String = "",
+    val language: String = "nl",
 )
 
 /**
@@ -61,86 +64,75 @@ data class Fault(
  * them apart matters, but showing two identical-looking rows does not.
  */
 data class FaultGroup(
-    val melding: String,
-    val varianten: List<Fault>,
+    val message: String,
+    val variants: List<Fault>,
 ) {
-    val eerste: Fault get() = varianten.first()
-    val machines: List<String> get() = varianten.flatMap { it.machines }.distinct()
-    val zelf: Boolean get() = varianten.all { it.zelf }
+    val first: Fault get() = variants.first()
+    val machines: List<String> get() = variants.flatMap { it.machines }.distinct()
+    val selfService: Boolean get() = variants.all { it.selfService }
 }
 
 @Serializable
 data class Procedure(
     val id: String,
-    val titel: String,
+    val title: String,
     val brewer: String = "",
     val machines: List<String> = emptyList(),
+    val codes: List<String> = emptyList(),
     val interval: String = "",
-    val intervalTekst: String = "",
-    val doel: String = "",
-    val nodig: List<String> = emptyList(),
-    @SerialName("let") val letOp: List<LetOp> = emptyList(),
-    val stappen: List<Stap> = emptyList(),
-    val bron: String = "",
+    val intervalText: String = "",
+    val purpose: String = "",
+    val needed: List<String> = emptyList(),
+    val images: List<String> = emptyList(),
+    val warnings: List<SafetyNote> = emptyList(),
+    val steps: List<Step> = emptyList(),
+    val source: String = "",
     /** Dutch unless the machine's only manual is English, as with the Uni-Brewer. */
-    val taal: String = "nl",
+    val language: String = "nl",
 )
 
 @Serializable
-data class LetOp(
-    @SerialName("n") val niveau: String,
-    @SerialName("t") val tekst: String,
+data class SafetyNote(
+    @SerialName("n") val level: String,
+    @SerialName("t") val text: String,
 )
 
 @Serializable
-data class Stap(
-    @SerialName("t") val tekst: String,
+data class Step(
+    @SerialName("t") val text: String,
     @SerialName("s") val sub: List<String> = emptyList(),
-)
-
-@Serializable
-data class Schema(
-    val id: String,
-    val brewer: String,
-    val interval: String,
-    val titel: String,
-    val machines: List<String> = emptyList(),
-    @SerialName("let") val letOp: String = "",
-    val taken: List<Taak> = emptyList(),
-)
-
-@Serializable
-data class Taak(
-    @SerialName("t") val tekst: String,
-    @SerialName("p") val procedure: String = "",
 )
 
 @Serializable
 data class Part(
     @SerialName("m") val machine: String,
-    @SerialName("s") val sectie: String,
-    @SerialName("d") val tekening: String,
+    /** Model code of the book the row comes from, so two builds do not mix. */
+    @SerialName("u") val variant: String = "",
+    @SerialName("s") val section: String,
+    @SerialName("d") val drawing: String,
     @SerialName("p") val pos: String,
-    @SerialName("n") val nummer: String,
-    @SerialName("q") val aantal: String,
-    @SerialName("v") val voorraad: String,
-    @SerialName("t") val omschrijving: String,
+    @SerialName("n") val number: String,
+    @SerialName("q") val quantity: String,
+    @SerialName("v") val stock: String,
+    @SerialName("t") val description: String,
 ) {
     /** Parts marked "n/a" in the spare parts book are not sold separately. */
-    val leverbaar: Boolean get() = nummer.isNotEmpty()
+    val available: Boolean get() = number.isNotEmpty()
 }
 
 @Serializable
-data class SpecGroep(
-    val groep: String,
+data class SpecGroup(
+    val group: String,
     val brewer: String = "",
+    val machines: List<String> = emptyList(),
+    val codes: List<String> = emptyList(),
     val items: List<SpecItem> = emptyList(),
 )
 
 @Serializable
 data class SpecItem(
-    @SerialName("k") val kop: String,
-    @SerialName("v") val waarde: String,
+    @SerialName("k") val key: String,
+    @SerialName("v") val value: String,
 )
 
 /**
@@ -150,49 +142,65 @@ data class SpecItem(
  *
  * Every brewer has its own book, so the same subject appears more than once --
  * an open boiler behaves differently behind a Uni-Brewer than behind a CoEx.
- * [brewer] and [machines] say which machine a section belongs to; [nr] is the
+ * [brewer] and [machines] say which machine a section belongs to; [number] is the
  * number in its own book and is therefore not unique, [id] is.
  */
 @Serializable
 data class Component(
     val id: String,
-    val nr: String,
-    val titel: String,
-    val tekst: String,
-    val groep: String = "",
-    val pagina: Int = 0,
-    val afbs: List<String> = emptyList(),
+    val number: String,
+    val title: String,
+    val text: String,
+    val group: String = "",
+    val page: Int = 0,
+    val images: List<String> = emptyList(),
     val machines: List<String> = emptyList(),
+    val codes: List<String> = emptyList(),
     val brewer: String = "",
-    val bron: String = "",
-    val taal: String = "nl",
+    val source: String = "",
+    val language: String = "nl",
 )
 
 /** One entry of the service menu, as the technical manual documents it. */
 @Serializable
 data class MenuItem(
     val id: String,
-    val nr: String,
-    val titel: String,
-    val tekst: String,
-    val pad: String = "",
-    val niveau: String = "",
-    val pagina: Int = 0,
-    val afb: String = "",
-    val afbs: List<String> = emptyList(),
-    val bron: String = "",
-    val doel: String = "",
-    val nodig: List<String> = emptyList(),
+    val number: String,
+    val title: String,
+    val text: String,
+    val path: String = "",
+    val level: String = "",
+    val page: Int = 0,
+    val image: String = "",
+    val images: List<String> = emptyList(),
+    val source: String = "",
+    val purpose: String = "",
+    val needed: List<String> = emptyList(),
     val interval: String = "",
-    val stappen: List<String> = emptyList(),
-    val punten: List<String> = emptyList(),
-    val opmerkingen: List<String> = emptyList(),
+    val steps: List<String> = emptyList(),
+    val points: List<String> = emptyList(),
+    val notes: List<String> = emptyList(),
     val machines: List<String> = emptyList(),
-    val taal: String = "nl",
+    val codes: List<String> = emptyList(),
+    val language: String = "nl",
 ) {
     /** Chapter 6 is the menu itself, 7 the step-by-step jobs. */
-    val hoofdstuk: String get() = nr.substringBefore('.')
+    val chapter: String get() = number.substringBefore('.')
 }
+
+/** A view of the machine with the numbered call-outs that belong to it. */
+@Serializable
+data class MachineView(
+    val id: String,
+    val number: String = "",
+    val title: String,
+    val callouts: List<String> = emptyList(),
+    val images: List<String> = emptyList(),
+    val machines: List<String> = emptyList(),
+    val codes: List<String> = emptyList(),
+    val source: String = "",
+    val language: String = "nl",
+)
 
 /** A balloon number on an exploded drawing, in fractions of the image. */
 @Serializable
@@ -202,3 +210,58 @@ data class Hotspot(
     val y: Float,
     val r: Float,
 )
+
+/**
+ * A maintenance sheet as it hangs inside the machine: numbered steps, each with
+ * the picture that goes with it. One per machine and interval, straight from
+ * the manufacturer's fold-out card.
+ */
+@Serializable
+data class MaintenanceCard(
+    val id: String,
+    val title: String,
+    val interval: String = "",
+    val machines: List<String> = emptyList(),
+    val codes: List<String> = emptyList(),
+    val language: String = "en",
+    val source: String = "",
+    val steps: List<MaintenanceStep> = emptyList(),
+)
+
+@Serializable
+data class MaintenanceStep(
+    @SerialName("n") val number: String = "",
+    @SerialName("t") val points: List<String> = emptyList(),
+    @SerialName("o") val notes: List<String> = emptyList(),
+    @SerialName("a") val images: List<String> = emptyList(),
+)
+
+/** One of the manufacturer's books, so the app can name its source. */
+@Serializable
+data class Book(
+    val id: String,
+    val kind: String = "",
+    val brand: String = "",
+    val code: String = "",
+    val brewer: String = "",
+    val cabinet: String = "",
+    val language: String = "",
+    val version: String = "",
+    val number: String = "",
+    val pages: Int = 0,
+    val title: String = "",
+    val file: String = "",
+    val superseded: Boolean = false,
+) {
+    val kindName: String
+        get() = when (kind) {
+            "TM" -> "Technische handleiding"
+            "SMI" -> "Onderhoudskaart"
+            "UM" -> "Gebruikershandleiding"
+            "QSG" -> "Snelstartgids"
+            "SPM" -> "Onderdelenboek"
+            "IM" -> "Installatiehandleiding"
+            "BR" -> "Brochure"
+            else -> kind
+        }
+}

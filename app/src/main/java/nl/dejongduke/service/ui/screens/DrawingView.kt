@@ -53,7 +53,7 @@ import nl.dejongduke.service.data.Hotspot
 fun DrawingView(
     path: String,
     balloons: List<Hotspot>,
-    geselecteerd: String?,
+    selected: String?,
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -121,7 +121,7 @@ fun DrawingView(
                     modifier = Modifier.fillMaxSize(),
                 )
                 balloons.forEach { spot ->
-                    val actief = spot.pos == geselecteerd
+                    val active = spot.pos == selected
                     val diameter = (spot.r * 2.6f * breedte.value).coerceIn(22f, 60f).dp
                     Box(
                         Modifier
@@ -132,13 +132,13 @@ fun DrawingView(
                             .size(diameter)
                             .clip(CircleShape)
                             .then(
-                                if (actief) Modifier.background(
+                                if (active) Modifier.background(
                                     MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)
                                 ) else Modifier
                             )
                             .border(
-                                width = if (actief) 2.dp else 1.dp,
-                                color = if (actief) MaterialTheme.colorScheme.primary
+                                width = if (active) 2.dp else 1.dp,
+                                color = if (active) MaterialTheme.colorScheme.primary
                                 else MaterialTheme.colorScheme.primary.copy(alpha = 0.45f),
                                 shape = CircleShape,
                             )
@@ -148,7 +148,7 @@ fun DrawingView(
             }
         }
 
-        if (geselecteerd != null) {
+        if (selected != null) {
             Box(
                 Modifier
                     .align(Alignment.TopStart)
@@ -158,7 +158,7 @@ fun DrawingView(
                     .padding(horizontal = 8.dp, vertical = 3.dp),
             ) {
                 Text(
-                    "pos $geselecteerd",
+                    "pos $selected",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold,

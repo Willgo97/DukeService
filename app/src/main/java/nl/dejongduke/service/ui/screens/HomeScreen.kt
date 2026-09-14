@@ -18,7 +18,9 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ListAlt
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Tune
@@ -49,7 +51,6 @@ import nl.dejongduke.service.ui.Tab
 fun LazyListScope.homeSections(
     catalog: Catalog,
     pins: List<String>,
-    ticks: Map<String, Set<Int>>,
     onOpen: (Route) -> Unit,
     onTab: (Tab) -> Unit,
 ) {
@@ -58,14 +59,14 @@ fun LazyListScope.homeSections(
         val value = key.substringAfter(':')
         when {
             key.startsWith("fault:") -> catalog.faultGroup(value)?.let {
-                Triple(Icons.Filled.WarningAmber, it.melding, Route.Fault(it.melding) as Route)
+                Triple(Icons.Filled.WarningAmber, it.message, Route.Fault(it.message) as Route)
             }
-            key.startsWith("part:") -> catalog.parts.firstOrNull { it.nummer == value }?.let {
-                Triple(Icons.Filled.Build, "${it.nummer} · ${it.omschrijving}",
-                    Route.PartSection(it.machine, it.sectie) as Route)
+            key.startsWith("part:") -> catalog.parts.firstOrNull { it.number == value }?.let {
+                Triple(Icons.Filled.Build, "${it.number} · ${it.description}",
+                    Route.PartSection(it.machine, it.variant, it.section) as Route)
             }
             key.startsWith("proc:") -> catalog.procedure(value)?.let {
-                Triple(Icons.AutoMirrored.Filled.ListAlt, it.titel, Route.Procedure(it.id) as Route)
+                Triple(Icons.AutoMirrored.Filled.ListAlt, it.title, Route.Procedure(it.id) as Route)
             }
             else -> null
         }
@@ -73,51 +74,12 @@ fun LazyListScope.homeSections(
     if (pinned.isNotEmpty()) {
         item { SectionHeader("Vastgezet", "${pinned.size}") }
         items(pinned.size) { index ->
-            val (icon, titel, route) = pinned[index]
+            val (icon, title, route) = pinned[index]
             Card(onClick = { onOpen(route) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(12.dp))
-                    Text(titel, style = MaterialTheme.typography.bodyLarge, maxLines = 2)
-                }
-            }
-        }
-    }
-
-    // --- today's checklists ----------------------------------------------
-    val lopend = catalog.schemas.filter { (ticks[it.id]?.size ?: 0) > 0 }
-    if (lopend.isNotEmpty()) {
-        item { SectionHeader("Vandaag bezig", "${lopend.size}") }
-        items(lopend.size) { index ->
-            val schema = lopend[index]
-            val done = ticks[schema.id].orEmpty().size
-            val total = schema.taken.size
-            Card(onClick = { onOpen(Route.Schema(schema.id)) }) {
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(schema.titel, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-                        Text(
-                            "$done/$total",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = if (done == total) MaterialTheme.colorScheme.secondary
-                            else MaterialTheme.colorScheme.primary,
-                        )
-                    }
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        "${schema.brewer}  ·  ${catalog.machineNames(schema.machines)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    LinearProgressIndicator(
-                        progress = { if (total == 0) 0f else done.toFloat() / total },
-                        modifier = Modifier.fillMaxWidth().height(4.dp).clip(RoundedCornerShape(2.dp)),
-                        color = if (done == total) MaterialTheme.colorScheme.secondary
-                        else MaterialTheme.colorScheme.primary,
-                        trackColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-                        drawStopIndicator = {},
-                    )
+                    Text(title, style = MaterialTheme.typography.bodyLarge, maxLines = 2)
                 }
             }
         }
@@ -130,7 +92,7 @@ fun LazyListScope.homeSections(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Tile(Icons.Filled.WarningAmber, "Storingen",
                     "${catalog.faultGroups.size} meldingen", Modifier.weight(1f)) {
-                    onTab(Tab.Storingen)
+                    onTab(Tab.Faults)
                 }
                 Tile(Icons.Filled.Memory, "Techniek",
                     "${catalog.components.size} onderdelen", Modifier.weight(1f)) {
@@ -141,11 +103,22 @@ fun LazyListScope.homeSections(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Tile(Icons.Filled.Tune, "Servicemenu",
                     "${catalog.menu.size} onderwerpen", Modifier.weight(1f)) {
-                    onOpen(Route.Servicemenu)
+                    onOpen(Route.ServiceMenu)
                 }
                 Tile(Icons.Filled.Build, "Onderdelen",
                     "${catalog.parts.size} regels", Modifier.weight(1f)) {
-                    onTab(Tab.Onderdelen)
+                    onTab(Tab.Parts)
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Tile(Icons.Filled.CleaningServices, "Onderhoudskaarten",
+                    "${catalog.cards.size} kaarten", Modifier.weight(1f)) {
+                    onOpen(Route.Cards)
+                }
+                Tile(Icons.AutoMirrored.Filled.MenuBook, "Handleidingen",
+                    "${catalog.books.size} boeken", Modifier.weight(1f)) {
+                    onOpen(Route.Books)
                 }
             }
         }
@@ -155,7 +128,7 @@ fun LazyListScope.homeSections(
 @Composable
 private fun Tile(
     icon: ImageVector,
-    titel: String,
+    title: String,
     onder: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
@@ -169,7 +142,7 @@ private fun Tile(
     ) {
         Icon(icon, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
         Spacer(Modifier.height(10.dp))
-        Text(titel, style = MaterialTheme.typography.titleMedium)
+        Text(title, style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(2.dp))
         Text(
             onder,
@@ -190,8 +163,9 @@ fun LazyListScope.catalogSummary(catalog: Catalog) {
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Pill("${catalog.faultGroups.size} storingen")
-            Pill("${catalog.procedures.count { it.stappen.isNotEmpty() }} procedures")
-            Pill("${catalog.schemas.size} checklists")
+            Pill("${catalog.procedures.count { it.steps.isNotEmpty() }} procedures")
+            Pill("${catalog.cards.size} onderhoudskaarten")
+            Pill("${catalog.books.size} handleidingen")
             Pill("${catalog.components.size} componenten")
             Pill("${catalog.menu.size} servicemenu")
             Pill("${catalog.parts.size} onderdelen")

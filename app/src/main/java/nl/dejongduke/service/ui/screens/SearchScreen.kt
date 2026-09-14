@@ -49,8 +49,7 @@ fun SearchScreen(
     results: SearchResult,
     recent: List<String>,
     pins: List<String>,
-    ticks: Map<String, Set<Int>>,
-    taal: String,
+    language: String,
     onQuery: (String) -> Unit,
     onCommit: () -> Unit,
     onClearRecent: () -> Unit,
@@ -105,12 +104,12 @@ fun SearchScreen(
                     }
                 }
             }
-            homeSections(catalog, pins, ticks, onOpen, onTab)
+            homeSections(catalog, pins, onOpen, onTab)
 
             item { SectionHeader("Vaak nodig") }
             items(veelVoorkomend(catalog)) { group ->
-                FaultCard(catalog, group, showMachines = false, taal = taal) {
-                    onOpen(Route.Fault(group.melding))
+                FaultCard(catalog, group, showMachines = false, language = language) {
+                    onOpen(Route.Fault(group.message))
                 }
             }
 
@@ -125,31 +124,31 @@ fun SearchScreen(
 
         if (results.faults.isNotEmpty()) {
             item { SectionHeader("Storingen", "${results.faults.size}") }
-            items(results.faults, key = { it.melding }) { group ->
-                FaultCard(catalog, group, showMachines = true, taal = taal) {
-                    openResult(Route.Fault(group.melding))
+            items(results.faults, key = { it.message }) { group ->
+                FaultCard(catalog, group, showMachines = true, language = language) {
+                    openResult(Route.Fault(group.message))
                 }
             }
         }
 
         if (results.procedures.isNotEmpty()) {
             item { SectionHeader("Procedures", "${results.procedures.size}") }
-            items(results.procedures, key = { it.id }) { proc ->
-                Card(onClick = { openResult(Route.Procedure(proc.id)) }) {
+            items(results.procedures, key = { it.id }) { procedures ->
+                Card(onClick = { openResult(Route.Procedure(procedures.id)) }) {
                     Column {
-                        Text(proc.titel, style = MaterialTheme.typography.titleMedium)
-                        if (proc.intervalTekst.isNotEmpty()) {
+                        Text(procedures.title, style = MaterialTheme.typography.titleMedium)
+                        if (procedures.intervalText.isNotEmpty()) {
                             Spacer(Modifier.height(2.dp))
                             Text(
-                                proc.intervalTekst,
+                                procedures.intervalText,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                         Spacer(Modifier.height(8.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Pill("${proc.stappen.size} stappen")
-                            if (proc.brewer.isNotEmpty()) Pill(proc.brewer)
+                            Pill("${procedures.steps.size} stappen")
+                            if (procedures.brewer.isNotEmpty()) Pill(procedures.brewer)
                         }
                     }
                 }
@@ -158,13 +157,13 @@ fun SearchScreen(
 
         if (results.components.isNotEmpty()) {
             item { SectionHeader("Techniek", "${results.components.size}") }
-            items(results.components, key = { it.nr }) { c ->
+            items(results.components, key = { it.id }) { c ->
                 Card(onClick = { openResult(Route.Component(c.id)) }) {
                     Column {
-                        Text(c.titel, style = MaterialTheme.typography.titleMedium)
+                        Text(c.title, style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            c.tekst.take(110).let { if (c.tekst.length > 110) "$it…" else it },
+                            c.text.take(110).let { if (c.text.length > 110) "$it…" else it },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 2,
@@ -176,13 +175,31 @@ fun SearchScreen(
 
         if (results.menu.isNotEmpty()) {
             item { SectionHeader("Servicemenu", "${results.menu.size}") }
-            items(results.menu, key = { it.nr }) { m ->
+            items(results.menu, key = { it.id }) { m ->
                 Card(onClick = { openResult(Route.MenuItem(m.id)) }) {
                     Column {
-                        Text(m.titel, style = MaterialTheme.typography.titleMedium)
+                        Text(m.title, style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            m.pad.ifEmpty { m.tekst.take(110) },
+                            m.path.ifEmpty { m.text.take(110) },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 2,
+                        )
+                    }
+                }
+            }
+        }
+
+        if (results.cards.isNotEmpty()) {
+            item { SectionHeader("Onderhoudskaarten", "${results.cards.size}") }
+            items(results.cards, key = { it.id }) { card ->
+                Card(onClick = { openResult(Route.MaintenanceCard(card.id)) }) {
+                    Column {
+                        Text(card.title, style = MaterialTheme.typography.titleMedium)
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            "${catalog.machineNames(card.machines)}  ·  ${card.steps.size} stappen",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 2,
@@ -197,10 +214,10 @@ fun SearchScreen(
             items(results.machines, key = { it.id }) { machine ->
                 Card(onClick = { openResult(Route.Machine(machine.id)) }) {
                     Column {
-                        Text(machine.naam, style = MaterialTheme.typography.titleMedium)
+                        Text(machine.name, style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            machine.kort,
+                            machine.summary,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -216,27 +233,27 @@ fun SearchScreen(
                 Card {
                     Column {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            if (part.leverbaar) {
-                                PartNumber(part.nummer)
+                            if (part.available) {
+                                PartNumber(part.number)
                             } else {
                                 Pill("niet los leverbaar")
                             }
                             Spacer(Modifier.width(8.dp))
                             Text(
-                                catalog.machine(part.machine)?.naam ?: part.machine,
+                                catalog.machine(part.machine)?.name ?: part.machine,
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.primary,
                             )
                         }
                         Spacer(Modifier.height(6.dp))
-                        Text(part.omschrijving, style = MaterialTheme.typography.bodyLarge)
+                        Text(part.description, style = MaterialTheme.typography.bodyLarge)
                         Spacer(Modifier.height(4.dp))
                         Text(
                             buildString {
-                                append(part.sectie)
+                                append(part.section)
                                 if (part.pos.isNotEmpty()) append("  ·  pos ${part.pos}")
-                                if (part.aantal.isNotEmpty()) append("  ·  ${part.aantal}×")
-                                if (part.voorraad.isNotEmpty()) append("  ·  ${voorraadLabel(part.voorraad)}")
+                                if (part.quantity.isNotEmpty()) append("  ·  ${part.quantity}×")
+                                if (part.stock.isNotEmpty()) append("  ·  ${stockLabel(part.stock)}")
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -251,7 +268,7 @@ fun SearchScreen(
     }
 }
 
-fun voorraadLabel(code: String) = when (code) {
+fun stockLabel(code: String) = when (code) {
     "SE" -> "monteursvoorraad"
     "SW" -> "magazijnvoorraad"
     else -> code

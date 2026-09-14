@@ -3,10 +3,14 @@
 manuals/
 txt/
 
-# Page renders from those manuals. The app ships them, this public repo does
-# not: tools/parse_components.py and tools/parse_servicemenu.py rebuild them
-# from manuals/ when you have the PDFs.
+# Page renders and drawings from those manuals. The app ships them, this public
+# repo does not: kbtools/build_kb.sh rebuilds them from manuals/ when you have
+# the PDFs. The drawings whose balloon numbers were read are the exception —
+# those live in data/tek_ballon/, because the coordinates are useless without
+# exactly those images.
 app/src/main/assets/img/
+app/src/main/assets/tek/
+app/src/main/assets/stap/
 
 # Build output
 build/
@@ -23,3 +27,10 @@ local.properties
 *.iml
 .DS_Store
 __pycache__/
+
+# The knowledge base built from those manuals: same copyright, same rule.
+kb/
+build/
+
+# Local python for the extraction scripts.
+.venv/

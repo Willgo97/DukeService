@@ -1,48 +1,172 @@
 [
- {"groep":"Installatieruimte","brewer":"beide","items":[
-  {"k":"Boven (T)","v":"300 mm — om het deksel te openen en bij de containers te komen"},
-  {"k":"Achter (B)","v":"100 mm — voor ventilatie en alle aansluitingen"},
-  {"k":"Links (L)","v":"180 mm — om bij het deurslot te komen"},
-  {"k":"Rechts (R)","v":"180 mm — om de deur te openen en bij de muntproever te komen"}
- ]},
- {"groep":"Wateraansluiting","brewer":"beide","items":[
-  {"k":"Minimale druk","v":"50 kPa (0,5 bar)"},
-  {"k":"Maximale druk","v":"600 kPa (6,0 bar)"},
-  {"k":"Aansluiting","v":"¾\" BSP"},
-  {"k":"Hardheid","v":"5 - 7 °dH (Duitse norm) · 8 - 12 °fH (Franse norm)"},
-  {"k":"pH-waarde","v":"ca. 7"},
-  {"k":"Inlaattemperatuur","v":"maximaal 30 °C"},
-  {"k":"Verplicht","v":"(Elektronisch) waterslot tussen de kraan en de machine"}
- ]},
- {"groep":"Drukboiler (PSSR)","brewer":"beide","items":[
-  {"k":"Vatcategorie","v":"SEP"},
-  {"k":"Werkdruk (nominaal)","v":"11 bar"},
-  {"k":"Maximaal toegestane druk","v":"24 bar"},
-  {"k":"Ontwerptemperatuur","v":"135 °C"},
-  {"k":"Veiligheidsventiel","v":"12 bar"},
-  {"k":"Overdrukventiel","v":"2 bar"}
- ]},
- {"groep":"Omgeving","brewer":"beide","items":[
-  {"k":"In opslag","v":"+10 °C tot +50 °C"},
-  {"k":"In gebruik","v":"+5 °C tot +40 °C"},
-  {"k":"Geluidsdruk stand-by","v":"< 20 dB(A)"},
-  {"k":"Geluidsdruk molen / koffie","v":"≤ 62 dB(A)"}
- ]},
- {"groep":"Elektrisch","brewer":"beide","items":[
-  {"k":"Netspanning, frequentie en maximaal vermogen","v":"Staat op het typeplaatje in de machine — daar staan de geldende waarden"},
-  {"k":"Tolerantie netspanning","v":"± 10%"},
-  {"k":"Tolerantie frequentie","v":"± 2%"}
- ]},
- {"groep":"Beker- en kanmaten","brewer":"beide","items":[
-  {"k":"Maximale bekerhoogte","v":"110 mm"},
-  {"k":"Maximale bekerdiameter","v":"85 mm"},
-  {"k":"Maximale kanhoogte","v":"185 mm"},
-  {"k":"Maximale kandiameter","v":"135 mm"},
-  {"k":"Let op","v":"De hoogte van de bekerstandaard ligt vast en is bij bestelling bepaald"}
- ]},
- {"groep":"Typeplaatje","brewer":"beide","items":[
-  {"k":"Plek","v":"Binnen in de machine, op het linker zijpaneel"},
-  {"k":"Bevat","v":"Fabrikantgegevens · serienummer · modelcode · modelnaam en configuratie · elektrische aansluiting · productiedatum · wateraansluiting · keurmerken"},
-  {"k":"CE","v":"Staat het CE-logo linksonder op het typeplaatje, dan voldoet de machine aan de CE-normen"}
- ]}
+ {
+  "group": "Installatieruimte",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "Boven (T)",
+    "v": "300 mm — om het deksel te openen en bij de containers te komen"
+   },
+   {
+    "k": "Achter (B)",
+    "v": "100 mm — voor ventilatie en alle aansluitingen"
+   },
+   {
+    "k": "Links (L)",
+    "v": "180 mm — om bij het deurslot te komen"
+   },
+   {
+    "k": "Rechts (R)",
+    "v": "180 mm — om de deur te openen en bij de muntproever te komen"
+   }
+  ]
+ },
+ {
+  "group": "Wateraansluiting",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "Minimale druk",
+    "v": "50 kPa (0,5 bar)"
+   },
+   {
+    "k": "Maximale druk",
+    "v": "600 kPa (6,0 bar)"
+   },
+   {
+    "k": "Aansluiting",
+    "v": "¾\" BSP"
+   },
+   {
+    "k": "Hardheid",
+    "v": "5 - 7 °dH (Duitse norm) · 8 - 12 °fH (Franse norm)"
+   },
+   {
+    "k": "pH-waarde",
+    "v": "ca. 7"
+   },
+   {
+    "k": "Inlaattemperatuur",
+    "v": "maximaal 30 °C"
+   },
+   {
+    "k": "Verplicht",
+    "v": "(Elektronisch) waterslot tussen de kraan en de machine"
+   }
+  ]
+ },
+ {
+  "group": "Drukboiler (PSSR)",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "Vatcategorie",
+    "v": "SEP"
+   },
+   {
+    "k": "Werkdruk (nominaal)",
+    "v": "11 bar"
+   },
+   {
+    "k": "Maximaal toegestane druk",
+    "v": "24 bar"
+   },
+   {
+    "k": "Ontwerptemperatuur",
+    "v": "135 °C"
+   },
+   {
+    "k": "Veiligheidsventiel",
+    "v": "12 bar"
+   },
+   {
+    "k": "Overdrukventiel",
+    "v": "2 bar"
+   }
+  ]
+ },
+ {
+  "group": "Omgeving",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "In opslag",
+    "v": "+10 °C tot +50 °C"
+   },
+   {
+    "k": "In gebruik",
+    "v": "+5 °C tot +40 °C"
+   },
+   {
+    "k": "Geluidsdruk stand-by",
+    "v": "< 20 dB(A)"
+   },
+   {
+    "k": "Geluidsdruk molen / koffie",
+    "v": "≤ 62 dB(A)"
+   }
+  ]
+ },
+ {
+  "group": "Elektrisch",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "Netspanning, frequentie en maximaal vermogen",
+    "v": "Staat op het typeplaatje in de machine — daar staan de geldende waarden"
+   },
+   {
+    "k": "Tolerantie netspanning",
+    "v": "± 10%"
+   },
+   {
+    "k": "Tolerantie frequentie",
+    "v": "± 2%"
+   }
+  ]
+ },
+ {
+  "group": "Beker- en kanmaten",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "Maximale bekerhoogte",
+    "v": "110 mm"
+   },
+   {
+    "k": "Maximale bekerdiameter",
+    "v": "85 mm"
+   },
+   {
+    "k": "Maximale kanhoogte",
+    "v": "185 mm"
+   },
+   {
+    "k": "Maximale kandiameter",
+    "v": "135 mm"
+   },
+   {
+    "k": "Let op",
+    "v": "De hoogte van de bekerstandaard ligt vast en is bij bestelling bepaald"
+   }
+  ]
+ },
+ {
+  "group": "Typeplaatje",
+  "brewer": "beide",
+  "items": [
+   {
+    "k": "Plek",
+    "v": "Binnen in de machine, op het linker zijpaneel"
+   },
+   {
+    "k": "Bevat",
+    "v": "Fabrikantgegevens · serienummer · modelcode · modelnaam en configuratie · elektrische aansluiting · productiedatum · wateraansluiting · keurmerken"
+   },
+   {
+    "k": "CE",
+    "v": "Staat het CE-logo linksonder op het typeplaatje, dan voldoet de machine aan de CE-normen"
+   }
+  ]
+ }
 ]

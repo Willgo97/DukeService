@@ -4,30 +4,56 @@ Offline naslagwerk voor servicemonteurs aan De Jong DUKE-koffiemachines.
 Android, Kotlin, Jetpack Compose. Alles zit in de APK — geen netwerk nodig,
 want in een kelder of serverruimte heb je dat toch niet.
 
+Achter de app ligt een kennisbank die uit álle servicedocumentatie is
+opgebouwd: 207 boeken, 16.498 pagina's, negen talen. Die kennisbank staat los
+van de app en is ook door andere programma's te gebruiken — zie
+[`kb/README.md`](kb/README.md).
+
 ## Wat zit erin
 
 | | |
 |---|---|
-| 50 schermmeldingen | Nederlandse displaytekst, technische oorzaak en wat je controleert |
-| 70 procedures | 502 stappen, met waarschuwingen en benodigdheden |
-| 11 onderhoudschecklists | dag / week / maand / halfjaar, per brewer, afvinkbaar |
-| 130 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
-| 148 servicemenu-onderwerpen | wat elke functie doet, met wachtwoordniveaus |
-| 4.602 onderdeelregels | 1.547 unieke nummers uit zes onderdelenboeken |
-| 11 machines | foto, afmetingen, typecodes, uitvoeringen, welk servicemenu |
-| 89 explosietekeningen | aanklikbare ballonnen: 1990 van 2765 posities in 149 secties |
+| 11 machinelijnen, 59 uitvoeringen | merk × brewer × kastmaat, met serienummers en welk servicemenu |
+| 53 schermmeldingen | Nederlandse displaytekst, oorzaak en wat je controleert, met de machines waarvoor ze gelden |
+| 100 onderhoudskaarten | de kaart van de fabrikant zelf: genummerde stappen met de tekening die erbij hoort |
+| 150 procedures | stap voor stap, met waarschuwingen en benodigdheden |
+| 475 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
+| 513 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
+| 40.475 onderdeelregels | 1.935 unieke nummers uit 62 onderdelenboeken |
+| 1.773 explosietekeningen | met de onderdelentabel ernaast; op 83 ervan zijn de ballonnummers aanklikbaar |
+| 63 aanzichten | voor-, achter- en binnenkant met genummerde verwijzingen |
+| 207 boeken | welke handleiding waar vandaan komt |
 | Scanner | leest labels, typeplaatjes en schermmeldingen met de camera |
 
 Eén zoekveld gaat overal tegelijk doorheen: schermmeldingen, procedures,
-onderdeelnummers, componenten, servicemenu en machines.
+onderdeelnummers, componenten, servicemenu, onderhoudskaarten en machines.
 
-## Servicemenu per machine
+## Stap voor stap
 
-Wat er bij de machine als eerste toe doet, staat op elke machinekaart:
+Onderhoudskaarten en procedures zijn ook als stappenloper te openen: één stap
+per scherm, groot, met de tekening erbij, doorswipen met een balk die zegt hoe
+ver je bent. Voor een open machine is dat de juiste vorm — een pagina waar
+twaalf stappen langs scrollen niet.
 
-- **Oud servicemenu** — ICeQ2-besturing: Virtu, Zia, Nio, Edge, Vareo
-- **Oud of nieuw** — Lua, Avy en (mogelijk) Rosa hebben op allebei gedraaid; vanaf software 6.30/6.40 is het nieuwe verplicht
-- **Alleen nieuw** — Lina, Nio Next
+## Machines
+
+Elke machinelijn wordt in meerdere uitvoeringen verkocht: de driletterige code
+zegt welke brewer en welke kastmaat, en dát is wat de documentatie uit elkaar
+houdt. Een Avy CND en een Zia CND zijn dezelfde machine in een andere kast, en
+de app behandelt ze ook zo: de techniek komt uit hetzelfde boek, de kast en het
+scherm niet.
+
+| code | brewer | kast | serie |
+|---|---|---|---|
+| CEC / CND | CoEx | Medium / Small | 7000-9000 / 6000-8000 |
+| XEA / XNA | CoEx XL | Medium / Small | 19000 / 18000 |
+| FEC / FND | Filterfresh | Medium / Small | 4000 / 2000 |
+| IEA / INB | Instant | Medium / Small | 5000 / 1000 |
+| CKA / XKA | CoEx / CoEx XL | Nio | — |
+
+Servicemenu per machine: **oud** (ICeQ2) bij Virtu, Zia, Nio en Edge, **oud of
+nieuw** bij Lua, Avy, Blu en Rosa (vanaf software 6.30/6.40 is het nieuwe
+verplicht), **alleen nieuw** bij Lina en Nio Next.
 
 ## Thema
 
@@ -35,24 +61,6 @@ Losjes naar het nieuwe servicemenu: bijna-zwarte panelen met een lichtere
 zijbalk, witte tekst voor wat actief is en grijs voor de rest, en één warm goud
 accent op de bedieningselementen. Licht en donker, om te zetten met het icoon
 rechtsboven (Systeem / Licht / Donker, wordt onthouden).
-
-## Bronnen
-
-De documentatie zelf staat in `manuals/` en blijft daar: die is auteursrechtelijk
-beschermd door de fabrikant en gaat niet mee in git (zie `.gitignore` en `LICENSE`).
-
-- Technische handleiding Avy CoEx Medium — `5DTCET10M` NL V1.0 — de Nederlandse
-  brontekst voor storingen, componenten en servicemenu
-- Technische handleidingen Avy CoEx Small `5DTCNT20M`, Avy CoEx XL `5DTXET20M`,
-  Nio CoEx XL `5DTXKA20M`, Rosa Filterfresh `5DTFNV20M`, Lua Instant `5DTINS10M`
-  — hier komen de CoEx XL-, Uni-Brewer- en Instant-onderdelen vandaan, en de
-  storingen die alleen op die machines voorkomen
-- Gebruikershandleidingen Virtu `5DUCEK20I`, Lua `5DUXES20I`, Avy `5DUXET20M`,
-  Rosa `5DUFNV20M`
-- Installatiehandleiding Touchless Interface `5DIAXA820`
-- Onderdelenboeken Virtu (9CECK), Zia (9CECP), Nio (9CKA), Lua (9XEAS),
-  Avy (9XEAT), Rosa (9FNDV)
-- Productbrochures van dejongduke.com
 
 ## Bouwen
 
@@ -67,68 +75,57 @@ ze zelf. Zonder keystore wordt met de debug-sleutel ondertekend; met een eigen
 keystore via `DUKE_STORE_FILE` / `DUKE_STORE_PASSWORD` / `DUKE_KEY_ALIAS` /
 `DUKE_KEY_PASSWORD` wordt het een release-build.
 
-## Data opnieuw opbouwen
-
-De scripts in `tools/` lezen de PDF's uit `manuals/` en schrijven zowel `data/`
-(leesbaar) als `app/src/main/assets/` (compact):
+De testen lezen de meegeleverde assets op de JVM, zodat gegevens die niet meer
+bij het model passen hier stuklopen en niet pas op het eerste scherm:
 
 ```bash
-./tools/build_data.sh               # alles in de juiste volgorde
+./gradlew testDebugUnitTest
 ```
 
-Of los, waarbij `parse_components.py` de map `assets/img` leegmaakt en dus vóór
-de andere paginarenderaars moet draaien:
+## Kennisbank opnieuw opbouwen
+
+`kbtools/` leest de PDF's in `manuals/` en bouwt zowel `kb/` (de kennisbank) als
+`app/src/main/assets/` (wat de app meeneemt):
 
 ```bash
-python3 tools/parse_parts.py        # onderdelenboeken -> parts.json
-python3 tools/parse_components.py   # hoofdstuk 4-5 -> components.json + paginabeelden
-python3 tools/parse_servicemenu.py  # hoofdstuk 6-7 -> servicemenu.json + paginabeelden
-python3 tools/parse_procedures.py   # Rosa-procedures + onderhoudsschema's
-python3 tools/parse_faults.py       # storingen uit tien boeken -> faults_raw.json
-python3 tools/merge_faults.py       # vouwt die in faults.json
-python3 tools/parse_drawings.py     # explosietekeningen -> tek/ + drawings.json
-python3 tools/parse_photos.py       # machinefoto's uit de brochurecovers
-python3 tools/render_hires.py       # tekeningen op 200 dpi, voor de herkenning
-python3 tools/index_balloons.py     # ballonnummers -> hotspots.json
+python3 -m venv .venv && .venv/bin/pip install pymupdf numpy pillow
+./kbtools/build_kb.sh
 ```
 
-Drie bestanden in `data/` zijn met de hand geschreven en worden niet
-gegenereerd: `procedures_base.json` (de Nederlandse procedures uit de Virtu- en
-Lua-handleiding), `maintenance_base.json` en `procedures_touchless.json`. De
-parsers lezen die en schrijven het resultaat naar `procedures.json` en
-`maintenance.json`.
+| stap | wat het doet |
+|---|---|
+| `inventory.py` | leest bestandsnamen en PDF-eigenschappen, vindt kopieën en oude drukken |
+| `organize.py` | ordent `manuals/` per soort boek en zet verouderde drukken apart |
+| `extract.py` | haalt elke pagina op als geordende tekst en snijdt hem op secties |
+| `parts.py` | leest de onderdelentabellen terug uit de kolomposities |
+| `facts.py` | maakt getypeerde records: melding, menu, component, specificatie … |
+| `topics.py` | vouwt gelijke tekst samen en bepaalt voor welke machines hij geldt |
+| `media.py` | rendert elke afbeelding één keer, ontdubbeld op inhoud |
+| `emit.py` | schrijft `kb/` (JSON, JSONL, SQLite met zoekindex) |
+| `schemas.py` | schrijft `kb/schema/` |
+| `appdata.py` | maakt de assets voor de app |
 
-Niet verwerkt: `W100 User manual English.pdf`. Dat is een andere machine met een
-eigen documentatiefamilie (`T0642EN00`, twee kolommen, geen hoofdstukindeling
-zoals de DUKE-boeken) en de W100 staat ook niet in de machinelijst van de app.
+Wat met de hand is geschreven blijft staan en wordt alleen aangevuld: de
+Nederlandse storingsteksten, de machineteksten en de procedures in `data/`.
 
-De ballonnummers op de tekeningen zijn pixels, geen tekst. Ze worden in twee
-stappen gelezen: de tekstherkenning die de app zelf al meedraagt leest de
-tweecijferige ballonnen (`DrawingIndexer`, alleen in een debug-build,
-Instellingen → Ontwikkelen), en `index_balloons.py` gebruikt die als voorbeeld
-om de rest te herkennen — alle ballonnen in een boek komen uit dezelfde
-CAD-export, dus de cijfers zijn identiek. Wat eruit komt wordt getoetst aan de
-posities in de onderdelentabel, dus een verkeerde lezing valt af.
+In `tools/` staat nog de oude pijplijn voor de ballonnummers op de tekeningen;
+die zijn pixels en geen tekst. Zie `tools/README.md`.
 
-`faults.json`, `machines.json`, `procedures.json`, `maintenance.json` en
-`specs.json` zijn met de hand samengesteld; `procedures.json` komt uit
-`procedures_a.json` (CoEx) plus `procedures_b.json` (koudwater, scherm, CoEx XL).
-Na een handmatige wijziging de compacte kopie bijwerken:
+## Bronnen
 
-```bash
-for f in machines faults procedures maintenance specs; do
-  python3 -c "
-import json
-d = json.load(open('data/$f.json'))
-json.dump(d, open('app/src/main/assets/$f.json','w'), ensure_ascii=False, separators=(',',':'))
-"
-done
-```
+De documentatie zelf staat in `manuals/` en blijft daar: die is auteursrechtelijk
+beschermd door de fabrikant en gaat niet mee in git (zie `.gitignore` en
+`LICENSE`). `manuals/INDEX.md` zegt welk boek waar staat.
 
-## Delen met een telefoon
+- 73 technische handleidingen (TM), in NL, EN, DE, FR-ca, SV, NO, DA, FI en CZ
+- 50 onderhoudskaarten (SMI), één per machine en uitvoering
+- 61 onderdelenboeken (Spare Parts Manual), 2022 tot 2026
+- 6 gebruikershandleidingen, 5 snelstartgidsen, 1 installatiehandleiding
+- 8 productbrochures van dejongduke.com
 
-`../DukeService-share/serve.sh` zet de APK met een QR-pagina op het lokale
-netwerk. Alleen die map wordt gedeeld.
+Niet verwerkt tot machinekennis: `User_Manual_W100_EN_T0642EN00.pdf`. Dat is een
+andere machine met een eigen documentatiefamilie, en de W100 staat ook niet in
+de machinelijst van de app.
 
 ## Let op
 

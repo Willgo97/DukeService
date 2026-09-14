@@ -62,8 +62,8 @@ import nl.dejongduke.service.ui.SectionHeader
  * a subject and the list follows that.
  */
 /** "4.1.16.2" -> 4001600200, so numbers sort the way the book reads. */
-private fun nummer(nr: String): Long =
-    nr.split('.').take(4).fold(0L) { acc, part -> acc * 100 + (part.toLongOrNull() ?: 0L) }
+private fun number(number: String): Long =
+    number.split('.').take(4).fold(0L) { acc, part -> acc * 100 + (part.toLongOrNull() ?: 0L) }
 
 private val VOLGORDE = listOf(
     "Watersysteem", "Brewer", "Molen", "Mixer", "Ingrediënten", "Verse melk", "Elektronica",
@@ -83,12 +83,12 @@ fun ComponentList(
         catalog.components.filter { filter == null || filter in it.machines }
     }
     val groups = remember(shown) {
-        shown.groupBy { it.groep }.toList()
-            .sortedBy { (naam, _) -> VOLGORDE.indexOf(naam).let { if (it < 0) VOLGORDE.size else it } }
+        shown.groupBy { it.group }.toList()
+            .sortedBy { (name, _) -> VOLGORDE.indexOf(name).let { if (it < 0) VOLGORDE.size else it } }
             // Books number the same subject differently, so sort on the number
             // itself; that keeps the water system running from inlet to boiler
             // even when two manuals are mixed.
-            .map { (naam, items) -> naam to items.sortedBy { nummer(it.nr) } }
+            .map { (name, items) -> name to items.sortedBy { number(it.number) } }
     }
 
     LazyColumn(Modifier.fillMaxWidth()) {
@@ -105,7 +105,7 @@ fun ComponentList(
         item {
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alle machines") +
-                    documented.map { it.id as String? to it.naam },
+                    documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
             )
@@ -121,14 +121,14 @@ fun ComponentList(
             }
         }
 
-        groups.forEach { (groep, items) ->
-            item { SectionHeader(groep, "${items.size}") }
+        groups.forEach { (group, items) ->
+            item { SectionHeader(group, "${items.size}") }
             items(items, key = { it.id }) { c ->
                 Card(onClick = { onOpen(Route.Component(c.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(c.titel, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f, false))
+                                Text(c.title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f, false))
                                 // Which brewer this section describes only matters
                                 // while looking across machines.
                                 if (filter == null && c.brewer.isNotEmpty()) {
@@ -138,7 +138,7 @@ fun ComponentList(
                             }
                             Spacer(Modifier.height(2.dp))
                             Text(
-                                c.tekst.take(90).let { if (c.tekst.length > 90) "$it…" else it },
+                                c.text.take(90).let { if (c.text.length > 90) "$it…" else it },
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 2,
@@ -156,35 +156,35 @@ fun ComponentList(
 @Composable
 fun ComponentDetail(catalog: Catalog, component: Component) {
     val machines = remember(component) {
-        component.machines.mapNotNull { catalog.machine(it)?.naam }
+        component.machines.mapNotNull { catalog.machine(it)?.name }
     }
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(component.titel, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(component.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(10.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (component.brewer.isNotEmpty()) Pill(component.brewer, selected = true)
                     machines.forEach { Pill(it) }
-                    if (component.pagina > 0) Pill("pagina ${component.pagina}")
+                    if (component.page > 0) Pill("pagina ${component.page}")
                 }
             }
         }
-        items(component.afbs, key = { it }) { afb ->
-            AssetImage(afb)
+        items(component.images, key = { it }) { image ->
+            AssetImage(image)
             Spacer(Modifier.height(10.dp))
         }
         item {
             Text(
-                component.tekst,
+                component.text,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             )
         }
-        if (component.bron.isNotEmpty()) {
+        if (component.source.isNotEmpty()) {
             item {
                 Text(
-                    "Bron: ${component.bron}",
+                    "Bron: ${component.source}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

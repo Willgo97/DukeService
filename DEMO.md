@@ -6,26 +6,42 @@ gewoon door.
 
 ## 1. Waar het om draait (30 sec)
 
-Open de app. Het startscherm laat zien wat erin zit: **50 storingen,
-130 componenten, 148 servicemenu-onderwerpen, 4.602 onderdeelregels.**
+Open de app. Het startscherm laat zien wat erin zit: **53 storingen, 475
+componenten, 513 servicemenu-onderwerpen, 40.475 onderdeelregels, 100
+onderhoudskaarten, 207 handleidingen.**
 
-> "Dit is alles wat in de handleidingen en onderdelenboeken staat, doorzoekbaar
-> op de telefoon, zonder internet."
+> "Dit is alles wat in de service­documentatie staat — 207 boeken, 16.500
+> pagina's — doorzoekbaar op de telefoon, zonder internet."
 
-Uit tien handleidingen: de CoEx, de CoEx XL, de Uni-Brewer en de Instant staan
-er allemaal in, elk met zijn eigen watersysteem en brewer.
+Alle merken en alle uitvoeringen: Virtu, Zia, Nio, Lua, Avy, Rosa, Lina, Blu en
+Edge, elk met CoEx, CoEx XL, Filterfresh of Instant, in Small en Medium.
 
-## 2. De scanner (90 sec) — het sterkste stuk
+## 2. De onderhoudskaart (60 sec) — nieuw
+
+**Onderhoud** → kies een machine → *Dagelijks onderhoud*.
+
+Dit is de vouwkaart van de fabrikant zelf: genummerde stappen met precies de
+tekening die erbij hoort. Tik **Stap voor stap**: één stap per scherm, groot,
+doorswipen, met een balk die zegt hoe ver je bent.
+
+> "Met een open machine voor je wil je geen pagina waar twaalf stappen langs
+> scrollen. Je wilt de stap waar je bent, en de tekening ernaast."
+
+## 3. De scanner (90 sec)
 
 Tik op **Scan** rechtsonder.
 
 **a. Richt op het display van een machine** met een storing erop.
 De app leest de melding en toont meteen oorzaak en stappen. Dit werkt ook als
 de OCR er een letter naast zit: "Koffiem**n**olen blokkeert" wordt nog steeds
-herkend als *Grinder blocked*.
+herkend. Tekst die alleen toevállig een woord deelt — een label met "brewer"
+erop — geeft géén melding: de hele zin moet er staan.
 
-**b. Richt op een onderdeellabel.** `5KAF119` → *Waste bucket CEC, Virtu,
-tekening 1014 Cabinet 9CEC*. Eén tik zet het nummer op het klembord.
+Wat gevonden is blijft een paar tellen staan, ook als je de camera wegdraait.
+
+**b. Richt op een onderdeellabel.** `5KAF058` → *Suction filter*, met de
+tekening en de machines waar het op zit. Eén tik zet het nummer op het
+klembord.
 
 **c. Richt op het typeplaatje.** Modelcode en serienummer worden gelezen; de
 app weet welke machine voor je staat.
@@ -33,99 +49,81 @@ app weet welke machine voor je staat.
 Geen camera bij de hand? **Uit foto** doet hetzelfde met een foto uit de
 galerij — handig als een klant je een foto stuurt.
 
-## 3. Een storing oplossen (60 sec)
+## 4. Een storing oplossen (60 sec)
 
 Zoek op `lekbak` of tik een storing uit *Vaak nodig*.
 
 Laat zien: de Nederlandse schermtekst, de **technische** oorzaak uit de
-technische handleiding ("de niveausensor in de boiler heeft geen waterniveau
-gedetecteerd"), de stappen, en de doorverwijzing naar de bijbehorende
-procedure — apart voor CoEx en CoEx XL.
+technische handleiding, de stappen, en de doorverwijzing naar de bijbehorende
+procedure. Onder de melding staat voor welke machines hij geldt — dat zijn er
+nu acht of negen per melding, omdat de techniek achter de deur gedeeld is.
 
 Onderaan: **Vastzetten** en **Delen** — de storing als tekst naar een collega
 of de klant.
 
-## 4. Onderdelen: de tekening werkt mee (60 sec)
+## 5. Onderdelen: de tekening werkt mee (60 sec)
 
-Onderdelen → *1014 Cabinet 9CEC*.
+**Onderdelen** → kies merk *Virtu* → uitvoering *CoEx Medium* → *1014 Cabinet
+9CEC*.
 
-De explosietekening uit het onderdelenboek staat erbij, en de ballonnummers zijn
-aanklikbaar: tik nummer 1 aan en het onderdeel verschijnt eronder —
-`5MAF101-RAL9005`, back bracket. Andersom werkt ook: tik een onderdeel in de
-lijst en de ballon licht op. Eén tik op het nummer zet het op het klembord.
+De uitvoering is een eigen keuze geworden: elke brewer en kastmaat heeft zijn
+eigen onderdelenboek, en een Small-kast hoort geen Medium-nummers te tonen.
 
-> "De nummers stonden als pixels in de tekening. Die zijn er één keer uit
-> gelezen en getoetst aan de onderdelentabel, dus wat je aantikt klopt."
+De explosietekening staat erbij, en op de tekeningen waarvan de ballonnummers
+gelezen zijn, zijn die aanklikbaar: tik een nummer aan en het onderdeel
+verschijnt eronder. Andersom werkt ook.
 
-1.990 van de 2.765 posities zijn zo aanklikbaar.
+## 6. Techniek en servicemenu (45 sec)
 
-## 5. Techniek (45 sec)
+**Techniek**: 475 componenten — inlaatventiel, drukregelaar,
+waterstroommeter, clixon, besturingsprint — elk met de tekeningen uit de
+technische handleiding. Filter op machine en de lijst wordt die van die
+machine.
 
-Machines → **Hoe de machine werkt** → *Schematisch diagram van het
-watersysteem*.
+**Servicemenu**: 513 onderwerpen met het pad erheen (`Login > Hardware >
+Calibrations > Ingredient Canisters`) en de stappen.
 
-Het complete schema met legenda, inzoombaar. 130 componenten: inlaatventiel,
-drukregelaar, waterstroommeter, clixon, besturingsprint. Elk met de
-bijbehorende pagina's uit de technische handleiding.
+## 7. Machines en handleidingen (45 sec)
 
-Zet bovenin het filter op **Nio** en de lijst wordt die van de Nio: CoEx
-XL-brewer, en het verse-melksysteem dat de andere machines niet hebben. Zet hem
-op **Rosa** en je krijgt de Uni-Brewer, die door filterpapier brouwt.
+**Machines**: per merk de uitvoeringen met hun codes en serienummers, de
+aanzichten met genummerde verwijzingen, en — wat bij storingzoeken als eerste
+telt — **welk servicemenu erop draait**: oud (ICeQ2), nieuw, of allebei vanaf
+software 6.30/6.40.
 
-## 6. Onderhoud en servicemenu (45 sec)
-
-**Onderhoud**: de checklists per brewer, afvinkbaar. Vinkjes gelden voor
-vandaag; morgen staat de lijst weer open.
-
-**Servicemenu**: wat elke functie doet, met wachtwoordniveaus, ook per machine
-te filteren. Zoek op `ontkalken` — 46 stappen plus de vijf originele
-handleidingpagina's.
-
-Bij **Onderhoud** staat ook *Nieuw filterpapier plaatsen* voor de Rosa, en bij
-de procedures de vijf klussen rond de **Touchless Interface** — van de software
-op twee USB-sticks zetten tot de QR-code testen met je eigen telefoon.
-
-## 7. Machines (30 sec)
-
-Foto's van het hele assortiment. Per machine: uitvoeringen (Avy heeft er drie),
-typecodes, en — wat bij storingzoeken als eerste telt — **welk servicemenu
-erop draait**: oud (ICeQ2), nieuw, of allebei vanaf software 6.30/6.40.
-
-Onderaan elke machine een notitieveld voor serienummer en locatie.
+**Handleidingen**: welke 207 boeken erachter zitten, per machine en per soort,
+met versie en documentnummer. De PDF's zelf zitten er niet in — die zijn van de
+fabrikant.
 
 ## 8. Instellingen (20 sec)
 
 Het tandwiel rechtsboven: licht/donker, en — nuttiger — **taal van de
 meldingen**. Staat de machine op Engels, dan wil je de Engelse schermtekst
-bovenaan zien; staat hij op Nederlands, andersom. De andere taal blijft eronder
-staan.
+bovenaan zien; staat hij op Nederlands, andersom.
 
 ---
 
 ## Vragen die gaan komen
 
 **"Waar komt de data vandaan?"**
-Uit de handleidingen, technische handleidingen en onderdelenboeken. Zoek →
-*Waar komt dit vandaan?* toont de bronnen per onderdeel; elke storing noemt
-onderaan het documentnummer.
+Uit alle 207 service­boeken: technische handleidingen, onderhoudskaarten,
+gebruikers­handleidingen, snelstartgidsen, onderdelenboeken en brochures. Elke
+melding, elk component en elke procedure noemt onderaan uit welk boek hij komt.
+
+**"Hoe kan één handleiding voor negen merken gelden?"**
+Omdat de machine achter de deur gedeeld is. De driletterige code (CND, XEA …)
+zegt welke brewer en welke kastmaat; een Avy CND en een Zia CND zijn dezelfde
+machine in een andere kast. De app zegt er expliciet bij welke machines een
+tekst dekt, en de hoofdstukken die wél over de kast of het scherm gaan blijven
+bij hun eigen merk.
 
 **"Werkt het echt offline?"**
 Ja, inclusief de tekstherkenning. Er zit geen netwerkcode in de app.
 
-**"Kan dit ook voor Lina / Nio Next / Blu?"**
-De structuur staat er; alleen de documentatie van die modellen ontbreekt nog.
-Aanleveren en het staat erin.
+**"Kan ik die kennisbank ook ergens anders voor gebruiken?"**
+Ja. Naast de app staat er een kennisbank in SQLite en JSON, met een
+zoekindex en een beschreven model — te lezen vanuit elk programma. Zie
+`kb/README.md`.
 
 **"Van wie is dit?"**
 Privé gemaakt, in eigen tijd, op eigen apparatuur — zie `LICENSE`. De inhoud
-van de handleidingen blijft van De Jong DUKE en zit niet in de repo.
-
-## Wat er nog niet in zit
-
-- Alleen de CoEx-familie is technisch uitgewerkt (Avy-handleiding als bron)
-- Lina, Nio Next, Blu, Edge en Vareo: alleen brochuregegevens
-- Geen koppeling met ConnectMe of het onderdelenbestelsysteem
-- De scanner leest tekst, geen barcodes of QR
-- Geen chatbot: elke regel in de app is herleidbaar tot een handleiding, en dat
-  is precies wat een taalmodel van telefoonformaat niet kan garanderen
-- 3D-modellen zouden STEP-bestanden vragen; de explosietekeningen doen nu het werk
+is van de fabrikant en wordt niet gepubliceerd.

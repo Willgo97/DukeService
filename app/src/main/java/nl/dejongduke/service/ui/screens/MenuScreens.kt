@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
-import nl.dejongduke.service.data.LetOp
+import nl.dejongduke.service.data.SafetyNote
 import nl.dejongduke.service.data.MenuItem
 import nl.dejongduke.service.ui.Card
 import nl.dejongduke.service.ui.ChipRow
@@ -68,26 +68,26 @@ fun MenuList(
         item {
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alle machines") +
-                    documented.map { it.id as String? to it.naam },
+                    documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
             )
         }
         item { Spacer(Modifier.height(4.dp)) }
 
-        chapters.forEach { (nr, naam) ->
-            val items = shown.filter { it.hoofdstuk == nr }
+        chapters.forEach { (number, name) ->
+            val items = shown.filter { it.chapter == number }
             if (items.isEmpty()) return@forEach
-            item { SectionHeader(naam, "${items.size}") }
+            item { SectionHeader(name, "${items.size}") }
             items(items, key = { it.id }) { m ->
                 Card(onClick = { onOpen(Route.MenuItem(m.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(m.titel, style = MaterialTheme.typography.titleMedium)
-                            if (m.pad.isNotEmpty()) {
+                            Text(m.title, style = MaterialTheme.typography.titleMedium)
+                            if (m.path.isNotEmpty()) {
                                 Spacer(Modifier.height(3.dp))
                                 Text(
-                                    m.pad,
+                                    m.path,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.primary,
                                     fontFamily = FontFamily.Monospace,
@@ -95,15 +95,15 @@ fun MenuList(
                             } else {
                                 Spacer(Modifier.height(2.dp))
                                 Text(
-                                    m.tekst.take(80).let { if (m.tekst.length > 80) "$it…" else it },
+                                    m.text.take(80).let { if (m.text.length > 80) "$it…" else it },
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     maxLines = 2,
                                 )
                             }
                         }
-                        if (m.niveau.isNotEmpty()) {
-                            Pill("niveau ${m.niveau}")
+                        if (m.level.isNotEmpty()) {
+                            Pill("niveau ${m.level}")
                             Spacer(Modifier.height(0.dp))
                         }
                         Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -120,18 +120,18 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(item.titel, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(item.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(10.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Pill(item.nr)
-                    if (item.niveau.isNotEmpty()) {
-                        Pill("wachtwoordniveau ${item.niveau}", tone = MaterialTheme.colorScheme.primary)
+                    Pill(item.number)
+                    if (item.level.isNotEmpty()) {
+                        Pill("wachtwoordniveau ${item.level}", tone = MaterialTheme.colorScheme.primary)
                     }
-                    if (item.pagina > 0) Pill("pagina ${item.pagina}")
+                    if (item.page > 0) Pill("pagina ${item.page}")
                 }
             }
         }
-        if (item.pad.isNotEmpty()) {
+        if (item.path.isNotEmpty()) {
             item {
                 Column(
                     Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
@@ -146,7 +146,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        item.pad,
+                        item.path,
                         style = MaterialTheme.typography.bodyLarge,
                         fontFamily = FontFamily.Monospace,
                         color = MaterialTheme.colorScheme.primary,
@@ -154,14 +154,14 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                 }
             }
         }
-        if (item.afb.isNotEmpty()) {
-            item { Spacer(Modifier.height(8.dp)); AssetImage(item.afb) }
+        if (item.image.isNotEmpty()) {
+            item { Spacer(Modifier.height(8.dp)); AssetImage(item.image) }
         }
-        if (item.doel.isNotEmpty()) {
+        if (item.purpose.isNotEmpty()) {
             item { SectionHeader("Waarom") }
             item {
                 Text(
-                    item.doel,
+                    item.purpose,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(horizontal = 20.dp),
                 )
@@ -177,11 +177,11 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                 )
             }
         }
-        if (item.nodig.isNotEmpty()) {
+        if (item.needed.isNotEmpty()) {
             item { SectionHeader("Nodig") }
             item {
                 Column(Modifier.padding(horizontal = 20.dp)) {
-                    item.nodig.forEach { n ->
+                    item.needed.forEach { n ->
                         Row(Modifier.padding(vertical = 3.dp)) {
                             Text("·  ", style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.primary)
@@ -191,9 +191,9 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                 }
             }
         }
-        if (item.stappen.isNotEmpty()) {
-            item { SectionHeader("Stappen", "${item.stappen.size}") }
-            items(item.stappen.size) { index ->
+        if (item.steps.isNotEmpty()) {
+            item { SectionHeader("Stappen", "${item.steps.size}") }
+            items(item.steps.size) { index ->
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
                     Text(
                         "${index + 1}.",
@@ -201,23 +201,23 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(end = 10.dp),
                     )
-                    Text(item.stappen[index], style = MaterialTheme.typography.bodyLarge)
+                    Text(item.steps[index], style = MaterialTheme.typography.bodyLarge)
                 }
             }
         }
-        if (item.tekst.isNotEmpty()) {
+        if (item.text.isNotEmpty()) {
             item {
                 Text(
-                    item.tekst,
+                    item.text,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
                 )
             }
         }
-        if (item.punten.isNotEmpty()) {
+        if (item.points.isNotEmpty()) {
             item {
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp)) {
-                    item.punten.forEach { punt ->
+                    item.points.forEach { punt ->
                         Text(
                             punt,
                             style = MaterialTheme.typography.bodyLarge,
@@ -228,27 +228,27 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
 
-        items(item.opmerkingen.size) { index ->
+        items(item.notes.size) { index ->
             WarnBanner(
-                LetOp("let op", item.opmerkingen[index]),
+                SafetyNote("let op", item.notes[index]),
                 Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
             )
         }
 
-        if (item.afbs.isNotEmpty()) {
-            item { SectionHeader("Uit de handleiding", "${item.afbs.size} pagina's") }
-            items(item.afbs.size) { index ->
+        if (item.images.isNotEmpty()) {
+            item { SectionHeader("Uit de handleiding", "${item.images.size} pagina's") }
+            items(item.images.size) { index ->
                 Column {
-                    AssetImage(item.afbs[index])
+                    AssetImage(item.images[index])
                     Spacer(Modifier.height(8.dp))
                 }
             }
         }
 
-        if (item.bron.isNotEmpty()) {
+        if (item.source.isNotEmpty()) {
             item {
                 Text(
-                    "Bron: ${item.bron}",
+                    "Bron: ${item.source}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

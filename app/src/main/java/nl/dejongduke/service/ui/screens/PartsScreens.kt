@@ -46,23 +46,49 @@ fun PartsScreen(
     onOpen: (Route) -> Unit,
 ) {
     var term by remember { mutableStateOf("") }
+    var build by remember { mutableStateOf<String?>(null) }
     val documented = catalog.machines.filter { m -> catalog.parts.any { it.machine == m.id } }
     // Without a machine chosen the section list would mix five books together,
     // so default to the first documented machine instead of showing everything.
     val machine = filter?.takeIf { id -> documented.any { it.id == id } } ?: documented.firstOrNull()?.id
 
-    val forMachine = remember(machine) { catalog.parts.filter { it.machine == machine } }
+    // Every brewer and cabinet size has its own parts book. Picking one first
+    // is what the paper books force you to do as well, and it keeps a Small
+    // cabinet from showing Medium part numbers.
+    val builds = remember(machine) {
+        catalog.parts.asSequence().filter { it.machine == machine }
+            .map { it.variant }.filter { it.isNotEmpty() }.distinct().sorted().toList()
+    }
+    val selectedBuild = build?.takeIf { builds.contains(it) } ?: builds.firstOrNull()
+    val forMachine = remember(machine, selectedBuild) {
+        catalog.parts.filter { it.machine == machine && it.variant == selectedBuild }
+    }
     val searching = term.trim().length >= 2
-    val hits = remember(machine, term) { catalog.searchParts(machine, term) }
-    val sections = remember(machine) { forMachine.groupBy { it.sectie }.toSortedMap() }
+    val hits = remember(machine, selectedBuild, term) {
+        catalog.searchParts(machine, term, variant = selectedBuild)
+    }
+    val sections = remember(machine, selectedBuild) { forMachine.groupBy { it.section }.toSortedMap() }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = documented.map { it.id as String? to it.naam },
+                options = documented.map { it.id as String? to it.name },
                 selected = machine,
-                onSelect = onFilter,
+                onSelect = { onFilter(it); build = null },
             )
+        }
+        if (builds.size > 1) {
+            item {
+                ChipRow(
+                    options = builds.map { code ->
+                        code as String? to (catalog.variants(machine ?: "")
+                            .firstOrNull { it.code == code }
+                            ?.let { "${it.brewer} ${it.cabinet}".trim() } ?: code)
+                    },
+                    selected = selectedBuild,
+                    onSelect = { build = it },
+                )
+            }
         }
         item {
             OutlinedTextField(
@@ -96,12 +122,16 @@ fun PartsScreen(
         }
 
         item { SectionHeader("Tekeningen", "${sections.size}") }
-        items(sections.keys.toList()) { sectie ->
-            val count = sections[sectie]?.size ?: 0
-            Card(onClick = { onOpen(Route.PartSection(machine, sectie)) }) {
+        items(sections.keys.toList()) { section ->
+            val count = sections[section]?.size ?: 0
+            val name = catalog.drawingName(machine, selectedBuild.orEmpty(), section)
+            Card(onClick = { onOpen(Route.PartSection(machine, selectedBuild.orEmpty(), section)) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(sectie, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            if (name.isEmpty()) section else "$section  $name",
+                            style = MaterialTheme.typography.titleMedium,
+                        )
                         Spacer(Modifier.height(2.dp))
                         Text(
                             "$count onderdelen",
@@ -118,46 +148,62 @@ fun PartsScreen(
 }
 
 @Composable
-fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
-    val parts = remember(machine, sectie) {
-        catalog.parts.filter { it.machine == machine && it.sectie == sectie }
+fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, section: String) {
+    val parts = remember(machine, variant, section) {
+        catalog.parts.filter {
+            it.machine == machine && it.section == section &&
+                (variant.isEmpty() || it.variant == variant)
+        }
     }
-    val tekening = catalog.drawing(machine, sectie)
-    val balloons = remember(machine, sectie) { catalog.balloons(machine, sectie) }
-    var gekozen by remember(machine, sectie) { mutableStateOf<String?>(null) }
+    val sheets = catalog.drawing(machine, variant, section)
+    val name = catalog.drawingName(machine, variant, section)
+    val balloons = remember(machine, variant, section) {
+        catalog.balloons(machine, variant, section)
+    }
+    var selected by remember(machine, variant, section) { mutableStateOf<String?>(null) }
 
     /** Position as the balloons write it: "05" in the table is "5" on the drawing. */
-    fun kort(p: String) = p.trimStart('0').lowercase().ifEmpty { "0" }
+    fun summary(p: String) = p.trimStart('0').lowercase().ifEmpty { "0" }
 
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(sectie, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(
+                    if (name.isEmpty()) section else name,
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
                 Spacer(Modifier.height(6.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Pill(catalog.machine(machine)?.naam ?: machine)
+                    Pill(catalog.machine(machine)?.name ?: machine)
+                    if (variant.isNotEmpty()) Pill(variant)
+                    Pill("tek. $section")
                     Pill("${parts.size} onderdelen")
                     if (balloons.isNotEmpty()) Pill("${balloons.size} aanklikbaar")
                 }
             }
         }
-        if (tekening != null) {
+        if (sheets.isNotEmpty()) {
             item {
                 Column {
-                    DrawingView(
-                        path = tekening,
-                        balloons = balloons,
-                        geselecteerd = gekozen,
-                        // No scrolling: the answer appears under the drawing, so
-                        // the picture you are reading stays in view.
-                        onSelect = { pos -> gekozen = if (gekozen == pos) null else pos },
-                    )
-                    val gekozenDelen = parts.filter { gekozen != null && kort(it.pos) == gekozen }
-                    if (gekozenDelen.isNotEmpty()) {
+                    // A big assembly runs over more than one sheet; the balloons
+                    // were read from the first one.
+                    sheets.forEachIndexed { index, sheet ->
+                        DrawingView(
+                            path = sheet,
+                            balloons = if (index == 0) balloons else emptyList(),
+                            selected = selected,
+                            // No scrolling: the answer appears under the drawing,
+                            // so the picture you are reading stays in view.
+                            onSelect = { pos -> selected = if (selected == pos) null else pos },
+                        )
+                    }
+                    val selectedParts = parts.filter { selected != null && summary(it.pos) == selected }
+                    if (selectedParts.isNotEmpty()) {
                         Spacer(Modifier.height(8.dp))
-                        gekozenDelen.forEach { part ->
-                            PartRow(part, showSection = false, actief = true)
+                        selectedParts.forEach { part ->
+                            PartRow(part, showSection = false, active = true)
                         }
                     }
                     Spacer(Modifier.height(6.dp))
@@ -179,9 +225,9 @@ fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
             PartRow(
                 part = part,
                 showSection = false,
-                actief = gekozen != null && kort(part.pos) == gekozen,
-                onClick = if (balloons.any { it.pos == kort(part.pos) }) {
-                    { gekozen = kort(part.pos) }
+                active = selected != null && summary(part.pos) == selected,
+                onClick = if (balloons.any { it.pos == summary(part.pos) }) {
+                    { selected = summary(part.pos) }
                 } else null,
             )
         }
@@ -200,18 +246,18 @@ fun PartSectionDetail(catalog: Catalog, machine: String, sectie: String) {
 private fun PartRow(
     part: Part,
     showSection: Boolean,
-    actief: Boolean = false,
+    active: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
-    Card(onClick = onClick, highlight = actief) {
+    Card(onClick = onClick, highlight = active) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (part.leverbaar) PartNumber(part.nummer) else Pill("niet los leverbaar")
+                if (part.available) PartNumber(part.number) else Pill("niet los leverbaar")
                 Spacer(Modifier.width(8.dp))
-                if (part.voorraad.isNotEmpty()) {
+                if (part.stock.isNotEmpty()) {
                     Pill(
-                        part.voorraad,
-                        tone = if (part.voorraad == "SE") MaterialTheme.colorScheme.secondary
+                        part.stock,
+                        tone = if (part.stock == "SE") MaterialTheme.colorScheme.secondary
                         else MaterialTheme.colorScheme.primary,
                     )
                 }
@@ -225,15 +271,15 @@ private fun PartRow(
                 }
             }
             Spacer(Modifier.height(6.dp))
-            Text(part.omschrijving, style = MaterialTheme.typography.bodyLarge)
-            if (showSection || part.aantal.isNotEmpty()) {
+            Text(part.description, style = MaterialTheme.typography.bodyLarge)
+            if (showSection || part.quantity.isNotEmpty()) {
                 Spacer(Modifier.height(4.dp))
                 Text(
                     buildString {
-                        if (showSection) append(part.sectie)
-                        if (part.aantal.isNotEmpty()) {
+                        if (showSection) append(part.section)
+                        if (part.quantity.isNotEmpty()) {
                             if (isNotEmpty()) append("  ·  ")
-                            append("${part.aantal}× per machine")
+                            append("${part.quantity}× per machine")
                         }
                     },
                     style = MaterialTheme.typography.bodySmall,

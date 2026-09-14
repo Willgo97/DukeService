@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Fault
 import nl.dejongduke.service.data.FaultGroup
-import nl.dejongduke.service.data.LetOp
+import nl.dejongduke.service.data.SafetyNote
 import nl.dejongduke.service.ui.ActionRow
 import nl.dejongduke.service.ui.Card
 import nl.dejongduke.service.ui.ChipRow
@@ -46,7 +46,7 @@ import nl.dejongduke.service.ui.WarnBanner
 fun FaultsScreen(
     catalog: Catalog,
     filter: String?,
-    taal: String,
+    language: String,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
@@ -54,17 +54,17 @@ fun FaultsScreen(
 
     val documented = catalog.machines.filter { m -> catalog.faults.any { m.id in it.machines } }
     val byMachine = catalog.faultGroups.filter { filter == null || filter in it.machines }
-    val categories = byMachine.map { it.eerste.cat }.distinct().sorted()
+    val categories = byMachine.map { it.first.category }.distinct().sorted()
     // A category picked for one machine may not exist for the next one; leaving
     // it set would show an empty list with no chip to explain why.
     if (categorie != null && categorie !in categories) categorie = null
-    val shown = byMachine.filter { categorie == null || it.eerste.cat == categorie }
+    val shown = byMachine.filter { categorie == null || it.first.category == categorie }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alle machines") +
-                    documented.map { it.id as String? to it.naam },
+                    documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
             )
@@ -80,19 +80,19 @@ fun FaultsScreen(
         item { SectionHeader("Schermmeldingen", "${shown.size}") }
 
         if (shown.isEmpty()) {
-            val naam = filter?.let { catalog.machine(it)?.naam }
+            val name = filter?.let { catalog.machine(it)?.name }
             item {
                 EmptyState(
                     "Geen meldingen",
-                    if (naam != null) "Voor de $naam staat nog geen storingslijst in de app."
+                    if (name != null) "Voor de $name staat nog geen storingslijst in de app."
                     else "Er staat nog geen storingslijst in de app.",
                 )
             }
         }
 
-        items(shown, key = { it.melding }) { group ->
-            FaultCard(catalog, group, showMachines = filter == null, taal = taal) {
-                onOpen(Route.Fault(group.melding))
+        items(shown, key = { it.message }) { group ->
+            FaultCard(catalog, group, showMachines = filter == null, language = language) {
+                onOpen(Route.Fault(group.message))
             }
         }
         item { Spacer(Modifier.height(24.dp)) }
@@ -104,24 +104,24 @@ fun FaultCard(
     catalog: Catalog,
     group: FaultGroup,
     showMachines: Boolean,
-    taal: String = "nl",
+    language: String = "nl",
     onClick: () -> Unit,
 ) {
     // Which line leads depends on what the machine in front of you displays.
-    val kop = if (taal == "en") group.melding else group.eerste.nl
-    val onder = if (taal == "en") group.eerste.nl else group.melding
+    val key = if (language == "en") group.message else group.first.dutch
+    val onder = if (language == "en") group.first.dutch else group.message
     Card(onClick = onClick) {
         Column {
             Row {
                 Box(
                     Modifier.padding(top = 7.dp).size(8.dp).clip(CircleShape)
                         .background(
-                            if (group.zelf) MaterialTheme.colorScheme.secondary
+                            if (group.selfService) MaterialTheme.colorScheme.secondary
                             else MaterialTheme.colorScheme.error
                         )
                 )
                 Spacer(Modifier.width(10.dp))
-                Text(kop, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                Text(key, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             }
             Spacer(Modifier.height(4.dp))
             Text(
@@ -135,9 +135,9 @@ fun FaultCard(
                 Modifier.padding(start = 18.dp),
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                Pill(group.eerste.cat)
+                Pill(group.first.category)
                 if (showMachines) Pill(catalog.machineNames(group.machines))
-                if (!group.zelf) Pill("monteur", tone = MaterialTheme.colorScheme.error)
+                if (!group.selfService) Pill("monteur", tone = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -149,12 +149,12 @@ fun FaultDetail(
     catalog: Catalog,
     group: FaultGroup,
     pinned: Boolean,
-    taal: String,
+    language: String,
     onPin: (String) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
-    val kop = if (taal == "en") group.melding else group.eerste.nl
-    val onder = if (taal == "en") group.eerste.nl else group.melding
+    val key = if (language == "en") group.message else group.first.dutch
+    val onder = if (language == "en") group.first.dutch else group.message
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -164,7 +164,7 @@ fun FaultDetail(
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Spacer(Modifier.height(4.dp))
-                Text(kop, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(key, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(4.dp))
                 Text(
                     onder,
@@ -176,30 +176,30 @@ fun FaultDetail(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
-                    Pill(group.eerste.cat)
+                    Pill(group.first.category)
                     Pill(catalog.machineNames(group.machines))
-                    group.varianten.flatMap { it.brewers }.distinct().forEach { Pill(it) }
+                    group.variants.flatMap { it.brewers }.distinct().forEach { Pill(it) }
                 }
             }
         }
 
         item {
             ActionRow(
-                pinKey = "fault:" + group.melding,
+                pinKey = "fault:" + group.message,
                 pinned = pinned,
                 onPin = onPin,
-                deelTekst = buildString {
-                    appendLine(group.melding)
-                    appendLine(group.eerste.nl)
-                    if (group.eerste.oorzaak.isNotEmpty()) appendLine("\nOorzaak: " + group.eerste.oorzaak)
-                    group.eerste.oplossing.forEachIndexed { i, stap -> appendLine("${i + 1}. $stap") }
+                shareText = buildString {
+                    appendLine(group.message)
+                    appendLine(group.first.dutch)
+                    if (group.first.cause.isNotEmpty()) appendLine("\nOorzaak: " + group.first.cause)
+                    group.first.solution.forEachIndexed { i, step -> appendLine("${i + 1}. $step") }
                     append("\n— DUKE Service")
                 },
             )
         }
 
-        group.varianten.forEachIndexed { index, variant ->
-            if (group.varianten.size > 1) {
+        group.variants.forEachIndexed { index, variant ->
+            if (group.variants.size > 1) {
                 item {
                     if (index > 0) {
                         HorizontalDivider(
@@ -213,10 +213,10 @@ fun FaultDetail(
             faultBody(variant, catalog, onOpen)
         }
         item {
-            val bron = group.varianten.mapNotNull { it.bron.ifEmpty { null } }.distinct()
-            if (bron.isNotEmpty()) {
+            val source = group.variants.mapNotNull { it.source.ifEmpty { null } }.distinct()
+            if (source.isNotEmpty()) {
                 Text(
-                    "Bron: " + bron.joinToString(" · "),
+                    "Bron: " + source.joinToString(" · "),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -233,20 +233,20 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
     catalog: Catalog,
     onOpen: (Route) -> Unit,
 ) {
-    if (fault.oorzaak.isNotEmpty()) {
+    if (fault.cause.isNotEmpty()) {
         item { SectionHeader("Oorzaak") }
         item {
             Text(
-                fault.oorzaak,
+                fault.cause,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 2.dp),
             )
         }
     }
 
-    if (fault.oplossing.isNotEmpty()) {
-        item { SectionHeader(if (fault.zelf) "Wat je doet" else "Wat er moet gebeuren") }
-        items(fault.oplossing.size) { index ->
+    if (fault.solution.isNotEmpty()) {
+        item { SectionHeader(if (fault.selfService) "Wat je doet" else "Wat er moet gebeuren") }
+        items(fault.solution.size) { index ->
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp)) {
                 Box(
                     Modifier.size(24.dp).clip(CircleShape)
@@ -260,47 +260,47 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
                     )
                 }
                 Spacer(Modifier.width(12.dp))
-                Text(fault.oplossing[index], style = MaterialTheme.typography.bodyLarge)
+                Text(fault.solution[index], style = MaterialTheme.typography.bodyLarge)
             }
         }
     }
 
-    if (fault.monteur.isNotEmpty()) {
+    if (fault.engineerNote.isNotEmpty()) {
         item {
             Card {
                 Column {
                     Text(
-                        if (fault.zelf) "Als het blijft" else "Servicemelding",
+                        if (fault.selfService) "Als het blijft" else "Servicemelding",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.error,
                     )
                     Spacer(Modifier.height(4.dp))
-                    Text(fault.monteur, style = MaterialTheme.typography.bodyMedium)
+                    Text(fault.engineerNote, style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
     }
 
-    if (fault.opmerking.isNotEmpty()) {
+    if (fault.note.isNotEmpty()) {
         item {
             WarnBanner(
-                LetOp("let op", fault.opmerking),
+                SafetyNote("let op", fault.note),
                 Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
             )
         }
     }
 
-    val linked = fault.proc.mapNotNull { catalog.procedure(it) }
+    val linked = fault.procedures.mapNotNull { catalog.procedure(it) }
     if (linked.isNotEmpty()) {
         item { SectionHeader("Bijbehorende procedures") }
-        items(linked, key = { fault.melding + it.id }) { proc ->
-            Card(onClick = { onOpen(Route.Procedure(proc.id)) }) {
+        items(linked, key = { fault.message + it.id }) { procedures ->
+            Card(onClick = { onOpen(Route.Procedure(procedures.id)) }) {
                 Column {
-                    Text(proc.titel, style = MaterialTheme.typography.titleMedium)
+                    Text(procedures.title, style = MaterialTheme.typography.titleMedium)
                     Spacer(Modifier.height(2.dp))
                     Text(
-                        "${proc.stappen.size} stappen" +
-                            if (proc.brewer.isNotEmpty()) "  ·  ${proc.brewer}" else "",
+                        "${procedures.steps.size} stappen" +
+                            if (procedures.brewer.isNotEmpty()) "  ·  ${procedures.brewer}" else "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

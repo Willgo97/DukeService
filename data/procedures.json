@@ -1,22 +1,22 @@
 [
  {
   "id": "inschakelen",
-  "titel": "Machine inschakelen",
+  "title": "Machine inschakelen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Stond de deur te lang open, dan verschijnt het servicemenu. Tik op [Exit] en daarna op [Sluit de deur en druk hier om service te verlaten]."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Zet de watertoevoer open."
    },
@@ -45,27 +45,27 @@
     "t": "Na een paar minuten verdwijnt 'Heating boilers' en is de machine klaar voor gebruik."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "uitschakelen",
-  "titel": "Machine uitschakelen / buiten gebruik stellen",
+  "title": "Machine uitschakelen / buiten gebruik stellen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "tip",
     "t": "Staat de machine langer dan een week stil: voer eerst het maandelijks onderhoud uit, sluit de watertoevoer af en trek de stekker eruit. Dat scheelt ook energie."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur."
    },
@@ -76,27 +76,27 @@
     ]
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "deur-openen",
-  "titel": "Deur openen",
+  "title": "Deur openen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Laat de deur niet onbeheerd openstaan; dan kan iedereen bij de binnenkant van de machine."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Steek de sleutel in het slot van de deur."
    },
@@ -110,20 +110,20 @@
     ]
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "deur-sluiten",
-  "titel": "Deur sluiten",
+  "title": "Deur sluiten",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Controleer dat alle canisters geplaatst zijn."
@@ -133,7 +133,7 @@
     "t": "Haal de sleutel altijd uit de machine en uit de eventuele onderkast, zodat niemand anders de deur kan openen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Steek de sleutel in het slot van de deur."
    },
@@ -153,27 +153,27 @@
     "t": "Optioneel — servicemenu verlaten: tik op [Exit] en daarna op [Sluit de deur en druk hier om service te verlaten]."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "bovenklep",
-  "titel": "Bovenklep openen of sluiten",
+  "title": "Bovenklep openen of sluiten",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "Om canisters te vullen of te reinigen moeten ze uit de machine. Via de bovenklep kom je er makkelijk bij.",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "Om canisters te vullen of te reinigen moeten ze uit de machine. Via de bovenklep kom je er makkelijk bij.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "De bovenklep vergrendelt in de deur en gaat alleen open als de deur open is. Afhankelijk van het model zitten er uitsparingen in voor één of twee (bonen)canisters."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Openen: til de bovenklep aan de voorkant op en zwaai hem naar achteren open. Hij blijft rechtop staan."
    },
@@ -181,45 +181,45 @@
     "t": "Sluiten: zwaai de klep terug naar beneden. Zorg dat hij helemaal zakt en vergrendelt als de deur dichtgaat."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "servicesleutel",
-  "titel": "De servicesleutel",
+  "title": "De servicesleutel",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "Uit veiligheid schakelt de machine alle afgiftefuncties uit als de deur opengaat. Met de groene servicesleutel omzeil je die beveiliging voor onderhoud waarbij de machine moet blijven werken.",
-  "nodig": [],
-  "let": [],
-  "stappen": [],
-  "taal": "nl"
+  "intervalText": "",
+  "purpose": "Uit veiligheid schakelt de machine alle afgiftefuncties uit als de deur opengaat. Met de groene servicesleutel omzeil je die beveiliging voor onderhoud waarbij de machine moet blijven werken.",
+  "needed": [],
+  "warnings": [],
+  "steps": [],
+  "language": "nl"
  },
  {
   "id": "servicesleutel-plaatsen",
-  "titel": "Servicesleutel plaatsen",
+  "title": "Servicesleutel plaatsen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [
    "Groene servicesleutel"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Met de servicesleutel erin staat de machine onder spanning terwijl de deur open is. Onderdelen kunnen bewegen en er kan heet water uit komen. Plaats de sleutel alleen als erom gevraagd wordt."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Zoek de sleutelopening aan de binnenkant van de deur."
    },
@@ -235,24 +235,24 @@
     ]
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "servicesleutel-verwijderen",
-  "titel": "Servicesleutel verwijderen",
+  "title": "Servicesleutel verwijderen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [
    "Groene servicesleutel"
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "Draai de servicesleutel een kwartslag (90°)."
    },
@@ -260,24 +260,24 @@
     "t": "Haal de servicesleutel uit de deur."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "geplande-spoeling",
-  "titel": "Geplande spoeling",
+  "title": "Geplande spoeling",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks, wordt op het scherm aangekondigd",
-  "doel": "Reinigen wordt weleens overgeslagen of vergeten. De geplande spoeling wordt daarom elke dag door de scheduler afgedwongen. In plaats hiervan kun je ook het dagelijks of wekelijks onderhoud draaien.",
-  "nodig": [
+  "intervalText": "Dagelijks, wordt op het scherm aangekondigd",
+  "purpose": "Reinigen wordt weleens overgeslagen of vergeten. De geplande spoeling wordt daarom elke dag door de scheduler afgedwongen. In plaats hiervan kun je ook het dagelijks of wekelijks onderhoud draaien.",
+  "needed": [
    "Spoelbak of kan van 1 liter"
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "Zet een spoelbak of kan onder de uitloop om het spoelwater op te vangen."
    },
@@ -301,23 +301,23 @@
     "t": "De machine keert terug naar het hoofdmenu en is klaar voor gebruik."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "mixers-spoelen",
-  "titel": "Mixers en brewer doorspoelen",
+  "title": "Mixers en brewer doorspoelen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "dag",
-  "intervalTekst": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
-  "doel": "De spoeling jaagt heet water door de mixers en de brewer om restanten weg te spoelen.",
-  "nodig": [
+  "intervalText": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
+  "purpose": "De spoeling jaagt heet water door de mixers en de brewer om restanten weg te spoelen.",
+  "needed": [
    "Spoelbak"
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "Open zo nodig de deur zodat het servicemenu op het scherm komt."
    },
@@ -337,21 +337,21 @@
     "t": "Herhaal de vorige stap tot er schoon water uit de machine komt."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "afvalemmer-reinigen",
-  "titel": "Afvalemmer reinigen",
+  "title": "Afvalemmer reinigen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "Na elke afgifte gaat het koffiedik (de koffiekoek) in de afvalemmer. Overtollig water uit de brewer wordt opgevangen in een drupbak die in de afvalemmer staat, net onder de brewer. Bij een externe afvalbak is de afvalemmer vervangen door een afvalgeleider.",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Dagelijks",
+  "purpose": "Na elke afgifte gaat het koffiedik (de koffiekoek) in de afvalemmer. Overtollig water uit de brewer wordt opgevangen in een drupbak die in de afvalemmer staat, net onder de brewer. Bij een externe afvalbak is de afvalemmer vervangen door een afvalgeleider.",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Afhankelijk van het type emmer:",
     "s": [
@@ -376,26 +376,26 @@
     "t": "Controleer dat de waterniveausensor in de drupbak hangt."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "bekerstandaard-reinigen",
-  "titel": "Bekerstandaard reinigen",
+  "title": "Bekerstandaard reinigen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "Voor het reinigen moeten de bekerstandaards uit de machine.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Dagelijks",
+  "purpose": "Voor het reinigen moeten de bekerstandaards uit de machine.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Afhankelijk van het model heeft de machine één of twee bekerstandaards."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Houd de bekerstandaard vast en trek één poot van de scharnierpen."
    },
@@ -418,21 +418,21 @@
     "t": "Herhaal de laatste stappen voor de tweede bekerstandaard."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "afvalbak-onderkast",
-  "titel": "Afvalbak in de onderkast reinigen",
+  "title": "Afvalbak in de onderkast reinigen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "week",
-  "intervalTekst": "Wekelijks, vaker als het nodig is",
-  "doel": "Staat de machine op een onderkast, dan gaat overtollig water uit de brewer en afvalwater uit de lekbak naar de linker afvalbak en het koffiedik naar de rechter. Allebei moeten ze regelmatig schoon.",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Wekelijks, vaker als het nodig is",
+  "purpose": "Staat de machine op een onderkast, dan gaat overtollig water uit de brewer en afvalwater uit de lekbak naar de linker afvalbak en het koffiedik naar de rechter. Allebei moeten ze regelmatig schoon.",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Haal de afvalbak(ken) uit de onderkast."
    },
@@ -452,20 +452,20 @@
     "t": "Staat de melding 'Waste bucket full / Empty waste bucket' op het scherm: tik in het servicemenu op [Maintenance] en daarna op [Reset waste bin] om de teller te resetten en de melding weg te halen."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "lekbak-reinigen",
-  "titel": "Lekbak reinigen",
+  "title": "Lekbak reinigen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "De lekbak vangt afvalwater van de machine en van de afgifte op en moet regelmatig schoon. De lekbak zit onder de kannenplateau. Afhankelijk van het model zit er een metalen rooster in.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Dagelijks",
+  "purpose": "De lekbak vangt afvalwater van de machine en van de afgifte op en moet regelmatig schoon. De lekbak zit onder de kannenplateau. Afhankelijk van het model zit er een metalen rooster in.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Loopt de lekbak over op een grotere afvalemmer of rechtstreeks op de afvoer, dan mag het interval naar één keer per week."
@@ -475,7 +475,7 @@
     "t": "Zorg dat de nokken aan de achterkant van het kannenplateau (3) in de uitsparingen in de deur (1) vallen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Til het kannenplateau aan de voorkant op en haal het uit de geleiders in de deur.",
     "s": [
@@ -504,21 +504,21 @@
     "t": "Afhankelijk van het model: leg het metalen inlegrooster terug."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "mixsysteem-reinigen",
-  "titel": "Mixsysteem reinigen",
+  "title": "Mixsysteem reinigen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "week",
-  "intervalTekst": "Wekelijks, vaker als het nodig is",
-  "doel": "Om verstopping door ingrediënten te voorkomen moeten de mixers uit de machine en schoongemaakt worden.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Wekelijks, vaker als het nodig is",
+  "purpose": "Om verstopping door ingrediënten te voorkomen moeten de mixers uit de machine en schoongemaakt worden.",
+  "needed": [],
+  "warnings": [
    {
     "n": "pas op",
     "t": "Zorg dat het afzuigfilter helemaal droog is voordat je het in de filterlade zet."
@@ -532,7 +532,7 @@
     "t": "Zorg dat de mixer-afzuiging goed aansluit op de opening in de filterlade."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Haal de uitloopslangen van de mixers."
    },
@@ -594,23 +594,23 @@
     "t": "Sluit de uitloopslangen weer op de mixers aan."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "brewer-schoonmaken",
-  "titel": "Brewer uitnemen en reinigen",
+  "title": "Brewer uitnemen en reinigen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "week",
-  "intervalTekst": "Minimaal wekelijks, vaker als het nodig is",
-  "doel": "Voor een volledige reiniging met water moet de brewer uit de machine. Ook de brewerhouder moet gecontroleerd en schoongemaakt worden, anders gaat de brewer storen.",
-  "nodig": [
+  "intervalText": "Minimaal wekelijks, vaker als het nodig is",
+  "purpose": "Voor een volledige reiniging met water moet de brewer uit de machine. Ook de brewerhouder moet gecontroleerd en schoongemaakt worden, anders gaat de brewer storen.",
+  "needed": [
    "Pijpenborstel",
    "Slangenborstel"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Haal de brewer zelf niet uit elkaar. Alleen opgeleid personeel mag aan de brewer zelf werken; dat staat in de technische handleiding."
@@ -620,7 +620,7 @@
     "t": "Zit de brewer niet goed gemonteerd, dan kan hij storingen geven of tijdens het zetten uit de houder springen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Maak de breweruitloop los van de brewer, samen met de verbindingsslang en de uitloopnozzle."
    },
@@ -655,25 +655,25 @@
     ]
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "brewer-tablet",
-  "titel": "Brewer reinigen met reinigingstablet",
+  "title": "Brewer reinigen met reinigingstablet",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "week",
-  "intervalTekst": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
-  "doel": "Reinigen met een tablet haalt alle koffieresten uit de brewer.",
-  "nodig": [
+  "intervalText": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
+  "purpose": "Reinigen met een tablet haalt alle koffieresten uit de brewer.",
+  "needed": [
    "Reinigingstablet",
    "Spoelbak of kan van 1 liter",
    "Beschermende kleding, handschoenen en veiligheidsbril",
    "Groene servicesleutel"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Reinig je de brewer niet met de voorgeschreven tablet van de fabrikant, dan vervalt de garantie op de betrokken onderdelen. Niet reinigen kan de machine laten storen. Advies: minimaal één keer per week. Heb je last van dichtgeslibde filterkoppen, doe het dan vaker."
@@ -691,7 +691,7 @@
     "t": "Breek de reinigingscyclus nooit af. Is de cyclus niet helemaal afgerond, doe dan de hele procedure opnieuw."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur."
    },
@@ -720,20 +720,20 @@
     "t": "Haal de spoelbak weg en leeg hem."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "molen-vrijmaken",
-  "titel": "Molen vrijmaken",
+  "title": "Molen vrijmaken",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "nodig",
-  "intervalTekst": "Bij de melding 'Grinder blocked'",
-  "doel": "Soms zit er een takje of steentje tussen de verse bonen. De molen stopt als zo'n vreemd voorwerp hem blokkeert; in het meldingsgebied verschijnt 'Grinder blocked'.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Bij de melding 'Grinder blocked'",
+  "purpose": "Soms zit er een takje of steentje tussen de verse bonen. De molen stopt als zo'n vreemd voorwerp hem blokkeert; in het meldingsgebied verschijnt 'Grinder blocked'.",
+  "needed": [],
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Houd de deur open en plaats nooit de servicesleutel — anders kan de molen onverwacht aanslaan."
@@ -747,7 +747,7 @@
     "t": "Zit er niets meer in de weg, dan draait de as soepel rond."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Zoek de molen die vastzit."
    },
@@ -804,28 +804,28 @@
     "t": "Controleer de werking met een testkoffie."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "bekerdispenser-vullen",
-  "titel": "Bekerdispenser vullen",
+  "title": "Bekerdispenser vullen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "nodig",
-  "intervalTekst": "Wanneer nodig",
-  "doel": "Alleen bij machines met bekerdispenser. Vul op tijd bij, anders kan de machine geen dranken meer afgeven. Een beker met de hand plaatsen kan altijd.",
-  "nodig": [
+  "intervalText": "Wanneer nodig",
+  "purpose": "Alleen bij machines met bekerdispenser. Vul op tijd bij, anders kan de machine geen dranken meer afgeven. Een beker met de hand plaatsen kan altijd.",
+  "needed": [
    "Papieren of plastic bekers voor koffiemachines (diameter 70 of 73 mm)"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Pas op bij het openen van de dispenserdeur: er kunnen bekers uit vallen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur van de machine."
    },
@@ -848,22 +848,22 @@
     "t": "Sluit de dispenserdeur en vergrendel hem."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "theebrewer-reinigen",
-  "titel": "Theebrewer reinigen",
+  "title": "Theebrewer reinigen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "week",
-  "intervalTekst": "Wekelijks",
-  "doel": "Reinigen haalt alle resten uit de theebrewer. Daarvoor moet hij uit de machine.",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Wekelijks",
+  "purpose": "Reinigen haalt alle resten uit de theebrewer. Daarvoor moet hij uit de machine.",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Open de deur."
    },
@@ -898,21 +898,21 @@
     "t": "Steek de slang in de uitlooparm."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "canisters-reinigen",
-  "titel": "Canisters reinigen",
+  "title": "Canisters reinigen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "maand",
-  "intervalTekst": "Maandelijks, vaker als het nodig is",
-  "doel": "Alle ingrediënten laten resten achter in de canister. Voor het reinigen moeten de canisters uit de machine.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Maandelijks, vaker als het nodig is",
+  "purpose": "Alle ingrediënten laten resten achter in de canister. Voor het reinigen moeten de canisters uit de machine.",
+  "needed": [],
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Plaats nooit de servicesleutel — anders kan de machine onverwacht aanslaan."
@@ -926,7 +926,7 @@
     "t": "Vul de canisters pas als ze helemaal droog zijn. Anders gaat het product klonteren en loopt het systeem vast."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur."
    },
@@ -949,23 +949,23 @@
     "t": "Droog de canisters grondig aan de binnen- en buitenkant."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "canisters-vullen",
-  "titel": "Ingrediëntcanisters vullen",
+  "title": "Ingrediëntcanisters vullen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks of wanneer nodig",
-  "doel": "Vul op tijd bij, anders kan de machine geen dranken meer afgeven.",
-  "nodig": [
+  "intervalText": "Dagelijks of wanneer nodig",
+  "purpose": "Vul op tijd bij, anders kan de machine geen dranken meer afgeven.",
+  "needed": [
    "Ingrediënten"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Houd minimaal een laag van 4 cm product in de canisters. Gebruik alleen ingrediënten die de leverancier voorschrijft."
@@ -987,7 +987,7 @@
     "t": "Controleer de stand van de canisteruitloop: hij moet naar de juiste mengbeker wijzen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur."
    },
@@ -1019,23 +1019,23 @@
     "t": "Sluit de bovenklep."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "bonencanister-vullen",
-  "titel": "Bonencanister vullen",
+  "title": "Bonencanister vullen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks of wanneer nodig",
-  "doel": "Vul op tijd bij, anders kan de machine geen dranken meer afgeven.",
-  "nodig": [
+  "intervalText": "Dagelijks of wanneer nodig",
+  "purpose": "Vul op tijd bij, anders kan de machine geen dranken meer afgeven.",
+  "needed": [
    "Koffiebonen"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Plaats nooit de servicesleutel — anders kan de molen onverwacht aanslaan."
@@ -1049,7 +1049,7 @@
     "t": "Trek je de vergrendelschuif niet helemaal uit, dan vallen de bonen uit de canister."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur."
    },
@@ -1087,27 +1087,27 @@
     "t": "Herhaal de procedure voor eventuele andere bonencanisters."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "koudwater-uitloop",
-  "titel": "Koudwateruitloop reinigen",
+  "title": "Koudwateruitloop reinigen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "week",
-  "intervalTekst": "Wekelijks, vaker afhankelijk van gebruik en omgeving",
-  "doel": "De koudwateruitloop moet regelmatig schoon om bacteriegroei te voorkomen.",
-  "nodig": [
+  "intervalText": "Wekelijks, vaker afhankelijk van gebruik en omgeving",
+  "purpose": "De koudwateruitloop moet regelmatig schoon om bacteriegroei te voorkomen.",
+  "needed": [
    "Wegwerpdoek",
    "Reinigingsmiddel",
    "Wegwerp papieren doekjes",
    "Spoelbak of kan van 1 liter",
    "Beschermende kleding, handschoenen en veiligheidsbril"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Gebruik geen agressieve reinigingsmiddelen of schuurmiddelen op (delen van) de machine."
@@ -1117,7 +1117,7 @@
     "t": "Draag beschermende kleding, handschoenen en een veiligheidsbril bij het werken met reinigingschemicaliën."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Dompel een schone doek in het reinigingsmiddel (concentratie volgens voorschrift van de fabrikant) en knijp hem goed uit."
    },
@@ -1143,20 +1143,20 @@
     "t": "Kies een volle kan koud water en tap minimaal 1 liter, zodat alle resten reinigingsmiddel wegspoelen."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "koudwater-diepreiniging",
-  "titel": "Koudwateruitloop diepreinigen",
+  "title": "Koudwateruitloop diepreinigen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "maand",
-  "intervalTekst": "Maandelijks, vaker afhankelijk van gebruik en omgeving",
-  "doel": "De koudwateruitloop moet regelmatig gereinigd én gedesinfecteerd worden om bacteriegroei te voorkomen.",
-  "nodig": [
+  "intervalText": "Maandelijks, vaker afhankelijk van gebruik en omgeving",
+  "purpose": "De koudwateruitloop moet regelmatig gereinigd én gedesinfecteerd worden om bacteriegroei te voorkomen.",
+  "needed": [
    "Wegwerpdoek",
    "Reinigingsmiddel",
    "Desinfectiemiddel",
@@ -1165,7 +1165,7 @@
    "Borstel",
    "Beschermende kleding, handschoenen en veiligheidsbril"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Gebruik geen agressieve reinigingsmiddelen of schuurmiddelen op (delen van) de machine."
@@ -1175,7 +1175,7 @@
     "t": "Draag beschermende kleding, handschoenen en een veiligheidsbril bij het werken met reinigingschemicaliën."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Dompel een schone doek in warm water en neem de koudwateruitloop voor."
    },
@@ -1216,26 +1216,26 @@
     "t": "Kies een volle kan koud water en tap minimaal 1 liter, zodat alle resten wegspoelen."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "niveaus-invoeren",
-  "titel": "Canisterniveaus invoeren",
+  "title": "Canisterniveaus invoeren",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "dag",
-  "intervalTekst": "Verschijnt bij het verlaten van het servicemenu, als deze optie aanstaat",
-  "doel": "Staat deze optie aan, dan meldt de machine wanneer de canisters bijna leeg zijn. Op basis van het aantal getapte dranken rekent de machine uit hoeveel er nog in zit. Na het bijvullen moeten de tellers gereset worden.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Verschijnt bij het verlaten van het servicemenu, als deze optie aanstaat",
+  "purpose": "Staat deze optie aan, dan meldt de machine wanneer de canisters bijna leeg zijn. Op basis van het aantal getapte dranken rekent de machine uit hoeveel er nog in zit. Na het bijvullen moeten de tellers gereset worden.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Een volle canister is 100%. Om het product vers te houden kun je ook op 50% vullen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Tik je op [Exit] om het servicemenu te verlaten, dan verschijnt het scherm met de ingrediëntniveaus.",
     "s": [
@@ -1255,56 +1255,56 @@
     "t": "Herhaal dit voor elke bijgevulde canister (of waar de waarde niet klopt), of tik op [Exit]."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "buitenkant-reinigen",
-  "titel": "Buitenkant van de machine reinigen",
+  "title": "Buitenkant van de machine reinigen",
   "brewer": "beide",
   "machines": [
    "virtu",
    "lua"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "Alle buitenvlakken schoonmaken die in geen andere procedure aan bod komen.",
-  "nodig": [
+  "intervalText": "Dagelijks",
+  "purpose": "Alle buitenvlakken schoonmaken die in geen andere procedure aan bod komen.",
+  "needed": [
    "Zachte vochtige doek"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Gebruik geen agressieve reinigingsmiddelen of schuurmiddelen op (delen van) de machine."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Neem alle buitenvlakken af met een zachte, vochtige doek."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "touchscreen-reinigen",
-  "titel": "Touchscreen reinigen",
+  "title": "Touchscreen reinigen",
   "brewer": "CoEx",
   "machines": [
    "virtu"
   ],
   "interval": "dag",
-  "intervalTekst": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
-  "doel": "Het touchscreen is de belangrijkste schakel tussen gebruiker en machine. Voor hygiënisch en foutloos gebruik moet het regelmatig schoon.",
-  "nodig": [
+  "intervalText": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
+  "purpose": "Het touchscreen is de belangrijkste schakel tussen gebruiker en machine. Voor hygiënisch en foutloos gebruik moet het regelmatig schoon.",
+  "needed": [
    "Schone zachte doek",
    "(Isopropyl)alcohol"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "pas op",
     "t": "Gebruik geen andere (agressieve) chemicaliën op het touchscreen. Voorkom druppen: niet te veel vloeistof op de doek."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Tik op een van de knoppen met de melding [DRUK hier om te reinigen]. Het scherm gaat uit.",
     "s": [
@@ -1319,27 +1319,27 @@
     "t": "Na korte tijd gaat het scherm weer aan, keert de machine terug naar het hoofdmenu en is hij klaar voor gebruik."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "inschakelen-xl",
-  "titel": "Machine inschakelen",
+  "title": "Machine inschakelen",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Stond de deur te lang open, dan verschijnt het servicemenu. Tik op [Exit] en beantwoord de vraag 'Do you want to leave the service menu' met [OK]."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Zet de watertoevoer open."
    },
@@ -1368,21 +1368,21 @@
     "t": "Na een paar minuten verdwijnt 'Heating boilers' en is de machine klaar voor gebruik."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "deur-sluiten-xl",
-  "titel": "Deur sluiten",
+  "title": "Deur sluiten",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "nodig",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Controleer dat alle canisters geplaatst zijn."
@@ -1392,7 +1392,7 @@
     "t": "Haal de sleutel altijd uit de machine en uit de eventuele onderkast."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Steek de sleutel in het slot van de deur."
    },
@@ -1412,24 +1412,24 @@
     "t": "Optioneel — servicemenu verlaten: tik op [Exit] en beantwoord de vraag 'Do you want to leave the service menu' met [OK]."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "mixers-spoelen-xl",
-  "titel": "Mixers en brewer doorspoelen",
+  "title": "Mixers en brewer doorspoelen",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "dag",
-  "intervalTekst": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
-  "doel": "De spoeling jaagt heet water door de mixers en de brewer om restanten weg te spoelen.",
-  "nodig": [
+  "intervalText": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
+  "purpose": "De spoeling jaagt heet water door de mixers en de brewer om restanten weg te spoelen.",
+  "needed": [
    "Spoelbak"
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "Open zo nodig de deur zodat het servicemenu op het scherm komt."
    },
@@ -1452,27 +1452,27 @@
     "t": "Herhaal de vorige stap tot er schoon water uit de machine komt."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "afvalemmer-reinigen-xl",
-  "titel": "Afvalemmer reinigen",
+  "title": "Afvalemmer reinigen",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "Na elke afgifte gaat de koffiekoek in de afvalemmer. Overtollig water uit de brewer wordt opgevangen in een drupbak die daarin staat.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Dagelijks",
+  "purpose": "Na elke afgifte gaat de koffiekoek in de afvalemmer. Overtollig water uit de brewer wordt opgevangen in een drupbak die daarin staat.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Bij een vaste afvalwateraansluiting is er geen drupbak of afvalwateremmer nodig."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Klap de uitlooparm met de nozzles omhoog."
    },
@@ -1500,22 +1500,22 @@
     "t": "Klap de uitlooparm terug in de normale stand."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "bekerstandaard-reinigen-xl",
-  "titel": "Bekerstandaard reinigen",
+  "title": "Bekerstandaard reinigen",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "De bekerstandaard moet regelmatig uit de machine en schoongemaakt worden.",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Dagelijks",
+  "purpose": "De bekerstandaard moet regelmatig uit de machine en schoongemaakt worden.",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Trek de bekerstandaard van het magnetische ophangpunt en haal hem uit de deur."
    },
@@ -1526,21 +1526,21 @@
     "t": "Zet de bekerstandaard terug op het magnetische ophangpunt in de deur."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "afvalbak-onderkast-xl",
-  "titel": "Afvalbak in de onderkast reinigen",
+  "title": "Afvalbak in de onderkast reinigen",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "week",
-  "intervalTekst": "Wekelijks, vaker als het nodig is",
-  "doel": "Staat de machine op een onderkast, dan kunnen de emmers binnenin vervangen zijn door een afvalgeleider en een vaste afvalwateraansluiting.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Wekelijks, vaker als het nodig is",
+  "purpose": "Staat de machine op een onderkast, dan kunnen de emmers binnenin vervangen zijn door een afvalgeleider en een vaste afvalwateraansluiting.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Bij een vaste afvalwateraansluiting zit er geen afvalwaterbak in."
@@ -1550,7 +1550,7 @@
     "t": "De onderkast moet uit veiligheid op slot. Laat de deur van de onderkast niet onbeheerd openstaan."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Haal de afvalbak uit de onderkast."
    },
@@ -1570,21 +1570,21 @@
     "t": "Staat de melding 'Waste bucket full / Empty waste bucket' op het scherm: tik in het servicemenu op [Reset waste bin] om de teller te resetten en de melding weg te halen."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "lekbak-reinigen-xl",
-  "titel": "Lekbak reinigen",
+  "title": "Lekbak reinigen",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "dag",
-  "intervalTekst": "Dagelijks",
-  "doel": "De lekbak vangt afvalwater van de machine en van de afgifte op en moet regelmatig schoon.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Dagelijks",
+  "purpose": "De lekbak vangt afvalwater van de machine en van de afgifte op en moet regelmatig schoon.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Loopt de lekbak over op een grotere afvalemmer of rechtstreeks op de afvoer, dan mag het interval naar één keer per week."
@@ -1594,7 +1594,7 @@
     "t": "Zorg dat de nok aan de achterkant van het kannenplateau (3) in de uitsparing in de deur (1) valt."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Trek het kannenplateau in de richting van de pijl uit de geleiders in de deur."
    },
@@ -1614,23 +1614,23 @@
     "t": "Zet het kannenplateau op de geleiders (2) en schuif het in de richting van de pijl tegen de deur aan."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "brewer-schoonmaken-xl",
-  "titel": "Brewer uitnemen en reinigen (CoEx XL)",
+  "title": "Brewer uitnemen en reinigen (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "week",
-  "intervalTekst": "Minimaal één keer per week, vaker als het nodig is",
-  "doel": "Voor reiniging met water moet de brewer uit de machine. Ook het montageframe moet gecontroleerd en schoongemaakt worden.",
-  "nodig": [
+  "intervalText": "Minimaal één keer per week, vaker als het nodig is",
+  "purpose": "Voor reiniging met water moet de brewer uit de machine. Ook het montageframe moet gecontroleerd en schoongemaakt worden.",
+  "needed": [
    "Slangenborstel"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Haal de brewer zelf niet uit elkaar. Alleen opgeleid personeel mag aan de brewer zelf werken; dat staat in de technische handleiding."
@@ -1644,7 +1644,7 @@
     "t": "Zit de brewer niet goed gemonteerd, dan verschijnt 'Brewer out of position' en wordt koffie-afgifte geblokkeerd."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur; het servicemenu verschijnt."
    },
@@ -1697,26 +1697,26 @@
     "t": "Tik in het servicemenu op [Done] om de procedure af te sluiten."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "brewer-tablet-xl",
-  "titel": "Brewer reinigen met reinigingstablet (CoEx XL)",
+  "title": "Brewer reinigen met reinigingstablet (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "week",
-  "intervalTekst": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
-  "doel": "Reinigen met een tablet haalt alle koffieresten uit de brewer. De brewer blijft in de machine zitten.",
-  "nodig": [
+  "intervalText": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
+  "purpose": "Reinigen met een tablet haalt alle koffieresten uit de brewer. De brewer blijft in de machine zitten.",
+  "needed": [
    "Reinigingstablet",
    "Spoelbak of kan van 1 liter",
    "Beschermende kleding, handschoenen en veiligheidsbril",
    "Groene servicesleutel"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Reinig je de brewer niet met de voorgeschreven tablet van de fabrikant, dan vervalt de garantie op de betrokken onderdelen."
@@ -1734,7 +1734,7 @@
     "t": "Breek de reinigingscyclus nooit af. Is de cyclus niet helemaal afgerond, doe dan de hele procedure opnieuw."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur; het servicemenu verschijnt."
    },
@@ -1781,27 +1781,27 @@
     "t": "Haal de spoelbak weg en leeg hem."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "molen-vrijmaken-xl",
-  "titel": "Molen vrijmaken (CoEx XL)",
+  "title": "Molen vrijmaken (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "nodig",
-  "intervalTekst": "Bij de melding 'Grinder blocked'",
-  "doel": "Soms zit er een takje of steentje tussen de verse bonen. De molen stopt als zo'n vreemd voorwerp hem blokkeert.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Bij de melding 'Grinder blocked'",
+  "purpose": "Soms zit er een takje of steentje tussen de verse bonen. De molen stopt als zo'n vreemd voorwerp hem blokkeert.",
+  "needed": [],
+  "warnings": [
    {
     "n": "waarschuwing",
     "t": "Houd de deur open en plaats nooit de servicesleutel — anders kan de molen onverwacht aanslaan."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Zoek de molen die vastzit."
    },
@@ -1845,27 +1845,27 @@
     "t": "Controleer de werking met een testkoffie."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "niveaus-invoeren-xl",
-  "titel": "Canisterniveaus invoeren (CoEx XL)",
+  "title": "Canisterniveaus invoeren (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "dag",
-  "intervalTekst": "Verschijnt bij het openen van de deur, als deze optie aanstaat",
-  "doel": "Staat deze optie aan, dan meldt de machine 'Canister % almost empty' zodra een canister bijna leeg is. Na het bijvullen moeten de niveaus opnieuw ingevoerd worden.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Verschijnt bij het openen van de deur, als deze optie aanstaat",
+  "purpose": "Staat deze optie aan, dan meldt de machine 'Canister % almost empty' zodra een canister bijna leeg is. Na het bijvullen moeten de niveaus opnieuw ingevoerd worden.",
+  "needed": [],
+  "warnings": [
    {
     "n": "let op",
     "t": "Een volle canister is 100%. Om het product vers te houden kun je ook op 50% vullen."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Bij het openen van de deur verschijnt het scherm met de ingrediëntniveaus.",
     "s": [
@@ -1891,30 +1891,30 @@
     "t": "Tik op [Exit] om het servicemenu te verlaten."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "touchscreen-reinigen-xl",
-  "titel": "Touchscreen reinigen (CoEx XL)",
+  "title": "Touchscreen reinigen (CoEx XL)",
   "brewer": "CoEx XL",
   "machines": [
    "lua",
    "avy"
   ],
   "interval": "dag",
-  "intervalTekst": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
-  "doel": "Het touchscreen is de belangrijkste schakel tussen gebruiker en machine. Voor hygiënisch en foutloos gebruik moet het regelmatig schoon.",
-  "nodig": [
+  "intervalText": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
+  "purpose": "Het touchscreen is de belangrijkste schakel tussen gebruiker en machine. Voor hygiënisch en foutloos gebruik moet het regelmatig schoon.",
+  "needed": [
    "Schone zachte doek",
    "(Isopropyl)alcohol"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "pas op",
     "t": "Gebruik geen andere (agressieve) chemicaliën op het touchscreen. Voorkom druppen: niet te veel vloeistof op de doek."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Tik op een van de knoppen met de melding [DRUK hier om te reinigen]. Het scherm gaat uit.",
     "s": [
@@ -1929,26 +1929,26 @@
     "t": "Na korte tijd gaat het scherm weer aan, keert de machine terug naar het hoofdmenu en is hij klaar voor gebruik."
    }
   ],
-  "taal": "nl"
+  "language": "nl"
  },
  {
   "id": "inschakelen-ff",
-  "titel": "Machine inschakelen",
+  "title": "Machine inschakelen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "note",
     "t": "If the door was left open for too long the Service menu is shown. Tap the [Exit] button and then the [OK] button to answer the question 'Do you want to leave the service menu' to leave the Service menu."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Turn on the water supply.",
     "s": []
@@ -1984,27 +1984,27 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "deur-openen-ff",
-  "titel": "Deur openen",
+  "title": "Deur openen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "note",
     "t": "Do not leave the door open unattended to prevent unauthorized access to the inside of the machine."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Insert the key in the lock of the door of the coffee machine.",
     "s": []
@@ -2020,21 +2020,21 @@
     ]
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "deur-sluiten-ff",
-  "titel": "Deur sluiten",
+  "title": "Deur sluiten",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [
    {
     "n": "warning",
     "t": "Make sure all canisters are installed."
@@ -2044,7 +2044,7 @@
     "t": "Always remove the key from the coffee machine and optional base cabinet to prevent unauthorized opening of the door."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Insert the key in the lock of the door of the coffee machine.",
     "s": []
@@ -2070,27 +2070,27 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "bovenklep-ff",
-  "titel": "Bovenklep openen of sluiten",
+  "title": "Bovenklep openen of sluiten",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "To fill up or clean the canisters they need to be removed from the coffee machine. To allow easy access to the canisters, the top lid of the coffee machine can be opened.",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "To fill up or clean the canisters they need to be removed from the coffee machine. To allow easy access to the canisters, the top lid of the coffee machine can be opened.",
+  "needed": [],
+  "warnings": [
    {
     "n": "note",
     "t": "The top lid locks inside the door and can only be opened if the door is opened. Depending on the model, the top lid can contain cut outs for one or two (bean) canisters."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "To open, lift the top lid in the front and swing it open to the back. The top lid stays open in the upright position.",
     "s": []
@@ -2100,22 +2100,22 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "uitschakelen-ff",
-  "titel": "Machine uitschakelen / buiten gebruik stellen",
+  "title": "Machine uitschakelen / buiten gebruik stellen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "",
+  "purpose": "",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Open the door.",
     "s": []
@@ -2131,24 +2131,24 @@
     ]
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "geplande-spoeling-ff",
-  "titel": "Geplande spoeling",
+  "title": "Geplande spoeling",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "Daily, announced on screen",
-  "doel": "Cleaning the coffee machine can be skipped or forgotten. The scheduled rinse is forced every day using a scheduler. When activated follow the procedure below to perform the rinse. Instead you can also run the daily maintenance or weekly maintenance.",
-  "nodig": [
+  "intervalText": "Daily, announced on screen",
+  "purpose": "Cleaning the coffee machine can be skipped or forgotten. The scheduled rinse is forced every day using a scheduler. When activated follow the procedure below to perform the rinse. Instead you can also run the daily maintenance or weekly maintenance.",
+  "needed": [
    "A rinsing tub or 1 liter jug"
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "Place a rinsing tub or jug under the outlet nozzle to collect the rinse water.",
     "s": []
@@ -2175,24 +2175,24 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "mixers-spoelen-ff",
-  "titel": "Mixers en brewer doorspoelen",
+  "title": "Mixers en brewer doorspoelen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "At least daily, increase the frequency if needed Total time • Total time needed to rinse is 1 to 2 minutes.",
-  "doel": "The Rinse process flushes hot water through the mixers and the brewer to remove any residue.",
-  "nodig": [
+  "intervalText": "At least daily, increase the frequency if needed Total time • Total time needed to rinse is 1 to 2 minutes.",
+  "purpose": "The Rinse process flushes hot water through the mixers and the brewer to remove any residue.",
+  "needed": [
    "Rinsing tub."
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "If needed open the door to show the Service menu on the touchscreen.",
     "s": []
@@ -2220,22 +2220,22 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "afvalemmer-reinigen-ff",
-  "titel": "Afvalemmer reinigen",
+  "title": "Afvalemmer reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "Daily.",
-  "doel": "Used coffee filter paper and coffee residue is transported into the waste bucket. A metal waste disposer inside the waste bucket ensures a better distribution of the waste. Regular cleaning is needed. If an external waste bin is used, the waste bucket and disposer (B) are replaced by a waste guide (G). Perform the following steps:",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Daily.",
+  "purpose": "Used coffee filter paper and coffee residue is transported into the waste bucket. A metal waste disposer inside the waste bucket ensures a better distribution of the waste. Regular cleaning is needed. If an external waste bin is used, the waste bucket and disposer (B) are replaced by a waste guide (G). Perform the following steps:",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Depending on your model:",
     "s": [
@@ -2259,22 +2259,22 @@
     ]
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "bekerstandaard-reinigen-ff",
-  "titel": "Bekerstandaard reinigen",
+  "title": "Bekerstandaard reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "Daily",
-  "doel": "The cup stand needs to be removed from the machine and cleaned regularly.",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Daily",
+  "purpose": "The cup stand needs to be removed from the machine and cleaned regularly.",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Pull the cup stand from the magnetic suspension point and remove it from the door.",
     "s": []
@@ -2288,27 +2288,27 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "afvalbak-onderkast-ff",
-  "titel": "Afvalbak in de onderkast reinigen",
+  "title": "Afvalbak in de onderkast reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "week",
-  "intervalTekst": "Weekly, increase the frequency if needed",
-  "doel": "If waste bins in a base cabinet (or other external cabinet) are installed, excess water from the brewer and waste water from the drip tray is captured in the left waste bin and coffee residue in the right waste bin. Both bins must be cleaned regularly.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Weekly, increase the frequency if needed",
+  "purpose": "If waste bins in a base cabinet (or other external cabinet) are installed, excess water from the brewer and waste water from the drip tray is captured in the left waste bin and coffee residue in the right waste bin. Both bins must be cleaned regularly.",
+  "needed": [],
+  "warnings": [
    {
     "n": "note",
     "t": "If a fixed waste water connection is used, a waste water bin is not installed."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Remove the waste bin(s) from the base cabinet.",
     "s": []
@@ -2334,21 +2334,21 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "lekbak-reinigen-ff",
-  "titel": "Lekbak reinigen",
+  "title": "Lekbak reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "Daily",
-  "doel": "The drip tray collects waste water from the coffee machine and waste water during the dispense of products and needs to be cleaned regularly. The drip tray is covered by the jug stand.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Daily",
+  "purpose": "The drip tray collects waste water from the coffee machine and waste water during the dispense of products and needs to be cleaned regularly. The drip tray is covered by the jug stand.",
+  "needed": [],
+  "warnings": [
    {
     "n": "note",
     "t": "If the drip tray is connected to a larger waste bucket/bin or directly into the main waste water disposal, the cleaning interval can be lowered to once a week."
@@ -2358,7 +2358,7 @@
     "t": "Make sure that the ledge on the back of the jug stand (3) fits inside the notch in the door (1)."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Pull the jug stand from the door in the direction of the arrow and remove it from the support guides in the door.",
     "s": []
@@ -2384,21 +2384,21 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "mixsysteem-reinigen-ff",
-  "titel": "Mixsysteem reinigen",
+  "title": "Mixsysteem reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "week",
-  "intervalTekst": "Weekly, increase the frequency if needed",
-  "doel": "To prevent clogging of ingredients the mixers must be removed from the coffee machine and cleaned.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Weekly, increase the frequency if needed",
+  "purpose": "To prevent clogging of ingredients the mixers must be removed from the coffee machine and cleaned.",
+  "needed": [],
+  "warnings": [
    {
     "n": "caution",
     "t": "Make sure the exhaust filter is completely dry before installing it in the filter drawer."
@@ -2412,7 +2412,7 @@
     "t": "Make sure that the mixer suction trap connects properly to the opening in the filter drawer."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Remove the outlet hoses from the mixers.",
     "s": []
@@ -2492,24 +2492,24 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "brewer-schoonmaken-ff",
-  "titel": "Brewer uitnemen en reinigen",
+  "title": "Brewer uitnemen en reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "At least once a week, increase the frequency if needed.",
-  "doel": "Removal of the brewer is necessary for performing the cleaning procedure.",
-  "nodig": [
+  "intervalText": "At least once a week, increase the frequency if needed.",
+  "purpose": "Removal of the brewer is necessary for performing the cleaning procedure.",
+  "needed": [
    "Blue brewer key",
    "Green service key"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "warning",
     "t": "Do not take the brewer itself apart. Only properly trained personnel may work on the brewer itself. Instructions for performing work on the brewer itself is found in the technical manual."
@@ -2523,7 +2523,7 @@
     "t": "You can turn the main shaft of the brewer with the blue brewer key (delivered with the machine)."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Tear off the filter paper on the left and right of the brewer.",
     "s": []
@@ -2611,26 +2611,26 @@
     ]
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "brewer-tablet-ff",
-  "titel": "Brewer reinigen met reinigingstablet",
+  "title": "Brewer reinigen met reinigingstablet",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "At least once a week, increase the frequency if needed.",
-  "doel": "Cleaning of the brewer with a tablet removes all coffee residue.",
-  "nodig": [
+  "intervalText": "At least once a week, increase the frequency if needed.",
+  "purpose": "Cleaning of the brewer with a tablet removes all coffee residue.",
+  "needed": [
    "Cleaning tablet.",
    "Rinsing tub or 1 liter jug.",
    "Protective clothing, gloves and safety glasses.",
    "Green service key."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "Failure to clean the brewer weekly with the cleaning tablet available from the manufacturer will void the warranty on related parts. Not cleaning the brewer can cause the machine to malfunction!"
@@ -2652,7 +2652,7 @@
     "t": "Never cancel or interrupt the cleaning cycle. Repeat the full cleaning procedure if the cleaning cycle is not completely finished."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open the door of the machine if not already opened.",
     "s": []
@@ -2700,21 +2700,21 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "molen-vrijmaken-ff",
-  "titel": "Molen vrijmaken",
+  "title": "Molen vrijmaken",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "Occasionally small twigs or small rocks (known as foreign objects) are in between the fresh beans. The grinder will stop if these objects are blocking the grinder. A message 'Grinder blocked' is displayed in the warning message area.",
-  "nodig": [],
-  "let": [
+  "intervalText": "",
+  "purpose": "Occasionally small twigs or small rocks (known as foreign objects) are in between the fresh beans. The grinder will stop if these objects are blocking the grinder. A message 'Grinder blocked' is displayed in the warning message area.",
+  "needed": [],
+  "warnings": [
    {
     "n": "warning",
     "t": "To prevent possible activation of the grinder(s), keep the door open and never place the service key."
@@ -2724,7 +2724,7 @@
     "t": "Check the section Fill up the bean canister for details about the removal of the canisters. When the canister is removed, the grinder itself is visible."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Locate the grinder that needs cleaning up.",
     "s": []
@@ -2780,24 +2780,24 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "filterpapier-ff",
-  "titel": "Nieuw filterpapier plaatsen",
+  "title": "Nieuw filterpapier plaatsen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "When needed.",
-  "doel": "Follow this procedure when the machine runs out of paper and a new roll of filter paper must be placed.",
-  "nodig": [
+  "intervalText": "When needed.",
+  "purpose": "Follow this procedure when the machine runs out of paper and a new roll of filter paper must be placed.",
+  "needed": [
    "Green Service key.",
    "Roll of recommended coffee filter paper."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "Make sure the filter paper roll unrolls counter clock wise."
@@ -2807,7 +2807,7 @@
     "t": "Make sure that the brewer is not moved down during lifting of the transport wheels. Push the cantilever down with your thumb while supporting the brewer with your index finger."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open the door of the machine.",
     "s": []
@@ -2867,21 +2867,21 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "canisters-reinigen-ff",
-  "titel": "Canisters reinigen",
+  "title": "Canisters reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "maand",
-  "intervalTekst": "Monthly, increase the frequency if needed",
-  "doel": "All ingredients leave residue inside the canister. To clean the canisters they need to be removed from the machine.",
-  "nodig": [],
-  "let": [
+  "intervalText": "Monthly, increase the frequency if needed",
+  "purpose": "All ingredients leave residue inside the canister. To clean the canisters they need to be removed from the machine.",
+  "needed": [],
+  "warnings": [
    {
     "n": "warning",
     "t": "To prevent possible activation of the machine, never place the service key."
@@ -2895,7 +2895,7 @@
     "t": "Do not fill the canisters until they are completely dry. The product may form lumps which makes the system unusable."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open the door.",
     "s": []
@@ -2927,27 +2927,27 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "koudwater-uitloop-ff",
-  "titel": "Koudwateruitloop reinigen",
+  "title": "Koudwateruitloop reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "week",
-  "intervalTekst": "Weekly, increase the frequency if needed (depending on machine usage and environmental conditions)",
-  "doel": "The cold water outlet nozzle must be cleaned regularly to prevent bacteria growth.",
-  "nodig": [
+  "intervalText": "Weekly, increase the frequency if needed (depending on machine usage and environmental conditions)",
+  "purpose": "The cold water outlet nozzle must be cleaned regularly to prevent bacteria growth.",
+  "needed": [
    "Multi purpose, disposable cloth.",
    "Cleaning agent.",
    "Disposable paper towels.",
    "Rinsing tub or 1 liter jug.",
    "Protective clothing, gloves and safety glasses."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "Do not use aggressive cleaning products or abrasives to clean (parts of) the machine."
@@ -2957,7 +2957,7 @@
     "t": "Wear protective clothing, gloves and safety glasses when working with cleaning chemicals."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Use the cloth to apply the cleaning agent. Submerge a clean cloth into the cleaning agent (concentration recommended by cleaning agent manufacturer’s instructions). Remove the cloth and remove excess water.",
     "s": []
@@ -2991,20 +2991,20 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "koudwater-diepreiniging-ff",
-  "titel": "Koudwateruitloop diepreinigen",
+  "title": "Koudwateruitloop diepreinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "maand",
-  "intervalTekst": "Monthly, increase the frequency if needed (depending on machine usage and environmental conditions)",
-  "doel": "The cold water outlet nozzle must be cleaned and disinfected regularly to prevent bacteria growth.",
-  "nodig": [
+  "intervalText": "Monthly, increase the frequency if needed (depending on machine usage and environmental conditions)",
+  "purpose": "The cold water outlet nozzle must be cleaned and disinfected regularly to prevent bacteria growth.",
+  "needed": [
    "Multi purpose, disposable cloth.",
    "Cleaning agent.",
    "Protective clothing, gloves and safety glasses.",
@@ -3013,7 +3013,7 @@
    "Rinsing tub or 1 liter jug.",
    "Brush."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "Do not use aggressive cleaning products or abrasives to clean (parts of) the machine."
@@ -3023,7 +3023,7 @@
     "t": "Wear protective clothing, gloves and safety glasses when working with cleaning chemicals."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Submerge a clean cloth in warm water. Pre clean the cold water outlet nozzle using the cloth.",
     "s": []
@@ -3077,23 +3077,23 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "canisters-vullen-ff",
-  "titel": "Ingrediëntcanisters vullen",
+  "title": "Ingrediëntcanisters vullen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "To prevent that the machine can no longer dispense drinks due to a lack of ingredients, the machine must be refilled in time.",
-  "nodig": [
+  "intervalText": "",
+  "purpose": "To prevent that the machine can no longer dispense drinks due to a lack of ingredients, the machine must be refilled in time.",
+  "needed": [
    "Ingredients."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "• Make sure that the canisters remain filled with a layer of at least (4 cm) of product. • Only use ingredients recommended by the supplier of the machine. • To fill up a bean canister (optional) check the section Fill up the bean canister."
@@ -3115,7 +3115,7 @@
     "t": "Check the position of the outlet of the canister. It must be positioned towards the correct mixing bowl."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open the door.",
     "s": []
@@ -3157,23 +3157,23 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "bonencanister-vullen-ff",
-  "titel": "Bonencanister vullen",
+  "title": "Bonencanister vullen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "In order to prevent that the machine can no longer dispense drinks due to a lack of ingredients, the machine must be refilled in time.",
-  "nodig": [
+  "intervalText": "",
+  "purpose": "In order to prevent that the machine can no longer dispense drinks due to a lack of ingredients, the machine must be refilled in time.",
+  "needed": [
    "Coffee beans."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "• Make sure that the canisters remain filled with a layer of at least 4 cm of product. • Only use ingredients recommended by the supplier of the machine. • To fill up an ingredient canister (optional) check the section Fill up the ingredient canisters."
@@ -3191,7 +3191,7 @@
     "t": "When the canister locking slider is not fully pulled out, coffee beans will fall out of the canister."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open the door.",
     "s": []
@@ -3241,27 +3241,27 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "niveaus-invoeren-ff",
-  "titel": "Canisterniveaus invoeren",
+  "title": "Canisterniveaus invoeren",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "When this option is active, the Enter ingredient level screen is displayed when the door is opened.",
-  "doel": "When activated the coffee machine displays a message 'Canister % almost empty' when the ingredient canisters are almost empty. Based on the number of beverages taken, the machine calculates the amount of ingredients left in the canisters. When the canisters are filled up the counters need to be reset. Follow the steps in the procedure below to reset the counters.",
-  "nodig": [],
-  "let": [
+  "intervalText": "When this option is active, the Enter ingredient level screen is displayed when the door is opened.",
+  "purpose": "When activated the coffee machine displays a message 'Canister % almost empty' when the ingredient canisters are almost empty. Based on the number of beverages taken, the machine calculates the amount of ingredients left in the canisters. When the canisters are filled up the counters need to be reset. Follow the steps in the procedure below to reset the counters.",
+  "needed": [],
+  "warnings": [
    {
     "n": "note",
     "t": "A completely filled canister is filled 100%. To keep ingredients fresh it is also possible to fill the canister for 50%."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "When the door is opened, the Enter ingredients levels screen is displayed.",
     "s": [
@@ -3291,53 +3291,53 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "buitenkant-reinigen-ff",
-  "titel": "Buitenkant van de machine reinigen",
+  "title": "Buitenkant van de machine reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "Daily",
-  "doel": "To clean all outside areas of the coffee machine that are not cleaned in any other procedure.",
-  "nodig": [
+  "intervalText": "Daily",
+  "purpose": "To clean all outside areas of the coffee machine that are not cleaned in any other procedure.",
+  "needed": [
    "Soft damp cloth."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "note",
     "t": "Do not use aggressive cleaning products or abrasives to clean (parts of) the machine."
    }
   ],
-  "stappen": [],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "steps": [],
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "touchscreen-reinigen-ff",
-  "titel": "Touchscreen reinigen",
+  "title": "Touchscreen reinigen",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "dag",
-  "intervalTekst": "At least daily. When announced on screen.",
-  "doel": "The touchscreen is the main interface between user and coffee machine. To ensure a hygienic and flawless use, the touchscreen must be cleaned regularly.",
-  "nodig": [
+  "intervalText": "At least daily. When announced on screen.",
+  "purpose": "The touchscreen is the main interface between user and coffee machine. To ensure a hygienic and flawless use, the touchscreen must be cleaned regularly.",
+  "needed": [
    "A clean soft cloth for disinfection purposes.",
    "(Isopropyl) alcohol."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "caution",
     "t": "- Do not use any other (aggressive) chemicals to clean the surface of the touchscreen. - Prevent dripping, do not use too much cleaning liquid on the cloth."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Tap one of the buttons with the message [PRESS here to start cleaning]. The screen will be switched off now.",
     "s": [
@@ -3353,30 +3353,30 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "servicesleutel-ff",
-  "titel": "De servicesleutel",
+  "title": "De servicesleutel",
   "brewer": "Uni-Brewer",
   "machines": [
    "rosa"
   ],
   "interval": "",
-  "intervalTekst": "",
-  "doel": "For safety reasons all dispense functions are disabled if the door of the machine is opened. Use the green service key to override this safety for maintenance procedures that need a fully functioning machine. 5.6.25.1 Insert the service key",
-  "nodig": [
+  "intervalText": "",
+  "purpose": "For safety reasons all dispense functions are disabled if the door of the machine is opened. Use the green service key to override this safety for maintenance procedures that need a fully functioning machine. 5.6.25.1 Insert the service key",
+  "needed": [
    "Green service key.",
    "Green service key."
   ],
-  "let": [
+  "warnings": [
    {
     "n": "warning",
     "t": "When the service key is inserted, the machine is powered up with open door. Parts in the machine can move and hot water can flow out. Only insert the service key when requested. 5.6.25.2 Remove the service key"
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Locate the entry for the Service key on the inside of the door.",
     "s": []
@@ -3402,12 +3402,12 @@
     "s": []
    }
   ],
-  "bron": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
-  "taal": "en"
+  "source": "UM Rosa Filterfresh EN V2.3 (5DUFNV20M)",
+  "language": "en"
  },
  {
   "id": "touchless-software",
-  "titel": "Touchless Interface: software klaarzetten",
+  "title": "Touchless Interface: software klaarzetten",
   "brewer": "beide",
   "machines": [
    "virtu",
@@ -3420,9 +3420,9 @@
    "vareo"
   ],
   "interval": "nodig",
-  "intervalTekst": "Eenmalig, voordat je naar de klant gaat.",
-  "doel": "De Touchless Interface laat de klant een drank bestellen door een QR-code op de machine te scannen met zijn telefoon. Daarvoor moeten MoVeC 5.30 of hoger, de bijbehorende interface-versie en twee .ipk-bestanden op de machine komen. Je zet ze thuis of op kantoor op twee lege USB-sticks klaar.",
-  "nodig": [
+  "intervalText": "Eenmalig, voordat je naar de klant gaat.",
+  "purpose": "De Touchless Interface laat de klant een drank bestellen door een QR-code op de machine te scannen met zijn telefoon. Daarvoor moeten MoVeC 5.30 of hoger, de bijbehorende interface-versie en twee .ipk-bestanden op de machine komen. Je zet ze thuis of op kantoor op twee lege USB-sticks klaar.",
+  "needed": [
    "Twee lege USB-sticks, FAT32 geformatteerd",
    "Toegang tot 'My DJD' op www.dejongduke.nl",
    "MoVeC-applicatie 5.30 of hoger",
@@ -3430,13 +3430,13 @@
    "Touchless-enable_1.0.ipk",
    "Restclient-disable_1.0.ipk"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Controleer bij de eigenschappen van de stick dat hij echt FAT32 is; met een ander bestandssysteem leest de machine hem niet."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Steek de eerste lege USB-stick in de computer.",
     "s": []
@@ -3490,12 +3490,12 @@
     "s": []
    }
   ],
-  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
-  "taal": "nl"
+  "source": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "language": "nl"
  },
  {
   "id": "touchless-installeren",
-  "titel": "Touchless Interface installeren op de machine",
+  "title": "Touchless Interface installeren op de machine",
   "brewer": "beide",
   "machines": [
    "virtu",
@@ -3508,12 +3508,12 @@
    "vareo"
   ],
   "interval": "nodig",
-  "intervalTekst": "Bij de machine, nadat de sticks klaar zijn.",
-  "doel": "De software van beide USB-sticks op de machine zetten, zodat de QR-code op het hoofdscherm verschijnt.",
-  "nodig": [
+  "intervalText": "Bij de machine, nadat de sticks klaar zijn.",
+  "purpose": "De software van beide USB-sticks op de machine zetten, zodat de QR-code op het hoofdscherm verschijnt.",
+  "needed": [
    "De twee voorbereide USB-sticks"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "De machine moet minstens 6 minuten aan staan voordat je met installeren begint."
@@ -3523,7 +3523,7 @@
     "t": "Installeer eerst de software en pas daarna een eventuele GPRS-dongle. Andersom verbruik je onnodig databundel."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Open de deur van de machine.",
     "s": [
@@ -3575,12 +3575,12 @@
     "s": []
    }
   ],
-  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
-  "taal": "nl"
+  "source": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "language": "nl"
  },
  {
   "id": "touchless-gprs",
-  "titel": "GPRS-verbinding instellen in het servicemenu",
+  "title": "GPRS-verbinding instellen in het servicemenu",
   "brewer": "beide",
   "machines": [
    "virtu",
@@ -3593,18 +3593,18 @@
    "vareo"
   ],
   "interval": "nodig",
-  "intervalTekst": "Na het plaatsen van de GPRS-dongle.",
-  "doel": "De dongle aan de praat krijgen: serienummer controleren, pincode en APN invullen en de verbinding nakijken.",
-  "nodig": [
+  "intervalText": "Na het plaatsen van de GPRS-dongle.",
+  "purpose": "De dongle aan de praat krijgen: serienummer controleren, pincode en APN invullen en de verbinding nakijken.",
+  "needed": [
    "Servicesleutel of toegang tot het hoogste niveau van het servicemenu"
   ],
-  "let": [
+  "warnings": [
    {
     "n": "let op",
     "t": "Heb je de simkaart niet bij De Jong DUKE besteld, gebruik dan de pincode en APN van je eigen provider."
    }
   ],
-  "stappen": [
+  "steps": [
    {
     "t": "Ga het servicemenu in door de deur te openen en log in op het hoogste niveau.",
     "s": [
@@ -3636,12 +3636,12 @@
     ]
    }
   ],
-  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
-  "taal": "nl"
+  "source": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "language": "nl"
  },
  {
   "id": "touchless-testen",
-  "titel": "Touchless Interface testen",
+  "title": "Touchless Interface testen",
   "brewer": "beide",
   "machines": [
    "virtu",
@@ -3654,13 +3654,13 @@
    "vareo"
   ],
   "interval": "nodig",
-  "intervalTekst": "Na installatie, voordat je de klant afmeldt.",
-  "doel": "Controleren of de klant echt een drank kan bestellen met zijn telefoon.",
-  "nodig": [
+  "intervalText": "Na installatie, voordat je de klant afmeldt.",
+  "purpose": "Controleren of de klant echt een drank kan bestellen met zijn telefoon.",
+  "needed": [
    "Een smartphone met camera en internet"
   ],
-  "let": [],
-  "stappen": [
+  "warnings": [],
+  "steps": [
    {
     "t": "Scan de QR-code op de machine met een smartphone.",
     "s": []
@@ -3682,12 +3682,12 @@
     "s": []
    }
   ],
-  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
-  "taal": "nl"
+  "source": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "language": "nl"
  },
  {
   "id": "touchless-storing",
-  "titel": "QR-code zichtbaar maar Touchless werkt niet",
+  "title": "QR-code zichtbaar maar Touchless werkt niet",
   "brewer": "beide",
   "machines": [
    "virtu",
@@ -3700,11 +3700,11 @@
    "vareo"
   ],
   "interval": "nodig",
-  "intervalTekst": "Bij een storingsmelding over de Touchless Interface.",
-  "doel": "Wat je zelf nakijkt voordat je technische ondersteuning belt.",
-  "nodig": [],
-  "let": [],
-  "stappen": [
+  "intervalText": "Bij een storingsmelding over de Touchless Interface.",
+  "purpose": "Wat je zelf nakijkt voordat je technische ondersteuning belt.",
+  "needed": [],
+  "warnings": [],
+  "steps": [
    {
     "t": "Herstart de machine: zet hem uit, wacht 10 seconden en zet hem weer aan.",
     "s": []
@@ -3728,7 +3728,7 @@
     "s": []
    }
   ],
-  "bron": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
-  "taal": "nl"
+  "source": "Touchless Interface Installation Manual EN 01-03 (5DIAXA820)",
+  "language": "nl"
  }
 ]

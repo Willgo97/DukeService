@@ -34,8 +34,8 @@ fun ActionRow(
     pinKey: String,
     pinned: Boolean,
     onPin: (String) -> Unit,
-    deelTekst: String,
-    kopieer: String? = null,
+    shareText: String,
+    copyText: String? = null,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -48,9 +48,9 @@ fun ActionRow(
             Spacer(Modifier.width(7.dp))
             Text(if (pinned) "Vastgezet" else "Vastzetten", style = MaterialTheme.typography.labelLarge)
         }
-        if (kopieer != null) {
+        if (copyText != null) {
             FilledTonalButton(
-                onClick = { copyToClipboard(context, kopieer) },
+                onClick = { copyToClipboard(context, copyText) },
                 modifier = Modifier.weight(1f),
             ) {
                 Icon(Icons.Filled.ContentCopy, null, Modifier.size(17.dp))
@@ -59,7 +59,7 @@ fun ActionRow(
             }
         }
         FilledTonalButton(
-            onClick = { share(context, deelTekst) },
+            onClick = { share(context, shareText) },
             modifier = Modifier.weight(1f),
         ) {
             Icon(Icons.Filled.Share, null, Modifier.size(17.dp))

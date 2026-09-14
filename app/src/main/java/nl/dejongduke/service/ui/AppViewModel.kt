@@ -16,10 +16,10 @@ import nl.dejongduke.service.ui.theme.ThemeMode
 import java.time.LocalDate
 
 enum class Tab(val label: String) {
-    Zoek("Zoek"),
-    Storingen("Storingen"),
-    Onderhoud("Onderhoud"),
-    Onderdelen("Onderdelen"),
+    Search("Zoek"),
+    Faults("Storingen"),
+    Maintenance("Onderhoud"),
+    Parts("Onderdelen"),
     Machines("Machines"),
 }
 
@@ -27,17 +27,21 @@ sealed interface Route {
     data class Fault(val key: String) : Route
     data class Procedure(val id: String) : Route
     data class Machine(val id: String) : Route
-    data class Schema(val id: String) : Route
-    data class PartSection(val machine: String, val sectie: String) : Route
+    data class PartSection(val machine: String, val variant: String, val section: String) : Route
+    data class MaintenanceCard(val id: String) : Route
+    /** A job walked through one step at a time; kind is "card" or "procedure". */
+    data class Steps(val kind: String, val id: String) : Route
+    data object Cards : Route
+    data object Books : Route
     data class Component(val id: String) : Route
     data object Components : Route
     data class MenuItem(val id: String) : Route
-    data object Servicemenu : Route
+    data object ServiceMenu : Route
     data object Scan : Route
-    data object Instellingen : Route
+    data object Settings : Route
     data object Procedures : Route
     data object Specs : Route
-    data object Bronnen : Route
+    data object Sources : Route
 }
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
@@ -47,7 +51,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _catalog = MutableStateFlow<Catalog?>(null)
     val catalog: StateFlow<Catalog?> = _catalog.asStateFlow()
 
-    private val _tab = MutableStateFlow(Tab.Zoek)
+    private val _tab = MutableStateFlow(Tab.Search)
     val tab: StateFlow<Tab> = _tab.asStateFlow()
 
     private val _stack = MutableStateFlow<List<Route>>(emptyList())
@@ -68,9 +72,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     )
     val theme: StateFlow<ThemeMode> = _theme.asStateFlow()
 
-    private val _ticks = MutableStateFlow<Map<String, Set<Int>>>(emptyMap())
-    val ticks: StateFlow<Map<String, Set<Int>>> = _ticks.asStateFlow()
-
     /**
      * The day the checklists apply to. It has to be a flow: the view model
      * outlives midnight, and an engineer who reopens the app the next morning
@@ -82,8 +83,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _recent = MutableStateFlow(prefs.recent())
     val recent: StateFlow<List<String>> = _recent.asStateFlow()
 
-    private val _meldingTaal = MutableStateFlow(prefs.meldingTaal)
-    val meldingTaal: StateFlow<String> = _meldingTaal.asStateFlow()
+    private val _messageLanguage = MutableStateFlow(prefs.messageLanguage)
+    val messageLanguage: StateFlow<String> = _messageLanguage.asStateFlow()
 
     private val _scanDirect = MutableStateFlow(prefs.scanDirect)
     val scanDirect: StateFlow<Boolean> = _scanDirect.asStateFlow()
@@ -100,19 +101,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             val loaded = withContext(Dispatchers.IO) { Catalog.load(getApplication()) }
             _catalog.value = loaded
-            _ticks.value = loaded.schemas.associate { it.id to prefs.ticked(it.id, _today.value) }
-            withContext(Dispatchers.IO) { prefs.pruneChecklists(_today.value) }
+            // The parts table is five megabytes; the app is usable without it.
+            val rows = withContext(Dispatchers.IO) { Catalog.loadParts(getApplication()) }
+            _catalog.value = _catalog.value?.withParts(rows)
         }
     }
 
-    /** Call when the app returns to the foreground, so a new day starts clean. */
+    /** Call when the app returns to the foreground, so the date stays right. */
     fun refreshDay() {
-        val now = LocalDate.now()
-        if (now == _today.value) return
-        _today.value = now
-        val cat = _catalog.value ?: return
-        _ticks.value = cat.schemas.associate { it.id to prefs.ticked(it.id, now) }
-        viewModelScope.launch { withContext(Dispatchers.IO) { prefs.pruneChecklists(now) } }
+        _today.value = LocalDate.now()
     }
 
     fun selectTab(tab: Tab) {
@@ -133,8 +130,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setQuery(text: String) {
         _query.value = text
-        val cat = _catalog.value ?: return
-        _results.value = cat.search(text)
+        val loaded = _catalog.value ?: return
+        _results.value = loaded.search(text)
     }
 
     fun commitQuery() {
@@ -166,9 +163,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         prefs.machine = machineId
     }
 
-    fun setMeldingTaal(taal: String) {
-        _meldingTaal.value = taal
-        prefs.meldingTaal = taal
+    fun setMessageLanguage(language: String) {
+        _messageLanguage.value = language
+        prefs.messageLanguage = language
     }
 
     fun setScanDirect(aan: Boolean) {
@@ -176,26 +173,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         prefs.scanDirect = aan
     }
 
-    /** Clears today's ticks on every checklist. */
-    fun resetAlleTicks() {
-        _catalog.value?.schemas?.forEach { prefs.setTicked(it.id, _today.value, emptySet()) }
-        _ticks.value = emptyMap()
-    }
 
     fun setTheme(mode: ThemeMode) {
         _theme.value = mode
         prefs.theme = mode.name
     }
 
-    fun toggleTick(schema: String, index: Int) {
-        val current = _ticks.value[schema].orEmpty().toMutableSet()
-        if (!current.add(index)) current.remove(index)
-        prefs.setTicked(schema, _today.value, current)
-        _ticks.value = _ticks.value + (schema to current)
-    }
-
-    fun resetTicks(schema: String) {
-        prefs.setTicked(schema, _today.value, emptySet())
-        _ticks.value = _ticks.value + (schema to emptySet())
-    }
 }

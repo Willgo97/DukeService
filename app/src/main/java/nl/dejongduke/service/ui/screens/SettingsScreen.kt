@@ -41,13 +41,12 @@ fun SettingsScreen(
     catalog: Catalog,
     thema: ThemeMode,
     onThema: (ThemeMode) -> Unit,
-    meldingTaal: String,
-    onMeldingTaal: (String) -> Unit,
-    standaardMachine: String?,
+    messageLanguage: String,
+    onMessageLanguage: (String) -> Unit,
+    defaultMachine: String?,
     onMachine: (String?) -> Unit,
     scanDirect: Boolean,
     onScanDirect: (Boolean) -> Unit,
-    onResetTicks: () -> Unit,
     onOpen: (Route) -> Unit,
 ) {
     LazyColumn(Modifier.fillMaxWidth()) {
@@ -55,14 +54,14 @@ fun SettingsScreen(
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
                 ThemeMode.entries.forEach { mode ->
-                    Keuze(
-                        titel = mode.label,
+                    Choice(
+                        title = mode.label,
                         onder = when (mode) {
                             ThemeMode.System -> "Volgt de stand van je telefoon"
                             ThemeMode.Light -> "Altijd licht"
                             ThemeMode.Dark -> "Altijd donker — prettiger in een donkere ruimte"
                         },
-                        gekozen = mode == thema,
+                        selected = mode == thema,
                     ) { onThema(mode) }
                 }
             }
@@ -71,16 +70,16 @@ fun SettingsScreen(
         item { SectionHeader("Taal van de meldingen") }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
-                Keuze(
+                Choice(
                     "Nederlands voorop",
                     "Zoals een machine die op Nederlands staat het toont",
-                    meldingTaal == "nl",
-                ) { onMeldingTaal("nl") }
-                Keuze(
+                    messageLanguage == "nl",
+                ) { onMessageLanguage("nl") }
+                Choice(
                     "Engels voorop",
                     "Zoals de handleiding en een machine die op Engels staat",
-                    meldingTaal == "en",
-                ) { onMeldingTaal("en") }
+                    messageLanguage == "en",
+                ) { onMessageLanguage("en") }
             }
         }
         item {
@@ -97,8 +96,8 @@ fun SettingsScreen(
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alle machines") +
                     catalog.machines.filter { m -> catalog.parts.any { it.machine == m.id } }
-                        .map { it.id as String? to it.naam },
-                selected = standaardMachine,
+                        .map { it.id as String? to it.name },
+                selected = defaultMachine,
                 onSelect = onMachine,
             )
         }
@@ -129,29 +128,22 @@ fun SettingsScreen(
             }
         }
 
-        item { SectionHeader("Onderhoud") }
-        item {
-            TextButton(onClick = onResetTicks, modifier = Modifier.padding(horizontal = 12.dp)) {
-                Text("Vinkjes van vandaag wissen")
-            }
-        }
-
         if (BuildConfig.DEBUG) {
             item { SectionHeader("Ontwikkelen") }
             item {
-                var stand by remember { mutableStateOf("") }
-                val bereik = rememberCoroutineScope()
+                var status by remember { mutableStateOf("") }
+                val scope = rememberCoroutineScope()
                 val context = LocalContext.current
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     TextButton(onClick = {
-                        bereik.launch {
-                            stand = "bezig…"
-                            stand = DrawingIndexer.run(context) { stand = it }
+                        scope.launch {
+                            status = "bezig…"
+                            status = DrawingIndexer.run(context) { status = it }
                         }
                     }) { Text("Tekeningen indexeren") }
-                    if (stand.isNotEmpty()) {
+                    if (status.isNotEmpty()) {
                         Text(
-                            stand,
+                            status,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 12.dp, bottom = 8.dp),
@@ -164,15 +156,15 @@ fun SettingsScreen(
         item { SectionHeader("Over") }
         item {
             Column(Modifier.padding(horizontal = 20.dp)) {
-                Regel("Versie", "1.1")
-                Regel("Inhoud", "${catalog.faultGroups.size} storingen · ${catalog.parts.size} onderdelen")
-                Regel("Werkt offline", "Ook de tekstherkenning van de scanner")
+                InfoRow("Versie", "1.1")
+                InfoRow("Inhoud", "${catalog.faultGroups.size} storingen · ${catalog.parts.size} onderdelen")
+                InfoRow("Werkt offline", "Ook de tekstherkenning van de scanner")
                 Spacer(Modifier.height(10.dp))
             }
         }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
-                TextButton(onClick = { onOpen(Route.Bronnen) }) { Text("Waar komt dit vandaan?") }
+                TextButton(onClick = { onOpen(Route.Sources) }) { Text("Waar komt dit vandaan?") }
             }
         }
         item {
@@ -189,23 +181,23 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun Keuze(titel: String, onder: String, gekozen: Boolean, onClick: () -> Unit) {
+private fun Choice(title: String, onder: String, selected: Boolean, onClick: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
             .padding(vertical = 1.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(
-                if (gekozen) MaterialTheme.colorScheme.surfaceContainerHigh
+                if (selected) MaterialTheme.colorScheme.surfaceContainerHigh
                 else MaterialTheme.colorScheme.surfaceContainer
             )
             .clickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        RadioButton(selected = gekozen, onClick = onClick)
+        RadioButton(selected = selected, onClick = onClick)
         Column(Modifier.weight(1f)) {
-            Text(titel, style = MaterialTheme.typography.bodyLarge)
+            Text(title, style = MaterialTheme.typography.bodyLarge)
             Text(
                 onder,
                 style = MaterialTheme.typography.bodySmall,
@@ -216,13 +208,13 @@ private fun Keuze(titel: String, onder: String, gekozen: Boolean, onClick: () ->
 }
 
 @Composable
-private fun Regel(kop: String, waarde: String) {
+private fun InfoRow(key: String, value: String) {
     Row(
         Modifier.fillMaxWidth().padding(vertical = 5.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Text(kop, style = MaterialTheme.typography.bodyMedium,
+        Text(key, style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Text(waarde, style = MaterialTheme.typography.bodyMedium)
+        Text(value, style = MaterialTheme.typography.bodyMedium)
     }
 }

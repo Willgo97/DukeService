@@ -14,75 +14,127 @@ class Catalog(
     val machines: List<Machine>,
     val faults: List<Fault>,
     val procedures: List<Procedure>,
-    val schemas: List<Schema>,
     val parts: List<Part>,
-    val specs: List<SpecGroep>,
+    val specs: List<SpecGroup>,
     val components: List<Component> = emptyList(),
     val menu: List<MenuItem> = emptyList(),
-    /** "machine|section" -> the exploded drawing that goes with it. */
-    val drawings: Map<String, String> = emptyMap(),
+    /** The manufacturer's maintenance sheets, step by step with pictures. */
+    val cards: List<MaintenanceCard> = emptyList(),
+    /** Every book the knowledge base was built from. */
+    val books: List<Book> = emptyList(),
+    /** Front, back and inside views with their call-outs. */
+    val views: List<MachineView> = emptyList(),
+    /** "machine|build|section" -> the exploded drawing sheets of that section. */
+    val drawings: Map<String, List<String>> = emptyMap(),
+    /** The same key -> the name the parts book gives that drawing. */
+    val drawingNames: Map<String, String> = emptyMap(),
     /** drawing name -> the balloon numbers found on it. */
     val hotspots: Map<String, List<Hotspot>> = emptyMap(),
 ) {
     /** Faults collapsed by screen message; the list screens show these. */
     val faultGroups: List<FaultGroup> = faults
-        .groupBy { it.melding }
-        .map { (melding, varianten) -> FaultGroup(melding, varianten) }
-        .sortedBy { it.melding.lowercase() }
+        .groupBy { it.message }
+        .map { (message, variants) -> FaultGroup(message, variants) }
+        .sortedBy { it.message.lowercase() }
 
-    private val groupByMessage = faultGroups.associateBy { it.melding }
+    private val groupByMessage = faultGroups.associateBy { it.message }
 
     private val procById = procedures.associateBy { it.id }
     private val machineById = machines.associateBy { it.id }
 
     /** Search keys are precomputed once; every keystroke scans them. */
-    private val faultKeys = faults.map { normalize(it.melding + " " + it.nl + " " + it.cat + " " + it.oorzaak) }
+    private val faultKeys = faults.map { normalize(it.message + " " + it.dutch + " " + it.category + " " + it.cause) }
     private val procKeys = procedures.map { p ->
-        normalize(p.titel + " " + p.doel + " " + p.stappen.joinToString(" ") { it.tekst })
+        normalize(p.title + " " + p.purpose + " " + p.steps.joinToString(" ") { it.text })
     }
-    private val partNumberKeys = parts.map { normalize(it.nummer) }
-    private val partTextKeys = parts.map { normalize(it.omschrijving + " " + it.sectie) }
-    private val machineKeys = machines.map { normalize(it.naam + " " + it.serie + " " + it.typecode + " " + it.brewer) }
+    private val partNumberKeys = parts.map { normalize(it.number) }
+    private val partTextKeys = parts.map { normalize(it.description + " " + it.section) }
+    private val machineKeys = machines.map { normalize(it.name + " " + it.series + " " + it.typeCode + " " + it.brewer) }
     // Title and body are scored apart: a hit in the heading of a section is
     // what the engineer was looking for, a hit halfway its description usually
     // is not.
-    private val componentTitles = components.map { normalize(it.titel) }
-    private val componentKeys = components.map { normalize(it.tekst) }
-    private val menuTitles = menu.map { normalize(it.titel + " " + it.pad) }
-    private val menuKeys = menu.map { normalize(it.tekst) }
+    private val componentTitles = components.map { normalize(it.title) }
+    private val componentKeys = components.map { normalize(it.text) }
+    private val menuTitles = menu.map { normalize(it.title + " " + it.path) }
+    private val menuKeys = menu.map { normalize(it.text) }
+    private val cardTitles = cards.map { k ->
+        normalize(k.title + " " + machineNames(k.machines) + " " + k.codes.joinToString(" "))
+    }
+    private val cardKeys = cards.map { k ->
+        normalize(k.steps.joinToString(" ") { it.points.joinToString(" ") })
+    }
+
+    /** Builds a machine is sold in, tasks from the books that describe it. */
+    fun variants(machineId: String): List<Variant> =
+        machineById[machineId]?.variants.orEmpty()
+
+    fun card(id: String): MaintenanceCard? = cards.firstOrNull { it.id == id }
+
+    fun cardsFor(machineId: String?, code: String? = null): List<MaintenanceCard> = cards
+        .filter { card ->
+            (machineId == null || card.machines.contains(machineId)) &&
+                (code == null || card.codes.isEmpty() || card.codes.contains(code))
+        }
+        // Without a machine chosen the list is fifty cards long, so keep the
+        // ones for the same machine together.
+        .sortedWith(compareBy({ it.machines.firstOrNull() ?: "" },
+                              { it.codes.firstOrNull() ?: "" }))
+
+    fun booksFor(machineId: String?, code: String? = null): List<Book> = books.filter { b ->
+        (machineId == null || b.brand == machineId) && (code == null || b.code == code)
+    }
+
+    /** The same catalog with the parts table filled in. */
+    fun withParts(rows: List<Part>) = Catalog(
+        machines = machines, faults = faults, procedures = procedures, parts = rows,
+        specs = specs, components = components, menu = menu, cards = cards,
+        books = books, views = views, drawings = drawings,
+        drawingNames = drawingNames, hotspots = hotspots,
+    )
 
     fun procedure(id: String): Procedure? = procById[id]
 
-    fun faultGroup(melding: String): FaultGroup? = groupByMessage[melding]
+    fun faultGroup(message: String): FaultGroup? = groupByMessage[message]
 
     fun component(id: String): Component? = components.firstOrNull { it.id == id }
 
     fun menuItem(id: String): MenuItem? = menu.firstOrNull { it.id == id }
 
-    fun drawing(machine: String, sectie: String): String? = drawings["$machine|$sectie"]
+    fun drawing(machine: String, variant: String, section: String): List<String> =
+        drawings["$machine|$variant|$section"].orEmpty()
+
+    fun drawingName(machine: String, variant: String, section: String): String =
+        drawingNames["$machine|$variant|$section"].orEmpty()
 
     /** Balloons on the drawing for this section, keyed by position. */
-    fun balloons(machine: String, sectie: String): List<Hotspot> {
-        val path = drawing(machine, sectie) ?: return emptyList()
+    fun balloons(machine: String, variant: String, section: String): List<Hotspot> {
+        val path = drawing(machine, variant, section).firstOrNull() ?: return emptyList()
         return hotspots[path.substringAfterLast('/').removeSuffix(".webp")].orEmpty()
     }
+
+    /** Machine views for one machine, front first. */
+    fun viewsFor(machineId: String?): List<MachineView> =
+        views.filter { machineId == null || it.machines.contains(machineId) }
+            .sortedBy { it.number }
 
     fun machine(id: String): Machine? = machineById[id]
 
     /** Human-readable machine names for a list of ids, e.g. "Virtu, Lua". */
     fun machineNames(ids: List<String>): String =
-        ids.mapNotNull { machineById[it]?.naam }.joinToString(", ").ifEmpty { ids.joinToString(", ") }
+        ids.mapNotNull { machineById[it]?.name }.joinToString(", ").ifEmpty { ids.joinToString(", ") }
 
     /**
      * Parts for one machine, ranked. The parts screen used to normalize every
      * description on every keystroke; this reuses the keys built at load time.
      */
-    fun searchParts(machine: String?, raw: String, limit: Int = 120): List<Part> {
+    fun searchParts(machine: String?, raw: String, limit: Int = 120,
+                    variant: String? = null): List<Part> {
         val q = normalize(raw)
         if (q.length < 2) return emptyList()
         return parts.indices
             .mapNotNull { i ->
                 if (machine != null && parts[i].machine != machine) return@mapNotNull null
+                if (variant != null && parts[i].variant != variant) return@mapNotNull null
                 val byNumber = score(partNumberKeys[i], q)?.plus(100)
                 val hit = byNumber ?: score(partTextKeys[i], q)
                 hit?.let { it to parts[i] }
@@ -99,7 +151,7 @@ class Catalog(
         val hitFaults = faults.indices
             .mapNotNull { i -> score(faultKeys[i], q)?.let { it to faults[i] } }
             .sortedByDescending { it.first }
-            .mapNotNull { groupByMessage[it.second.melding] }
+            .mapNotNull { groupByMessage[it.second.message] }
             .distinct()
             .take(limit)
 
@@ -134,29 +186,50 @@ class Catalog(
             .sortedByDescending { it.first }
             .map { it.second }
 
-        return SearchResult(hitFaults, hitProcs, hitParts, hitMachines, hitComponents, hitMenu)
+        val hitCards = cards.indices
+            .mapNotNull { i -> best(cardTitles[i], cardKeys[i], q)?.let { it to cards[i] } }
+            .sortedByDescending { it.first }
+            .take(limit).map { it.second }
+
+        return SearchResult(hitFaults, hitProcs, hitParts, hitMachines, hitComponents,
+                            hitMenu, hitCards)
     }
 
     companion object {
         private val json = Json { ignoreUnknownKeys = true }
 
+        /**
+         * Everything except the parts table, which is by far the biggest file.
+         *
+         * Reading all of it before the first screen appears costs seconds on a
+         * phone, and the engineer opening the app is usually after a message or
+         * a procedure. [parts] follows in the background.
+         */
         fun load(context: Context): Catalog {
             fun <T> read(name: String, parse: (String) -> T): T =
                 parse(context.assets.open(name).bufferedReader().use { it.readText() })
 
             return Catalog(
+                parts = emptyList(),
                 machines = read("machines.json") { json.decodeFromString(it) },
                 faults = read("faults.json") { json.decodeFromString(it) },
                 procedures = read("procedures.json") { json.decodeFromString(it) },
-                schemas = read("maintenance.json") { json.decodeFromString(it) },
-                parts = read("parts.json") { json.decodeFromString(it) },
                 specs = read("specs.json") { json.decodeFromString(it) },
                 components = read("components.json") { json.decodeFromString(it) },
                 menu = read("servicemenu.json") { json.decodeFromString(it) },
+                cards = read("cards.json") { json.decodeFromString(it) },
+                books = read("books.json") { json.decodeFromString(it) },
+                views = read("views.json") { json.decodeFromString(it) },
                 drawings = read("drawings.json") { json.decodeFromString(it) },
+                drawingNames = read("drawingnames.json") { json.decodeFromString(it) },
                 hotspots = read("hotspots.json") { json.decodeFromString(it) },
             )
         }
+
+        /** The parts table, read after the app is already usable. */
+        fun loadParts(context: Context): List<Part> =
+            json.decodeFromString(
+                context.assets.open("parts.json").bufferedReader().use { it.readText() })
 
         /** Lowercase, strip accents, and drop the punctuation that part numbers carry. */
         fun normalize(s: String): String =
@@ -211,15 +284,13 @@ data class SearchResult(
     val machines: List<Machine> = emptyList(),
     val components: List<Component> = emptyList(),
     val menu: List<MenuItem> = emptyList(),
-    /** "machine|section" -> the exploded drawing that goes with it. */
-    val drawings: Map<String, String> = emptyMap(),
-    /** drawing name -> the balloon numbers found on it. */
-    val hotspots: Map<String, List<Hotspot>> = emptyMap(),
+    val cards: List<MaintenanceCard> = emptyList(),
 ) {
     val empty: Boolean
         get() = faults.isEmpty() && procedures.isEmpty() && parts.isEmpty() &&
-            machines.isEmpty() && components.isEmpty() && menu.isEmpty()
+            machines.isEmpty() && components.isEmpty() && menu.isEmpty() &&
+            cards.isEmpty()
     val total: Int
         get() = faults.size + procedures.size + parts.size + machines.size +
-            components.size + menu.size
+            components.size + menu.size + cards.size
 }

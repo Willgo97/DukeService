@@ -49,13 +49,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.ui.theme.ThemeMode
-import nl.dejongduke.service.ui.screens.BronnenScreen
+import nl.dejongduke.service.ui.screens.BookList
+import nl.dejongduke.service.ui.screens.SourcesScreen
 import nl.dejongduke.service.ui.screens.ComponentDetail
 import nl.dejongduke.service.ui.screens.ComponentList
 import nl.dejongduke.service.ui.screens.MenuDetail
 import nl.dejongduke.service.ui.screens.MenuList
 import nl.dejongduke.service.ui.screens.FaultDetail
 import nl.dejongduke.service.ui.screens.FaultsScreen
+import nl.dejongduke.service.ui.screens.CardDetail
+import nl.dejongduke.service.ui.screens.CardList
 import nl.dejongduke.service.ui.screens.MachineDetail
 import nl.dejongduke.service.ui.screens.MachinesScreen
 import nl.dejongduke.service.ui.screens.MaintenanceScreen
@@ -63,17 +66,19 @@ import nl.dejongduke.service.ui.screens.PartSectionDetail
 import nl.dejongduke.service.ui.screens.PartsScreen
 import nl.dejongduke.service.ui.screens.ProcedureDetail
 import nl.dejongduke.service.ui.screens.ProcedureList
-import nl.dejongduke.service.ui.screens.SchemaDetail
 import nl.dejongduke.service.ui.screens.ScanScreen
 import nl.dejongduke.service.ui.screens.SearchScreen
 import nl.dejongduke.service.ui.screens.SettingsScreen
 import nl.dejongduke.service.ui.screens.SpecsScreen
+import nl.dejongduke.service.ui.screens.StepPlayer
+import nl.dejongduke.service.ui.screens.cardSteps
+import nl.dejongduke.service.ui.screens.procedureSteps
 
 private fun tabIcon(tab: Tab): ImageVector = when (tab) {
-    Tab.Zoek -> Icons.Filled.Search
-    Tab.Storingen -> Icons.Filled.WarningAmber
-    Tab.Onderhoud -> Icons.AutoMirrored.Filled.ListAlt
-    Tab.Onderdelen -> Icons.Filled.Build
+    Tab.Search -> Icons.Filled.Search
+    Tab.Faults -> Icons.Filled.WarningAmber
+    Tab.Maintenance -> Icons.AutoMirrored.Filled.ListAlt
+    Tab.Parts -> Icons.Filled.Build
     Tab.Machines -> Icons.Filled.CoffeeMaker
 }
 
@@ -106,7 +111,7 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { vm.open(Route.Instellingen) }) {
+                    IconButton(onClick = { vm.open(Route.Settings) }) {
                         Icon(Icons.Filled.Settings, "Instellingen")
                     }
                 },
@@ -139,9 +144,9 @@ fun AppShell(vm: AppViewModel = viewModel()) {
             }
         },
     ) { padding ->
-        val cat = catalog
+        val loaded = catalog
         Box(Modifier.fillMaxSize().padding(padding)) {
-            if (cat == null) {
+            if (loaded == null) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
                 return@Box
             }
@@ -159,8 +164,8 @@ fun AppShell(vm: AppViewModel = viewModel()) {
             ) { (route, activeTab) ->
                 Column(Modifier.fillMaxSize()) {
                     when (route) {
-                        null -> RootScreen(vm, cat, activeTab, filter)
-                        else -> DetailScreen(vm, cat, route)
+                        null -> RootScreen(vm, loaded, activeTab, filter)
+                        else -> DetailScreen(vm, loaded, route)
                     }
                 }
             }
@@ -169,24 +174,22 @@ fun AppShell(vm: AppViewModel = viewModel()) {
 }
 
 @Composable
-private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?) {
+private fun RootScreen(vm: AppViewModel, loaded: Catalog, tab: Tab, filter: String?) {
     val query by vm.query.collectAsStateWithLifecycle()
     val results by vm.results.collectAsStateWithLifecycle()
-    val ticks by vm.ticks.collectAsStateWithLifecycle()
     val recent by vm.recent.collectAsStateWithLifecycle()
     val today by vm.today.collectAsStateWithLifecycle()
     val pins by vm.pins.collectAsStateWithLifecycle()
-    val taal by vm.meldingTaal.collectAsStateWithLifecycle()
+    val language by vm.messageLanguage.collectAsStateWithLifecycle()
 
     when (tab) {
-        Tab.Zoek -> SearchScreen(
-            catalog = cat,
+        Tab.Search -> SearchScreen(
+            catalog = loaded,
             query = query,
             results = results,
             recent = recent,
             pins = pins,
-            ticks = ticks,
-            taal = taal,
+            language = language,
             onQuery = vm::setQuery,
             onCommit = vm::commitQuery,
             onClearRecent = vm::clearRecent,
@@ -194,85 +197,84 @@ private fun RootScreen(vm: AppViewModel, cat: Catalog, tab: Tab, filter: String?
             onTab = vm::selectTab,
         )
 
-        Tab.Storingen -> FaultsScreen(cat, filter, taal, vm::setFilter, vm::open)
+        Tab.Faults -> FaultsScreen(loaded, filter, language, vm::setFilter, vm::open)
 
-        Tab.Onderhoud -> MaintenanceScreen(cat, filter, vm::setFilter, ticks, today, vm::open)
+        Tab.Maintenance -> MaintenanceScreen(loaded, filter, today, vm::setFilter, vm::open)
 
-        Tab.Onderdelen -> PartsScreen(cat, filter, vm::setFilter, vm::open)
+        Tab.Parts -> PartsScreen(loaded, filter, vm::setFilter, vm::open)
 
-        Tab.Machines -> MachinesScreen(cat, vm::open)
+        Tab.Machines -> MachinesScreen(loaded, vm::open)
     }
 }
 
 @Composable
-private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
-    val ticks by vm.ticks.collectAsStateWithLifecycle()
+private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
     val filter by vm.filter.collectAsStateWithLifecycle()
     val pins by vm.pins.collectAsStateWithLifecycle()
     val notes by vm.notes.collectAsStateWithLifecycle()
 
     when (route) {
         is Route.Fault -> {
-            val group = cat.faultGroup(route.key)
+            val group = loaded.faultGroup(route.key)
             if (group != null) {
-                val taal by vm.meldingTaal.collectAsStateWithLifecycle()
+                val language by vm.messageLanguage.collectAsStateWithLifecycle()
                 FaultDetail(
-                    cat, group, pins.contains("fault:" + group.melding), taal, vm::togglePin, vm::open,
+                    loaded, group, pins.contains("fault:" + group.message), language, vm::togglePin, vm::open,
                 )
             }
         }
 
         is Route.Procedure -> {
-            val proc = cat.procedure(route.id)
-            if (proc != null) {
-                ProcedureDetail(cat, proc, pins.contains("proc:" + proc.id), vm::togglePin)
+            val procedures = loaded.procedure(route.id)
+            if (procedures != null) {
+                ProcedureDetail(loaded, procedures, pins.contains("proc:" + procedures.id),
+                                vm::togglePin, vm::open)
             }
         }
 
-        Route.Procedures -> ProcedureList(cat, filter, vm::setFilter, vm::open)
+        Route.Procedures -> ProcedureList(loaded, filter, vm::setFilter, vm::open)
 
-        Route.Components -> ComponentList(cat, filter, vm::setFilter, vm::open)
+        Route.Components -> ComponentList(loaded, filter, vm::setFilter, vm::open)
 
-        Route.Servicemenu -> MenuList(cat, filter, vm::setFilter, vm::open)
+        Route.ServiceMenu -> MenuList(loaded, filter, vm::setFilter, vm::open)
 
         Route.Scan -> {
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
-            ScanScreen(cat, direct, vm::open)
+            ScanScreen(loaded, direct, vm::open)
         }
 
-        Route.Instellingen -> {
+        Route.Settings -> {
             val thema by vm.theme.collectAsStateWithLifecycle()
-            val taal by vm.meldingTaal.collectAsStateWithLifecycle()
+            val language by vm.messageLanguage.collectAsStateWithLifecycle()
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
             SettingsScreen(
-                catalog = cat,
+                catalog = loaded,
                 thema = thema,
                 onThema = vm::setTheme,
-                meldingTaal = taal,
-                onMeldingTaal = vm::setMeldingTaal,
-                standaardMachine = filter,
+                messageLanguage = language,
+                onMessageLanguage = vm::setMessageLanguage,
+                defaultMachine = filter,
                 onMachine = vm::setFilter,
                 scanDirect = direct,
                 onScanDirect = vm::setScanDirect,
-                onResetTicks = vm::resetAlleTicks,
                 onOpen = vm::open,
             )
         }
 
         is Route.MenuItem -> {
-            val item = cat.menuItem(route.id)
-            if (item != null) MenuDetail(cat, item)
+            val item = loaded.menuItem(route.id)
+            if (item != null) MenuDetail(loaded, item)
         }
 
         is Route.Component -> {
-            val component = cat.component(route.id)
-            if (component != null) ComponentDetail(cat, component)
+            val component = loaded.component(route.id)
+            if (component != null) ComponentDetail(loaded, component)
         }
 
         is Route.Machine -> {
-            val machine = cat.machine(route.id)
+            val machine = loaded.machine(route.id)
             if (machine != null) {
-                MachineDetail(cat, machine, notes[machine.id].orEmpty(), vm::setNote, vm::open) { tab, machineId ->
+                MachineDetail(loaded, machine, notes[machine.id].orEmpty(), vm::setNote, vm::open) { tab, machineId ->
                     vm.setFilter(machineId)
                     vm.back()
                     vm.selectTab(tab)
@@ -280,45 +282,59 @@ private fun DetailScreen(vm: AppViewModel, cat: Catalog, route: Route) {
             }
         }
 
-        is Route.Schema -> {
-            val schema = cat.schemas.firstOrNull { it.id == route.id }
-            if (schema != null) {
-                SchemaDetail(
-                    catalog = cat,
-                    schema = schema,
-                    ticked = ticks[schema.id].orEmpty(),
-                    onToggle = { vm.toggleTick(schema.id, it) },
-                    onReset = { vm.resetTicks(schema.id) },
-                    onOpen = vm::open,
-                )
+        is Route.PartSection -> PartSectionDetail(loaded, route.machine, route.variant, route.section)
+
+        Route.Cards -> CardList(loaded, filter, vm::setFilter, vm::open)
+
+        is Route.MaintenanceCard -> {
+            val card = loaded.card(route.id)
+            if (card == null) EmptyState("Niet gevonden", "Deze onderhoudskaart staat niet in de app.")
+            else CardDetail(loaded, card, vm::open)
+        }
+
+        Route.Books -> BookList(loaded, filter, vm::setFilter)
+
+        is Route.Steps -> when (route.kind) {
+            "card" -> {
+                val card = loaded.card(route.id)
+                StepPlayer(card?.title ?: "Stappen",
+                           loaded.machineNames(card?.machines.orEmpty()),
+                           loaded.cardSteps(route.id))
+            }
+            else -> {
+                val procedure = loaded.procedure(route.id)
+                StepPlayer(procedure?.title ?: "Stappen",
+                           loaded.machineNames(procedure?.machines.orEmpty()),
+                           loaded.procedureSteps(route.id))
             }
         }
 
-        is Route.PartSection -> PartSectionDetail(cat, route.machine, route.sectie)
+        Route.Specs -> SpecsScreen(loaded)
 
-        Route.Specs -> SpecsScreen(cat)
-
-        Route.Bronnen -> BronnenScreen()
+        Route.Sources -> SourcesScreen()
     }
 }
 
 private fun titleFor(catalog: Catalog?, tab: Tab, route: Route?): String = when (route) {
     null -> when (tab) {
-        Tab.Zoek -> "DUKE Service"
+        Tab.Search -> "DUKE Service"
         else -> tab.label
     }
     is Route.Fault -> "Storing"
     is Route.Procedure -> "Procedure"
     Route.Procedures -> "Procedures"
     Route.Components -> "Techniek"
-    Route.Servicemenu -> "Servicemenu"
+    Route.ServiceMenu -> "Servicemenu"
     Route.Scan -> "Scannen"
-    Route.Instellingen -> "Instellingen"
+    Route.Settings -> "Instellingen"
     is Route.MenuItem -> "Servicemenu"
     is Route.Component -> "Techniek"
-    is Route.Machine -> catalog?.machine(route.id)?.naam ?: "Machine"
-    is Route.Schema -> "Checklist"
+    is Route.Machine -> catalog?.machine(route.id)?.name ?: "Machine"
     is Route.PartSection -> "Onderdelen"
+    is Route.MaintenanceCard -> "Onderhoudskaart"
+    Route.Cards -> "Onderhoudskaarten"
+    Route.Books -> "Handleidingen"
+    is Route.Steps -> "Stap voor stap"
     Route.Specs -> "Technisch"
-    Route.Bronnen -> "Bronnen"
+    Route.Sources -> "Bronnen"
 }

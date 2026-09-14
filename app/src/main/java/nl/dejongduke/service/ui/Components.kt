@@ -44,7 +44,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import nl.dejongduke.service.data.LetOp
+import nl.dejongduke.service.data.SafetyNote
 import nl.dejongduke.service.ui.theme.warnColor
 
 /**
@@ -158,8 +158,8 @@ fun Card(
 }
 
 @Composable
-fun WarnBanner(item: LetOp, modifier: Modifier = Modifier) {
-    val tone = warnColor(item.niveau)
+fun WarnBanner(item: SafetyNote, modifier: Modifier = Modifier) {
+    val tone = warnColor(item.level)
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -172,14 +172,14 @@ fun WarnBanner(item: LetOp, modifier: Modifier = Modifier) {
         Spacer(Modifier.width(10.dp))
         Column {
             Text(
-                item.niveau.uppercase(),
+                item.level.uppercase(),
                 style = MaterialTheme.typography.labelSmall,
                 color = tone,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp,
             )
             Spacer(Modifier.height(2.dp))
-            Text(item.tekst, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(item.text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
     }
 }

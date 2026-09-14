@@ -22,7 +22,7 @@ import kotlin.coroutines.resume
  * push the drawings at full resolution, run this once, keep the JSON.
  *
  *   adb push txt/hires/. /sdcard/Android/data/nl.dejongduke.service.debug/files/ocr-in/
- *   (tik "Tekeningen indexeren" in Instellingen)
+ *   (tik "Tekeningen indexeren" in Settings)
  *   adb pull /sdcard/Android/data/nl.dejongduke.service.debug/files/hotspots.json
  */
 object DrawingIndexer {

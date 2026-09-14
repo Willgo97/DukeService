@@ -15,6 +15,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,13 +57,13 @@ fun ProcedureList(
     val documented = catalog.machines.filter { m -> catalog.procedures.any { m.id in it.machines } }
     val shown = catalog.procedures
         .filter { filter == null || filter in it.machines }
-        .filter { it.stappen.isNotEmpty() }
+        .filter { it.steps.isNotEmpty() }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alle machines") +
-                    documented.map { it.id as String? to it.naam },
+                    documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
             )
@@ -69,14 +73,14 @@ fun ProcedureList(
             val group = shown.filter { it.interval == interval }
             if (group.isEmpty()) return@forEach
             item { SectionHeader(intervalLabel(interval), "${group.size}") }
-            items(group, key = { it.id }) { proc ->
-                Card(onClick = { onOpen(Route.Procedure(proc.id)) }) {
+            items(group, key = { it.id }) { procedures ->
+                Card(onClick = { onOpen(Route.Procedure(procedures.id)) }) {
                     Column {
-                        Text(proc.titel, style = MaterialTheme.typography.titleMedium)
-                        if (proc.doel.isNotEmpty()) {
+                        Text(procedures.title, style = MaterialTheme.typography.titleMedium)
+                        if (procedures.purpose.isNotEmpty()) {
                             Spacer(Modifier.height(3.dp))
                             Text(
-                                proc.doel,
+                                procedures.purpose,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 2,
@@ -84,8 +88,8 @@ fun ProcedureList(
                         }
                         Spacer(Modifier.height(8.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            Pill("${proc.stappen.size} stappen")
-                            if (proc.brewer.isNotEmpty() && proc.brewer != "beide") Pill(proc.brewer)
+                            Pill("${procedures.steps.size} stappen")
+                            if (procedures.brewer.isNotEmpty() && procedures.brewer != "beide") Pill(procedures.brewer)
                         }
                     }
                 }
@@ -101,11 +105,12 @@ fun ProcedureDetail(
     procedure: Procedure,
     pinned: Boolean,
     onPin: (String) -> Unit,
+    onOpen: (Route) -> Unit,
 ) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(procedure.titel, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(procedure.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(10.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(intervalLabel(procedure.interval))
@@ -113,34 +118,53 @@ fun ProcedureDetail(
                     Pill(catalog.machineNames(procedure.machines))
                     // Of this machine there is no Dutch manual; say so rather
                     // than let the engineer wonder about the translation.
-                    if (procedure.taal == "en") Pill("Engelse tekst")
+                    if (procedure.language == "en") Pill("Engelse tekst")
+                }
+                if (procedure.steps.isNotEmpty()) {
+                    Spacer(Modifier.height(12.dp))
+                    FilledTonalButton(onClick = { onOpen(Route.Steps("procedure", procedure.id)) }) {
+                        Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Stap voor stap")
+                    }
                 }
             }
         }
 
         // The chip above already says "Dagelijks"; only spell the interval out
         // when the manual adds something the chip does not cover.
+        if (procedure.images.isNotEmpty()) {
+            item {
+                Column {
+                    procedure.images.forEach { image ->
+                        AssetImage(image)
+                        Spacer(Modifier.height(8.dp))
+                    }
+                }
+            }
+        }
+
         item {
             ActionRow(
                 pinKey = "proc:" + procedure.id,
                 pinned = pinned,
                 onPin = onPin,
-                deelTekst = buildString {
-                    appendLine(procedure.titel)
-                    if (procedure.intervalTekst.isNotEmpty()) appendLine(procedure.intervalTekst)
+                shareText = buildString {
+                    appendLine(procedure.title)
+                    if (procedure.intervalText.isNotEmpty()) appendLine(procedure.intervalText)
                     appendLine()
-                    procedure.stappen.forEachIndexed { i, stap -> appendLine("${i + 1}. ${stap.tekst}") }
+                    procedure.steps.forEachIndexed { i, step -> appendLine("${i + 1}. ${step.text}") }
                     append("— DUKE Service")
                 },
             )
         }
 
-        if (procedure.intervalTekst.isNotEmpty() &&
-            !procedure.intervalTekst.equals(intervalLabel(procedure.interval), ignoreCase = true)
+        if (procedure.intervalText.isNotEmpty() &&
+            !procedure.intervalText.equals(intervalLabel(procedure.interval), ignoreCase = true)
         ) {
             item {
                 Text(
-                    procedure.intervalTekst,
+                    procedure.intervalText,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 2.dp),
@@ -148,22 +172,22 @@ fun ProcedureDetail(
             }
         }
 
-        if (procedure.doel.isNotEmpty()) {
+        if (procedure.purpose.isNotEmpty()) {
             item { SectionHeader("Waarom") }
             item {
                 Text(
-                    procedure.doel,
+                    procedure.purpose,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(horizontal = 20.dp),
                 )
             }
         }
 
-        if (procedure.nodig.isNotEmpty()) {
+        if (procedure.needed.isNotEmpty()) {
             item { SectionHeader("Nodig") }
             item {
                 Column(Modifier.padding(horizontal = 20.dp)) {
-                    procedure.nodig.forEach { item ->
+                    procedure.needed.forEach { item ->
                         Row(Modifier.padding(vertical = 3.dp)) {
                             Box(
                                 Modifier.padding(top = 8.dp).size(5.dp).clip(CircleShape)
@@ -177,20 +201,20 @@ fun ProcedureDetail(
             }
         }
 
-        if (procedure.letOp.isNotEmpty()) {
+        if (procedure.warnings.isNotEmpty()) {
             item { Spacer(Modifier.height(12.dp)) }
-            items(procedure.letOp.size) { index ->
+            items(procedure.warnings.size) { index ->
                 WarnBanner(
-                    procedure.letOp[index],
+                    procedure.warnings[index],
                     Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                 )
             }
         }
 
-        if (procedure.stappen.isNotEmpty()) {
-            item { SectionHeader("Stappen", "${procedure.stappen.size}") }
-            items(procedure.stappen.size) { index ->
-                val stap = procedure.stappen[index]
+        if (procedure.steps.isNotEmpty()) {
+            item { SectionHeader("Stappen", "${procedure.steps.size}") }
+            items(procedure.steps.size) { index ->
+                val step = procedure.steps[index]
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 7.dp)) {
                     Box(
                         Modifier.size(28.dp).clip(CircleShape)
@@ -205,8 +229,8 @@ fun ProcedureDetail(
                     }
                     Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
-                        Text(stap.tekst, style = MaterialTheme.typography.bodyLarge)
-                        stap.sub.forEach { sub ->
+                        Text(step.text, style = MaterialTheme.typography.bodyLarge)
+                        step.sub.forEach { sub ->
                             Spacer(Modifier.height(6.dp))
                             Row(
                                 Modifier.fillMaxWidth()
@@ -225,10 +249,10 @@ fun ProcedureDetail(
                 }
             }
         }
-        if (procedure.bron.isNotEmpty()) {
+        if (procedure.source.isNotEmpty()) {
             item {
                 Text(
-                    "Bron: ${procedure.bron}",
+                    "Bron: ${procedure.source}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 /**
  * The small amount of state that outlives a visit: which checklist items are
- * ticked today, what was searched for recently, and how it should look.
+ * searched for recently, pinned, and how the app should look.
  */
 class Prefs(context: Context) {
     private val sp = context.getSharedPreferences("duke", Context.MODE_PRIVATE)
@@ -14,24 +14,9 @@ class Prefs(context: Context) {
     // Ticks are stored per schedule per day, so tomorrow starts clean without
     // anyone having to reset anything.
 
-    private fun checkKey(schema: String, day: LocalDate) = "check:$schema:$day"
+    private fun checkKey(schedule: String, day: LocalDate) = "check:$schedule:$day"
 
-    fun ticked(schema: String, day: LocalDate): Set<Int> =
-        sp.getStringSet(checkKey(schema, day), emptySet())!!.mapNotNull { it.toIntOrNull() }.toSet()
 
-    fun setTicked(schema: String, day: LocalDate, items: Set<Int>) {
-        sp.edit().putStringSet(checkKey(schema, day), items.map { it.toString() }.toSet()).apply()
-    }
-
-    /** Keeps a fortnight of history so the file cannot grow without bound. */
-    fun pruneChecklists(today: LocalDate) {
-        val keep = (0..13).map { today.minusDays(it.toLong()).toString() }.toSet()
-        val stale = sp.all.keys.filter { key ->
-            key.startsWith("check:") && key.substringAfterLast(':') !in keep
-        }
-        if (stale.isEmpty()) return
-        sp.edit().apply { stale.forEach { remove(it) } }.apply()
-    }
 
     // --- Pinned items -----------------------------------------------------
     // Keys look like "fault:Grinder blocked" or "part:5KAF119".
@@ -84,7 +69,7 @@ class Prefs(context: Context) {
      * Which language leads on a fault card. A machine set to English shows
      * English on its display, so that is what you want to read first.
      */
-    var meldingTaal: String
+    var messageLanguage: String
         get() = sp.getString("melding_taal", "nl")!!
         set(value) = sp.edit().putString("melding_taal", value).apply()
 
