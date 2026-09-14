@@ -249,7 +249,7 @@ class Catalog(
 
             return Catalog(
                 parts = emptyList(),
-                machines = read("machines.json") { json.decodeFromString(it) },
+                machines = read("machines-$wanted.json") { json.decodeFromString(it) },
                 faults = content.faults,
                 procedures = content.procedures,
                 specs = content.specs,

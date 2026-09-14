@@ -281,4 +281,8 @@ Cause : </string>
     <string name="x_gekopieerd">%1$s copié</string>
     <string name="x_gevonden">%1$d trouvés</string>
     <string name="x_gevonden_in_de_foto">%1$d trouvés sur la photo</string>
+    <plurals name="n_callouts">
+        <item quantity="one">%d repère</item>
+        <item quantity="other">%d repères</item>
+    </plurals>
 </resources>

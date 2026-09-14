@@ -215,7 +215,8 @@ fun SearchScreen(
                         Text(cardTitle(card.title), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            "${catalog.machineNames(card.machines)}  ·  ${card.steps.size} stappen",
+                            catalog.machineNames(card.machines) + "  \u00b7  " +
+                            count(R.plurals.n_steps, card.steps.size),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 2,

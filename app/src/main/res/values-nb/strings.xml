@@ -281,4 +281,8 @@
     <string name="x_gekopieerd">%1$s kopiert</string>
     <string name="x_gevonden">%1$d funnet</string>
     <string name="x_gevonden_in_de_foto">%1$d funnet i bildet</string>
+    <plurals name="n_callouts">
+        <item quantity="one">%d henvisning</item>
+        <item quantity="other">%d henvisninger</item>
+    </plurals>
 </resources>

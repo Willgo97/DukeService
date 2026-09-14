@@ -36,7 +36,7 @@ class AssetsTest {
 
     @Test
     fun everyAssetParses() {
-        val machines: List<Machine> = read("machines.json")
+        val machines: List<Machine> = read("machines-nl.json")
         val nl = content("nl")
         val faults: List<Fault> = nl.faults
         val procedures: List<Procedure> = nl.procedures
@@ -102,6 +102,21 @@ class AssetsTest {
                 c.components.count { it.title.isBlank() }
             assertTrue("$language has $empty untitled items", empty == 0)
 
+            // The machines are described by hand, and those words are
+            // translated too; a machine screen half in Dutch is no use to the
+            // engineer standing in front of it.
+            val dutchMachines: List<Machine> = read("machines-nl.json")
+            val machinesInLanguage: List<Machine> = read("machines-$language.json")
+            assertTrue("$language machines", machinesInLanguage.size == dutchMachines.size)
+            assertTrue("$language machine texts",
+                       machinesInLanguage.none { it.name.isBlank() || it.summary.isBlank() })
+            if (language != "nl") {
+                val same = machinesInLanguage.count { row ->
+                    dutchMachines.any { it.id == row.id && it.summary == row.summary }
+                }
+                assertTrue("$language leaves $same machines in Dutch", same == 0)
+            }
+
             val figures = (c.components.flatMap { it.images } + c.views.flatMap { it.images })
                 .distinct()
                 .filterNot { File(assets, it).exists() }
@@ -111,7 +126,7 @@ class AssetsTest {
 
     @Test
     fun partsPointAtKnownMachinesAndBuilds() {
-        val machines: List<Machine> = read("machines.json")
+        val machines: List<Machine> = read("machines-nl.json")
         val parts: List<Part> = read("parts.json")
         val known = machines.associateBy { it.id }
         val strays = parts.map { it.machine }.distinct().filterNot { known.containsKey(it) }

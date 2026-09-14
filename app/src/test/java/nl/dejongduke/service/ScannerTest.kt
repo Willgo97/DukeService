@@ -27,7 +27,7 @@ class ScannerTest {
 
     private val catalog by lazy {
         Catalog(
-            machines = read<List<Machine>>("machines.json"),
+            machines = read<List<Machine>>("machines-nl.json"),
             faults = read<Content>("content-nl.json").faults,
             procedures = emptyList(),
             parts = read<List<Part>>("parts.json"),

@@ -1,0 +1,382 @@
+{
+ "machines": {
+  "virtu": {
+   "summary": {
+    "nl": "Tijdloze bonenmachine met CoEx-brewer en aanpasbaar rvs frontpaneel.",
+    "en": "Timeless bean-to-cup machine with CoEx brewer and a customisable stainless steel front.",
+    "de": "Zeitloser Vollautomat mit CoEx-Brüheinheit und anpassbarer Edelstahlfront.",
+    "fr": "Machine à grains intemporelle, groupe CoEx et façade inox personnalisable.",
+    "sv": "Tidlös bönmaskin med CoEx-bryggare och anpassningsbar front i rostfritt stål.",
+    "no": "Tidløs kaffemaskin med CoEx-brygger og tilpassbar front i rustfritt stål.",
+    "da": "Tidløs bønnemaskine med CoEx-brygger og tilpasselig front i rustfrit stål.",
+    "fi": "Ajaton papukone, jossa on CoEx-keitin ja muokattava teräsetulevy.",
+    "cs": "Nadčasový kávovar na zrna se spařovačem CoEx a přizpůsobitelným nerezovým čelem."
+   },
+   "description": {
+    "nl": "Espresso uit verse bonen, verse filterkoffie en klassieke instantdranken. Heet water en optioneel gekoeld water, plat of bruisend. Het rvs frontpaneel is aanpasbaar per locatie. Bekerdetectie start de bereiding pas als er een beker staat.",
+    "en": "Espresso from fresh beans, fresh filter coffee and classic instant drinks. Hot water and optionally chilled water, still or sparkling. The stainless steel front can be customised per location. Cup detection only starts the drink once a cup is in place.",
+    "de": "Espresso aus frischen Bohnen, frischer Filterkaffee und klassische Instantgetränke. Heißes Wasser und optional gekühltes Wasser, still oder mit Kohlensäure. Die Edelstahlfront lässt sich je Standort anpassen. Die Bechererkennung startet die Zubereitung erst, wenn ein Becher steht.",
+    "fr": "Espresso à partir de grains frais, café filtre frais et boissons instantanées classiques. Eau chaude et, en option, eau réfrigérée, plate ou gazeuse. La façade inox se personnalise selon le site. La détection de gobelet ne lance la préparation qu’une fois le gobelet en place.",
+    "sv": "Espresso av färska bönor, färskt bryggkaffe och klassiska instantdrycker. Hett vatten och som tillval kylt vatten, stilla eller kolsyrat. Fronten i rostfritt stål kan anpassas per plats. Muggavkänningen startar beredningen först när en mugg står på plats.",
+    "no": "Espresso av friske bønner, friskbrygget filterkaffe og klassiske instantdrikker. Varmt vann og som tilvalg kjølt vann, stille eller med kullsyre. Fronten i rustfritt stål kan tilpasses hvert sted. Koppgjenkjenning starter tilberedningen først når koppen står der.",
+    "da": "Espresso af friske bønner, friskbrygget filterkaffe og klassiske instantdrikke. Varmt vand og som tilvalg kølet vand, stille eller med brus. Fronten i rustfrit stål kan tilpasses hvert sted. Kopregistrering starter først tilberedningen, når koppen står der.",
+    "fi": "Espressoa tuoreista pavuista, tuoretta suodatinkahvia ja klassisia pikajuomia. Kuumaa vettä ja valinnaisesti jäähdytettyä vettä, hiilihapotonta tai hiilihapotettua. Teräsetulevy on muokattavissa kohteen mukaan. Kupintunnistus käynnistää valmistuksen vasta, kun kuppi on paikallaan.",
+    "cs": "Espreso z čerstvých zrn, čerstvá filtrovaná káva a klasické instantní nápoje. Horká voda a volitelně chlazená voda, neperlivá nebo perlivá. Nerezové čelo lze přizpůsobit podle místa. Detekce kelímku spustí přípravu až ve chvíli, kdy kelímek stojí na místě."
+   }
+  },
+  "zia": {
+   "summary": {
+    "nl": "Veelzijdige machine met filter- en bonenkoffie, breed configureerbaar.",
+    "en": "Versatile machine for filter and bean coffee, widely configurable.",
+    "de": "Vielseitige Maschine für Filter- und Bohnenkaffee, breit konfigurierbar.",
+    "fr": "Machine polyvalente, café filtre et grains, largement configurable.",
+    "sv": "Mångsidig maskin för brygg- och bönkaffe, kan konfigureras brett.",
+    "no": "Allsidig maskin for filter- og bønnekaffe, kan konfigureres bredt.",
+    "da": "Alsidig maskine til filter- og bønnekaffe, kan konfigureres bredt.",
+    "fi": "Monipuolinen kone suodatin- ja papukahville, laajasti konfiguroitavissa.",
+    "cs": "Všestranný stroj na filtrovanou i zrnkovou kávu, široce konfigurovatelný."
+   },
+   "description": {
+    "nl": "Te configureren met filterkoffie of volledig op bonen. Keuze in aantal bonencanisters en canisters voor melk-, chocolade- of plantaardige poeders. Optioneel een losse kast met koeler voor plat of bruisend water en een afvaldoorvoer.",
+    "en": "Can be configured for filter coffee or entirely for beans. A choice of bean canisters and canisters for milk, chocolate or plant-based powders. Optionally a separate cabinet with a cooler for still or sparkling water and a waste chute.",
+    "de": "Konfigurierbar mit Filterkaffee oder ganz auf Bohnen. Wahl bei der Zahl der Bohnenbehälter und der Behälter für Milch-, Schokoladen- oder Pflanzenpulver. Optional ein separater Unterschrank mit Kühler für stilles oder kohlensäurehaltiges Wasser und einer Abfalldurchführung.",
+    "fr": "Configurable en café filtre ou entièrement en grains. Choix du nombre de trémies à grains et de trémies pour poudres de lait, de chocolat ou végétales. En option, un meuble séparé avec refroidisseur pour eau plate ou gazeuse et un passage à déchets.",
+    "sv": "Kan konfigureras för bryggkaffe eller helt för bönor. Val av antal bönbehållare och behållare för mjölk-, choklad- eller växtbaserat pulver. Som tillval ett separat skåp med kylare för stilla eller kolsyrat vatten och en avfallsinkast.",
+    "no": "Kan konfigureres med filterkaffe eller helt på bønner. Valg av antall bønnebeholdere og beholdere for melke-, sjokolade- eller plantepulver. Som tilvalg et eget skap med kjøler for stille eller kullsyreholdig vann og en avfallssjakt.",
+    "da": "Kan konfigureres med filterkaffe eller helt på bønner. Valg af antal bønnebeholdere og beholdere til mælke-, chokolade- eller plantepulver. Som tilvalg et separat skab med køler til stille eller brusende vand og en affaldsgennemføring.",
+    "fi": "Konfiguroitavissa suodatinkahville tai kokonaan pavuille. Valittavissa papusäiliöiden määrä sekä säiliöt maito-, suklaa- tai kasvipohjaisille jauheille. Valinnaisesti erillinen kaappi, jossa jäähdytin hiilihapottomalle tai hiilihapotetulle vedelle ja jätteenpudotus.",
+    "cs": "Lze konfigurovat na filtrovanou kávu nebo zcela na zrna. Na výběr je počet zásobníků na zrna a zásobníků na mléčné, čokoládové nebo rostlinné prášky. Volitelně samostatná skříň s chladičem na neperlivou či perlivou vodu a průchodkou na odpad."
+   }
+  },
+  "nio": {
+   "summary": {
+    "nl": "Compact tafelmodel; voorganger van de Nio Next.",
+    "en": "Compact countertop model; predecessor of the Nio Next.",
+    "de": "Kompaktes Tischmodell; Vorgänger der Nio Next.",
+    "fr": "Modèle de comptoir compact ; prédécesseur du Nio Next.",
+    "sv": "Kompakt bordsmodell; föregångare till Nio Next.",
+    "no": "Kompakt bordmodell; forgjengeren til Nio Next.",
+    "da": "Kompakt bordmodel; forgænger for Nio Next.",
+    "fi": "Pienikokoinen pöytämalli; Nio Nextin edeltäjä.",
+    "cs": "Kompaktní stolní model; předchůdce modelu Nio Next."
+   },
+   "description": {
+    "nl": "Tafelmodel met CoEx-brewer, leverbaar met metalen of PPSU-kleppen. Let op: het onderdelenboek splitst pressure boiler en steam boiler per uitvoering en per bouwjaar.",
+    "en": "Countertop model with a CoEx brewer, available with metal or PPSU valves. Note: the parts book splits the pressure boiler and the steam boiler per build and per year of manufacture.",
+    "de": "Tischmodell mit CoEx-Brüheinheit, lieferbar mit Metall- oder PPSU-Ventilen. Achtung: Das Ersatzteilbuch trennt Druckkessel und Dampfkessel nach Ausführung und Baujahr.",
+    "fr": "Modèle de comptoir avec groupe CoEx, disponible avec vannes métalliques ou PPSU. Attention : le catalogue de pièces sépare la chaudière à pression et la chaudière à vapeur par version et par année de fabrication.",
+    "sv": "Bordsmodell med CoEx-bryggare, levereras med ventiler i metall eller PPSU. Observera: reservdelsboken delar upp trycktank och ångtank per utförande och tillverkningsår.",
+    "no": "Bordmodell med CoEx-brygger, leveres med ventiler i metall eller PPSU. Merk: delekatalogen deler trykkboiler og dampboiler per utførelse og produksjonsår.",
+    "da": "Bordmodel med CoEx-brygger, leveres med ventiler i metal eller PPSU. Bemærk: reservedelsbogen opdeler trykkedel og dampkedel pr. udførelse og produktionsår.",
+    "fi": "Pöytämalli, jossa CoEx-keitin; saatavana metalli- tai PPSU-venttiileillä. Huomaa: varaosakirja erottelee painevesisäiliön ja höyrysäiliön mallin ja valmistusvuoden mukaan.",
+    "cs": "Stolní model se spařovačem CoEx, dodávaný s kovovými nebo PPSU ventily. Pozor: katalog dílů dělí tlakový a parní bojler podle provedení a roku výroby."
+   }
+  },
+  "nionext": {
+   "summary": {
+    "nl": "Premium tafelmodel met verstelbare rvs doseerkop, optioneel verse melk.",
+    "en": "Premium countertop model with an adjustable stainless steel outlet, optionally fresh milk.",
+    "de": "Premium-Tischmodell mit verstellbarem Edelstahl-Auslauf, optional Frischmilch.",
+    "fr": "Modèle de comptoir haut de gamme, bec inox réglable, lait frais en option.",
+    "sv": "Premium bordsmodell med justerbart utlopp i rostfritt stål, färsk mjölk som tillval.",
+    "no": "Premium bordmodell med justerbart utløp i rustfritt stål, fersk melk som tilvalg.",
+    "da": "Premium bordmodel med justerbart udløb i rustfrit stål, frisk mælk som tilvalg.",
+    "fi": "Premium-pöytämalli, jossa säädettävä teräsnokka ja valinnainen tuoremaito.",
+    "cs": "Prémiový stolní model s nastavitelnou nerezovou výpustí, volitelně čerstvé mléko."
+   },
+   "description": {
+    "nl": "Opvolger van de Nio. Verstelbare doseerkop van roestvrij staal, dynamische interface met direct-start voorkeuzes. Optioneel verse-melksysteem; die uitvoering is fors breder en zwaarder.",
+    "en": "Successor to the Nio. Adjustable stainless steel outlet, a dynamic interface with direct-start favourites. Optional fresh milk system; that build is considerably wider and heavier.",
+    "de": "Nachfolger der Nio. Verstellbarer Auslauf aus Edelstahl, dynamische Oberfläche mit Direktstart-Favoriten. Optionales Frischmilchsystem; diese Ausführung ist deutlich breiter und schwerer.",
+    "fr": "Successeur du Nio. Bec réglable en inox, interface dynamique avec favoris à départ direct. Système de lait frais en option ; cette version est nettement plus large et plus lourde.",
+    "sv": "Efterföljare till Nio. Justerbart utlopp i rostfritt stål, dynamiskt gränssnitt med direktstartade favoriter. Färskmjölkssystem som tillval; det utförandet är betydligt bredare och tyngre.",
+    "no": "Etterfølgeren til Nio. Justerbart utløp i rustfritt stål, dynamisk grensesnitt med direktestart-favoritter. Ferskmelksystem som tilvalg; den utførelsen er betydelig bredere og tyngre.",
+    "da": "Efterfølgeren til Nio. Justerbart udløb i rustfrit stål, dynamisk grænseflade med direkte start-favoritter. Friskmælkssystem som tilvalg; den udførelse er betydeligt bredere og tungere.",
+    "fi": "Nion seuraaja. Säädettävä teräsnokka ja dynaaminen käyttöliittymä suorakäynnistyssuosikeilla. Valinnainen tuoremaitojärjestelmä; se malli on selvästi leveämpi ja painavampi.",
+    "cs": "Nástupce modelu Nio. Nastavitelná nerezová výpusť, dynamické rozhraní s oblíbenými nápoji na jedno klepnutí. Volitelný systém čerstvého mléka; toto provedení je výrazně širší a těžší."
+   }
+  },
+  "lua": {
+   "summary": {
+    "nl": "Vloermodel met CoEx XL-brewer en groot glazen touchscreen.",
+    "en": "Floor-standing model with a CoEx XL brewer and a large glass touchscreen.",
+    "de": "Standmodell mit CoEx-XL-Brüheinheit und großem Glas-Touchscreen.",
+    "fr": "Modèle sur pied avec groupe CoEx XL et grand écran tactile en verre.",
+    "sv": "Golvmodell med CoEx XL-bryggare och stor pekskärm i glas.",
+    "no": "Gulvmodell med CoEx XL-brygger og stor berøringsskjerm i glass.",
+    "da": "Gulvmodel med CoEx XL-brygger og stor touchskærm i glas.",
+    "fi": "Lattiamalli, jossa CoEx XL -keitin ja suuri lasikosketusnäyttö.",
+    "cs": "Podlahový model se spařovačem CoEx XL a velkým skleněným dotykovým displejem."
+   },
+   "description": {
+    "nl": "Groot glazen touchscreen met lichteffecten die aangeven waar de beker moet staan. CoEx XL-brewer: andere reinigingsstappen en andere brewer-onderdelen dan de gewone CoEx.",
+    "en": "A large glass touchscreen with light effects showing where the cup should stand. CoEx XL brewer: different cleaning steps and different brewer parts from the ordinary CoEx.",
+    "de": "Großer Glas-Touchscreen mit Lichteffekten, die zeigen, wo der Becher stehen soll. CoEx-XL-Brüheinheit: andere Reinigungsschritte und andere Brühereiteile als die gewöhnliche CoEx.",
+    "fr": "Grand écran tactile en verre avec des effets lumineux indiquant où placer le gobelet. Groupe CoEx XL : étapes de nettoyage et pièces de groupe différentes du CoEx ordinaire.",
+    "sv": "Stor pekskärm i glas med ljuseffekter som visar var muggen ska stå. CoEx XL-bryggare: andra rengöringssteg och andra bryggardelar än den vanliga CoEx.",
+    "no": "Stor berøringsskjerm i glass med lyseffekter som viser hvor koppen skal stå. CoEx XL-brygger: andre rengjøringstrinn og andre bryggerdeler enn den vanlige CoEx.",
+    "da": "Stor touchskærm i glas med lyseffekter, der viser, hvor koppen skal stå. CoEx XL-brygger: andre rengøringstrin og andre bryggerdele end den almindelige CoEx.",
+    "fi": "Suuri lasikosketusnäyttö, jonka valoefektit näyttävät, mihin kuppi asetetaan. CoEx XL -keitin: eri puhdistusvaiheet ja eri keittimen osat kuin tavallisessa CoEx:ssä.",
+    "cs": "Velký skleněný dotykový displej se světelnými efekty, které ukazují, kam postavit kelímek. Spařovač CoEx XL: jiné kroky čištění a jiné díly spařovače než u běžného CoEx."
+   }
+  },
+  "avy": {
+   "summary": {
+    "nl": "Espressomachine-look met CoEx XL-brewer en uitneembare lekbak.",
+    "en": "Espresso-machine look with a CoEx XL brewer and a removable drip tray.",
+    "de": "Espressomaschinen-Optik mit CoEx-XL-Brüheinheit und herausnehmbarer Tropfschale.",
+    "fr": "Allure de machine à espresso, groupe CoEx XL et bac d’égouttage amovible.",
+    "sv": "Espressomaskinsutseende med CoEx XL-bryggare och uttagbart droppkar.",
+    "no": "Espressomaskin-utseende med CoEx XL-brygger og uttakbart dryppkar.",
+    "da": "Espressomaskine-look med CoEx XL-brygger og aftagelig drypbakke.",
+    "fi": "Espressokoneen ulkonäkö, CoEx XL -keitin ja irrotettava tippa-allas.",
+    "cs": "Vzhled espresso kávovaru se spařovačem CoEx XL a vyjímatelnou odkapávací miskou."
+   },
+   "description": {
+    "nl": "Geïnspireerd op traditionele espressomachines, met gebogen lijnen. Aanpasbaar glazen touchscreen en een uitneembare lekbak die het schoonmaken versnelt.",
+    "en": "Inspired by traditional espresso machines, with curved lines. A customisable glass touchscreen and a removable drip tray that speeds up cleaning.",
+    "de": "Angelehnt an traditionelle Espressomaschinen, mit geschwungenen Linien. Anpassbarer Glas-Touchscreen und eine herausnehmbare Tropfschale, die das Reinigen beschleunigt.",
+    "fr": "Inspirée des machines à espresso traditionnelles, aux lignes courbes. Écran tactile en verre personnalisable et bac d’égouttage amovible qui accélère le nettoyage.",
+    "sv": "Inspirerad av traditionella espressomaskiner, med böjda linjer. Anpassningsbar pekskärm i glas och ett uttagbart droppkar som gör rengöringen snabbare.",
+    "no": "Inspirert av tradisjonelle espressomaskiner, med buede linjer. Tilpassbar berøringsskjerm i glass og et uttakbart dryppkar som gjør rengjøringen raskere.",
+    "da": "Inspireret af traditionelle espressomaskiner, med buede linjer. Tilpasselig touchskærm i glas og en aftagelig drypbakke, der gør rengøringen hurtigere.",
+    "fi": "Perinteisten espressokoneiden innoittama, kaarevat linjat. Muokattava lasikosketusnäyttö ja irrotettava tippa-allas, joka nopeuttaa puhdistusta.",
+    "cs": "Inspirováno tradičními espresso kávovary, se zaoblenými liniemi. Přizpůsobitelný skleněný dotykový displej a vyjímatelná odkapávací miska, která zrychluje čištění."
+   }
+  },
+  "rosa": {
+   "summary": {
+    "nl": "Zwart aluminium design met 14-inch scherm; Uni-Brewer met Filterfresh.",
+    "en": "Black aluminium design with a 14-inch screen; Uni-Brewer with Filterfresh.",
+    "de": "Design in schwarzem Aluminium mit 14-Zoll-Bildschirm; Uni-Brüheinheit mit Filterfresh.",
+    "fr": "Design en aluminium noir, écran 14 pouces ; Uni-Brewer avec Filterfresh.",
+    "sv": "Design i svart aluminium med 14-tumsskärm; Uni-bryggare med Filterfresh.",
+    "no": "Design i svart aluminium med 14-tommers skjerm; Uni-brygger med Filterfresh.",
+    "da": "Design i sort aluminium med 14-tommers skærm; Uni-brygger med Filterfresh.",
+    "fi": "Musta alumiinimuotoilu ja 14 tuuman näyttö; Uni-keitin ja Filterfresh.",
+    "cs": "Design z černého hliníku s 14palcovou obrazovkou; spařovač Uni s Filterfresh."
+   },
+   "description": {
+    "nl": "Koffie en espresso van constante kwaliteit, instantdranken, heet water en optioneel gekoeld plat of bruisend water. Anders dan de CoEx-machines zit hier een Uni-Brewer in met Filterfresh: andere brewer, andere onderdelen en andere reinigingsstappen.",
+    "en": "Coffee and espresso of constant quality, instant drinks, hot water and optionally chilled still or sparkling water. Unlike the CoEx machines this one has a Uni-Brewer with Filterfresh: a different brewer, different parts and different cleaning steps.",
+    "de": "Kaffee und Espresso in gleichbleibender Qualität, Instantgetränke, heißes Wasser und optional gekühltes stilles oder kohlensäurehaltiges Wasser. Anders als bei den CoEx-Maschinen sitzt hier eine Uni-Brüheinheit mit Filterfresh: andere Brüheinheit, andere Teile und andere Reinigungsschritte.",
+    "fr": "Café et espresso de qualité constante, boissons instantanées, eau chaude et, en option, eau réfrigérée plate ou gazeuse. Contrairement aux machines CoEx, celle-ci reçoit un Uni-Brewer avec Filterfresh : autre groupe, autres pièces et autres étapes de nettoyage.",
+    "sv": "Kaffe och espresso av jämn kvalitet, instantdrycker, hett vatten och som tillval kylt stilla eller kolsyrat vatten. Till skillnad från CoEx-maskinerna sitter här en Uni-bryggare med Filterfresh: annan bryggare, andra delar och andra rengöringssteg.",
+    "no": "Kaffe og espresso med jevn kvalitet, instantdrikker, varmt vann og som tilvalg kjølt stille eller kullsyreholdig vann. I motsetning til CoEx-maskinene sitter det her en Uni-brygger med Filterfresh: annen brygger, andre deler og andre rengjøringstrinn.",
+    "da": "Kaffe og espresso af ensartet kvalitet, instantdrikke, varmt vand og som tilvalg kølet stille eller brusende vand. I modsætning til CoEx-maskinerne sidder her en Uni-brygger med Filterfresh: anden brygger, andre dele og andre rengøringstrin.",
+    "fi": "Tasalaatuista kahvia ja espressoa, pikajuomia, kuumaa vettä ja valinnaisesti jäähdytettyä hiilihapotonta tai hiilihapotettua vettä. Toisin kuin CoEx-koneissa, tässä on Uni-keitin ja Filterfresh: eri keitin, eri osat ja eri puhdistusvaiheet.",
+    "cs": "Káva a espreso ve stálé kvalitě, instantní nápoje, horká voda a volitelně chlazená neperlivá či perlivá voda. Na rozdíl od strojů CoEx je zde spařovač Uni s Filterfresh: jiný spařovač, jiné díly a jiné kroky čištění."
+   }
+  },
+  "lina": {
+   "summary": {
+    "nl": "Nieuwste model met next-gen interface, in parelbeige of zilver.",
+    "en": "Newest model with a next-generation interface, in pearl beige or silver.",
+    "de": "Neuestes Modell mit Interface der nächsten Generation, in Perlbeige oder Silber.",
+    "fr": "Modèle le plus récent, interface nouvelle génération, en beige perle ou argent.",
+    "sv": "Nyaste modellen med nästa generations gränssnitt, i pärlbeige eller silver.",
+    "no": "Nyeste modell med neste generasjons grensesnitt, i perlebeige eller sølv.",
+    "da": "Nyeste model med næste generations grænseflade, i perlebeige eller sølv.",
+    "fi": "Uusin malli, seuraavan sukupolven käyttöliittymä, helmenbeige tai hopea.",
+    "cs": "Nejnovější model s rozhraním nové generace, v perlově béžové nebo stříbrné."
+   },
+   "description": {
+    "nl": "Hoge-resolutie 10,1-inch scherm met een nieuwe interface: levensechte pictogrammen en soepele navigatie. Verfijnd silhouet met verticaal lijnpatroon. Gebruikt hergebruikte onderdelen.",
+    "en": "A high-resolution 10.1-inch screen with a new interface: lifelike icons and smooth navigation. A refined silhouette with a vertical line pattern. Built with reused parts.",
+    "de": "Hochauflösender 10,1-Zoll-Bildschirm mit neuer Oberfläche: lebensechte Symbole und flüssige Navigation. Feine Silhouette mit vertikalem Linienmuster. Verwendet wiederverwendete Teile.",
+    "fr": "Écran 10,1 pouces haute résolution avec une nouvelle interface : icônes réalistes et navigation fluide. Silhouette raffinée au motif de lignes verticales. Utilise des pièces réemployées.",
+    "sv": "Högupplöst 10,1-tumsskärm med ett nytt gränssnitt: verklighetstrogna ikoner och smidig navigering. Förfinad siluett med vertikalt linjemönster. Byggd med återanvända delar.",
+    "no": "Høyoppløst 10,1-tommers skjerm med nytt grensesnitt: livaktige ikoner og smidig navigasjon. Forfinet silhuett med vertikalt linjemønster. Bygget med gjenbrukte deler.",
+    "da": "Højopløst 10,1-tommers skærm med en ny grænseflade: livagtige ikoner og glidende navigation. Forfinet silhuet med lodret linjemønster. Bygget med genbrugte dele.",
+    "fi": "Teräväpiirtoinen 10,1 tuuman näyttö ja uusi käyttöliittymä: elävät kuvakkeet ja sujuva navigointi. Hienostunut siluetti pystyviivakuvioinnilla. Rakennettu uudelleenkäytetyistä osista.",
+    "cs": "Displej 10,1\" s vysokým rozlišením a novým rozhraním: věrné ikony a plynulá navigace. Vytříbená silueta se svislým linkovým vzorem. Využívá znovupoužité díly."
+   }
+  },
+  "blu": {
+   "summary": {
+    "nl": "Duurzaamste model: 96% recyclebaar, gebouwd op repareren en refurbishen.",
+    "en": "The most sustainable model: 96% recyclable, built to be repaired and refurbished.",
+    "de": "Nachhaltigstes Modell: zu 96 % recycelbar, auf Reparatur und Aufarbeitung ausgelegt.",
+    "fr": "Le modèle le plus durable : recyclable à 96 %, conçu pour être réparé et reconditionné.",
+    "sv": "Den mest hållbara modellen: 96 % återvinningsbar, byggd för reparation och renovering.",
+    "no": "Den mest bærekraftige modellen: 96 % gjenvinnbar, bygget for reparasjon og oppussing.",
+    "da": "Den mest bæredygtige model: 96 % genanvendelig, bygget til reparation og istandsættelse.",
+    "fi": "Kestävin malli: 96 % kierrätettävissä, rakennettu korjattavaksi ja kunnostettavaksi.",
+    "cs": "Nejudržitelnější model: z 96 % recyklovatelný, stavěný na opravy a repasování."
+   },
+   "description": {
+    "nl": "Geen verf, lijm of hars op de deur; de machine is voor 96% recyclebaar en bewust ontworpen om te repareren en te refurbishen. Gekoppeld aan ConnectMe schakelt Blu in daluren zelf naar de spaarstand.",
+    "en": "No paint, glue or resin on the door; the machine is 96% recyclable and deliberately designed to be repaired and refurbished. Connected to ConnectMe, Blu switches itself to standby during quiet hours.",
+    "de": "Keine Farbe, kein Klebstoff und kein Harz an der Tür; die Maschine ist zu 96 % recycelbar und bewusst auf Reparatur und Aufarbeitung ausgelegt. Mit ConnectMe verbunden schaltet Blu in Schwachlastzeiten selbst in den Sparbetrieb.",
+    "fr": "Ni peinture, ni colle, ni résine sur la porte ; la machine est recyclable à 96 % et pensée pour être réparée et reconditionnée. Reliée à ConnectMe, la Blu passe d’elle-même en veille aux heures creuses.",
+    "sv": "Ingen färg, lim eller harts på luckan; maskinen är 96 % återvinningsbar och medvetet gjord för att repareras och renoveras. Ansluten till ConnectMe går Blu själv ner i sparläge under lågtrafik.",
+    "no": "Ingen maling, lim eller harpiks på døren; maskinen er 96 % gjenvinnbar og bevisst laget for reparasjon og oppussing. Koblet til ConnectMe går Blu selv i sparemodus utenom travle timer.",
+    "da": "Ingen maling, lim eller harpiks på lågen; maskinen er 96 % genanvendelig og bevidst designet til reparation og istandsættelse. Koblet til ConnectMe går Blu selv i sparetilstand uden for spidsbelastning.",
+    "fi": "Ovessa ei ole maalia, liimaa eikä hartsia; kone on 96-prosenttisesti kierrätettävissä ja suunniteltu tarkoituksella korjattavaksi ja kunnostettavaksi. ConnectMe-yhteydessä Blu siirtyy hiljaisina tunteina itse säästötilaan.",
+    "cs": "Na dveřích není barva, lepidlo ani pryskyřice; stroj je z 96 % recyklovatelný a záměrně navržený pro opravy a repasování. Po připojení k ConnectMe přejde Blu mimo špičku sám do úsporného režimu."
+   }
+  },
+  "edge": {
+   "summary": {
+    "nl": "Ouder model. Geen publieke documentatie gevonden — vul zelf aan.",
+    "en": "Older model. No public documentation found — add your own.",
+    "de": "Älteres Modell. Keine öffentliche Dokumentation gefunden — selbst ergänzen.",
+    "fr": "Modèle ancien. Aucune documentation publique trouvée — à compléter vous-même.",
+    "sv": "Äldre modell. Ingen offentlig dokumentation hittad — fyll på själv.",
+    "no": "Eldre modell. Fant ingen offentlig dokumentasjon — fyll ut selv.",
+    "da": "Ældre model. Ingen offentlig dokumentation fundet — udfyld selv.",
+    "fi": "Vanhempi malli. Julkista dokumentaatiota ei löytynyt — täydennä itse.",
+    "cs": "Starší model. Veřejná dokumentace nenalezena — doplňte si sami."
+   },
+   "description": {
+    "nl": "Voor dit model stond bij het samenstellen geen handleiding of onderdelenboek online. Storingen en procedures van de CoEx-machines komen vaak overeen; controleer altijd het typeplaatje in de machine.",
+    "en": "No manual or parts book for this model was online when this was put together. Faults and procedures of the CoEx machines often match; always check the type plate inside the machine.",
+    "de": "Für dieses Modell war beim Zusammenstellen weder ein Handbuch noch ein Ersatzteilbuch online. Störungen und Verfahren der CoEx-Maschinen stimmen oft überein; prüfen Sie immer das Typenschild in der Maschine.",
+    "fr": "Pour ce modèle, ni manuel ni catalogue de pièces n’était en ligne lors de la compilation. Les pannes et procédures des machines CoEx correspondent souvent ; vérifiez toujours la plaque signalétique dans la machine.",
+    "sv": "För den här modellen fanns varken handbok eller reservdelsbok online när detta sattes ihop. Fel och procedurer för CoEx-maskinerna stämmer ofta; kontrollera alltid typskylten i maskinen.",
+    "no": "For denne modellen fantes verken håndbok eller delekatalog på nett da dette ble satt sammen. Feil og prosedyrer for CoEx-maskinene stemmer ofte; sjekk alltid typeskiltet i maskinen.",
+    "da": "For denne model fandtes hverken manual eller reservedelsbog online, da dette blev samlet. Fejl og procedurer for CoEx-maskinerne passer ofte; tjek altid typeskiltet i maskinen.",
+    "fi": "Tälle mallille ei ollut käsikirjaa eikä varaosakirjaa verkossa, kun tämä koottiin. CoEx-koneiden viat ja toimenpiteet vastaavat usein toisiaan; tarkista aina koneen sisällä oleva tyyppikilpi.",
+    "cs": "Pro tento model nebyla při sestavování online ani příručka, ani katalog dílů. Poruchy a postupy strojů CoEx se často shodují; vždy zkontrolujte typový štítek ve stroji."
+   }
+  },
+  "vareo": {
+   "summary": {
+    "nl": "Ouder model, nog gevoerd op de Noord-Amerikaanse markt.",
+    "en": "Older model, still carried on the North American market.",
+    "de": "Älteres Modell, auf dem nordamerikanischen Markt noch geführt.",
+    "fr": "Modèle ancien, encore proposé sur le marché nord-américain.",
+    "sv": "Äldre modell, förs fortfarande på den nordamerikanska marknaden.",
+    "no": "Eldre modell, føres fortsatt på det nordamerikanske markedet.",
+    "da": "Ældre model, føres stadig på det nordamerikanske marked.",
+    "fi": "Vanhempi malli, yhä valikoimassa Pohjois-Amerikan markkinoilla.",
+    "cs": "Starší model, stále nabízený na severoamerickém trhu."
+   },
+   "description": {
+    "nl": "Voor dit model stond bij het samenstellen geen handleiding of onderdelenboek online.",
+    "en": "No manual or parts book for this model was online when this was put together.",
+    "de": "Für dieses Modell war beim Zusammenstellen weder ein Handbuch noch ein Ersatzteilbuch online.",
+    "fr": "Pour ce modèle, ni manuel ni catalogue de pièces n’était en ligne lors de la compilation.",
+    "sv": "För den här modellen fanns varken handbok eller reservdelsbok online när detta sattes ihop.",
+    "no": "For denne modellen fantes verken håndbok eller delekatalog på nett da dette ble satt sammen.",
+    "da": "For denne model fandtes hverken manual eller reservedelsbog online, da dette blev samlet.",
+    "fi": "Tälle mallille ei ollut käsikirjaa eikä varaosakirjaa verkossa, kun tämä koottiin.",
+    "cs": "Pro tento model nebyla při sestavování online ani příručka, ani katalog dílů."
+   }
+  }
+ },
+ "serviceMenuNote": {
+  "ICeQ2-besturing: altijd het oude servicemenu.": {
+   "en": "ICeQ2 control: always the old service menu.",
+   "de": "ICeQ2-Steuerung: immer das alte Servicemenü.",
+   "fr": "Commande ICeQ2 : toujours l’ancien menu de service.",
+   "sv": "ICeQ2-styrning: alltid den gamla servicemenyn.",
+   "no": "ICeQ2-styring: alltid den gamle servicemenyen.",
+   "da": "ICeQ2-styring: altid den gamle servicemenu.",
+   "fi": "ICeQ2-ohjaus: aina vanha huoltovalikko.",
+   "cs": "Řízení ICeQ2: vždy staré servisní menu."
+  },
+  "Alleen het nieuwe servicemenu.": {
+   "en": "The new service menu only.",
+   "de": "Nur das neue Servicemenü.",
+   "fr": "Uniquement le nouveau menu de service.",
+   "sv": "Endast den nya servicemenyn.",
+   "no": "Bare den nye servicemenyen.",
+   "da": "Kun den nye servicemenu.",
+   "fi": "Vain uusi huoltovalikko.",
+   "cs": "Pouze nové servisní menu."
+  },
+  "Heeft op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.": {
+   "en": "Ran on the old service menu; from software 6.30/6.40 on the new one.",
+   "de": "Lief mit dem alten Servicemenü; ab Software 6.30/6.40 mit dem neuen.",
+   "fr": "A fonctionné avec l’ancien menu de service ; à partir du logiciel 6.30/6.40, le nouveau.",
+   "sv": "Har kört på den gamla servicemenyn; från programvara 6.30/6.40 den nya.",
+   "no": "Har kjørt på den gamle servicemenyen; fra programvare 6.30/6.40 den nye.",
+   "da": "Har kørt på den gamle servicemenu; fra software 6.30/6.40 den nye.",
+   "fi": "Toiminut vanhalla huoltovalikolla; ohjelmistosta 6.30/6.40 alkaen uudella.",
+   "cs": "Běžel na starém servisním menu; od softwaru 6.30/6.40 na novém."
+  },
+  "Mogelijk ook op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.": {
+   "en": "May also have run on the old service menu; from software 6.30/6.40 on the new one.",
+   "de": "Lief möglicherweise auch mit dem alten Servicemenü; ab Software 6.30/6.40 mit dem neuen.",
+   "fr": "A peut-être aussi fonctionné avec l’ancien menu de service ; à partir du logiciel 6.30/6.40, le nouveau.",
+   "sv": "Kan även ha kört på den gamla servicemenyn; från programvara 6.30/6.40 den nya.",
+   "no": "Kan også ha kjørt på den gamle servicemenyen; fra programvare 6.30/6.40 den nye.",
+   "da": "Kan også have kørt på den gamle servicemenu; fra software 6.30/6.40 den nye.",
+   "fi": "On voinut toimia myös vanhalla huoltovalikolla; ohjelmistosta 6.30/6.40 alkaen uudella.",
+   "cs": "Mohl běžet i na starém servisním menu; od softwaru 6.30/6.40 na novém."
+  },
+  "Niet vastgelegd. Kijk in de machine welke besturing erin zit.": {
+   "en": "Not recorded. Look inside the machine to see which control it has.",
+   "de": "Nicht erfasst. Schauen Sie in der Maschine nach, welche Steuerung verbaut ist.",
+   "fr": "Non renseigné. Regardez dans la machine quelle commande elle possède.",
+   "sv": "Inte noterat. Titta i maskinen vilken styrning den har.",
+   "no": "Ikke registrert. Se i maskinen hvilken styring den har.",
+   "da": "Ikke registreret. Se i maskinen, hvilken styring den har.",
+   "fi": "Ei kirjattu. Katso koneen sisältä, mikä ohjaus siinä on.",
+   "cs": "Nezaznamenáno. Podívejte se do stroje, jaké má řízení."
+  }
+ },
+ "specLabel": {
+  "Gewicht": {
+   "en": "Weight",
+   "de": "Gewicht",
+   "fr": "Poids",
+   "sv": "Vikt",
+   "no": "Vekt",
+   "da": "Vægt",
+   "fi": "Paino",
+   "cs": "Hmotnost"
+  },
+  "Hoogte": {
+   "en": "Height",
+   "de": "Höhe",
+   "fr": "Hauteur",
+   "sv": "Höjd",
+   "no": "Høyde",
+   "da": "Højde",
+   "fi": "Korkeus",
+   "cs": "Výška"
+  },
+  "Breedte": {
+   "en": "Width",
+   "de": "Breite",
+   "fr": "Largeur",
+   "sv": "Bredd",
+   "no": "Bredde",
+   "da": "Bredde",
+   "fi": "Leveys",
+   "cs": "Šířka"
+  },
+  "Diepte": {
+   "en": "Depth",
+   "de": "Tiefe",
+   "fr": "Profondeur",
+   "sv": "Djup",
+   "no": "Dybde",
+   "da": "Dybde",
+   "fi": "Syvyys",
+   "cs": "Hloubka"
+  },
+  "Voeding": {
+   "en": "Power supply",
+   "de": "Stromversorgung",
+   "fr": "Alimentation",
+   "sv": "Strömförsörjning",
+   "no": "Strømforsyning",
+   "da": "Strømforsyning",
+   "fi": "Virransyöttö",
+   "cs": "Napájení"
+  },
+  "Energielabel": {
+   "en": "Energy label",
+   "de": "Energielabel",
+   "fr": "Étiquette énergie",
+   "sv": "Energimärkning",
+   "no": "Energimerke",
+   "da": "Energimærke",
+   "fi": "Energiamerkintä",
+   "cs": "Energetický štítek"
+  }
+ }
+}

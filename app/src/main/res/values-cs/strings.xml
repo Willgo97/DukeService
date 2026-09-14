@@ -295,4 +295,9 @@ Příčina: </string>
     <string name="x_gekopieerd">%1$s zkopírováno</string>
     <string name="x_gevonden">nalezeno %1$d</string>
     <string name="x_gevonden_in_de_foto">na fotce nalezeno %1$d</string>
+    <plurals name="n_callouts">
+        <item quantity="one">%d odkaz</item>
+        <item quantity="few">%d odkazy</item>
+        <item quantity="other">%d odkazů</item>
+    </plurals>
 </resources>

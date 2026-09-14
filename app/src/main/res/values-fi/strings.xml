@@ -281,4 +281,8 @@ Syy: </string>
     <string name="x_gekopieerd">%1$s kopioitu</string>
     <string name="x_gevonden">%1$d löytyi</string>
     <string name="x_gevonden_in_de_foto">%1$d löytyi kuvasta</string>
+    <plurals name="n_callouts">
+        <item quantity="one">%d viittaus</item>
+        <item quantity="other">%d viittausta</item>
+    </plurals>
 </resources>

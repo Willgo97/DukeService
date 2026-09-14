@@ -280,4 +280,8 @@
     <string name="x_gekopieerd">%1$s gekopieerd</string>
     <string name="x_gevonden">%1$d gevonden</string>
     <string name="x_gevonden_in_de_foto">%1$d gevonden in de foto</string>
+    <plurals name="n_callouts">
+        <item quantity="one">%d verwijzing</item>
+        <item quantity="other">%d verwijzingen</item>
+    </plurals>
 </resources>

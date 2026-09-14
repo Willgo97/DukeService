@@ -138,8 +138,23 @@ class Pictures:
         return path
 
 
-def build_machines(products, pictures):
-    """The eleven machine lines, with the builds each one is sold in."""
+def build_machines(products, pictures, locale="nl"):
+    """The eleven machine lines, with the builds each one is sold in.
+
+    The words around the machine — what it is, which service menu it runs, what
+    the specification rows are called — are written by hand in Dutch and
+    translated in data/machines-i18n.json, because a machine screen in a
+    language you do not read is no use to the engineer standing in front of it.
+    """
+    words = read_json(os.path.join(DATA, "machines-i18n.json"), {})
+    per_machine = words.get("machines", {})
+    notes = words.get("serviceMenuNote", {})
+    labels = words.get("specLabel", {})
+
+    def say(table, text):
+        """The translation of a hand-written line, or the Dutch it was written in."""
+        return (table.get(text) or {}).get(locale, text) if locale != "nl" else text
+
     base = read_json(os.path.join(DATA, "machines.json"), [])
     by_brand = defaultdict(list)
     for p in products:
@@ -147,6 +162,14 @@ def build_machines(products, pictures):
     out = []
     for machine in base:
         brand = machine["id"]
+        for field in ("summary", "description"):
+            said = (per_machine.get(brand, {}).get(field) or {}).get(locale)
+            if said:
+                machine[field] = said
+        if machine.get("serviceMenuNote"):
+            machine["serviceMenuNote"] = say(notes, machine["serviceMenuNote"])
+        for row in machine.get("specs", []):
+            row["label"] = say(labels, row["label"])
         variants = sorted(by_brand.get(brand, []), key=lambda p: p["model_code"])
         machine["variants"] = [dict(
             code=v["model_code"],
@@ -730,18 +753,17 @@ def main():
                        "safety", "views")}
     for bucket in ("img", "tek", "stap"):
         shutil.rmtree(os.path.join(ASSETS, bucket), ignore_errors=True)
-    for stale in glob.glob(os.path.join(ASSETS, "content-*.json")):
+    for stale in (glob.glob(os.path.join(ASSETS, "content-*.json"))
+                  + glob.glob(os.path.join(ASSETS, "machines*.json"))):
         os.remove(stale)
     pictures = Pictures()
 
     # --- the same for everyone ---------------------------------------------
-    machines = build_machines(kb["products"], pictures)
     cards = build_cards(kb["maintenance"], pictures)
     parts = build_parts(kb["parts"])
     drawings, drawing_titles = build_drawings(kb["drawings"], pictures)
 
     sizes = {}
-    sizes["machines.json"] = compact("machines.json", machines)
     sizes["cards.json"] = compact("cards.json", cards)
     sizes["parts.json"] = compact("parts.json", parts)
     sizes["drawings.json"] = compact("drawings.json", drawings)
@@ -752,8 +774,12 @@ def main():
     # engineer the language their machine and their manual are in, and falls
     # back to English where a book was never translated.
     counts = {}
+    machines = {}
     for locale, code in LOCALES.items():
         langs = [code, "EN", "NL"]
+        machines[locale] = build_machines(kb["products"], pictures, locale)
+        sizes[f"machines-{locale}.json"] = compact(
+            f"machines-{locale}.json", machines[locale])
         content = dict(
             faults=build_faults(kb["faults"], langs),
             components=build_components(kb["components"], pictures, langs),
@@ -769,7 +795,7 @@ def main():
         print(f"  {locale}  {sizes[name]/1024:7.0f} KB   "
               f"{native}/{len(content['components'])} componenten in eigen taal")
 
-    print(f"\n{len(machines)} machines, {len(cards)} maintenance cards, "
+    print(f"\n{len(machines['nl'])} machines, {len(cards)} maintenance cards, "
           f"{len(parts)} part rows, {len(drawings)} drawings")
     print("per language:", counts["nl"])
     for name, size in sorted(sizes.items(), key=lambda kv: -kv[1])[:6]:

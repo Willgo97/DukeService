@@ -274,7 +274,7 @@ fun MachineDetail(
                         if (!open && view.callouts.isNotEmpty()) {
                             Spacer(Modifier.height(2.dp))
                             Text(
-                                "${view.callouts.size} verwijzingen",
+                                count(R.plurals.n_callouts, view.callouts.size),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
