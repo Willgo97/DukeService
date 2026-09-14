@@ -95,7 +95,7 @@ fun SettingsScreen(
         item {
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alle machines") +
-                    catalog.machines.filter { m -> catalog.parts.any { it.machine == m.id } }
+                    catalog.machinesWithParts
                         .map { it.id as String? to it.name },
                 selected = defaultMachine,
                 onSelect = onMachine,

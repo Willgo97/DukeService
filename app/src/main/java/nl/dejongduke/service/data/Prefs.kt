@@ -10,13 +10,16 @@ import java.time.LocalDate
 class Prefs(context: Context) {
     private val sp = context.getSharedPreferences("duke", Context.MODE_PRIVATE)
 
-    // --- Checklists -------------------------------------------------------
-    // Ticks are stored per schedule per day, so tomorrow starts clean without
-    // anyone having to reset anything.
+    // --- The machine being worked on --------------------------------------
+    // Which build of a machine was last looked at, so walking back into the
+    // parts book lands on the right book instead of the first one.
 
-    private fun checkKey(schedule: String, day: LocalDate) = "check:$schedule:$day"
+    fun variant(machineId: String): String? = sp.getString("variant:$machineId", null)
 
-
+    fun setVariant(machineId: String, code: String?) {
+        if (code == null) sp.edit().remove("variant:$machineId").apply()
+        else sp.edit().putString("variant:$machineId", code).apply()
+    }
 
     // --- Pinned items -----------------------------------------------------
     // Keys look like "fault:Grinder blocked" or "part:5KAF119".

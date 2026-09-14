@@ -38,28 +38,31 @@ import nl.dejongduke.service.ui.WarnBanner
 fun MenuList(
     catalog: Catalog,
     filter: String?,
+    variant: String?,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
     val chapters = listOf(
         "6" to "Servicemenu",
-        "7" to "Klussen stap voor stap",
     )
     val documented = remember(catalog) {
         catalog.machines.filter { m -> catalog.menu.any { m.id in it.machines } }
     }
     // Every book documents the menu of its own machine; without a machine
     // picked the same topic shows up once per manual.
-    val shown = remember(catalog, filter) {
-        catalog.menu.filter { filter == null || filter in it.machines }
+    val shown = remember(catalog, filter, variant) {
+        catalog.menu.filter {
+            (filter == null || filter in it.machines) && catalog.forVariant(it.codes, variant)
+        }
     }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    "Wat er in het servicemenu zit en wat elke functie doet, plus de klussen die je " +
-                        "via het menu uitvoert — zoals ontkalken, kalibreren en software laden.",
+                    "Wat er in het servicemenu zit en wat elke functie doet, met het pad " +
+                        "erheen. De klussen die je via het menu uitvoert — ontkalken, " +
+                        "kalibreren, software laden — staan bij de procedures.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

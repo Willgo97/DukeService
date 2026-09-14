@@ -41,12 +41,13 @@ private val dayFormat = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.forLan
 fun MaintenanceScreen(
     catalog: Catalog,
     filter: String?,
+    variant: String?,
     today: LocalDate,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
     val documented = catalog.machines.filter { m -> catalog.cards.any { m.id in it.machines } }
-    val cards = catalog.cardsFor(filter)
+    val cards = catalog.cardsFor(filter, variant)
     val procedures = catalog.procedures.count { it.steps.isNotEmpty() }
 
     LazyColumn(Modifier.fillMaxWidth()) {
@@ -84,7 +85,9 @@ fun MaintenanceScreen(
                                 buildString {
                                     append(catalog.machineNames(card.machines))
                                     if (card.codes.isNotEmpty()) {
-                                        append("  ·  ${card.codes.joinToString(", ")}")
+                                        append("  ·  " + card.codes.joinToString(", ") {
+                                            catalog.variantLabel(card.machines.firstOrNull(), it)
+                                        })
                                     }
                                     append("  ·  ${card.steps.size} stappen")
                                 },

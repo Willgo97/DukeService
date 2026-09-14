@@ -51,7 +51,9 @@ def build_products(corpus):
         brand, code = doc.get("brand"), doc.get("model_code")
         series = doc.get("series")
         if code and series:
-            m = re.search(r"([\d/\s\-]*\d{3,5})\s*(?:and|en|/)?\s*(\d{3,5})?\s*series",
+            # Virtu counts in tens (70 and 90), the newer lines in thousands
+            # (7000 and 9000); both are the number a machine is sold under.
+            m = re.search(r"([\d/\s\-]*\d{2,5})\s*(?:and|en|/)?\s*(\d{2,5})?\s*series",
                           series, re.I)
             if m:
                 series_by_code[(brand, code)].add(re.sub(r"\s+", " ", m.group(0)).strip())
@@ -74,6 +76,27 @@ def build_products(corpus):
         p["name"] = f"{p['brand_name']} {p['brewer']} {p['size']}".strip()
         p["docs"] = sorted(set(p["docs"]))
     return products
+
+
+def by_brewer(products, meta_by_doc, docs):
+    """Machines matching the brewer and cabinet a brand-less book names."""
+    wanted = set()
+    for doc_id in docs:
+        meta = meta_by_doc.get(doc_id) or {}
+        title = (meta.get("pdf_title") or "") + " " + (meta.get("stem") or "")
+        brewers = {b for b in ("CoEx XL", "CoEx", "Filterfresh", "Instant")
+                   if b.lower().replace(" ", "") in title.lower().replace(" ", "")
+                   or b == meta.get("brewer")}
+        if "coexxl" in title.lower().replace(" ", "").replace("®", ""):
+            brewers.add("CoEx XL")
+        size = meta.get("size")
+        for product in products.values():
+            if brewers and product["brewer"] not in brewers:
+                continue
+            if size and product["size"] != size:
+                continue
+            wanted.add(product["id"])
+    return wanted
 
 
 def main():
@@ -142,6 +165,10 @@ def main():
         brand_only = chapter in BRAND_ONLY_CHAPTERS or kind in BRAND_ONLY_KINDS
         if not applies:
             applies = {p["id"] for p in products.values() if p["brand"] in all_brands}
+        if not applies:
+            # Quick start guides and the touchless manual name a brewer, not a
+            # brand: they hold for every machine built around that brewer.
+            applies = by_brewer(products, meta_by_doc, docs)
         ref_lang = next((l for l in LANG_ORDER if l in langs_all), sorted(langs_all)[0])
         title = langs_all[ref_lang].get("title", "")
         topics.append(dict(

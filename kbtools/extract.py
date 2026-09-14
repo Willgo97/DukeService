@@ -20,7 +20,7 @@ import pymupdf
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import BUILD, ROOT, read_json, write_json
-from layout import blocks_of, render, running_text, xy_cut
+from layout import blocks_of, drop_key, render, running_text, xy_cut
 
 DOCS = os.path.join(BUILD, "docs")
 # Each worker holds a whole book in memory; four of them is plenty on a laptop
@@ -292,7 +292,7 @@ def extract_one(meta):
         builder = {"poster": poster_sections, "parts": parts_sections,
                    "page": page_sections}[profile]
         ordered = builder(doc, drop)
-        return finish(doc, meta, ordered, profile)
+        return finish(doc, meta, ordered, profile, drop)
     anchors = anchors_from_toc(doc)
     if not anchors:
         anchors = headings_by_font(doc, drop)
@@ -339,12 +339,15 @@ def extract_one(meta):
                     ln["page"] = i + 1
                     sec["lines"].append(ln)
 
-    return finish(doc, meta, ordered, "flow")
+    return finish(doc, meta, ordered, "flow", drop)
 
 
-def finish(doc, meta, ordered, profile):
+def finish(doc, meta, ordered, profile, drop=()):
     out_sections = []
     for idx, sec in enumerate(ordered):
+        # A running footer that shares a block with body text survives the
+        # block filter; catch it again per line.
+        sec["lines"] = [l for l in sec["lines"] if drop_key(l["text"]) not in drop]
         text = render(sec["lines"])
         if not text and not sec["images"] and sec["title"] == "(front matter)":
             continue

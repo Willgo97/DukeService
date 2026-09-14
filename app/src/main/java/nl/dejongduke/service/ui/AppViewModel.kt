@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -102,8 +104,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val loaded = withContext(Dispatchers.IO) { Catalog.load(getApplication()) }
             _catalog.value = loaded
             // The parts table is five megabytes; the app is usable without it.
-            val rows = withContext(Dispatchers.IO) { Catalog.loadParts(getApplication()) }
-            _catalog.value = _catalog.value?.withParts(rows)
+            // Both the reading and the indexing that follows belong off the
+            // main thread — the index is eighty thousand normalised strings.
+            val withParts = withContext(Dispatchers.Default) {
+                val rows = Catalog.loadParts(getApplication())
+                loaded.withParts(rows)
+            }
+            _catalog.value = withParts
         }
     }
 
@@ -128,10 +135,25 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return true
     }
 
+    private var searchJob: Job? = null
+
+    /**
+     * Searching scans forty thousand part rows among everything else, which is
+     * too much to do on the main thread between two keystrokes.
+     */
     fun setQuery(text: String) {
         _query.value = text
         val loaded = _catalog.value ?: return
-        _results.value = loaded.search(text)
+        searchJob?.cancel()
+        if (text.trim().length < 2) {
+            _results.value = SearchResult()
+            return
+        }
+        searchJob = viewModelScope.launch {
+            delay(90)
+            val found = withContext(Dispatchers.Default) { loaded.search(text) }
+            _results.value = found
+        }
     }
 
     fun commitQuery() {
@@ -161,6 +183,28 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun setFilter(machineId: String?) {
         _filter.value = machineId
         prefs.machine = machineId
+        _variant.value = machineId?.let { prefs.variant(it) }
+    }
+
+    /** The build of the machine the lists are narrowed to, if one was chosen. */
+    private val _variant = MutableStateFlow(prefs.machine?.let { prefs.variant(it) })
+    val variant: StateFlow<String?> = _variant.asStateFlow()
+
+    fun setVariant(code: String?) {
+        _variant.value = code
+        _filter.value?.let { prefs.setVariant(it, code) }
+    }
+
+    /**
+     * Point the whole app at the machine in front of you.
+     *
+     * Reading the type plate is the one moment the app knows exactly which
+     * machine and which build it is dealing with; everything after that should
+     * follow without being asked again.
+     */
+    fun useMachine(machineId: String, code: String? = null) {
+        setFilter(machineId)
+        if (code != null) setVariant(code)
     }
 
     fun setMessageLanguage(language: String) {

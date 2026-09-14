@@ -20,11 +20,24 @@ from common import BUILD, read_json, write_json
 
 DOCS = os.path.join(BUILD, "docs")
 
+# A chapter number only means something within its own kind of book. Chapter 6
+# is the service menu in a technical manual and the troubleshooting list in a
+# user manual; reading one with the other's map files the text under the wrong
+# heading and loses it.
 KIND_BY_CHAPTER = {
-    "1": "safety", "2": "view", "3": "installation", "4": "component",
-    "5": "electronics", "6": "menu", "7": "howto", "8": "fault",
-    "9": "spec", "10": "appendix",
+    "TM": {"1": "safety", "2": "view", "3": "installation", "4": "component",
+           "5": "electronics", "6": "menu", "7": "howto", "8": "fault",
+           "9": "spec", "10": "appendix"},
+    "UM": {"1": "safety", "2": "view", "3": "howto", "4": "howto",
+           "5": "howto", "6": "fault", "7": "spec", "8": "appendix"},
+    "QSG": {"1": "front", "2": "safety", "3": "installation", "4": "howto",
+            "5": "howto", "6": "howto"},
+    "IM": {},                      # every chapter is a job on its own
 }
+# Which sections hold one message, per kind of book.
+MESSAGE_SECTION = {"TM": re.compile(r"^8\.\d+\.\d+$"),
+                   "UM": re.compile(r"^6\.\d+\.\d+$")}
+DEFAULT_KIND = {"IM": "howto", "QSG": "howto", "UM": "howto"}
 NOTE = re.compile(r"^\s*(NOTE|NOTA|OPMERKING|LET OP|HINWEIS|BEMÆRK|HUOMAA|MERK|OBS|"
                   r"POZNÁMKA|CAUTION|VOORZICHTIG|ACHTUNG|FORSIGTIG|VARO|FORSIKTIG|"
                   r"VAR FÖRSIKTIG|UPOZORNĚNÍ|WARNING|WAARSCHUWING|WARNUNG|ADVARSEL|"
@@ -157,29 +170,34 @@ def parse_doc(meta, data):
     for s in sections:
         by_chapter[chapter_of(s["number"])].append(s)
 
+    doctype = meta.get("doctype")
+    chapters = KIND_BY_CHAPTER.get(doctype, {})
+    leaf = MESSAGE_SECTION.get(doctype)
     fault_sections = [s for s in sections
-                      if s["number"] and re.match(r"^8\.\d+\.\d+$", s["number"])]
+                      if leaf and s["number"] and leaf.match(s["number"])]
     fault_labels = set(learn_labels(fault_sections))
 
     for s in sections:
         number = s["number"] or ""
-        kind = KIND_BY_CHAPTER.get(chapter_of(number))
-        if meta["doctype"] == "SMI":
+        kind = chapters.get(chapter_of(number))
+        if doctype == "SMI":
             kind = "maintenance_step"
-        elif meta["doctype"] == "SPM":
+        elif doctype == "SPM":
             kind = "drawing"
-        elif meta["doctype"] == "BR":
+        elif doctype == "BR":
             kind = "brochure"
-        if kind == "fault" and not re.match(r"^8\.\d+\.\d+$", number):
+        if kind == "fault" and not (leaf and leaf.match(number)):
             kind = "other"                      # chapter and paragraph headings
+        if not kind and number:
+            kind = DEFAULT_KIND.get(doctype, "other")
         if not kind:
-            kind = "front" if not number else "other"
+            kind = "front"
         rec = dict(id=s["id"], doc_id=meta["doc_id"], kind=kind, number=number,
                    title=s["title"], level=s["level"], page=s["page"],
                    page_to=s["page_to"], lang=meta.get("lang", "EN"),
                    text=s["text"], images=s["images"])
 
-        if kind == "fault" and re.match(r"^8\.\d+\.\d+$", number):
+        if kind == "fault":
             fields, order = split_by_labels(s["text"], fault_labels)
             notes, _ = pull_notes(s["text"])
             values = [fields[k] for k in order if fields.get(k)]

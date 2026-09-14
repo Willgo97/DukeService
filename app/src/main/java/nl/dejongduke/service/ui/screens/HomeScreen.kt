@@ -29,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,9 +52,81 @@ import nl.dejongduke.service.ui.Tab
 fun LazyListScope.homeSections(
     catalog: Catalog,
     pins: List<String>,
+    filter: String?,
+    variant: String?,
+    onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
     onTab: (Tab) -> Unit,
 ) {
+    // --- the machine in front of you --------------------------------------
+    // Scanning the type plate, or picking a machine anywhere in the app, points
+    // everything at it. Say so on the way in, and offer the four things that
+    // are then one tap away instead of four.
+    val machine = filter?.let { catalog.machine(it) }
+    if (machine != null) {
+        item { SectionHeader("Deze machine") }
+        item {
+            Card {
+                Column {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(machine.name, style = MaterialTheme.typography.titleLarge)
+                            Spacer(Modifier.height(2.dp))
+                            val build = variant?.let { code ->
+                                machine.variants.firstOrNull { it.code == code }
+                            }
+                            Text(
+                                if (build != null) {
+                                    listOfNotNull(
+                                        "${build.brewer} ${build.cabinet}".trim(),
+                                        build.code,
+                                        build.doc.ifEmpty { null },
+                                    ).joinToString("  ·  ")
+                                } else {
+                                    val brewers = machine.variants.map { it.brewer }
+                                        .filter { it.isNotEmpty() }.distinct()
+                                    listOfNotNull(
+                                        "${machine.variants.size} uitvoeringen"
+                                            .takeIf { machine.variants.isNotEmpty() },
+                                        brewers.joinToString(", ").ifEmpty { null },
+                                    ).joinToString("  ·  ")
+                                },
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 2,
+                            )
+                        }
+                        TextButton(onClick = { onFilter(null) }) { Text("Alle") }
+                    }
+                }
+            }
+        }
+        item {
+            Column(Modifier.padding(horizontal = 12.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Tile(Icons.Filled.CleaningServices, "Onderhoud",
+                         "${catalog.cardsFor(machine.id, variant).size} kaarten",
+                         Modifier.weight(1f)) { onTab(Tab.Maintenance) }
+                    Tile(Icons.Filled.Build, "Onderdelen",
+                         "${catalog.partCount(machine.id, variant)} regels",
+                         Modifier.weight(1f)) { onTab(Tab.Parts) }
+                }
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Tile(Icons.Filled.WarningAmber, "Storingen",
+                         "${catalog.faultGroups.count { group ->
+                             machine.id in group.machines &&
+                                 group.variants.any { catalog.forVariant(it.codes, variant) }
+                         }} meldingen",
+                         Modifier.weight(1f)) { onTab(Tab.Faults) }
+                    Tile(Icons.AutoMirrored.Filled.MenuBook, "Handleidingen",
+                         "${catalog.booksFor(machine.id, variant).size} boeken",
+                         Modifier.weight(1f)) { onOpen(Route.Books) }
+                }
+            }
+        }
+    }
+
     // --- pinned -----------------------------------------------------------
     val pinned = pins.mapNotNull { key ->
         val value = key.substringAfter(':')
@@ -61,7 +134,7 @@ fun LazyListScope.homeSections(
             key.startsWith("fault:") -> catalog.faultGroup(value)?.let {
                 Triple(Icons.Filled.WarningAmber, it.message, Route.Fault(it.message) as Route)
             }
-            key.startsWith("part:") -> catalog.parts.firstOrNull { it.number == value }?.let {
+            key.startsWith("part:") -> catalog.part(value)?.let {
                 Triple(Icons.Filled.Build, "${it.number} · ${it.description}",
                     Route.PartSection(it.machine, it.variant, it.section) as Route)
             }
@@ -86,7 +159,7 @@ fun LazyListScope.homeSections(
     }
 
     // --- the four ways in -------------------------------------------------
-    item { SectionHeader("Waar wil je heen") }
+    item { SectionHeader(if (machine == null) "Waar wil je heen" else "Alles") }
     item {
         Column(Modifier.padding(horizontal = 12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

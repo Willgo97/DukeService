@@ -46,19 +46,23 @@ import nl.dejongduke.service.ui.WarnBanner
 fun FaultsScreen(
     catalog: Catalog,
     filter: String?,
+    variant: String?,
     language: String,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
-    var categorie by remember { mutableStateOf<String?>(null) }
+    var category by remember { mutableStateOf<String?>(null) }
 
     val documented = catalog.machines.filter { m -> catalog.faults.any { m.id in it.machines } }
-    val byMachine = catalog.faultGroups.filter { filter == null || filter in it.machines }
+    val byMachine = catalog.faultGroups.filter { group ->
+        (filter == null || filter in group.machines) &&
+            group.variants.any { catalog.forVariant(it.codes, variant) }
+    }
     val categories = byMachine.map { it.first.category }.distinct().sorted()
     // A category picked for one machine may not exist for the next one; leaving
     // it set would show an empty list with no chip to explain why.
-    if (categorie != null && categorie !in categories) categorie = null
-    val shown = byMachine.filter { categorie == null || it.first.category == categorie }
+    if (category != null && category !in categories) category = null
+    val shown = byMachine.filter { category == null || it.first.category == category }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
@@ -73,8 +77,8 @@ fun FaultsScreen(
         item {
             ChipRow(
                 options = listOf<Pair<String?, String>>(null to "Alles") + categories.map { it as String? to it },
-                selected = categorie,
-                onSelect = { categorie = it },
+                selected = category,
+                onSelect = { category = it },
             )
         }
         item { SectionHeader("Schermmeldingen", "${shown.size}") }

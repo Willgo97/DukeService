@@ -45,11 +45,12 @@ import nl.dejongduke.service.ui.SectionHeader
 fun CardList(
     catalog: Catalog,
     filter: String?,
+    variant: String?,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
     val withCards = catalog.machines.filter { m -> catalog.cards.any { it.machines.contains(m.id) } }
-    val cards = remember(filter) { catalog.cardsFor(filter) }
+    val cards = remember(catalog, filter, variant) { catalog.cardsFor(filter, variant) }
     val perInterval = cards.groupBy { it.interval }
 
     LazyColumn(Modifier.fillMaxWidth()) {
@@ -83,7 +84,11 @@ fun CardList(
                             Text(
                                 buildString {
                                     append(catalog.machineNames(card.machines))
-                                    if (card.codes.isNotEmpty()) append("  ·  ${card.codes.joinToString(", ")}")
+                                    if (card.codes.isNotEmpty()) {
+                                        append("  ·  " + card.codes.joinToString(", ") {
+                                            catalog.variantLabel(card.machines.firstOrNull(), it)
+                                        })
+                                    }
                                     append("  ·  ${card.steps.size} stappen")
                                 },
                                 style = MaterialTheme.typography.bodySmall,

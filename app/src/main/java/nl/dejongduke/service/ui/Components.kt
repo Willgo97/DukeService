@@ -7,12 +7,16 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +38,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -133,11 +141,13 @@ fun PartNumber(text: String, modifier: Modifier = Modifier) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Card(
     onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     highlight: Boolean = false,
+    onLongClick: (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     Surface(
@@ -150,7 +160,15 @@ fun Card(
                     2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(14.dp)
                 ) else Modifier
             )
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
+            .then(
+                when {
+                    onLongClick != null -> Modifier.combinedClickable(
+                        onClick = onClick ?: {}, onLongClick = onLongClick,
+                    )
+                    onClick != null -> Modifier.clickable(onClick = onClick)
+                    else -> Modifier
+                }
+            ),
         color = if (highlight) MaterialTheme.colorScheme.surfaceContainerHigh
         else MaterialTheme.colorScheme.surfaceContainer,
         content = { Box(Modifier.padding(14.dp)) { content() } },
@@ -192,11 +210,21 @@ fun ChipRow(
     onSelect: (String?) -> Unit,
     contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp),
 ) {
-    Row(
-        Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(contentPadding),
+    val state = rememberLazyListState()
+    // With eleven machines the chosen one is often off the right edge, which
+    // reads as nothing being chosen at all.
+    LaunchedEffect(selected, options.size) {
+        val index = options.indexOfFirst { it.first == selected }
+        if (index >= 0) state.animateScrollToItem(index)
+    }
+    LazyRow(
+        Modifier.fillMaxWidth(),
+        state = state,
+        contentPadding = contentPadding,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        options.forEach { (id, label) ->
+        items(options.size) { index ->
+            val (id, label) = options[index]
             Pill(label, selected = id == selected) { onSelect(id) }
         }
     }
@@ -218,6 +246,30 @@ fun EmptyState(title: String, hint: String) {
     }
 }
 
+/**
+ * Decode an asset no larger than it is going to be shown.
+ *
+ * A drawing sheet is 1400 pixels wide and costs four bytes a pixel decoded; a
+ * parts section with a dozen sheets would run the app out of memory long
+ * before the engineer scrolled to the bottom of it.
+ */
+fun decodeAsset(context: android.content.Context, path: String, maxWidth: Int): ImageBitmap? =
+    runCatching {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        context.assets.open(path).use { BitmapFactory.decodeStream(it, null, bounds) }
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = sampleSize(bounds.outWidth, maxWidth)
+        }
+        context.assets.open(path).use { BitmapFactory.decodeStream(it, null, options) }
+            ?.asImageBitmap()
+    }.getOrNull()
+
+private fun sampleSize(width: Int, maxWidth: Int): Int {
+    var sample = 1
+    while (maxWidth > 0 && width / (sample * 2) >= maxWidth) sample *= 2
+    return sample
+}
+
 /** An image from the app's assets, decoded off the main thread. */
 @Composable
 fun AssetPhoto(
@@ -226,11 +278,11 @@ fun AssetPhoto(
     contentScale: ContentScale = ContentScale.Fit,
 ) {
     val context = LocalContext.current
-    val bitmap by produceState<ImageBitmap?>(null, path) {
+    val screen = LocalConfiguration.current.screenWidthDp
+    val density = LocalDensity.current.density
+    val bitmap by produceState<ImageBitmap?>(null, path, screen) {
         value = withContext(Dispatchers.IO) {
-            runCatching {
-                context.assets.open(path).use { BitmapFactory.decodeStream(it)?.asImageBitmap() }
-            }.getOrNull()
+            decodeAsset(context, path, (screen * density).toInt())
         }
     }
     val image = bitmap

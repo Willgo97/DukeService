@@ -23,14 +23,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Part
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.copyToClipboard
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
 import nl.dejongduke.service.ui.PartNumber
@@ -42,12 +45,13 @@ import nl.dejongduke.service.ui.SectionHeader
 fun PartsScreen(
     catalog: Catalog,
     filter: String?,
+    variant: String?,
     onFilter: (String?) -> Unit,
+    onVariant: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
-    var term by remember { mutableStateOf("") }
-    var build by remember { mutableStateOf<String?>(null) }
-    val documented = catalog.machines.filter { m -> catalog.parts.any { it.machine == m.id } }
+    var term by rememberSaveable { mutableStateOf("") }
+    val documented = catalog.machinesWithParts
     // Without a machine chosen the section list would mix five books together,
     // so default to the first documented machine instead of showing everything.
     val machine = filter?.takeIf { id -> documented.any { it.id == id } } ?: documented.firstOrNull()?.id
@@ -55,26 +59,26 @@ fun PartsScreen(
     // Every brewer and cabinet size has its own parts book. Picking one first
     // is what the paper books force you to do as well, and it keeps a Small
     // cabinet from showing Medium part numbers.
-    val builds = remember(machine) {
+    val builds = remember(catalog, machine) {
         catalog.parts.asSequence().filter { it.machine == machine }
             .map { it.variant }.filter { it.isNotEmpty() }.distinct().sorted().toList()
     }
-    val selectedBuild = build?.takeIf { builds.contains(it) } ?: builds.firstOrNull()
-    val forMachine = remember(machine, selectedBuild) {
+    val selectedBuild = variant?.takeIf { builds.contains(it) } ?: builds.firstOrNull()
+    val forMachine = remember(catalog, machine, selectedBuild) {
         catalog.parts.filter { it.machine == machine && it.variant == selectedBuild }
     }
     val searching = term.trim().length >= 2
-    val hits = remember(machine, selectedBuild, term) {
+    val hits = remember(catalog, machine, selectedBuild, term) {
         catalog.searchParts(machine, term, variant = selectedBuild)
     }
-    val sections = remember(machine, selectedBuild) { forMachine.groupBy { it.section }.toSortedMap() }
+    val sections = remember(catalog, machine, selectedBuild) { forMachine.groupBy { it.section }.toSortedMap() }
 
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
                 options = documented.map { it.id as String? to it.name },
                 selected = machine,
-                onSelect = { onFilter(it); build = null },
+                onSelect = { onFilter(it) },
             )
         }
         if (builds.size > 1) {
@@ -86,7 +90,7 @@ fun PartsScreen(
                             ?.let { "${it.brewer} ${it.cabinet}".trim() } ?: code)
                     },
                     selected = selectedBuild,
-                    onSelect = { build = it },
+                    onSelect = onVariant,
                 )
             }
         }
@@ -149,7 +153,7 @@ fun PartsScreen(
 
 @Composable
 fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, section: String) {
-    val parts = remember(machine, variant, section) {
+    val parts = remember(catalog, machine, variant, section) {
         catalog.parts.filter {
             it.machine == machine && it.section == section &&
                 (variant.isEmpty() || it.variant == variant)
@@ -157,7 +161,7 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
     }
     val sheets = catalog.drawing(machine, variant, section)
     val name = catalog.drawingName(machine, variant, section)
-    val balloons = remember(machine, variant, section) {
+    val balloons = remember(catalog, machine, variant, section) {
         catalog.balloons(machine, variant, section)
     }
     var selected by remember(machine, variant, section) { mutableStateOf<String?>(null) }
@@ -187,18 +191,14 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
         if (sheets.isNotEmpty()) {
             item {
                 Column {
-                    // A big assembly runs over more than one sheet; the balloons
-                    // were read from the first one.
-                    sheets.forEachIndexed { index, sheet ->
-                        DrawingView(
-                            path = sheet,
-                            balloons = if (index == 0) balloons else emptyList(),
-                            selected = selected,
-                            // No scrolling: the answer appears under the drawing,
-                            // so the picture you are reading stays in view.
-                            onSelect = { pos -> selected = if (selected == pos) null else pos },
-                        )
-                    }
+                    DrawingView(
+                        path = sheets.first(),
+                        balloons = balloons,
+                        selected = selected,
+                        // No scrolling: the answer appears under the drawing,
+                        // so the picture you are reading stays in view.
+                        onSelect = { pos -> selected = if (selected == pos) null else pos },
+                    )
                     val selectedParts = parts.filter { selected != null && summary(it.pos) == selected }
                     if (selectedParts.isNotEmpty()) {
                         Spacer(Modifier.height(8.dp))
@@ -217,6 +217,22 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
                     )
                     Spacer(Modifier.height(8.dp))
+                }
+            }
+            // A big assembly runs over more than one sheet. Each extra sheet is
+            // its own row so the list can let go of the ones off screen; the
+            // balloons were read from the first sheet only.
+            if (sheets.size > 1) {
+                items(sheets.drop(1), key = { it }) { sheet ->
+                    Column {
+                        DrawingView(
+                            path = sheet,
+                            balloons = emptyList(),
+                            selected = null,
+                            onSelect = {},
+                        )
+                        Spacer(Modifier.height(8.dp))
+                    }
                 }
             }
         }
@@ -249,7 +265,16 @@ private fun PartRow(
     active: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
-    Card(onClick = onClick, highlight = active) {
+    val context = LocalContext.current
+    // Holding a row copies the number: with a glove on, that beats opening the
+    // part and hunting for a copy button.
+    Card(
+        onClick = onClick,
+        highlight = active,
+        onLongClick = if (part.available) {
+            { copyToClipboard(context, part.number) }
+        } else null,
+    ) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (part.available) PartNumber(part.number) else Pill("niet los leverbaar")

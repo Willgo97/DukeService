@@ -186,8 +186,14 @@ def build_drawings(parts, media, corpus_by_doc):
         pictures = sorted(by_doc_section.get((doc_id, section), {}).values(),
                           key=lambda p: (p["kind"] != "drawing",
                                          -p["width"] * p["height"]))
-        pictures = [p for p in pictures
-                    if p["width"] * p["height"] >= 120_000 or p["kind"] == "drawing"]
+        # A section is a drawing plus, sometimes, a second sheet. The rest of
+        # what sits on those pages is a label or an icon, and a picture that is
+        # a fraction of the size of the sheet is one of those.
+        if pictures:
+            biggest = pictures[0]["width"] * pictures[0]["height"]
+            pictures = [p for p in pictures
+                        if p["kind"] == "drawing"
+                        or p["width"] * p["height"] >= biggest * 0.35]
         title = (rows[0].get("section_title") if rows
                  else next(iter(pictures), {}).get("section_title")) or ""
         product = (f"{meta.get('brand')}.{meta['model_code'].lower()}"

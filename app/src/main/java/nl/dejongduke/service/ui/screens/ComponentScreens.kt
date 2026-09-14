@@ -42,7 +42,9 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +52,7 @@ import kotlinx.coroutines.withContext
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Component
 import nl.dejongduke.service.ui.Card
+import nl.dejongduke.service.ui.decodeAsset
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
 import nl.dejongduke.service.ui.Pill
@@ -73,14 +76,17 @@ private val VOLGORDE = listOf(
 fun ComponentList(
     catalog: Catalog,
     filter: String?,
+    variant: String?,
     onFilter: (String?) -> Unit,
     onOpen: (Route) -> Unit,
 ) {
     val documented = remember(catalog) {
         catalog.machines.filter { m -> catalog.components.any { m.id in it.machines } }
     }
-    val shown = remember(catalog, filter) {
-        catalog.components.filter { filter == null || filter in it.machines }
+    val shown = remember(catalog, filter, variant) {
+        catalog.components.filter {
+            (filter == null || filter in it.machines) && catalog.forVariant(it.codes, variant)
+        }
     }
     val groups = remember(shown) {
         shown.groupBy { it.group }.toList()
@@ -198,11 +204,11 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
 @Composable
 fun AssetImage(path: String) {
     val context = LocalContext.current
-    val bitmap by produceState<ImageBitmap?>(null, path) {
+    val screen = LocalConfiguration.current.screenWidthDp
+    val density = LocalDensity.current.density
+    val bitmap by produceState<ImageBitmap?>(null, path, screen) {
         value = withContext(Dispatchers.IO) {
-            runCatching {
-                context.assets.open(path).use { BitmapFactory.decodeStream(it)?.asImageBitmap() }
-            }.getOrNull()
+            decodeAsset(context, path, (screen * density).toInt())
         }
     }
 

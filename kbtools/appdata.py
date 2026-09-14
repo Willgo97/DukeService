@@ -58,6 +58,25 @@ def codes(applies_to):
     return sorted({code_of(p) for p in applies_to if "." in (p or "")})
 
 
+def trim(image, threshold=244, pad=6):
+    """Cut the empty page around an illustration.
+
+    A figure is rendered from the area it occupies on the page, which often
+    leaves half a column of white beside it. On a phone that white is the
+    difference between a readable picture and a stamp.
+    """
+    mask = image.convert("L").point(lambda v: 0 if v > threshold else 255)
+    box = mask.getbbox()
+    if not box:
+        return image
+    width, height = image.size
+    box = (max(0, box[0] - pad), max(0, box[1] - pad),
+           min(width, box[2] + pad), min(height, box[3] + pad))
+    if (box[2] - box[0]) * (box[3] - box[1]) > width * height * 0.97:
+        return image
+    return image.crop(box)
+
+
 class Pictures:
     """Copies a picture into the assets at the size the app shows it."""
 
@@ -76,7 +95,7 @@ class Pictures:
         out_dir = os.path.join(ASSETS, bucket)
         os.makedirs(out_dir, exist_ok=True)
         dst = os.path.join(out_dir, digest + ".webp")
-        image = Image.open(src)
+        image = trim(Image.open(src))
         target = WIDTH[bucket]
         if max(image.size) > target:
             scale = target / max(image.size)
@@ -114,9 +133,15 @@ def build_machines(products, pictures):
             machine["cabinet"] = ", ".join(sizes)
             brewers = sorted({v["brewer"] for v in variants if v["brewer"]})
             machine["brewer"] = ", ".join(brewers)
-            series = sorted({s for v in variants for s in v["series"]})
+            # "1000, 2000, 18000" reads as a range; sorted as text it comes out
+            # "1000, 18000, 19000, 2000" and looks like a mistake.
+            series = {s for v in variants for s in v["series"]}
             if series:
-                machine["series"] = ", ".join(series)
+                def first_number(text):
+                    digits = re.findall(r"\d+", text)
+                    return int(digits[0]) if digits else 0
+                machine["series"] = ", ".join(
+                    s.replace(" series", "") for s in sorted(series, key=first_number))
         out.append(machine)
     known = {m["id"] for m in out}
     for brand, variants in sorted(by_brand.items()):
@@ -202,8 +227,11 @@ def category(message):
 def build_components(kb_components, pictures):
     out = []
     for topic in kb_components:
-        text, lang = first(topic["body"]) if topic.get("body") else first(topic.get("text", {}))
-        if not text:
+        # The body is the section minus its own heading. A chapter that only
+        # introduces its subsections has none, and would otherwise show up as a
+        # component whose whole text is its own title.
+        text, lang = first(topic["body"])
+        if not text or len(text.strip()) < 25:
             continue
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         out.append(dict(
@@ -214,7 +242,50 @@ def build_components(kb_components, pictures):
             brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
                                      for c in codes(topic["applies_to"])} - {""})),
             source=(topic["sources"] or [""])[0], language=lang))
-    return out
+    return label_duplicates(out)
+
+
+def variant_label(codes):
+    """"Instant Small" for the machines a set of model codes stands for."""
+    pairs = {MODEL_CODES[c] for c in codes if c in MODEL_CODES}
+    if not pairs or len(pairs) > 2:
+        return ""
+    return " / ".join(sorted(f"{brewer} {size}".strip() for brewer, size in pairs))
+
+
+def label_duplicates(rows, extra=None):
+    """Tell apart records that would read as the same row in a list.
+
+    The same subject is written once per brewer, so a machine sold with four of
+    them has four "Mixer" sections. They differ in their text, not in their
+    title, which is no help when you are looking at a list of them.
+    """
+    def key_of(row):
+        return (row["title"], tuple(row["machines"]),
+                row.get(extra, "") if extra else "")
+
+    groups = defaultdict(list)
+    for row in rows:
+        groups[key_of(row)].append(row)
+    for group in groups.values():
+        if len(group) < 2:
+            continue
+        for row in group:
+            label = variant_label(row.get("codes") or [])
+            if not label or label in row["title"]:
+                continue
+            # The manual's own title may already carry a bracket
+            # ("2-way outlet valve (Open boiler)"); a second one reads badly.
+            row["title"] = (f"{row['title']} — {label}" if row["title"].endswith(")")
+                            else f"{row['title']} ({label})")
+
+    # Whatever still collides says the same thing twice: keep the fullest one.
+    best = {}
+    for row in rows:
+        current = best.get(key_of(row))
+        if current is None or len(row.get("text", "")) > len(current.get("text", "")):
+            best[key_of(row)] = row
+    return [row for row in rows if best[key_of(row)] is row]
 
 
 def build_menu(kb_menu, pictures):
@@ -234,7 +305,7 @@ def build_menu(kb_menu, pictures):
             notes=[n["text"] for n in (notes or [])],
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
             source=(topic["sources"] or [""])[0], language=lang))
-    return out
+    return label_duplicates(out, extra="path")
 
 
 def build_procedures(kb_procedures, pictures):
@@ -245,7 +316,7 @@ def build_procedures(kb_procedures, pictures):
         steps, lang = first(topic["steps"]) or ([], "nl")
         body, body_lang = first(topic["body"])
         notes, _ = first(topic["notes"]) or ([], "nl")
-        if not steps and not body:
+        if not steps and len((body or "").strip()) < 40:
             continue
         title = topic["title"]
         if title.lower() in have:
@@ -284,8 +355,11 @@ def build_cards(maintenance, pictures):
         steps = []
         for step in card["steps"]:
             images = [pictures.add(i["file"], "stap") for i in step["images"]]
-            steps.append(dict(n=step["step"] or "", t=step["points"],
-                              o=[note["text"] for note in step["notes"]],
+            points = [p for p in step["points"] if p.strip()]
+            notes = [note["text"] for note in step["notes"]]
+            if not points and not notes and not images:
+                continue
+            steps.append(dict(n=step["step"] or "", t=points, o=notes,
                               a=[i for i in images if i]))
         title = CARD_TITLES.get(card["title"].strip().lower(), card["title"])
         out.append(dict(id=card["id"], title=title, interval=card["interval"],
@@ -375,7 +449,7 @@ def build_views(kb_views, pictures):
                         images=images, machines=brands(topic["applies_to"]),
                         codes=codes(topic["applies_to"]),
                         source=(topic["sources"] or [""])[0], language=lang))
-    return out
+    return label_duplicates(out)
 
 
 def build_specs(kb_specs):

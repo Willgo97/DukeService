@@ -1,6 +1,7 @@
 package nl.dejongduke.service.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -17,6 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -77,7 +81,7 @@ fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
 private fun MachineCard(catalog: Catalog, machine: Machine, onOpen: (Route) -> Unit) {
     val faults = catalog.faults.count { machine.id in it.machines }
     val procs = catalog.procedures.count { machine.id in it.machines && it.steps.isNotEmpty() }
-    val parts = catalog.parts.count { it.machine == machine.id }
+    val parts = catalog.partCount[machine.id] ?: 0
 
     Card(onClick = { onOpen(Route.Machine(machine.id)) }) {
         Column {
@@ -141,14 +145,16 @@ private fun MachineThumb(path: String) {
 fun MachineDetail(
     catalog: Catalog,
     machine: Machine,
-    notitie: String,
+    variant: String?,
+    onUseMachine: (String, String?) -> Unit,
+    note: String,
     onNote: (String, String) -> Unit,
     onOpen: (Route) -> Unit,
     onJump: (Tab, String) -> Unit,
 ) {
     val faults = catalog.faults.count { machine.id in it.machines }
     val procs = catalog.procedures.count { machine.id in it.machines && it.steps.isNotEmpty() }
-    val parts = catalog.parts.count { it.machine == machine.id }
+    val parts = catalog.partCount[machine.id] ?: 0
 
     LazyColumn(Modifier.fillMaxWidth()) {
         if (machine.photo.isNotEmpty()) {
@@ -243,6 +249,52 @@ fun MachineDetail(
             }
         }
 
+        // Six full-page pictures would push everything useful below the fold,
+        // so an aanzicht opens when it is asked for.
+        val views = catalog.viewsFor(machine.id)
+        if (views.isNotEmpty()) {
+            item { SectionHeader("Aanzichten", "${views.size}") }
+            items(views, key = { it.id }) { view ->
+                var open by rememberSaveable(view.id) { mutableStateOf(false) }
+                Card(onClick = { open = !open }) {
+                    Column {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                view.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.weight(1f),
+                            )
+                            Icon(
+                                if (open) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        if (!open && view.callouts.isNotEmpty()) {
+                            Spacer(Modifier.height(2.dp))
+                            Text(
+                                "${view.callouts.size} verwijzingen",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        if (open) {
+                            view.images.forEach { image ->
+                                Spacer(Modifier.height(8.dp))
+                                AssetImage(image)
+                            }
+                            if (view.callouts.isNotEmpty()) Spacer(Modifier.height(8.dp))
+                            view.callouts.forEach { callout ->
+                                Text(callout, style = MaterialTheme.typography.bodyMedium)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        item { Spacer(Modifier.height(24.dp)) }
+
         if (machine.specs.isNotEmpty()) {
             item { SectionHeader("Afmetingen en aansluiting") }
             item {
@@ -276,28 +328,21 @@ fun MachineDetail(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.weight(1.2f),
                             )
-                            Text(row.small.ifEmpty { "—" }, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
-                            Text(row.medium.ifEmpty { "—" }, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
-                        }
-                    }
-                }
-            }
-        }
-
-        val views = catalog.viewsFor(machine.id)
-        if (views.isNotEmpty()) {
-            item { SectionHeader("Aanzichten", "${views.size}") }
-            items(views, key = { it.id }) { view ->
-                Card {
-                    Column {
-                        Text(view.title, style = MaterialTheme.typography.titleMedium)
-                        view.images.forEach { image ->
-                            Spacer(Modifier.height(8.dp))
-                            AssetImage(image)
-                        }
-                        if (view.callouts.isNotEmpty()) Spacer(Modifier.height(8.dp))
-                        view.callouts.forEach { callout ->
-                            Text(callout, style = MaterialTheme.typography.bodyMedium)
+                            // Printing the same value twice reads as a mistake.
+                            if (row.small == row.medium) {
+                                Text(
+                                    row.small.ifEmpty { "—" },
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.weight(2f),
+                                )
+                            } else {
+                                Text(row.small.ifEmpty { "—" },
+                                     style = MaterialTheme.typography.bodyMedium,
+                                     modifier = Modifier.weight(1f))
+                                Text(row.medium.ifEmpty { "—" },
+                                     style = MaterialTheme.typography.bodyMedium,
+                                     modifier = Modifier.weight(1f))
+                            }
                         }
                     }
                 }
@@ -305,21 +350,42 @@ fun MachineDetail(
         }
 
         if (machine.variants.isNotEmpty()) {
-            item { SectionHeader("Uitvoeringen", "${machine.variants.size}") }
+            item {
+                SectionHeader("Uitvoeringen", "${machine.variants.size}")
+            }
+            item {
+                Text(
+                    "Tik de uitvoering aan die voor je staat — de typecode staat op het " +
+                        "typeplaatje. De lijsten in de app gaan dan alleen nog daarover.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+                )
+            }
             item {
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     machine.variants.forEach { u ->
+                        val active = u.code == variant
                         Column(
                             Modifier.fillMaxWidth()
                                 .padding(vertical = 1.dp)
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(MaterialTheme.colorScheme.surfaceContainer)
+                                .background(
+                                    if (active) MaterialTheme.colorScheme.surfaceContainerHighest
+                                    else MaterialTheme.colorScheme.surfaceContainer
+                                )
+                                // Machine and build in one call: setting the
+                                // machine re-reads the build it remembers, so
+                                // the two cannot be set one after the other.
+                                .clickable { onUseMachine(machine.id, if (active) null else u.code) }
                                 .padding(horizontal = 14.dp, vertical = 10.dp),
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     u.code,
                                     style = MaterialTheme.typography.titleMedium,
+                                    color = if (active) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.width(88.dp),
                                 )
                                 Text(
@@ -384,7 +450,7 @@ fun MachineDetail(
 
         item { SectionHeader("Mijn notitie") }
         item {
-            var text by remember(machine.id) { mutableStateOf(notitie) }
+            var text by remember(machine.id) { mutableStateOf(note) }
             Column(Modifier.padding(horizontal = 12.dp)) {
                 OutlinedTextField(
                     value = text,
@@ -487,57 +553,71 @@ fun SpecsScreen(catalog: Catalog) {
 }
 
 @Composable
-fun SourcesScreen() {
+fun SourcesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
+    val perKind = catalog.books.groupingBy { it.kindName }.eachCount()
+        .toList().sortedByDescending { it.second }
+    val languages = catalog.books.map { it.language }.filter { it.isNotEmpty() }.distinct()
+
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text("Waar komt dit vandaan?", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text("Waar komt dit vandaan?", style = MaterialTheme.typography.headlineSmall,
+                     fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    "Alles in deze app komt uit De Jong DUKE-documentatie: gebruikershandleidingen, " +
-                        "technische handleidingen en onderdelenboeken. De handleidingen zelf zitten niet in de app; " +
-                        "wat je hier ziet is eruit overgenomen voor gebruik op de werkvloer.",
+                    "Alles in deze app is overgenomen uit de servicedocumentatie van De Jong " +
+                        "DUKE: ${catalog.books.size} boeken in ${languages.size} talen. De " +
+                        "handleidingen zelf zitten er niet in — die zijn van de fabrikant.",
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
-        item { SectionHeader("Gebruikt") }
+        item { SectionHeader("De boeken", "${catalog.books.size}") }
         item {
             Column(Modifier.padding(horizontal = 20.dp)) {
-                listOf(
-                    "Technische handleiding Avy CoEx Medium — 5DTCET10M NL V1.0" to
-                        "De Nederlandse brontekst voor de storingen, de componentengids en het servicemenu.",
-                    "Technische handleidingen Avy (CND, XEA), Lua Instant, Nio CoEx XL en Rosa" to
-                        "Aanvullende typecodes en uitvoeringen per machine.",
-                    "Gebruikershandleidingen Virtu (5DUCEK20I), Lua (5DUXES20I), Avy en Rosa" to
-                        "Onderhoudsschema's, checklists en de procedures stap voor stap.",
-                    "Onderdelenboeken Virtu, Zia, Nio, Lua, Avy en Rosa" to
-                        "Alle onderdeelnummers, posities, tekeningnummers en voorraadcodes.",
-                    "Productbrochures van dejongduke.com" to
-                        "Afmetingen, gewichten, aansluitwaarden en modelbeschrijvingen.",
-                ).forEach { (title, note) ->
-                    Column(Modifier.padding(vertical = 8.dp)) {
-                        Text(title, style = MaterialTheme.typography.titleMedium)
+                perKind.forEach { (kind, count) ->
+                    Column(Modifier.padding(vertical = 6.dp)) {
+                        Text("$count × $kind", style = MaterialTheme.typography.titleMedium)
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+            }
+        }
+        item {
+            Card(onClick = { onOpen(Route.Books) }) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text("Alle handleidingen", style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
-                            note,
+                            "Per machine en per soort, met versie en documentnummer",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
+                    Icon(Icons.Filled.ChevronRight, null,
+                         tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
-        item { SectionHeader("Let op") }
+        item { SectionHeader("Hoe het is samengevoegd") }
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp)) {
                 Text(
-                    "De Nederlandse schermmeldingen komen uit de Nederlandstalige technische handleiding; " +
-                        "de Engelse tekst staat erbij omdat machines ook op Engels kunnen staan. " +
-                        "De storingen, de componentengids en het servicemenu zijn beschreven voor de Avy met CoEx-brewer " +
-                        "en gelden in grote lijnen voor de hele CoEx-familie. " +
-                        "Voor Lina, Blu, Nio Next, Edge en Vareo was geen handleiding te vinden; " +
-                        "van die modellen staan alleen de brochuregegevens in de app.",
+                    "De techniek achter de deur hangt aan de modelcode, niet aan het merk: een " +
+                        "Avy CND en een Zia CND zijn dezelfde machine in een andere kast. Tekst " +
+                        "uit een technische handleiding geldt daarom voor elk merk met dezelfde " +
+                        "code; bij elke melding, elk component en elke procedure staat voor welke " +
+                        "machines dat is. Wat wél over de kast of het scherm gaat — de " +
+                        "aanzichten, de onderhoudskaarten, de tekeningen — blijft bij zijn " +
+                        "eigen merk.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    "Nederlandse schermmeldingen komen uit de Nederlandstalige handleiding; de " +
+                        "Engelse tekst staat erbij omdat een machine ook op Engels kan staan. " +
+                        "Waar alleen een Engels boek bestaat, staat er een taallabel bij.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(12.dp))

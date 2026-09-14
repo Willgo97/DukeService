@@ -49,6 +49,9 @@ fun SearchScreen(
     results: SearchResult,
     recent: List<String>,
     pins: List<String>,
+    filter: String?,
+    variant: String?,
+    onFilter: (String?) -> Unit,
     language: String,
     onQuery: (String) -> Unit,
     onCommit: () -> Unit,
@@ -104,10 +107,10 @@ fun SearchScreen(
                     }
                 }
             }
-            homeSections(catalog, pins, onOpen, onTab)
+            homeSections(catalog, pins, filter, variant, onFilter, onOpen, onTab)
 
             item { SectionHeader("Vaak nodig") }
-            items(veelVoorkomend(catalog)) { group ->
+            items(commonFaults(catalog)) { group ->
                 FaultCard(catalog, group, showMachines = false, language = language) {
                     onOpen(Route.Fault(group.message))
                 }
@@ -118,7 +121,16 @@ fun SearchScreen(
         }
 
         if (results.empty) {
-            item { EmptyState("Niets gevonden", "Probeer een deel van het woord, of zoek op onderdeelnummer.") }
+            item {
+                EmptyState(
+                    "Niets gevonden",
+                    // The parts table is read after the first screen is up; a
+                    // number typed in that second would otherwise look missing.
+                    if (catalog.parts.isEmpty())
+                        "De onderdelenlijst wordt nog geladen — probeer het zo nog eens."
+                    else "Probeer een deel van het woord, of zoek op onderdeelnummer.",
+                )
+            }
             return@LazyColumn
         }
 
@@ -278,7 +290,7 @@ fun stockLabel(code: String) = when (code) {
  * The handful of messages an engineer meets most on a call-out — a shortcut past
  * typing for the things that go wrong week in, week out.
  */
-private fun veelVoorkomend(catalog: Catalog) = listOf(
+private fun commonFaults(catalog: Catalog) = listOf(
     "Grinder blocked",
     "Brewer out of position",
     "Waste bucket full / Empty waste bucket",

@@ -89,6 +89,7 @@ fun AppShell(vm: AppViewModel = viewModel()) {
     val tab by vm.tab.collectAsStateWithLifecycle()
     val stack by vm.stack.collectAsStateWithLifecycle()
     val filter by vm.filter.collectAsStateWithLifecycle()
+    val variant by vm.variant.collectAsStateWithLifecycle()
 
     val current = stack.lastOrNull()
     BackHandler(enabled = current != null) { vm.back() }
@@ -102,7 +103,23 @@ fun AppShell(vm: AppViewModel = viewModel()) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(titleFor(catalog, tab, current), maxLines = 1) },
+                title = {
+                    // Every list in the app narrows to the machine that was
+                    // picked or scanned. That has to be visible, or a short
+                    // list looks like missing data.
+                    val machine = filter?.let { catalog?.machine(it) }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(titleFor(catalog, tab, current), maxLines = 1)
+                        if (machine != null && current == null) {
+                            Text(
+                                machine.name,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                maxLines = 1,
+                            )
+                        }
+                    }
+                },
                 navigationIcon = {
                     if (current != null) {
                         IconButton(onClick = { vm.back() }) {
@@ -164,7 +181,7 @@ fun AppShell(vm: AppViewModel = viewModel()) {
             ) { (route, activeTab) ->
                 Column(Modifier.fillMaxSize()) {
                     when (route) {
-                        null -> RootScreen(vm, loaded, activeTab, filter)
+                        null -> RootScreen(vm, loaded, activeTab, filter, variant)
                         else -> DetailScreen(vm, loaded, route)
                     }
                 }
@@ -174,7 +191,13 @@ fun AppShell(vm: AppViewModel = viewModel()) {
 }
 
 @Composable
-private fun RootScreen(vm: AppViewModel, loaded: Catalog, tab: Tab, filter: String?) {
+private fun RootScreen(
+    vm: AppViewModel,
+    loaded: Catalog,
+    tab: Tab,
+    filter: String?,
+    variant: String?,
+) {
     val query by vm.query.collectAsStateWithLifecycle()
     val results by vm.results.collectAsStateWithLifecycle()
     val recent by vm.recent.collectAsStateWithLifecycle()
@@ -189,6 +212,9 @@ private fun RootScreen(vm: AppViewModel, loaded: Catalog, tab: Tab, filter: Stri
             results = results,
             recent = recent,
             pins = pins,
+            filter = filter,
+            variant = variant,
+            onFilter = vm::setFilter,
             language = language,
             onQuery = vm::setQuery,
             onCommit = vm::commitQuery,
@@ -197,11 +223,11 @@ private fun RootScreen(vm: AppViewModel, loaded: Catalog, tab: Tab, filter: Stri
             onTab = vm::selectTab,
         )
 
-        Tab.Faults -> FaultsScreen(loaded, filter, language, vm::setFilter, vm::open)
+        Tab.Faults -> FaultsScreen(loaded, filter, variant, language, vm::setFilter, vm::open)
 
-        Tab.Maintenance -> MaintenanceScreen(loaded, filter, today, vm::setFilter, vm::open)
+        Tab.Maintenance -> MaintenanceScreen(loaded, filter, variant, today, vm::setFilter, vm::open)
 
-        Tab.Parts -> PartsScreen(loaded, filter, vm::setFilter, vm::open)
+        Tab.Parts -> PartsScreen(loaded, filter, variant, vm::setFilter, vm::setVariant, vm::open)
 
         Tab.Machines -> MachinesScreen(loaded, vm::open)
     }
@@ -210,6 +236,7 @@ private fun RootScreen(vm: AppViewModel, loaded: Catalog, tab: Tab, filter: Stri
 @Composable
 private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
     val filter by vm.filter.collectAsStateWithLifecycle()
+    val variant by vm.variant.collectAsStateWithLifecycle()
     val pins by vm.pins.collectAsStateWithLifecycle()
     val notes by vm.notes.collectAsStateWithLifecycle()
 
@@ -234,13 +261,13 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         Route.Procedures -> ProcedureList(loaded, filter, vm::setFilter, vm::open)
 
-        Route.Components -> ComponentList(loaded, filter, vm::setFilter, vm::open)
+        Route.Components -> ComponentList(loaded, filter, variant, vm::setFilter, vm::open)
 
-        Route.ServiceMenu -> MenuList(loaded, filter, vm::setFilter, vm::open)
+        Route.ServiceMenu -> MenuList(loaded, filter, variant, vm::setFilter, vm::open)
 
         Route.Scan -> {
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
-            ScanScreen(loaded, direct, vm::open)
+            ScanScreen(loaded, direct, vm::useMachine, vm::open)
         }
 
         Route.Settings -> {
@@ -274,7 +301,8 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
         is Route.Machine -> {
             val machine = loaded.machine(route.id)
             if (machine != null) {
-                MachineDetail(loaded, machine, notes[machine.id].orEmpty(), vm::setNote, vm::open) { tab, machineId ->
+                MachineDetail(loaded, machine, variant, vm::useMachine,
+                    notes[machine.id].orEmpty(), vm::setNote, vm::open) { tab, machineId ->
                     vm.setFilter(machineId)
                     vm.back()
                     vm.selectTab(tab)
@@ -284,7 +312,7 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         is Route.PartSection -> PartSectionDetail(loaded, route.machine, route.variant, route.section)
 
-        Route.Cards -> CardList(loaded, filter, vm::setFilter, vm::open)
+        Route.Cards -> CardList(loaded, filter, variant, vm::setFilter, vm::open)
 
         is Route.MaintenanceCard -> {
             val card = loaded.card(route.id)
@@ -311,7 +339,7 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         Route.Specs -> SpecsScreen(loaded)
 
-        Route.Sources -> SourcesScreen()
+        Route.Sources -> SourcesScreen(loaded, vm::open)
     }
 }
 

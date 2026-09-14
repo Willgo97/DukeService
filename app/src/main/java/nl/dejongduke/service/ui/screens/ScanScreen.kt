@@ -44,6 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -59,6 +60,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import android.net.Uri
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -96,7 +99,12 @@ private const val PHOTO_PAUSE_MS = 20_000L
  * plant rooms these machines live in.
  */
 @Composable
-fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
+fun ScanScreen(
+    catalog: Catalog,
+    direct: Boolean,
+    onUseMachine: (String, String?) -> Unit,
+    onOpen: (Route) -> Unit,
+) {
     val context = LocalContext.current
     var granted by remember {
         mutableStateOf(
@@ -134,7 +142,11 @@ fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
         return
     }
 
-    val scanner = remember(catalog) { Scanner(catalog) }
+    // The scanner indexes every part number; building that in composition
+    // freezes the screen on the way in.
+    val scanner by produceState<Scanner?>(null, catalog) {
+        value = withContext(Dispatchers.Default) { Scanner(catalog) }
+    }
     var hits by remember { mutableStateOf<List<ScanHit>>(emptyList()) }
     var fromPhoto by remember { mutableStateOf(false) }
     // What the camera has seen lately, keyed by hit. A label drifts out of
@@ -158,7 +170,8 @@ fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
                         val lines = result.textBlocks.flatMap { b -> b.lines.map { it.text } }
                         // A photo is a deliberate choice, so read it more
                         // generously than a frame that happened to go by.
-                        val found = scanner.scan(lines, PHOTO_THRESHOLD)
+                        val found = (scanner ?: return@addOnSuccessListener)
+                            .scan(lines, PHOTO_THRESHOLD)
                         hits = found
                         seen = emptyMap()
                         fromPhoto = true
@@ -174,13 +187,14 @@ fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
 
     Box(Modifier.fillMaxSize()) {
         CameraPreview { lines ->
+            val reader = scanner ?: return@CameraPreview
             if (fromPhoto && System.currentTimeMillis() < photoUntil) return@CameraPreview
             fromPhoto = false
-            val found = scanner.scan(lines, LIVE_THRESHOLD)
+            val found = reader.scan(lines, LIVE_THRESHOLD)
             val now = System.currentTimeMillis()
             val updated = seen.toMutableMap()
             for (hit in found) {
-                val key = scanner.key(hit)
+                val key = reader.key(hit)
                 val previous = updated[key]
                 updated[key] = Sighting(
                     hit = if (previous != null && previous.hit.confidence >= hit.confidence) previous.hit else hit,
@@ -264,7 +278,9 @@ fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
                     .background(MaterialTheme.colorScheme.surface),
             ) {
                 LazyColumn(Modifier.padding(top = 10.dp)) {
-                    items(hits.size) { index -> HitCard(catalog, hits[index], onOpen) }
+                    items(hits.size) { index ->
+                        HitCard(catalog, hits[index], onUseMachine, onOpen)
+                    }
                 }
             }
         }
@@ -277,7 +293,12 @@ fun ScanScreen(catalog: Catalog, direct: Boolean, onOpen: (Route) -> Unit) {
 private data class Sighting(val hit: ScanHit, val times: Int, val lastSeen: Long)
 
 @Composable
-private fun HitCard(catalog: Catalog, hit: ScanHit, onOpen: (Route) -> Unit) {
+private fun HitCard(
+    catalog: Catalog,
+    hit: ScanHit,
+    onUseMachine: (String, String?) -> Unit,
+    onOpen: (Route) -> Unit,
+) {
     when (hit) {
         is ScanHit.PartHit -> HitRow(
             Icons.Filled.Build,
@@ -300,17 +321,32 @@ private fun HitCard(catalog: Catalog, hit: ScanHit, onOpen: (Route) -> Unit) {
             Icons.Filled.CoffeeMaker,
             hit.machine.name,
             hit.machine.summary,
-            "Machine  ·  ${hit.machine.series}",
+            "Machine  ·  tik om de app hierop te zetten",
             hit.confidence,
-        ) { onOpen(Route.Machine(hit.machine.id)) }
+        ) {
+            onUseMachine(hit.machine.id, null)
+            onOpen(Route.Machine(hit.machine.id))
+        }
 
+        // The type plate is the one moment the app knows exactly which machine
+        // it is standing in front of. Take it: from here on every list is that
+        // machine's list, without anyone picking it from a row of chips.
         is ScanHit.TypePlate -> HitRow(
             Icons.Filled.Info,
             hit.machine?.name ?: "Typeplaatje",
             "Serienummer ${hit.serienummer}",
-            if (hit.code.isNotEmpty()) "Typecode ${hit.code}" else "Van het typeplaatje",
+            if (hit.code.isNotEmpty()) "Typecode ${hit.code} — tik om de app hierop te zetten"
+            else "Van het typeplaatje",
             hit.confidence,
-        ) { hit.machine?.let { onOpen(Route.Machine(it.id)) } }
+        ) {
+            hit.machine?.let { machine ->
+                val build = machine.variants.map { it.code }
+                    .firstOrNull { hit.code.contains(it, ignoreCase = true) }
+                onUseMachine(machine.id, build)
+                onOpen(Route.Machine(machine.id))
+            }
+        }
+
     }
 }
 

@@ -39,6 +39,44 @@ class Catalog(
 
     private val groupByMessage = faultGroups.associateBy { it.message }
 
+    /** How many part rows each machine has; counting 40.000 rows per frame is
+     *  what a list of machines would otherwise do. */
+    val partCount: Map<String, Int> = parts.groupingBy { it.machine }.eachCount()
+
+    private val partCountByBuild: Map<Pair<String, String>, Int> =
+        parts.groupingBy { it.machine to it.variant }.eachCount()
+
+    /** Rows for a machine, or for one build of it. */
+    fun partCount(machineId: String, variant: String? = null): Int =
+        if (variant == null) partCount[machineId] ?: 0
+        else partCountByBuild[machineId to variant] ?: 0
+
+    /** Machines that have a parts book at all. */
+    val machinesWithParts: List<Machine> = machines.filter { partCount.containsKey(it.id) }
+
+    private val partByNumber: Map<String, Part> =
+        parts.asReversed().associateBy { it.number }
+
+    fun part(number: String): Part? = partByNumber[number]
+
+    /**
+     * Whether a record holds for the build being worked on.
+     *
+     * A record without model codes is general; one that names them holds only
+     * for those. With no build chosen everything passes.
+     */
+    /** "CoEx Medium (CEC)" — the code alone means nothing until you know it. */
+    fun variantLabel(machineId: String?, code: String): String {
+        val build = machineById[machineId]?.variants?.firstOrNull { it.code == code }
+            ?: machines.firstNotNullOfOrNull { m -> m.variants.firstOrNull { it.code == code } }
+        val words = listOfNotNull(build?.brewer?.ifEmpty { null }, build?.cabinet?.ifEmpty { null })
+            .joinToString(" ")
+        return if (words.isEmpty()) code else "$words ($code)"
+    }
+
+    fun forVariant(codes: List<String>, variant: String?): Boolean =
+        variant == null || codes.isEmpty() || codes.contains(variant)
+
     private val procById = procedures.associateBy { it.id }
     private val machineById = machines.associateBy { it.id }
 
@@ -73,7 +111,7 @@ class Catalog(
     fun cardsFor(machineId: String?, code: String? = null): List<MaintenanceCard> = cards
         .filter { card ->
             (machineId == null || card.machines.contains(machineId)) &&
-                (code == null || card.codes.isEmpty() || card.codes.contains(code))
+                forVariant(card.codes, code)
         }
         // Without a machine chosen the list is fifty cards long, so keep the
         // ones for the same machine together.
@@ -231,12 +269,18 @@ class Catalog(
             json.decodeFromString(
                 context.assets.open("parts.json").bufferedReader().use { it.readText() })
 
+        // Built once. These used to be constructed inside normalize(), which
+        // the catalog calls eighty thousand times while indexing the parts.
+        private val ACCENTS = Regex("\\p{Mn}+")
+        private val NOISE = Regex("[^a-z0-9 ]+")
+        private val SPACES = Regex(" +")
+
         /** Lowercase, strip accents, and drop the punctuation that part numbers carry. */
         fun normalize(s: String): String =
             Normalizer.normalize(s.lowercase(), Normalizer.Form.NFD)
-                .replace(Regex("\\p{Mn}+"), "")
-                .replace(Regex("[^a-z0-9 ]+"), " ")
-                .replace(Regex(" +"), " ")
+                .replace(ACCENTS, "")
+                .replace(NOISE, " ")
+                .replace(SPACES, " ")
                 .trim()
 
         /** Best of a title hit (weighted up) and a body hit. */

@@ -181,8 +181,17 @@ def running_text(doc, sample=24):
             y0, y1 = b["bbox"][1], b["bbox"][3]
             if y1 > top and y0 < bottom:
                 continue
-            text = "\n".join("".join(s["text"] for s in l["spans"]) for l in b["lines"])
-            if text.strip():
-                seen[drop_key(text)] += 1
+            lines = ["".join(s["text"] for s in l["spans"]) for l in b["lines"]]
+            text = "\n".join(lines)
+            if not text.strip():
+                continue
+            seen[drop_key(text)] += 1
+            # The footer block usually carries the page number as a second
+            # line. Index the lines separately too, because a footer that ends
+            # up inside a body block has to be recognised line by line.
+            if len(lines) > 1:
+                for line in lines:
+                    if line.strip():
+                        seen[drop_key(line)] += 1
         checked += 1
     return {t for t, n in seen.items() if n > max(2, checked * 0.4)}
