@@ -278,14 +278,44 @@ def component_group(topic):
     return "other"
 
 
+SECTION_NUMBER = re.compile(r"^\d+(\.\d+)*\.?\s*")
+
+
+def meat(body, title=""):
+    """The body without the heading the extractor left in front of it."""
+    text = SECTION_NUMBER.sub("", (body or "").strip())
+    if title and text.lower().startswith(title.lower()):
+        text = text[len(title):].strip()
+    return text
+
+
+def body_of(topic, langs, minimum=25):
+    """The body in the reader's language, or the nearest one that has words.
+
+    A book that was never translated leaves the section standing with nothing
+    but its own heading in that language; then the English one is worth more
+    than an empty screen.
+    """
+    title = topic.get("title") or ""
+    bodies = topic.get("body") or {}
+    order = list(langs) + [l for l in sorted(bodies) if l not in langs]
+    for lang in order:
+        text = meat(bodies.get(lang), title)
+        if len(text) >= minimum:
+            return text, LOCALE_OF.get(lang.lower(), lang.lower())
+    return "", "nl"
+
+
 def has_body(topic, minimum=25):
     """Whether any language has something to read.
 
     Decided over all languages at once, not per language: the same sections
     have to be in the app whatever it is set to, or a screen that exists in
-    Dutch would be missing in Finnish — and a link to it would dead-end.
+    Dutch would be missing in Finnish — and a link to it would dead-end. A
+    section whose whole body is its own heading says nothing.
     """
-    return any(len((body or "").strip()) >= minimum
+    title = topic.get("title") or ""
+    return any(len(meat(body, title)) >= minimum
                for body in (topic.get("body") or {}).values())
 
 
@@ -297,12 +327,12 @@ def build_components(kb_components, pictures, langs=LANG):
         # component whose whole text is its own title.
         if not has_body(topic):
             continue
-        text, lang = first(topic["body"], langs)
+        text, lang = body_of(topic, langs)
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         out.append(dict(
             id=topic["id"], number=topic["number"] or "",
             title=heading(topic, langs, topic["title"]),
-            text=prose(text or ""), group=component_group(topic),
+            text=prose(text), group=component_group(topic),
             page=0, images=[i for i in images if i],
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
             brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
@@ -367,24 +397,69 @@ def label_duplicates(rows, extra=None):
     for row in kept:
         row.pop("key", None)
         row.pop("size", None)
-    return kept
+    return spell_out(kept)
+
+
+def spell_out(rows):
+    """Say which machine a row is about when its name alone does not.
+
+    Two sections can be written for different builds and still be printed under
+    the same heading. In a list they then read as the same thing three times,
+    and the only way to tell them apart is to open them.
+    """
+    groups = defaultdict(list)
+    for row in rows:
+        groups[row["title"]].append(row)
+    def brewer_label(row):
+        return variant_label(row.get("codes") or [])
+
+    def code_label(row):
+        return ", ".join((row.get("codes") or [])[:3])
+
+    def number_label(row):
+        return row.get("number") or ""
+
+    def machine_label(row):
+        return ", ".join(m.capitalize() for m in (row.get("machines") or []))
+
+    for group in groups.values():
+        if len(group) < 2:
+            continue
+        # Whichever of the three tells them apart: which brewer it is written
+        # for, else the model code, else the machine it belongs to.
+        for naming in (brewer_label, code_label, number_label, machine_label):
+            labels = [naming(row) for row in group]
+            if all(labels) and len(set(labels)) == len(labels):
+                break
+        for row, label in zip(group, labels):
+            if not label or label in row["title"]:
+                continue
+            row["title"] = (f"{row['title']} — {label}" if row["title"].endswith(")")
+                            else f"{row['title']} ({label})")
+    return rows
 
 
 def build_menu(kb_menu, pictures, langs=LANG):
     out = []
     for topic in kb_menu:
-        body, lang = first(topic["body"], langs)
+        # A chapter that only announces the settings underneath it has nothing
+        # of its own to read: its whole text is its own heading.
+        if not (has_body(topic, 12) or topic["images"]
+                or any(topic["steps"].values()) or any(topic["notes"].values())):
+            continue
+        body, lang = body_of(topic, langs, 12)
         steps, _ = first(topic["steps"], langs) or ([], "nl")
         notes, _ = first(topic["notes"], langs) or ([], "nl")
         text = body or ""
         if not text and not steps:
-            text, lang = first(topic.get("text", {}), langs)
+            whole, lang = first(topic.get("text", {}), langs)
+            text = meat(whole, topic["title"])
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         out.append(dict(
             id=topic["id"], number=topic["number"] or "",
             title=heading(topic, langs, topic["title"]), key=topic["title"],
             size=sum(len(v or "") for v in topic["body"].values()),
-            text=prose(text or ""), path=topic.get("path") or "", level="",
+            text=prose(text), path=topic.get("path") or "", level="",
             images=[i for i in images if i], steps=[clean(s) for s in (steps or [])],
             notes=[clean(n["text"]) for n in (notes or [])],
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
@@ -402,7 +477,7 @@ def build_procedures(kb_procedures, pictures, langs=LANG):
         if not any(topic["steps"].values()) and not has_body(topic, 40):
             continue
         steps, lang = first(topic["steps"], langs) or ([], "nl")
-        body, body_lang = first(topic["body"], langs)
+        body, body_lang = body_of(topic, langs, 40)
         notes, _ = first(topic["notes"], langs) or ([], "nl")
         if topic["title"].lower() in have:
             continue
@@ -414,12 +489,12 @@ def build_procedures(kb_procedures, pictures, langs=LANG):
             brewer=", ".join(sorted({MODEL_CODES.get(c, ("", ""))[0]
                                      for c in codes(topic["applies_to"])} - {""})),
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
-            interval="", intervalText="", purpose=prose(body or ""),
+            interval="", intervalText="", purpose=prose(body),
             needed=[], warnings=[dict(n=n["level"], t=clean(n["text"])) for n in (notes or [])],
             steps=[dict(t=clean(s)) for s in (steps or [])],
             source=(topic["number"] or "") + " " + (topic["sources"] or [""])[0],
             language=lang or body_lang))
-    return out
+    return spell_out(out)
 
 
 # The sheets are English only; the heading is what the engineer scans for, so
