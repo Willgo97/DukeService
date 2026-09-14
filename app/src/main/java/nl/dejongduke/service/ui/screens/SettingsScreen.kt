@@ -181,7 +181,7 @@ fun SettingsScreen(
         item { SectionHeader(stringResource(R.string.over)) }
         item {
             Column(Modifier.padding(horizontal = 20.dp)) {
-                InfoRow(stringResource(R.string.versie), "1.1")
+                InfoRow(stringResource(R.string.versie), BuildConfig.VERSION_NAME)
                 InfoRow(stringResource(R.string.inhoud), count(R.plurals.n_faults, catalog.faultGroups.size) + " · " +
                     count(R.plurals.n_parts, catalog.parts.size))
                 InfoRow(stringResource(R.string.werkt_offline), stringResource(R.string.ook_de_tekstherkenning_van_de_scanner))
