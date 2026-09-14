@@ -6,11 +6,11 @@ gewoon door.
 
 ## 1. Waar het om draait (30 sec)
 
-Open de app. Het startscherm laat zien wat erin zit: **53 storingen, 475
-componenten, 513 servicemenu-onderwerpen, 40.475 onderdeelregels, 100
+Open de app. Het startscherm laat zien wat erin zit: **53 storingen, 247
+componenten, 277 servicemenu-onderwerpen, 40.475 onderdeelregels, 100
 onderhoudskaarten, 207 handleidingen.**
 
-> "Dit is alles wat in de service­documentatie staat — 207 boeken, 16.500
+> "Dit is alles wat in de service­documentatie staat — 207 boeken, 16.912
 > pagina's — doorzoekbaar op de telefoon, zonder internet."
 
 Alle merken en alle uitvoeringen: Virtu, Zia, Nio, Lua, Avy, Rosa, Lina, Blu en
@@ -75,30 +75,34 @@ verschijnt eronder. Andersom werkt ook.
 
 ## 6. Techniek en servicemenu (45 sec)
 
-**Techniek**: 475 componenten — inlaatventiel, drukregelaar,
+**Techniek**: 247 componenten — inlaatventiel, drukregelaar,
 waterstroommeter, clixon, besturingsprint — elk met de tekeningen uit de
 technische handleiding. Filter op machine en de lijst wordt die van die
 machine.
 
-**Servicemenu**: 513 onderwerpen met het pad erheen (`Login > Hardware >
+**Servicemenu**: 277 onderwerpen met het pad erheen (`Login > Hardware >
 Calibrations > Ingredient Canisters`) en de stappen.
 
-## 7. Machines en handleidingen (45 sec)
+## 7. Machines (45 sec)
 
 **Machines**: per merk de uitvoeringen met hun codes en serienummers, de
 aanzichten met genummerde verwijzingen, en — wat bij storingzoeken als eerste
 telt — **welk servicemenu erop draait**: oud (ICeQ2), nieuw, of allebei vanaf
 software 6.30/6.40.
 
-**Handleidingen**: welke 207 boeken erachter zitten, per machine en per soort,
-met versie en documentnummer. De PDF's zelf zitten er niet in — die zijn van de
-fabrikant.
+**Waar komt dit vandaan** (onderaan Instellingen): welke 207 boeken erachter
+zitten en hoe ze zijn samengevoegd. De PDF's zelf zitten er niet in — die zijn
+van de fabrikant; bij elke melding, elk component en elke procedure staat wel
+onderaan uit welk boek hij komt.
 
 ## 8. Instellingen (20 sec)
 
-Het tandwiel rechtsboven: licht/donker, en — nuttiger — **taal van de
-meldingen**. Staat de machine op Engels, dan wil je de Engelse schermtekst
-bovenaan zien; staat hij op Nederlands, andersom.
+Het tandwiel rechtsboven. Bovenaan de **taal**: negen, dezelfde negen waarin de
+handleidingen bestaan. Zet hem op Suomi en de hele app staat in het Fins — de
+knoppen én de teksten uit de boeken, voor zover de fabrikant ze vertaald heeft.
+Daaronder licht/donker, en de **taal van de meldingen**: staat de machine op
+Engels, dan wil je de Engelse schermtekst bovenaan zien; staat hij op
+Nederlands, andersom.
 
 ---
 

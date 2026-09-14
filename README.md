@@ -17,8 +17,8 @@ van de app en is ook door andere programma's te gebruiken — zie
 | 53 schermmeldingen | Nederlandse displaytekst, oorzaak en wat je controleert, met de machines waarvoor ze gelden |
 | 100 onderhoudskaarten | de kaart van de fabrikant zelf: genummerde stappen met de tekening die erbij hoort |
 | 194 procedures | stap voor stap, met waarschuwingen en benodigdheden |
-| 248 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
-| 279 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
+| 247 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
+| 277 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
 | 40.475 onderdeelregels | 1.935 unieke nummers uit 62 onderdelenboeken |
 | 1.773 explosietekeningen | met de onderdelentabel ernaast; op 89 ervan zijn de ballonnummers aanklikbaar |
 | 52 aanzichten | voor-, achter- en binnenkant met genummerde verwijzingen |
