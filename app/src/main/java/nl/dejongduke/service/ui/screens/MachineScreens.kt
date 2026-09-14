@@ -622,8 +622,18 @@ fun SourcesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    "Deze app is intern gereedschap, geen officiële uitgave van De Jong DUKE. " +
-                        "Bij twijfel: de handleiding en het typeplaatje in de machine zijn leidend.",
+                    "Onafhankelijk hulpmiddel, privé gemaakt. Geen uitgave van De Jong DUKE " +
+                        "en niet door hen goedgekeurd, onderschreven of gesponsord. Merk- en " +
+                        "productnamen zijn van hun eigenaren en staan hier alleen om aan te " +
+                        "geven over welke machines het gaat.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    "Werken aan deze machines is werken met heet water, stoom, druk en " +
+                        "netspanning. Bij twijfel zijn de handleiding van de fabrikant en het " +
+                        "typeplaatje in de machine leidend.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

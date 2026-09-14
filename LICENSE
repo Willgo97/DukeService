@@ -1,30 +1,90 @@
 Copyright (c) 2026 William Goudswaard. Alle rechten voorbehouden.
 
-Deze software (de "DUKE Service"-app: broncode, samengestelde datasets en
-vormgeving) is privé ontwikkeld, in eigen tijd en op eigen apparatuur, zonder
-opdracht van of middelen van een werkgever. Het auteursrecht berust bij de
-auteur hierboven.
+
+--- Wat dit is ---
+
+DUKE Service is een naslagwerk voor servicemonteurs aan koffiemachines van
+De Jong DUKE. De app (broncode, samengestelde datasets en vormgeving) is privé
+ontwikkeld, in eigen tijd en op eigen apparatuur, zonder opdracht van of
+middelen van een werkgever. Het auteursrecht berust bij de auteur hierboven.
 
 Zonder voorafgaande schriftelijke toestemming van de auteur is het niet
 toegestaan deze software geheel of gedeeltelijk te kopiëren, te wijzigen, te
 verspreiden, in sublicentie te geven of te verkopen.
 
-De software wordt geleverd "zoals hij is", zonder enige garantie. De auteur is
-niet aansprakelijk voor schade die voortvloeit uit het gebruik ervan.
+
+--- Geen verband met de fabrikant ---
+
+Deze app is een onafhankelijk hulpmiddel. Hij is GEEN uitgave van en is op geen
+enkele manier verbonden aan, goedgekeurd door, onderschreven door of
+gesponsord door J.M. de Jong DUKE Automatenfabriek B.V. of een aan haar
+gelieerde onderneming. Er bestaat geen samenwerking, licentie of andere
+zakelijke band tussen de auteur en de fabrikant met betrekking tot deze app.
+
+De app is ook geen uitgave van de werkgever van de auteur en is niet in
+opdracht van een werkgever gemaakt.
+
+"De Jong DUKE", "DUKE", "Virtu", "Zia", "Nio", "Nio Next", "Lua", "Avy",
+"Rosa", "Lina", "Blu", "Edge", "CoEx", "CoEx XL", "Filterfresh" en "ICeQ" zijn
+(mogelijk) merken of handelsnamen van de fabrikant of van derden. Zij worden
+hier uitsluitend beschrijvend gebruikt om aan te geven op welke machines deze
+informatie betrekking heeft. De auteur maakt geen aanspraak op die merken en
+suggereert geen enkele goedkeuring door de merkhouder.
+
 
 --- Materiaal van derden ---
 
 De app bevat gegevens die zijn ontleend aan documentatie van J.M. de Jong DUKE
-Automatenfabriek B.V. (handleidingen, technische handleidingen en
-onderdelenboeken). Het auteursrecht op die documentatie berust bij de
-fabrikant; die teksten en afbeeldingen vallen niet onder het auteursrecht van
-de auteur van deze app en worden hier alleen gebruikt voor professioneel
-gebruik door servicemonteurs.
+Automatenfabriek B.V. (gebruikershandleidingen, technische handleidingen,
+onderhoudskaarten en onderdelenboeken). Het auteursrecht op die documentatie
+berust bij de fabrikant; die teksten en afbeeldingen vallen niet onder het
+auteursrecht van de auteur van deze app.
 
-De handleidingen zelf worden niet met deze software meegeleverd of
-herverspreid. In de documentatie van de fabrikant staat dat niets eruit mag
-worden hergebruikt, gewijzigd of gepubliceerd zonder voorafgaande schriftelijke
-toestemming.
+De handleidingen zelf worden niet meegeleverd of herverspreid: de app bevat een
+bewerkte, samengevatte weergave, bedoeld voor professioneel gebruik door
+servicemonteurs aan machines die zij in onderhoud hebben.
 
-Deze app is geen officiële uitgave van De Jong DUKE en is niet door hen
-goedgekeurd of onderschreven.
+Meent een rechthebbende dat materiaal ten onrechte is opgenomen, dan wordt dat
+op eerste verzoek verwijderd. Neem contact op via de repository waar deze app
+wordt gepubliceerd.
+
+
+--- Geen garantie, eigen risico ---
+
+De software wordt geleverd "zoals hij is", zonder enige garantie, uitdrukkelijk
+noch stilzwijgend, daaronder begrepen garanties van verkoopbaarheid,
+geschiktheid voor een bepaald doel, juistheid of volledigheid.
+
+Werken aan deze machines betekent werken met heet water, stoom, druk en
+netspanning. De informatie in deze app kan onvolledig, verouderd of onjuist
+zijn. Bij twijfel zijn de handleiding van de fabrikant en het typeplaatje in de
+machine leidend, en gelden de veiligheidsinstructies van de fabrikant en van je
+eigen organisatie.
+
+De auteur is niet aansprakelijk voor enige schade, van welke aard ook, die
+voortvloeit uit het gebruik van of het vertrouwen op deze software.
+
+
+--- English summary ---
+
+DUKE Service is an independent, privately developed reference app for service
+engineers working on De Jong DUKE coffee machines. It is NOT published by,
+affiliated with, endorsed by, approved by or sponsored by J.M. de Jong DUKE
+Automatenfabriek B.V. All product names and trademarks are the property of
+their respective owners and are used descriptively only, to identify the
+machines this information relates to.
+
+The app contains information derived from the manufacturer's service
+documentation, condensed for professional use by service engineers. The
+manuals themselves are not included or redistributed. Rights holders who
+believe material has been included in error may request its removal, which
+will be honoured on first request.
+
+The software is provided "as is", without warranty of any kind. Servicing
+these machines involves hot water, steam, pressure and mains voltage; the
+manufacturer's documentation and the machine's type plate take precedence over
+anything in this app. The author accepts no liability for any damage arising
+from its use.
+
+All rights reserved. No part of this software may be copied, modified,
+distributed, sublicensed or sold without the author's prior written consent.
