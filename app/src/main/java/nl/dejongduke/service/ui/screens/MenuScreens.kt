@@ -35,6 +35,7 @@ import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import nl.dejongduke.service.ui.WarnBanner
+import nl.dejongduke.service.ui.count
 
 @Composable
 fun MenuList(
@@ -119,7 +120,7 @@ fun MenuList(
 }
 
 @Composable
-fun MenuDetail(catalog: Catalog, item: MenuItem) {
+fun MenuDetail(item: MenuItem) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
@@ -239,7 +240,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
         }
 
         if (item.images.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.from_the_manual), "${item.images.size} pagina's") }
+            item { SectionHeader(stringResource(R.string.from_the_manual), count(R.plurals.n_pages, item.images.size)) }
             items(item.images.size) { index ->
                 Column {
                     AssetImage(item.images[index])

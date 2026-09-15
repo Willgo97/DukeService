@@ -111,7 +111,6 @@ data class Part(
     /** Model code of the book the row comes from, so two builds do not mix. */
     @SerialName("u") val variant: String = "",
     @SerialName("s") val section: String,
-    @SerialName("d") val drawing: String,
     @SerialName("p") val pos: String,
     @SerialName("n") val number: String,
     @SerialName("q") val quantity: String,

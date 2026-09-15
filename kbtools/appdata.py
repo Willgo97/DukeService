@@ -560,8 +560,8 @@ def build_menu(kb_menu, pictures, langs=LANG):
                 or any(topic["steps"].values()) or any(topic["notes"].values())):
             continue
         body, lang = body_of(topic, langs, 12)
-        steps, _ = first(topic["steps"], langs) or ([], "nl")
-        notes, _ = first(topic["notes"], langs) or ([], "nl")
+        steps, _ = first(topic["steps"], langs)
+        notes, _ = first(topic["notes"], langs)
         text = body or ""
         if not text and not steps:
             whole, lang = first(topic.get("text", {}), langs)
@@ -588,9 +588,9 @@ def build_procedures(kb_procedures, pictures, langs=LANG):
         # missing on a phone that is set to Czech.
         if not any(topic["steps"].values()) and not has_body(topic, 40):
             continue
-        steps, lang = first(topic["steps"], langs) or ([], "nl")
+        steps, lang = first(topic["steps"], langs)
         body, body_lang = body_of(topic, langs, 40)
-        notes, _ = first(topic["notes"], langs) or ([], "nl")
+        notes, _ = first(topic["notes"], langs)
         if topic["title"].lower() in have:
             continue
         have.add(topic["title"].lower())
@@ -741,7 +741,6 @@ def build_drawings(drawings, pictures, parts):
               if os.path.basename(v).removesuffix(".webp") in hotspots}
     print(f"  balloons: {dropped} without a row in the parts books left out, "
           f"{len(thin)} drawing(s) replaced{' (' + ', '.join(thin[:6]) + ')' if thin else ''}")
-    build_drawings.hotspots = hotspots
     src = os.path.join(DATA, "tek_ballon")
     dst = os.path.join(ASSETS, "tek")
     os.makedirs(dst, exist_ok=True)
@@ -764,14 +763,14 @@ def build_drawings(drawings, pictures, parts):
         key = f"{brand_of(product)}|{code_of(product)}|{d['code']}"
         out[key] = paths
         titles[key] = d["title"]
-    return out, titles
+    return out, titles, hotspots
 
 
 def build_views(kb_views, pictures, langs=LANG):
     """The front, back and inside views with their numbered call-outs."""
     out = []
     for topic in kb_views:
-        callouts, lang = first(topic["callouts"], langs) or ([], "nl")
+        callouts, lang = first(topic["callouts"], langs)
         images = [pictures.add(i["file"], "img") for i in topic["images"]]
         images = [i for i in images if i]
         if not any(topic["callouts"].values()) and not images:
@@ -909,14 +908,14 @@ def main():
     # --- the same for everyone ---------------------------------------------
     cards = build_cards(kb["maintenance"], pictures)
     parts = build_parts(kb["parts"])
-    drawings, drawing_titles = build_drawings(kb["drawings"], pictures, parts)
+    drawings, drawing_titles, hotspots = build_drawings(kb["drawings"], pictures, parts)
 
     sizes = {}
     sizes["cards.json"] = compact("cards.json", cards)
     sizes["parts.json"] = compact("parts.json", parts)
     sizes["drawings.json"] = compact("drawings.json", drawings)
     sizes["drawingnames.json"] = compact("drawingnames.json", drawing_titles)
-    sizes["hotspots.json"] = compact("hotspots.json", build_drawings.hotspots)
+    sizes["hotspots.json"] = compact("hotspots.json", hotspots)
 
     # --- once per language --------------------------------------------------
     # The manuals were translated by the manufacturer; the app hands the

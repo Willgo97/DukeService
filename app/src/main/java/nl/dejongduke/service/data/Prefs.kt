@@ -1,7 +1,6 @@
 package nl.dejongduke.service.data
 
 import android.content.Context
-import java.time.LocalDate
 
 /**
  * The small amount of state that outlives a visit: which checklist items are

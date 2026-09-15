@@ -32,12 +32,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,6 +55,8 @@ import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Plate
 import nl.dejongduke.service.data.Scanner
 import nl.dejongduke.service.ui.Route
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 /** How long a plate the camera has left stays on screen. */
 private const val PLATE_KEEP_ALIVE_MS = 30_000L

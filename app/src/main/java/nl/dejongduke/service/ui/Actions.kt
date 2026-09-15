@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.FilledTonalButton
@@ -28,8 +27,9 @@ import androidx.compose.ui.unit.dp
 import nl.dejongduke.service.R
 
 /**
- * The three things an engineer does with a find: pin it for later, copy the
- * number into an order, or send it to whoever is on the phone.
+ * The two things an engineer does with a find: pin it for later, or send it to
+ * whoever is on the phone. Copying a number is the parts list's own business —
+ * that is where the numbers are.
  */
 @Composable
 fun ActionRow(
@@ -37,7 +37,6 @@ fun ActionRow(
     pinned: Boolean,
     onPin: (String) -> Unit,
     shareText: String,
-    copyText: String? = null,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -49,16 +48,6 @@ fun ActionRow(
             Icon(Icons.Filled.PushPin, null, Modifier.size(17.dp))
             Spacer(Modifier.width(7.dp))
             Text(if (pinned) stringResource(R.string.pinned) else stringResource(R.string.pin), style = MaterialTheme.typography.labelLarge)
-        }
-        if (copyText != null) {
-            FilledTonalButton(
-                onClick = { copyToClipboard(context, copyText) },
-                modifier = Modifier.weight(1f),
-            ) {
-                Icon(Icons.Filled.ContentCopy, null, Modifier.size(17.dp))
-                Spacer(Modifier.width(7.dp))
-                Text(stringResource(R.string.copy), style = MaterialTheme.typography.labelLarge)
-            }
         }
         FilledTonalButton(
             onClick = { share(context, shareText) },

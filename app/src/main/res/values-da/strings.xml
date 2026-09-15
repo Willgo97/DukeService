@@ -298,4 +298,12 @@
     <string name="point_at_the_type_plate_inside_the_door_the_a">Ret mod typeskiltet indvendigt i lågen. Appen læser teksten på enheden selv — intet sendes ud.</string>
     <string name="no_type_plate_in_the_photo">Intet typeskilt på billedet</string>
     <string name="built_label">Byggeår</string>
+    <string name="x_of_y">%1$d af %2$d</string>
+    <string name="per_machine">%1$s× pr. maskine</string>
+    <string name="engineer_stock">teknikerlager</string>
+    <string name="warehouse_stock">centrallager</string>
+    <plurals name="n_pages">
+        <item quantity="one">%d side</item>
+        <item quantity="other">%d sider</item>
+    </plurals>
 </resources>

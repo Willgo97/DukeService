@@ -298,4 +298,12 @@ Orsak: </string>
     <string name="point_at_the_type_plate_inside_the_door_the_a">Rikta mot typskylten på insidan av luckan. Appen läser texten i telefonen — ingenting skickas vidare.</string>
     <string name="no_type_plate_in_the_photo">Ingen typskylt på bilden</string>
     <string name="built_label">Byggår</string>
+    <string name="x_of_y">%1$d av %2$d</string>
+    <string name="per_machine">%1$s× per maskin</string>
+    <string name="engineer_stock">teknikerlager</string>
+    <string name="warehouse_stock">centrallager</string>
+    <plurals name="n_pages">
+        <item quantity="one">%d sida</item>
+        <item quantity="other">%d sidor</item>
+    </plurals>
 </resources>

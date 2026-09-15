@@ -10,20 +10,6 @@ it reads left to right.
 """
 import re
 
-LIGATURES = {"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl", "ﬅ": "ft", "ﬆ": "st"}
-LIG_SPLIT = re.compile("([" + "".join(LIGATURES) + r"])\s(?=[a-z])")
-
-
-def unligature(text):
-    """The typesetter breaks a word after a ligature: "modiﬁ ed" is "modified"."""
-    if not any(ch in text for ch in LIGATURES):
-        return text
-    text = LIG_SPLIT.sub(lambda m: LIGATURES[m.group(1)], text)
-    for lig, plain in LIGATURES.items():
-        text = text.replace(lig, plain)
-    return text
-
-
 BULLET = re.compile(r"^\s*(?:[•▪◦·‣–—-]|\d{1,2}[.)]|[a-z][.)]|\([0-9a-z]\))\s+")
 ONLY_MARKER = re.compile(r"^\s*(?:[•▪◦·‣–—-]|\d{1,2}[.)]|[a-z][.)]|\([0-9a-z]\))\s*$")
 DIGITS = re.compile(r"\d+")
@@ -71,8 +57,8 @@ def blocks_of(page, drop=()):
     return out
 
 
-def _gaps(intervals, lo, hi, min_gap):
-    """Empty stretches between lo and hi that no interval covers."""
+def _gaps(intervals, min_gap):
+    """Empty stretches, at least min_gap wide, that no interval covers."""
     if not intervals:
         return []
     intervals = sorted(intervals)
@@ -88,7 +74,7 @@ def xy_cut(blocks, min_hgap=6.0, min_vgap=14.0, depth=0):
     """Reading order by recursive whitespace cuts, horizontal first."""
     if len(blocks) <= 1 or depth > 12:
         return list(blocks)
-    rows = _gaps([(b["bbox"][1], b["bbox"][3]) for b in blocks], None, None, min_hgap)
+    rows = _gaps([(b["bbox"][1], b["bbox"][3]) for b in blocks], min_hgap)
     if rows:
         edge = rows[0][0]
         top = [b for b in blocks if b["bbox"][1] < edge]
@@ -96,7 +82,7 @@ def xy_cut(blocks, min_hgap=6.0, min_vgap=14.0, depth=0):
         if top and rest:
             return (xy_cut(top, min_hgap, min_vgap, depth + 1) +
                     xy_cut(rest, min_hgap, min_vgap, depth + 1))
-    cols = _gaps([(b["bbox"][0], b["bbox"][2]) for b in blocks], None, None, min_vgap)
+    cols = _gaps([(b["bbox"][0], b["bbox"][2]) for b in blocks], min_vgap)
     if cols:
         edge = cols[0][0]
         left = [b for b in blocks if b["bbox"][0] < edge]

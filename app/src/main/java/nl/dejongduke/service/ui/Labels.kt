@@ -33,10 +33,11 @@ fun categoryLabel(name: String): String = when (name) {
     else -> name
 }
 
+/** The two titles the maintenance sheets carry, as the pipeline writes them. */
 @Composable
 fun cardTitle(title: String): String = when (title) {
-    "Dagelijks onderhoud" -> stringResource(R.string.daily_maintenance)
-    "Periodiek onderhoud" -> stringResource(R.string.regular_maintenance)
+    "Daily maintenance" -> stringResource(R.string.daily_maintenance)
+    "Regular maintenance" -> stringResource(R.string.regular_maintenance)
     else -> title
 }
 

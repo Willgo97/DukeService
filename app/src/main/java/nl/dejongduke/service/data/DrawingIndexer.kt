@@ -38,7 +38,7 @@ object DrawingIndexer {
             input.mkdirs()
             val files = input.listFiles { f -> f.extension.lowercase() == "png" }?.sorted()
             if (files.isNullOrEmpty()) {
-                return@withContext "Geen PNG's in ${input.absolutePath}"
+                return@withContext "No PNGs in ${input.absolutePath}"
             }
             val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
             val all = JSONObject()

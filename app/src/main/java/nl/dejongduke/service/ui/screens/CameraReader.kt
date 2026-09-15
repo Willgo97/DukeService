@@ -34,11 +34,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -55,6 +53,8 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import nl.dejongduke.service.R
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 /**
  * A screen message read at arm's length. The camera's own default for analysis

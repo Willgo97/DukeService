@@ -3,7 +3,6 @@ package nl.dejongduke.service
 import kotlinx.serialization.json.Json
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.data.Content
-import nl.dejongduke.service.data.Fault
 import nl.dejongduke.service.data.Machine
 import nl.dejongduke.service.data.Part
 import nl.dejongduke.service.data.ScanHit

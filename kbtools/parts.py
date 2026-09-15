@@ -69,14 +69,13 @@ def parse_section(section, cols_hint=None):
     rows = rows_of(lines)
     cols = header_columns(rows) or cols_hint
     if not cols:
-        return [], None, []
+        return [], None
     # pages without a run of drawing cells carry no table, only notes
     table_pages = {}
     for ln in lines:
         if column_of(ln["x"], cols) == "drawing" and DRAWING_CELL.match(ln["t"].strip()):
             table_pages[ln["p"]] = table_pages.get(ln["p"], 0) + 1
     table_pages = {p for p, n in table_pages.items() if n >= 2}
-    notes = []
     out = []
     for row in rows:
         if row[0]["p"] not in table_pages:
@@ -96,8 +95,8 @@ def parse_section(section, cols_hint=None):
         if GROUP_ROW.match(joined):
             out.append(dict(kind="group", group=joined.upper()))
             continue
+        # the copyright line and the legend under the table are not rows
         if joined.lower().startswith(("part numbers marked", "all rights", "no part of")):
-            notes.append(joined)
             continue
         m = REFER.match(cells.get("description", ""))
         if m:
@@ -106,7 +105,7 @@ def parse_section(section, cols_hint=None):
             continue
         part = dict(kind="part", **{k: v for k, v in cells.items()})
         out.append(part)
-    return out, cols, notes
+    return out, cols
 
 
 def tidy(rows, section, doc):
@@ -168,7 +167,6 @@ def main():
     books = [d for d in corpus["documents"]
              if d.get("doctype") == "SPM" and not d.get("duplicate_of")]
     out = []
-    notes_all = {}
     for meta in books:
         path = os.path.join(DOCS, meta["doc_id"] + ".json.gz")
         if not os.path.exists(path):
@@ -177,12 +175,9 @@ def main():
         cols_hint = None
         book_rows = []
         for sec in data["sections"]:
-            rows, cols, notes = parse_section(sec, cols_hint)
+            rows, cols = parse_section(sec, cols_hint)
             if cols:
                 cols_hint = cols
-            for n in notes:
-                notes_all.setdefault(n, 0)
-                notes_all[n] += 1
             book_rows += tidy(rows, sec, meta["doc_id"])
         print(f"  {meta['doc_id']:52} {len(book_rows):5} rows")
         out += book_rows

@@ -314,4 +314,13 @@ Příčina: </string>
     <string name="point_at_the_type_plate_inside_the_door_the_a">Zamiřte na typový štítek na vnitřní straně dveří. Aplikace čte text přímo v zařízení — nic neodchází ven.</string>
     <string name="no_type_plate_in_the_photo">Na fotografii není typový štítek</string>
     <string name="built_label">Rok výroby</string>
+    <string name="x_of_y">%1$d z %2$d</string>
+    <string name="per_machine">%1$s× na stroj</string>
+    <string name="engineer_stock">sklad technika</string>
+    <string name="warehouse_stock">centrální sklad</string>
+    <plurals name="n_pages">
+        <item quantity="one">%d stránka</item>
+        <item quantity="few">%d stránky</item>
+        <item quantity="other">%d stránek</item>
+    </plurals>
 </resources>

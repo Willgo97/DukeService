@@ -2,6 +2,7 @@ package nl.dejongduke.service.data
 
 import android.content.Context
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
 import java.text.Normalizer
 
 /**
@@ -44,6 +45,11 @@ class Catalog(
     private val partCountByBuild: Map<Pair<String, String>, Int> =
         parts.groupingBy { it.machine to it.variant }.eachCount()
 
+    /** Which rows belong to one book, so searching in it need not walk all 38.000. */
+    private val partsByBuild: Map<Pair<String, String>, List<Int>> by lazy {
+        parts.indices.groupBy { parts[it].machine to parts[it].variant }
+    }
+
     /** Rows for a machine, or for one build of it. */
     fun partCount(machineId: String, variant: String? = null): Int =
         if (variant == null) partCount[machineId] ?: 0
@@ -57,12 +63,6 @@ class Catalog(
 
     fun part(number: String): Part? = partByNumber[number]
 
-    /**
-     * Whether a record holds for the build being worked on.
-     *
-     * A record without model codes is general; one that names them holds only
-     * for those. With no build chosen everything passes.
-     */
     /** "CoEx Medium (CEC)" — the code alone means nothing until you know it. */
     fun variantLabel(machineId: String?, code: String): String {
         val build = machineById[machineId]?.variants?.firstOrNull { it.code == code }
@@ -88,32 +88,52 @@ class Catalog(
         return if (narrowed.size * 4 >= all.size) narrowed else all
     }
 
+    /**
+     * Whether a record holds for the build being worked on.
+     *
+     * A record without model codes is general; one that names them holds only
+     * for those. With no build chosen everything passes.
+     */
     fun forVariant(codes: List<String>, variant: String?): Boolean =
         variant == null || codes.isEmpty() || codes.contains(variant)
 
     private val procById = procedures.associateBy { it.id }
     private val machineById = machines.associateBy { it.id }
 
-    /** Search keys are precomputed once; every keystroke scans them. */
-    private val faultKeys = faults.map { normalize(it.message + " " + it.dutch + " " + it.category + " " + it.cause) }
-    private val procKeys = procedures.map { p ->
-        normalize(p.title + " " + p.purpose + " " + p.steps.joinToString(" ") { it.text })
+    /**
+     * Search keys, built the first time something is searched for.
+     *
+     * Building them eagerly put a second of normalising eighty thousand rows in
+     * front of the first screen, and did it twice, because the catalog is built
+     * again when the parts table arrives.
+     */
+    private val faultKeys by lazy {
+        faults.map { normalize(it.message + " " + it.dutch + " " + it.category + " " + it.cause) }
     }
-    private val partNumberKeys = parts.map { normalize(it.number) }
-    private val partTextKeys = parts.map { normalize(it.description + " " + it.section) }
-    private val machineKeys = machines.map { normalize(it.name + " " + it.series + " " + it.typeCode + " " + it.brewer) }
+    private val procKeys by lazy {
+        procedures.map { p ->
+            normalize(p.title + " " + p.purpose + " " + p.steps.joinToString(" ") { it.text })
+        }
+    }
+    private val partNumberKeys by lazy { parts.map { normalize(it.number) } }
+    private val partTextKeys by lazy { parts.map { normalize(it.description + " " + it.section) } }
+    private val machineKeys by lazy {
+        machines.map { normalize(it.name + " " + it.series + " " + it.typeCode + " " + it.brewer) }
+    }
     // Title and body are scored apart: a hit in the heading of a section is
     // what the engineer was looking for, a hit halfway its description usually
     // is not.
-    private val componentTitles = components.map { normalize(it.title) }
-    private val componentKeys = components.map { normalize(it.text) }
-    private val menuTitles = menu.map { normalize(it.title + " " + it.path) }
-    private val menuKeys = menu.map { normalize(it.text) }
-    private val cardTitles = cards.map { k ->
-        normalize(k.title + " " + machineNames(k.machines) + " " + k.codes.joinToString(" "))
+    private val componentTitles by lazy { components.map { normalize(it.title) } }
+    private val componentKeys by lazy { components.map { normalize(it.text) } }
+    private val menuTitles by lazy { menu.map { normalize(it.title + " " + it.path) } }
+    private val menuKeys by lazy { menu.map { normalize(it.text) } }
+    private val cardTitles by lazy {
+        cards.map { k ->
+            normalize(k.title + " " + machineNames(k.machines) + " " + k.codes.joinToString(" "))
+        }
     }
-    private val cardKeys = cards.map { k ->
-        normalize(k.steps.joinToString(" ") { it.points.joinToString(" ") })
+    private val cardKeys by lazy {
+        cards.map { k -> normalize(k.steps.joinToString(" ") { it.points.joinToString(" ") }) }
     }
 
     /** Builds a machine is sold in, tasks from the books that describe it. */
@@ -179,12 +199,20 @@ class Catalog(
                     variant: String? = null): List<Part> {
         val q = normalize(raw)
         if (q.length < 2) return emptyList()
-        return parts.indices
+        val words = terms(q)
+        // With a machine and a build chosen — which is how the parts screen
+        // always asks — only that book's rows are worth looking at.
+        val rows = if (machine != null && variant != null) {
+            partsByBuild[machine to variant].orEmpty()
+        } else {
+            parts.indices
+        }
+        return rows
             .mapNotNull { i ->
                 if (machine != null && parts[i].machine != machine) return@mapNotNull null
                 if (variant != null && parts[i].variant != variant) return@mapNotNull null
-                val byNumber = score(partNumberKeys[i], q)?.plus(100)
-                val hit = byNumber ?: score(partTextKeys[i], q)
+                val byNumber = score(partNumberKeys[i], words)?.plus(100)
+                val hit = byNumber ?: score(partTextKeys[i], words)
                 hit?.let { it to parts[i] }
             }
             .sortedByDescending { it.first }
@@ -195,16 +223,17 @@ class Catalog(
     fun search(raw: String, limit: Int = 60): SearchResult {
         val q = normalize(raw)
         if (q.length < 2) return SearchResult()
+        val words = terms(q)
 
         val hitFaults = faults.indices
-            .mapNotNull { i -> score(faultKeys[i], q)?.let { it to faults[i] } }
+            .mapNotNull { i -> score(faultKeys[i], words)?.let { it to faults[i] } }
             .sortedByDescending { it.first }
             .mapNotNull { groupByMessage[it.second.message] }
             .distinct()
             .take(limit)
 
         val hitProcs = procedures.indices
-            .mapNotNull { i -> score(procKeys[i], q)?.let { it to procedures[i] } }
+            .mapNotNull { i -> score(procKeys[i], words)?.let { it to procedures[i] } }
             .sortedByDescending { it.first }
             .take(limit).map { it.second }
 
@@ -212,30 +241,30 @@ class Catalog(
         // outrank description matches instead of competing with them.
         val hitParts = parts.indices
             .mapNotNull { i ->
-                val byNumber = score(partNumberKeys[i], q)?.plus(100)
-                val byText = byNumber ?: score(partTextKeys[i], q)
+                val byNumber = score(partNumberKeys[i], words)?.plus(100)
+                val byText = byNumber ?: score(partTextKeys[i], words)
                 byText?.let { it to parts[i] }
             }
             .sortedByDescending { it.first }
             .take(limit).map { it.second }
 
         val hitComponents = components.indices
-            .mapNotNull { i -> best(componentTitles[i], componentKeys[i], q)?.let { it to components[i] } }
+            .mapNotNull { i -> best(componentTitles[i], componentKeys[i], words)?.let { it to components[i] } }
             .sortedByDescending { it.first }
             .take(limit).map { it.second }
 
         val hitMenu = menu.indices
-            .mapNotNull { i -> best(menuTitles[i], menuKeys[i], q)?.let { it to menu[i] } }
+            .mapNotNull { i -> best(menuTitles[i], menuKeys[i], words)?.let { it to menu[i] } }
             .sortedByDescending { it.first }
             .take(limit).map { it.second }
 
         val hitMachines = machines.indices
-            .mapNotNull { i -> score(machineKeys[i], q)?.let { it to machines[i] } }
+            .mapNotNull { i -> score(machineKeys[i], words)?.let { it to machines[i] } }
             .sortedByDescending { it.first }
             .map { it.second }
 
         val hitCards = cards.indices
-            .mapNotNull { i -> best(cardTitles[i], cardKeys[i], q)?.let { it to cards[i] } }
+            .mapNotNull { i -> best(cardTitles[i], cardKeys[i], words)?.let { it to cards[i] } }
             .sortedByDescending { it.first }
             .take(limit).map { it.second }
 
@@ -246,16 +275,16 @@ class Catalog(
     companion object {
         private val json = Json { ignoreUnknownKeys = true }
 
+        /** The languages the manuals — and therefore the app — exist in. */
+        val LANGUAGES = listOf("nl", "en", "de", "fr", "sv", "no", "da", "fi", "cs")
+
         /**
          * Everything except the parts table, which is by far the biggest file.
          *
          * Reading all of it before the first screen appears costs seconds on a
          * phone, and the engineer opening the app is usually after a message or
-         * a procedure. [parts] follows in the background.
+         * a procedure. [loadParts] follows in the background.
          */
-        /** The languages the manuals — and therefore the app — exist in. */
-        val LANGUAGES = listOf("nl", "en", "de", "fr", "sv", "no", "da", "fi", "cs")
-
         fun load(context: Context, language: String = "nl"): Catalog {
             fun <T> read(name: String, parse: (String) -> T): T =
                 parse(context.assets.open(name).bufferedReader().use { it.readText() })
@@ -279,10 +308,15 @@ class Catalog(
             )
         }
 
-        /** The parts table, read after the app is already usable. */
+        /**
+         * The parts table, read after the app is already usable.
+         *
+         * Straight off the stream: as a string first, those 4.8 MB of JSON are
+         * ten in memory before parsing even starts.
+         */
+        @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
         fun loadParts(context: Context): List<Part> =
-            json.decodeFromString(
-                context.assets.open("parts.json").bufferedReader().use { it.readText() })
+            context.assets.open("parts.json").use { json.decodeFromStream(it) }
 
         // Built once. These used to be constructed inside normalize(), which
         // the catalog calls eighty thousand times while indexing the parts.
@@ -299,23 +333,27 @@ class Catalog(
                 .trim()
 
         /** Best of a title hit (weighted up) and a body hit. */
-        fun best(title: String, body: String, query: String): Int? {
-            val t = score(title, query)?.times(3)
-            val b = score(body, query)
+        fun best(title: String, body: String, terms: List<String>): Int? {
+            val t = score(title, terms)?.times(3)
+            val b = score(body, terms)
             return when {
                 t != null && b != null -> maxOf(t, b)
                 else -> t ?: b
             }
         }
 
+        /** The words of an already normalized query, in the order they were typed. */
+        fun terms(query: String): List<String> = query.split(' ').filter { it.isNotEmpty() }
+
         /**
-         * Ranks a haystack against an already normalized query: whole-string match
-         * beats start-of-word, which beats a match anywhere.
+         * Ranks a haystack against the words of a query: whole-string match beats
+         * start-of-word, which beats a match anywhere.
+         *
+         * This runs once per row of every collection — eighty thousand times on
+         * a keystroke — so the query is split by the caller, once.
          */
-        fun score(haystack: String, query: String): Int? {
-            if (haystack.isEmpty()) return null
-            val terms = query.split(' ').filter { it.isNotEmpty() }
-            if (terms.isEmpty()) return null
+        fun score(haystack: String, terms: List<String>): Int? {
+            if (haystack.isEmpty() || terms.isEmpty()) return null
             var total = 0
             for (term in terms) {
                 val at = haystack.indexOf(term)
@@ -349,7 +387,4 @@ data class SearchResult(
         get() = faults.isEmpty() && procedures.isEmpty() && parts.isEmpty() &&
             machines.isEmpty() && components.isEmpty() && menu.isEmpty() &&
             cards.isEmpty()
-    val total: Int
-        get() = faults.size + procedures.size + parts.size + machines.size +
-            components.size + menu.size + cards.size
 }

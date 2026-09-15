@@ -215,7 +215,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         _pins.value = prefs.pins()
     }
 
-    fun isPinned(key: String) = _pins.value.contains(key)
 
     fun setFilter(machineId: String?) {
         _filter.value = machineId

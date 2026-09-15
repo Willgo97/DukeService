@@ -26,12 +26,10 @@ import nl.dejongduke.service.ui.count
 import nl.dejongduke.service.ui.cardTitle
 import nl.dejongduke.service.ui.ChipRow
 import nl.dejongduke.service.ui.EmptyState
-import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 /** "Monday 14 September", in whatever language the app is being read in. */
 @Composable

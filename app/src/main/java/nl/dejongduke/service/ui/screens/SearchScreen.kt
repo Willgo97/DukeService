@@ -285,9 +285,11 @@ fun SearchScreen(
     }
 }
 
+/** What the parts book's stock code means: SE is on the van, SW in the warehouse. */
+@Composable
 fun stockLabel(code: String) = when (code) {
-    "SE" -> "monteursvoorraad"
-    "SW" -> "magazijnvoorraad"
+    "SE" -> stringResource(R.string.engineer_stock)
+    "SW" -> stringResource(R.string.warehouse_stock)
     else -> code
 }
 

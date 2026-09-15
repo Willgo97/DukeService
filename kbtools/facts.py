@@ -13,7 +13,7 @@ import json
 import os
 import re
 import sys
-from collections import Counter, defaultdict
+from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import BUILD, read_json, write_json
@@ -166,9 +166,6 @@ def parse_specs(section):
 def parse_doc(meta, data):
     facts = []
     sections = data["sections"]
-    by_chapter = defaultdict(list)
-    for s in sections:
-        by_chapter[chapter_of(s["number"])].append(s)
 
     doctype = meta.get("doctype")
     chapters = KIND_BY_CHAPTER.get(doctype, {})

@@ -298,4 +298,12 @@ Syy: </string>
     <string name="point_at_the_type_plate_inside_the_door_the_a">Suuntaa oven sisäpuolella olevaan tyyppikilpeen. Sovellus lukee tekstin laitteessa — mitään ei lähetetä ulos.</string>
     <string name="no_type_plate_in_the_photo">Valokuvassa ei ole tyyppikilpeä</string>
     <string name="built_label">Valmistusvuosi</string>
+    <string name="x_of_y">%1$d / %2$d</string>
+    <string name="per_machine">%1$s× per kone</string>
+    <string name="engineer_stock">asentajan varasto</string>
+    <string name="warehouse_stock">keskusvarasto</string>
+    <plurals name="n_pages">
+        <item quantity="one">%d sivu</item>
+        <item quantity="other">%d sivua</item>
+    </plurals>
 </resources>

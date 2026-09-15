@@ -19,11 +19,9 @@ import androidx.compose.material3.TextButton
 import nl.dejongduke.service.R
 import nl.dejongduke.service.BuildConfig
 import nl.dejongduke.service.data.DrawingIndexer
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.Composable
@@ -39,6 +37,8 @@ import nl.dejongduke.service.ui.count
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import nl.dejongduke.service.ui.theme.ThemeMode
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun SettingsScreen(

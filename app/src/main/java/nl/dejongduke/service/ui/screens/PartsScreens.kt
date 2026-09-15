@@ -20,11 +20,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -43,6 +41,11 @@ import nl.dejongduke.service.ui.PartNumber
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun PartsScreen(
@@ -71,8 +74,13 @@ fun PartsScreen(
         catalog.parts.filter { it.machine == machine && it.variant == selectedBuild }
     }
     val searching = term.trim().length >= 2
-    val hits = remember(catalog, machine, selectedBuild, term) {
-        catalog.searchParts(machine, term, variant = selectedBuild)
+    // Searching runs off the main thread, and what was found stays on screen
+    // until the next answer is in: typing may not make the list blink.
+    var hits by remember { mutableStateOf<List<Part>>(emptyList()) }
+    LaunchedEffect(catalog, machine, selectedBuild, term) {
+        hits = withContext(Dispatchers.Default) {
+            catalog.searchParts(machine, term, variant = selectedBuild)
+        }
     }
     val sections = remember(catalog, machine, selectedBuild) { forMachine.groupBy { it.section }.toSortedMap() }
 
@@ -307,7 +315,7 @@ private fun PartRow(
                         if (showSection) append(part.section)
                         if (part.quantity.isNotEmpty()) {
                             if (isNotEmpty()) append("  ·  ")
-                            append("${part.quantity}× per machine")
+                            append(stringResource(R.string.per_machine, part.quantity))
                         }
                     },
                     style = MaterialTheme.typography.bodySmall,

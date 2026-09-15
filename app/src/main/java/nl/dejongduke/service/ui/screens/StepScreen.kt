@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,11 +26,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,6 +39,8 @@ import kotlinx.coroutines.launch
 import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
 import nl.dejongduke.service.ui.Pill
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 /** One step of a job: what to do, and the picture that goes with it. */
 data class StepPage(
@@ -145,7 +144,7 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
-                    "${pager.currentPage + 1} van ${steps.size}",
+                    stringResource(R.string.x_of_y, pager.currentPage + 1, steps.size),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
