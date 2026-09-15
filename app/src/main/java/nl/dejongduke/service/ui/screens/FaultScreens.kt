@@ -58,10 +58,14 @@ fun FaultsScreen(
     var category by remember { mutableStateOf<String?>(null) }
 
     val documented = catalog.machines.filter { m -> catalog.faults.any { m.id in it.machines } }
-    val byMachine = catalog.faultGroups.filter { group ->
-        (filter == null || filter in group.machines) &&
-            group.variants.any { catalog.forVariant(it.codes, variant) }
+    val forMachine = catalog.faultGroups.filter { filter == null || filter in it.machines }
+    val forBuild = forMachine.filter { group ->
+        group.variants.any { catalog.forVariant(it.codes, variant) }
     }
+    // The books tie a message to the brewer, not to the cabinet. A build the
+    // manuals never spell out separately would otherwise show an empty list,
+    // while the machine line's messages are exactly the ones on its screen.
+    val byMachine = forBuild.ifEmpty { forMachine }
     val categories = byMachine.map { it.first.category }.distinct().sorted()
     // A category picked for one machine may not exist for the next one; leaving
     // it set would show an empty list with no chip to explain why.

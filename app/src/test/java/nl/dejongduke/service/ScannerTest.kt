@@ -75,4 +75,58 @@ class ScannerTest {
             ).isEmpty()
         )
     }
+
+    // --- the type plate inside the door ----------------------------------
+    // What the camera gets off a real plate, photographed at an angle because
+    // there is a milk cooler in front of it.
+
+    private fun plate(vararg lines: String) =
+        scanner.scan(lines.toList(), 60).filterIsInstance<ScanHit.TypePlate>().firstOrNull()
+
+    @Test
+    fun readsTheWholeTypePlate() {
+        val hit = plate(
+            "de JONG DUKE", "WWW.DEJONGDUKE.NL", "SLIEDRECHT, NL", "MADE IN HOLLAND",
+            "Serial nr.: 2014386812001",
+            "Type: 9CKAA211A2A00",
+            "Model: Nio 20.2 FM [a] CoEx® bean2cup",
+            "Fresh Milk", "220-240V 50-60 Hz 2.9-3.4 kW",
+            "Date: September 2014",
+        )
+        assertEquals("nio", hit?.machine?.id)
+        assertEquals("CKA", hit?.build)
+        assertEquals("9CKAA211A2A00", hit?.code)
+        assertEquals("2014386812001", hit?.serienummer)
+        assertEquals("2014 · week 38", hit?.built)
+    }
+
+    @Test
+    fun theTypeCodeAloneIsEnough() {
+        // Half the plate is behind the cooler; only the type line came out.
+        val hit = plate("Type: 9CKAA211A2A00")
+        assertEquals("nio", hit?.machine?.id)
+        assertEquals("CKA", hit?.build)
+        assertTrue("confidence", (hit?.confidence ?: 0) >= 90)
+    }
+
+    @Test
+    fun aLongerBuildCodeWinsFromTheShorterOneItStartsWith() {
+        // 9CECK is a Virtu 70/90, not the CEC it begins with.
+        val hit = plate("Serial nr.: 2019120001001", "Type: 9CECKB110A1A00",
+                        "Model: Virtu 70.2 CoEx bean2cup")
+        assertEquals("CECK", hit?.build)
+        assertEquals("virtu", hit?.machine?.id)
+    }
+
+    @Test
+    fun aSerialWithoutATypeCodeStillNamesTheYear() {
+        val hit = plate("Serial nr.: 2021.14.0428.001")
+        assertEquals("2021 · week 14", hit?.built)
+        assertEquals(null, hit?.machine)
+    }
+
+    @Test
+    fun plainTextIsNotATypePlate() {
+        assertEquals(null, plate("Clean the milk system", "5KAF119 suction filter"))
+    }
 }

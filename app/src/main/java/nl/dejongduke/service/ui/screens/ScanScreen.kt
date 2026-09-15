@@ -341,16 +341,21 @@ private fun HitCard(
         // machine's list, without anyone picking it from a row of chips.
         is ScanHit.TypePlate -> HitRow(
             Icons.Filled.Info,
-            hit.machine?.name ?: stringResource(R.string.type_plate),
-            stringResource(R.string.serial_number, hit.serienummer),
+            listOfNotNull(
+                hit.machine?.name ?: stringResource(R.string.type_plate),
+                hit.build.ifEmpty { null },
+            ).joinToString(" · "),
+            listOfNotNull(
+                hit.serienummer.ifEmpty { null }
+                    ?.let { stringResource(R.string.serial_number, it) },
+                hit.built.ifEmpty { null },
+            ).joinToString("  ·  "),
             if (hit.code.isNotEmpty()) stringResource(R.string.type_code_tap_to_point_the_app_at_it, hit.code)
             else stringResource(R.string.from_the_type_plate),
             hit.confidence,
         ) {
             hit.machine?.let { machine ->
-                val build = machine.variants.map { it.code }
-                    .firstOrNull { hit.code.contains(it, ignoreCase = true) }
-                onUseMachine(machine.id, build)
+                onUseMachine(machine.id, hit.build.ifEmpty { null })
                 onOpen(Route.Machine(machine.id))
             }
         }

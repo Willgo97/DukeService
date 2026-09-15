@@ -157,9 +157,17 @@ fun MachineDetail(
     onOpen: (Route) -> Unit,
     onJump: (Tab, String) -> Unit,
 ) {
-    val faults = catalog.faults.count { machine.id in it.machines }
-    val procs = catalog.procedures.count { machine.id in it.machines && it.steps.isNotEmpty() }
-    val parts = catalog.partCount[machine.id] ?: 0
+    // Once the type plate has said which build is standing there, everything
+    // on this screen is about that build — not about the machine line.
+    val forMachine = catalog.faults.filter { machine.id in it.machines }
+    val faults = forMachine.count { catalog.forVariant(it.codes, variant) }
+        .let { if (it > 0) it else forMachine.size }
+    val machineProcs = catalog.procedures.filter {
+        machine.id in it.machines && it.steps.isNotEmpty()
+    }
+    val procs = machineProcs.count { catalog.forVariant(it.codes, variant) }
+        .let { if (it > 0) it else machineProcs.size }
+    val parts = catalog.partCount(machine.id, variant)
 
     LazyColumn(Modifier.fillMaxWidth()) {
         if (machine.photo.isNotEmpty()) {
@@ -237,7 +245,7 @@ fun MachineDetail(
                 JumpRow(stringResource(R.string.faults), if (faults > 0) count(R.plurals.n_messages, faults) else stringResource(R.string.nothing_recorded_yet), faults > 0) {
                     onJump(Tab.Faults, machine.id)
                 }
-                val cards = catalog.cardsFor(machine.id).size
+                val cards = catalog.cardsFor(machine.id, variant).size
                 JumpRow(stringResource(R.string.maintenance_card), if (cards > 0) count(R.plurals.n_cards_from_manufacturer, cards) else stringResource(R.string.no_card_2), cards > 0) {
                     onOpen(Route.Cards)
                 }

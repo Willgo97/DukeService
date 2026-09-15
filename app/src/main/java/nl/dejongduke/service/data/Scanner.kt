@@ -15,8 +15,13 @@ sealed interface ScanHit {
     data class MachineHit(val machine: Machine, val read: String, override val confidence: Int) : ScanHit
     data class TypePlate(
         val machine: Machine?,
+        /** The build the type code names: CKA, XEA, CECK … */
+        val build: String,
+        /** The type code as printed: 9CKAA211A2A00. */
         val code: String,
         val serienummer: String,
+        /** "2014 · week 38", read out of the serial number. */
+        val built: String,
         override val confidence: Int,
     ) : ScanHit
 }
@@ -47,6 +52,22 @@ class Scanner(private val catalog: Catalog) {
             m.variants.forEach { u -> add(u.code.uppercase(Locale.ROOT) to m) }
         }
     }
+
+    /**
+     * The builds a type code can name, longest first: a plate reading 9CECK…
+     * is a CoEx 70/90, not the CEC it starts with.
+     */
+    private val builds: List<Pair<String, Machine?>> = buildList {
+        catalog.machines.forEach { m ->
+            m.variants.forEach { add(it.code.uppercase(Locale.ROOT) to m) }
+        }
+        // A build we have no book for is still on a plate somewhere; naming it
+        // is better than reading 9CECK as the CEC it starts with.
+        BUILDS.forEach { add(it to null) }
+    }.filter { it.first.length >= 3 }
+        .distinctBy { it.first + (it.second?.id ?: "") }
+        .sortedWith(compareByDescending<Pair<String, Machine?>> { it.first.length }
+            .thenBy { it.second == null })
 
     /** The full message text, for a straight containment match. */
     private val faultTexts: List<Pair<List<String>, FaultGroup>> = catalog.faultGroups.map { g ->
@@ -85,17 +106,19 @@ class Scanner(private val catalog: Catalog) {
         }
 
         // --- type plate ---------------------------------------------------
-        val serial = SERIAL.find(upper)?.value
-        val code = machineWords.firstOrNull { (word, _) -> word.length >= 4 && upper.contains(word) }
-        if (serial != null) {
-            hits += ScanHit.TypePlate(code?.second, code?.first.orEmpty(), serial, 90)
-        }
+        // The plate inside the door is the one thing that says exactly which
+        // machine is standing there: "Type: 9CKAA211A2A00" is a Nio with a
+        // CoEx brewer, and the serial number says when it was built.
+        readPlate(upper)?.let { hits += it }
 
         // --- machine name on the housing ----------------------------------
         for ((word, machine) in machineWords) {
             if (word.length < 3) continue
             if (!Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)) continue
             if (hits.any { it is ScanHit.MachineHit && it.machine.id == machine.id }) continue
+            // The plate above already says which machine it is, and it says
+            // the build as well; a bare name underneath adds nothing.
+            if (hits.any { it is ScanHit.TypePlate && it.machine?.id == machine.id }) continue
             hits += ScanHit.MachineHit(machine, word, if (word.length > 4) 85 else 76)
         }
 
@@ -134,6 +157,43 @@ class Scanner(private val catalog: Catalog) {
             .sortedByDescending { it.confidence }.distinctBy { key(it) }.take(8)
     }
 
+    /**
+     * Reads the type plate out of whatever the camera got.
+     *
+     * Three things can be on it and any one of them is worth something: the
+     * type code (which machine and which build), the serial number (when it
+     * was built) and the model line. A plate behind a milk cooler is often
+     * only readable at an angle, so a hit on one of the three is enough.
+     */
+    private fun readPlate(upper: String): ScanHit.TypePlate? {
+        val found = builds.firstNotNullOfOrNull { (build, machine) ->
+            TYPE_CODE(build).find(upper)?.let { Triple(machine, build, it.value) }
+        }
+        // Without a book for that build the machine has to come from the model
+        // line: "Model: Virtu 70.2 CoEx".
+        val machine = found?.first ?: found?.let {
+            machineWords.firstOrNull { (word, _) ->
+                word.length >= 3 && Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)
+            }?.second
+        }
+        val serial = SERIAL.find(upper)?.value
+            ?: if (found != null) LOOSE_SERIAL.find(upper)?.value else null
+        if (found == null && serial == null) return null
+        val confidence = when {
+            found != null && serial != null -> 98
+            found != null -> 92
+            else -> 85
+        }
+        return ScanHit.TypePlate(
+            machine = machine,
+            build = found?.second.orEmpty(),
+            code = found?.third.orEmpty(),
+            serienummer = serial.orEmpty(),
+            built = serial?.let { built(it) }.orEmpty(),
+            confidence = confidence,
+        )
+    }
+
     private fun faultWordsOf(group: FaultGroup): Set<String> =
         faultWords.firstOrNull { it.second === group }?.first.orEmpty()
 
@@ -146,8 +206,41 @@ class Scanner(private val catalog: Catalog) {
 
     companion object {
         private val TOKEN = Regex("[0-9A-Z][0-9A-Z.\\-]{3,18}")
-        /** DUKE serial numbers on the type plate look like 2019.1234 or 20190101. */
-        private val SERIAL = Regex("\\b(?:20[0-9]{2}\\.[0-9]{3,5}|[0-9]{7,10})\\b")
+
+        /**
+         * Every build DUKE puts on a type plate. The catalog knows the ones we
+         * have books for; a machine on site may be one we do not, and reading
+         * its plate should still say which build it is.
+         */
+        private val BUILDS = listOf(
+            "CECK", "CECP", "CEC", "CND", "FEC", "FND", "IEA", "INB",
+            "XEA", "XNA", "XKA", "CKA",
+        )
+
+        /**
+         * A type code is a 9, the build, and the configuration behind it:
+         * 9CKAA211A2A00, 9CECKB110A1A00. The 9 is missing on some plates and
+         * the reader may drop it, so it is optional.
+         */
+        fun TYPE_CODE(build: String) =
+            Regex("(?<![A-Z0-9])9?" + Regex.escape(build) + "[A-Z0-9]{3,}(?![A-Z0-9])")
+
+        /**
+         * The serial number is year, week, batch and number: 2014386812001 or
+         * 2021.14.0428.001. Older plates print fewer digits.
+         */
+        private val SERIAL = Regex("\\b(?:(?:19|20)[0-9]{2}\\.[0-9]{2}\\.[0-9]{3,4}(?:\\.[0-9]{1,3})?|(?:19|20)[0-9]{11})\\b")
+        private val LOOSE_SERIAL = Regex("\\b(?:(?:19|20)[0-9]{2}\\.[0-9]{3,5}|[0-9]{7,10})\\b")
+
+        /** "2014 · week 38" out of 2014386812001 or 2014.38.6812.001. */
+        fun built(serial: String): String {
+            val digits = serial.filter { it.isDigit() }
+            if (digits.length < 6) return ""
+            val year = digits.take(4).toIntOrNull() ?: return ""
+            if (year < 1990 || year > 2100) return ""
+            val week = digits.drop(4).take(2).toIntOrNull() ?: return ""
+            return if (week in 1..53) "$year · week $week" else "$year"
+        }
         private val STOP = setOf(
             "machine", "koffiemachine", "coffee", "niet", "the", "een", "van", "voor",
             "door", "worden", "wordt", "deze", "your", "please", "with",

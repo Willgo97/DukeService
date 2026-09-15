@@ -305,7 +305,11 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
         is Route.Machine -> {
             val machine = loaded.machine(route.id)
             if (machine != null) {
-                MachineDetail(loaded, machine, variant, vm::useMachine,
+                // The build belongs to the machine the app is pointed at. Open
+                // another machine and its own lists are whole again, instead
+                // of being narrowed to a build that machine does not have.
+                MachineDetail(loaded, machine, variant.takeIf { filter == machine.id },
+                    vm::useMachine,
                     notes[machine.id].orEmpty(), vm::setNote, vm::open) { tab, machineId ->
                     vm.setFilter(machineId)
                     vm.back()

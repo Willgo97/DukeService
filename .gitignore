@@ -12,6 +12,9 @@ app/src/main/assets/img/
 app/src/main/assets/tek/
 app/src/main/assets/stap/
 
+# Photos of machines in the field: they carry a customer's serial number.
+data/samples/
+
 # Build output
 build/
 app/build/
