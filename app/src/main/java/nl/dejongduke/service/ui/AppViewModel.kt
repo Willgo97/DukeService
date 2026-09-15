@@ -42,6 +42,8 @@ sealed interface Route {
     data class MenuItem(val id: String) : Route
     data object ServiceMenu : Route
     data object Scan : Route
+    /** The type plate reader, which is a scanner of its own. */
+    data object PlateScan : Route
     data object Settings : Route
     data object Procedures : Route
     data object Specs : Route

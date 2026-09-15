@@ -78,7 +78,6 @@
     <string name="light">Vaalea</string>
     <string name="monthly">Kuukausittain</string>
     <string name="machine">Kone</string>
-    <string name="machine_tap_to_point_the_app_at_it">Kone  ·  napauta asettaaksesi sovelluksen siihen</string>
     <string name="machines">Koneet</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Ilmoitus, numero tai toimenpide</string>
@@ -128,8 +127,6 @@ Syy: </string>
     <string name="procedure">Toimenpide</string>
     <string name="procedures">Toimenpiteet</string>
     <string name="recent_searches">Viimeksi haettu</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Suuntaa tarraan, tyyppikilpeen tai näyttöön</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Suuntaa osan tarraan, tyyppikilpeen tai koneen näyttöön. Sovellus lukee tekstin itse laitteella — mitään ei lähetetä ulos.</string>
     <string name="scan">Skannaa</string>
     <string name="scanning">Skannaus</string>
     <string name="scanner">Skanneri</string>
@@ -137,7 +134,6 @@ Syy: </string>
     <string name="screen_messages">Näytön ilmoitukset</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = auton varasto · SW = keskusvarasto · pos viittaa piirustuksen numeroon.</string>
     <string name="serial_number_location_what_you_replaced">Sarjanumero, sijainti, mitä vaihdoit…</string>
-    <string name="serial_number">Sarjanumero %1$s</string>
     <string name="service_message">Huoltoilmoitus</string>
     <string name="service_menu">Huoltovalikko</string>
     <string name="service_menu_unknown">huoltovalikko tuntematon</string>
@@ -161,13 +157,11 @@ Syy: </string>
     <string name="tap_the_build_in_front_of_you_the_type_code">Napauta edessäsi olevaa mallia — tyyppikoodi on tyyppikilvessä. Sovelluksen luettelot koskevat sen jälkeen vain sitä.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Napauta numeroa piirustuksessa tai osaa luettelossa.</string>
     <string name="type_code">Tyyppikoodi</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Tyyppikoodi %1$s — napauta asettaaksesi sovelluksen siihen</string>
     <string name="type_plate">Tyyppikilpi</string>
     <string name="from_the_manual">Käsikirjasta</string>
     <string name="from_photo">Kuvasta</string>
     <string name="builds">Mallit</string>
     <string name="often_needed">Usein tarvittu</string>
-    <string name="from_the_type_plate">Tyyppikilvestä</string>
     <string name="pinned">Kiinnitetty</string>
     <string name="pin">Kiinnitä</string>
     <string name="fresh_milk">Tuore maito</string>
@@ -297,4 +291,11 @@ Syy: </string>
     <string name="use_this_machine">Käytä tätä konetta</string>
     <string name="open_settings">Avaa asetukset</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">Kamera on pois käytöstä tässä sovelluksessa. Kytke se päälle puhelimen asetuksista tai lue jo ottamasi kuva.</string>
+    <string name="point_at_a_label_or_the_screen">Suuntaa osatarraan tai näyttöön</string>
+    <string name="point_at_the_type_plate">Suuntaa tyyppikilpeen</string>
+    <string name="part_or_message">Osa tai ilmoitus</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Suuntaa osatarraan tai koneen näyttöön. Sovellus lukee tekstin laitteessa — mitään ei lähetetä ulos.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Suuntaa oven sisäpuolella olevaan tyyppikilpeen. Sovellus lukee tekstin laitteessa — mitään ei lähetetä ulos.</string>
+    <string name="no_type_plate_in_the_photo">Valokuvassa ei ole tyyppikilpeä</string>
+    <string name="built_label">Valmistusvuosi</string>
 </resources>

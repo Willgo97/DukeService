@@ -78,7 +78,6 @@
     <string name="light">Light</string>
     <string name="monthly">Monthly</string>
     <string name="machine">Machine</string>
-    <string name="machine_tap_to_point_the_app_at_it">Machine  ·  tap to point the app at it</string>
     <string name="machines">Machines</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Message, number or procedure</string>
@@ -128,8 +127,6 @@ Cause: </string>
     <string name="procedure">Procedure</string>
     <string name="procedures">Procedures</string>
     <string name="recent_searches">Recent searches</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Point at a label, type plate or the screen</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Point at a part label, the type plate or the machine\'s screen. The app reads the text on the device itself — nothing leaves it.</string>
     <string name="scan">Scan</string>
     <string name="scanning">Scanning</string>
     <string name="scanner">Scanner</string>
@@ -137,7 +134,6 @@ Cause: </string>
     <string name="screen_messages">Screen messages</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = van stock · SW = warehouse stock · pos refers to the number in the drawing.</string>
     <string name="serial_number_location_what_you_replaced">Serial number, location, what you replaced…</string>
-    <string name="serial_number">Serial number %1$s</string>
     <string name="service_message">Service message</string>
     <string name="service_menu">Service menu</string>
     <string name="service_menu_unknown">service menu unknown</string>
@@ -161,13 +157,11 @@ Cause: </string>
     <string name="tap_the_build_in_front_of_you_the_type_code">Tap the build in front of you — the type code is on the type plate. The lists in the app will then only cover that one.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Tap a number in the drawing, or tap a part in the list.</string>
     <string name="type_code">Type code</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Type code %1$s — tap to point the app at it</string>
     <string name="type_plate">Type plate</string>
     <string name="from_the_manual">From the manual</string>
     <string name="from_photo">From photo</string>
     <string name="builds">Builds</string>
     <string name="often_needed">Often needed</string>
-    <string name="from_the_type_plate">From the type plate</string>
     <string name="pinned">Pinned</string>
     <string name="pin">Pin</string>
     <string name="fresh_milk">Fresh milk</string>
@@ -297,4 +291,11 @@ Cause: </string>
     <string name="use_this_machine">Use this machine</string>
     <string name="open_settings">Open settings</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">The camera is switched off for this app. Turn it on in your phone\'s settings, or read a photo you already took.</string>
+    <string name="point_at_a_label_or_the_screen">Point at a part label or the screen</string>
+    <string name="point_at_the_type_plate">Point at the type plate</string>
+    <string name="part_or_message">Part or message</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Point at a part label or at the machine’s display. The app reads the text on the device itself — nothing leaves the phone.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Point at the type plate inside the door. The app reads the text on the device itself — nothing leaves the phone.</string>
+    <string name="no_type_plate_in_the_photo">No type plate in the photo</string>
+    <string name="built_label">Built</string>
 </resources>

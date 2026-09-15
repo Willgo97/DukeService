@@ -1,27 +1,15 @@
 package nl.dejongduke.service.ui.screens
 
-import android.Manifest
-import androidx.core.app.ActivityCompat
-import android.provider.Settings
-import android.content.Intent
-import android.app.Activity
-import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,12 +25,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.CoffeeMaker
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.WarningAmber
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -52,38 +37,34 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
-import android.net.Uri
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
-import nl.dejongduke.service.data.Plate
 import nl.dejongduke.service.data.ScanHit
 import nl.dejongduke.service.data.Scanner
 import nl.dejongduke.service.ui.Card
-import nl.dejongduke.service.ui.categoryLabel
 import nl.dejongduke.service.ui.Pill
 import nl.dejongduke.service.ui.Route
-import java.util.concurrent.Executors
+import nl.dejongduke.service.ui.categoryLabel
 
 /** Below this the camera is guessing, and a guess on a machine is worse than nothing. */
 private const val LIVE_THRESHOLD = 75
@@ -91,8 +72,11 @@ private const val LIVE_THRESHOLD = 75
 /** A photo is chosen on purpose, so it may be read a little more generously. */
 private const val PHOTO_THRESHOLD = 60
 
-/** An exact part number or a message word for word needs no second opinion. */
-private const val CERTAIN = 95
+/**
+ * An exact part number, or a message with all its words in the right order,
+ * needs no second opinion.
+ */
+private const val CERTAIN = 92
 
 /** How often a weaker result has to come back before it is shown. */
 private const val CONFIRMATIONS = 2
@@ -104,8 +88,12 @@ private const val KEEP_ALIVE_MS = 8_000L
 private const val PHOTO_PAUSE_MS = 20_000L
 
 /**
- * Point the camera at whatever is in front of you — a part label, the type
- * plate, or the machine's own display — and the app says what it is.
+ * Point the camera at a part label or at the machine's own display, and the
+ * app says what it is.
+ *
+ * Only those two: the type plate has its own scanner, because a plate carries
+ * numbers that read like part numbers and a model line that shares words with
+ * a screen message. Looking for all three at once made all three worse.
  *
  * Recognition runs on the device: no connection needed, which matters in the
  * plant rooms these machines live in.
@@ -116,48 +104,18 @@ fun ScanScreen(
     /** The machine the app is pointed at, so a part number shows its row. */
     machine: String?,
     direct: Boolean,
-    onUseMachine: (String, String?) -> Unit,
     onOpen: (Route) -> Unit,
+    onScanPlate: () -> Unit,
 ) {
     val context = LocalContext.current
-    var granted by remember {
-        mutableStateOf(
-            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED
-        )
-    }
-    var asked by remember { mutableStateOf(false) }
-    val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-        granted = it
-        asked = true
-    }
-    // Android stops showing the dialog after a second refusal; then the only
-    // way back is the settings screen.
-    val refusedForGood = asked && !granted &&
-        !ActivityCompat.shouldShowRequestPermissionRationale(
-            context as Activity, Manifest.permission.CAMERA,
-        )
-
+    val scope = rememberCoroutineScope()
     // The scanner indexes every part number; building that in composition
     // freezes the screen on the way in.
-    //
-    // It lives in one state that is kept for the whole screen, not in one that
-    // is replaced when the catalog changes: the camera's analyser holds on to
-    // the first callback it is given, and a replaced state would leave it
-    // reading a scanner from before the parts table arrived — which is exactly
-    // how scanning a part number stopped working a second after opening.
-    val scannerState = remember { mutableStateOf<Scanner?>(null) }
-    val scanner by scannerState
+    var scanner by remember { mutableStateOf<Scanner?>(null) }
     LaunchedEffect(catalog) {
-        scannerState.value = withContext(Dispatchers.Default) { Scanner(catalog) }
+        scanner = withContext(Dispatchers.Default) { Scanner(catalog) }
     }
     var hits by remember { mutableStateOf<List<ScanHit>>(emptyList()) }
-    // A type plate is not read in one frame: it fills up while the phone moves
-    // along it. What has been read stays until the plate leaves the picture.
-    var plate by remember { mutableStateOf<Plate?>(null) }
-    var plateSeen by remember { mutableStateOf(0L) }
-    // The camera is looking at a plate but has not read a field off it yet.
-    var platePending by remember { mutableStateOf(false) }
     var fromPhoto by remember { mutableStateOf(false) }
     // What the camera has seen lately, keyed by hit. A label drifts out of
     // frame while you are still reading it, and one frame of a bad angle
@@ -168,6 +126,10 @@ fun ScanScreen(
     // in those first seconds is kept, so it can go past the scanner again once
     // the numbers are in instead of coming back as "nothing recognised".
     var lastLines by remember { mutableStateOf<List<String>>(emptyList()) }
+    // Matching runs off the main thread, and the camera hands over the next
+    // frame while it is still busy. Reading one frame at a time keeps the
+    // preview smooth and costs nothing: the next frame is 30 ms away.
+    var busy by remember { mutableStateOf(false) }
     // "Open straight away" fires off a camera frame, and the frames keep
     // coming while the label is still in view. Without this the same screen
     // lands on the back stack thirty times over.
@@ -193,27 +155,27 @@ fun ScanScreen(
                 recognizer.process(image)
                     .addOnSuccessListener { result ->
                         val lines = result.textBlocks.flatMap { b -> b.lines.map { it.text } }
-                        // A photo is a deliberate choice, so read it more
-                        // generously than a frame that happened to go by.
                         val reader = scanner ?: return@addOnSuccessListener
                         lastLines = lines
-                        val found = reader.scan(lines, PHOTO_THRESHOLD, machine)
-                        // A plate with nothing read off it is not a result; the
-                        // label or the screen in the same picture is.
-                        plate = reader.readPlate(lines)?.takeIf { !it.isEmpty }
-                        plateSeen = System.currentTimeMillis()
-                        hits = if (plate != null) emptyList() else found
-                        seen = emptyMap()
-                        fromPhoto = true
-                        photoUntil = System.currentTimeMillis() + PHOTO_PAUSE_MS
-                        message = when {
-                            found.isNotEmpty() || plate != null -> ""
-                            lines.isEmpty() -> noTextInPhoto
-                            // Saying "nothing recognised" while half the
-                            // catalog is still on its way is a lie the
-                            // engineer acts on.
-                            catalog.parts.isEmpty() -> partsLoading
-                            else -> readNothingFound + lines.take(3).joinToString(" · ")
+                        scope.launch {
+                            // A photo is a deliberate choice, so read it more
+                            // generously than a frame that happened to go by.
+                            val found = withContext(Dispatchers.Default) {
+                                reader.scan(lines, PHOTO_THRESHOLD, machine)
+                            }
+                            hits = found
+                            seen = emptyMap()
+                            fromPhoto = true
+                            photoUntil = System.currentTimeMillis() + PHOTO_PAUSE_MS
+                            message = when {
+                                found.isNotEmpty() -> ""
+                                lines.isEmpty() -> noTextInPhoto
+                                // Saying "nothing recognised" while half the
+                                // catalog is still on its way is a lie the
+                                // engineer acts on.
+                                catalog.parts.isEmpty() -> partsLoading
+                                else -> readNothingFound + lines.take(3).joinToString(" · ")
+                            }
                         }
                     }
                     .addOnFailureListener { message = readFailed + (it.message ?: "") }
@@ -224,8 +186,10 @@ fun ScanScreen(
     // empty a moment ago deserves a second pass.
     LaunchedEffect(scanner) {
         val reader = scanner ?: return@LaunchedEffect
-        if (lastLines.isEmpty() || hits.isNotEmpty() || plate != null) return@LaunchedEffect
-        val found = reader.scan(lastLines, PHOTO_THRESHOLD, machine)
+        if (lastLines.isEmpty() || hits.isNotEmpty()) return@LaunchedEffect
+        val found = withContext(Dispatchers.Default) {
+            reader.scan(lastLines, PHOTO_THRESHOLD, machine)
+        }
         if (found.isNotEmpty()) {
             hits = found
             fromPhoto = true
@@ -241,185 +205,115 @@ fun ScanScreen(
                 photoUntil = 0L
                 fromPhoto = false
                 hits = emptyList()
-                plate = null
                 seen = emptyMap()
                 message = ""
             }
         },
     ) {
-        if (!granted) {
-            Column(
-                Modifier.fillMaxSize().padding(32.dp)
-                    // Keep clear of the panel that slides in with a result.
-                    .padding(bottom = if (hits.isNotEmpty() || plate != null) 300.dp else 0.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Icon(
-                    Icons.Filled.Info, null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.height(40.dp),
+        CameraAccess(
+            explanation = stringResource(R.string.point_at_a_part_label_or_the_screen_of_the_ma),
+            onPickPhoto = {
+                pickPhoto.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                 )
-                Spacer(Modifier.height(16.dp))
-                Text(stringResource(R.string.camera_needed), style = MaterialTheme.typography.titleLarge)
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    stringResource(
-                        if (refusedForGood) R.string.the_camera_was_turned_off_for_this_app_you_c
-                        else R.string.point_at_a_part_label_the_type_plate_or_the
-                    ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(Modifier.height(24.dp))
-                if (refusedForGood) {
-                    Button(onClick = {
-                        context.startActivity(
-                            Intent(
-                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                Uri.fromParts("package", context.packageName, null),
-                            )
+            },
+        ) {
+            CameraReader(SCREEN_TEXT) { lines ->
+                val reader = scanner
+                val now = System.currentTimeMillis()
+                if (reader == null || busy) return@CameraReader
+                if (fromPhoto && now < photoUntil) return@CameraReader
+                if (lines.isEmpty() && seen.isEmpty() && hits.isEmpty()) return@CameraReader
+
+                busy = true
+                scope.launch {
+                    val found = withContext(Dispatchers.Default) {
+                        reader.scan(lines, LIVE_THRESHOLD, machine)
+                    }
+                    busy = false
+                    // What was read off a photo stays until the camera has
+                    // something of its own to say. Pointing at a wall is not a
+                    // reason to throw away what the engineer just looked up.
+                    if (fromPhoto && found.isEmpty()) return@launch
+                    fromPhoto = false
+
+                    val updated = seen.toMutableMap()
+                    for (hit in found) {
+                        val key = reader.key(hit)
+                        val previous = updated[key]
+                        updated[key] = Sighting(
+                            hit = if (previous != null && previous.hit.confidence >= hit.confidence) previous.hit else hit,
+                            times = (previous?.times ?: 0) + 1,
+                            lastSeen = now,
                         )
-                    }) { Text(stringResource(R.string.open_settings)) }
-                } else {
-                    Button(onClick = { ask.launch(Manifest.permission.CAMERA) }) {
-                        Text(stringResource(R.string.allow_camera))
+                    }
+                    updated.entries.removeAll { now - it.value.lastSeen > KEEP_ALIVE_MS }
+                    seen = updated
+
+                    // Show a result once the camera has seen it twice, or
+                    // straight away when it is beyond doubt: an exact part
+                    // number, or the message with all its words in order.
+                    val shown = updated.values
+                        .filter { it.times >= CONFIRMATIONS || it.hit.confidence >= CERTAIN }
+                        .sortedByDescending { it.hit.confidence }
+                        .map { it.hit }
+                        .take(8)
+                    if (shown != hits) {
+                        hits = shown
+                        message = ""
+                    }
+                    // One unambiguous hit and the setting on: skip the list.
+                    if (direct && !jumped && shown.size == 1 && shown.first().confidence >= CERTAIN) {
+                        jumped = true
+                        onOpen(routeFor(shown.first()))
                     }
                 }
-                Spacer(Modifier.height(12.dp))
-                // Reading a photo needs no camera at all.
-                FilledTonalButton(onClick = {
-                    pickPhoto.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                    )
-                }) {
-                    Icon(Icons.Filled.PhotoLibrary, null, modifier = Modifier.height(18.dp))
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.from_photo))
-                }
-            }
-        }
-        if (granted) CameraPreview { lines ->
-            val reader = scanner ?: return@CameraPreview
-            val now = System.currentTimeMillis()
-            if (fromPhoto && now < photoUntil) return@CameraPreview
-            if (lines.isEmpty() && seen.isEmpty() && plate == null && hits.isEmpty()) {
-                return@CameraPreview
             }
 
-            val found = reader.scan(lines, LIVE_THRESHOLD, machine)
-            // What was read off a photo stays until the camera has something
-            // of its own to say. Pointing at a wall is not a reason to throw
-            // away what the engineer just looked up.
-            if (fromPhoto && found.isEmpty() && reader.readPlate(lines) == null) {
-                return@CameraPreview
-            }
-            fromPhoto = false
-
-            // Standing in front of the plate: keep filling it in, frame by
-            // frame. A plate the camera has left goes as soon as there is
-            // something else to show, or after the usual few seconds.
-            val reading = reader.readPlate(lines)
-            platePending = reading != null
-            if (reading != null) {
-                val filled = (plate ?: Plate()).merge(reading)
-                plate = filled.takeIf { !it.isEmpty }
-                plateSeen = now
-                message = ""
-                if (direct && !jumped && filled.complete && filled.machine != null) {
-                    jumped = true
-                    onUseMachine(filled.machine!!.id, filled.build.ifEmpty { null })
-                    onOpen(Route.Machine(filled.machine!!.id))
-                    return@CameraPreview
-                }
-            } else if (plate != null && (found.isNotEmpty() || now - plateSeen > KEEP_ALIVE_MS)) {
-                plate = null
-            }
-            // The panel says everything the plate hit would say.
-            val rest = if (plate != null) found.filterNot { it is ScanHit.TypePlate } else found
-            val updated = seen.toMutableMap()
-            for (hit in rest) {
-                val key = reader.key(hit)
-                val previous = updated[key]
-                updated[key] = Sighting(
-                    hit = if (previous != null && previous.hit.confidence >= hit.confidence) previous.hit else hit,
-                    times = (previous?.times ?: 0) + 1,
-                    lastSeen = now,
-                )
-            }
-            updated.entries.removeAll { now - it.value.lastSeen > KEEP_ALIVE_MS }
-            seen = updated
-
-            // Show a result once the camera has seen it twice, or straight away
-            // when it is beyond doubt: an exact part number or the whole
-            // message word for word.
-            val shown = updated.values
-                .filter { it.times >= CONFIRMATIONS || it.hit.confidence >= CERTAIN }
-                .sortedByDescending { it.hit.confidence }
-                .map { it.hit }
-                .take(8)
-            if (shown != hits) {
-                hits = shown
-                message = ""
-            }
-            // One unambiguous hit and the setting on: skip the list.
-            if (direct && !jumped && shown.size == 1 && shown.first().confidence >= CERTAIN) {
-                routeFor(shown.first())?.let {
-                    jumped = true
-                    onOpen(it)
-                }
-            }
-        }
-
-        // viewfinder guide
-        if (granted) Box(
-            Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 40.dp)
-                .fillMaxWidth(0.82f)
-                .height(150.dp)
-                .border(2.dp, Color.White.copy(alpha = 0.65f), RoundedCornerShape(14.dp)),
-        )
-
-        if (granted) Column(
-            Modifier.align(Alignment.TopCenter).padding(top = 200.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+            // viewfinder guide
             Box(
-                Modifier.clip(RoundedCornerShape(20.dp))
-                    .background(Color.Black.copy(alpha = 0.55f))
-                    .padding(horizontal = 14.dp, vertical = 7.dp),
+                Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 40.dp)
+                    .fillMaxWidth(0.82f)
+                    .height(150.dp)
+                    .border(2.dp, Color.White.copy(alpha = 0.65f), RoundedCornerShape(14.dp)),
+            )
+
+            Column(
+                Modifier.align(Alignment.TopCenter).padding(top = 200.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
+                Banner(
                     when {
                         message.isNotEmpty() -> message
-                        plate?.complete == true -> stringResource(R.string.type_plate_found)
-                        plate != null || (hits.isEmpty() && platePending) ->
-                            stringResource(R.string.hold_still_reading_the_plate)
                         // Part numbers cannot be found before the table is in.
                         hits.isEmpty() && catalog.parts.isEmpty() ->
                             stringResource(R.string.the_parts_list_is_still_loading_try_again_in)
                         hits.isEmpty() && seen.isNotEmpty() -> stringResource(R.string.hold_still)
-                        hits.isEmpty() -> stringResource(R.string.point_at_a_label_type_plate_or_the_screen)
+                        hits.isEmpty() -> stringResource(R.string.point_at_a_label_or_the_screen)
                         fromPhoto -> stringResource(R.string.found_in_the_photo, hits.size)
                         else -> stringResource(R.string.found_2, hits.size)
-                    },
-                    style = MaterialTheme.typography.labelLarge,
-                    color = Color.White,
+                    }
                 )
-            }
-            Spacer(Modifier.height(12.dp))
-            FilledTonalButton(onClick = {
-                pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            }) {
-                Icon(Icons.Filled.PhotoLibrary, null, modifier = Modifier.height(18.dp))
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.from_photo))
+                Spacer(Modifier.height(12.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    PhotoButton {
+                        pickPhoto.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }
+                    FilledTonalButton(onClick = onScanPlate) {
+                        Icon(Icons.Filled.Info, null, modifier = Modifier.height(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.type_plate))
+                    }
+                }
             }
         }
 
         AnimatedVisibility(
-            visible = hits.isNotEmpty() || plate != null,
+            visible = hits.isNotEmpty(),
             enter = slideInVertically { it },
             exit = slideOutVertically { it },
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -431,109 +325,43 @@ fun ScanScreen(
                     .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                     .background(MaterialTheme.colorScheme.surface),
             ) {
-                plate?.let { PlateCard(it, onUseMachine, onOpen) }
                 LazyColumn(Modifier.padding(top = 10.dp)) {
-                    items(hits.size) { index ->
-                        HitCard(catalog, hits[index], onUseMachine, onOpen)
-                    }
+                    items(hits.size) { index -> HitCard(catalog, hits[index], onOpen) }
                 }
             }
         }
     }
 
-    DisposableEffect(Unit) { onDispose { hits = emptyList(); plate = null } }
-}
-
-/**
- * The type plate as it fills up.
- *
- * The plate is one thing, not a list of finds, so it gets its own panel: what
- * has been read, what is still missing, and — the moment the machine is known
- * — the one button that matters.
- */
-@Composable
-private fun PlateCard(
-    plate: Plate,
-    onUseMachine: (String, String?) -> Unit,
-    onOpen: (Route) -> Unit,
-) {
-    Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Filled.Info, null, tint = MaterialTheme.colorScheme.primary,
-                 modifier = Modifier.height(20.dp))
-            Spacer(Modifier.width(8.dp))
-            Text(stringResource(R.string.type_plate), style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.weight(1f))
-            if (!plate.complete) {
-                CircularProgressIndicator(
-                    Modifier.height(16.dp),
-                    strokeWidth = 2.dp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
-        }
-        Spacer(Modifier.height(10.dp))
-        PlateRow(stringResource(R.string.type_code), plate.code)
-        PlateRow(stringResource(R.string.serial_number_label), plate.serial)
-        PlateRow(stringResource(R.string.model_label), plate.model)
-
-        plate.machine?.let { machine ->
-            Spacer(Modifier.height(14.dp))
-            Button(
-                onClick = {
-                    onUseMachine(machine.id, plate.build.ifEmpty { null })
-                    onOpen(Route.Machine(machine.id))
-                },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    listOfNotNull(machine.name, plate.build.ifEmpty { null },
-                                  plate.built.ifEmpty { null }).joinToString(" · ")
-                )
-            }
-            Spacer(Modifier.height(4.dp))
-            Text(
-                stringResource(R.string.use_this_machine),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            )
-        }
-    }
-}
-
-@Composable
-private fun PlateRow(label: String, value: String) {
-    Row(
-        Modifier.fillMaxWidth().padding(vertical = 3.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            label,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.width(120.dp),
-        )
-        Text(
-            value.ifEmpty { stringResource(R.string.not_read_yet) },
-            style = MaterialTheme.typography.bodyLarge,
-            color = if (value.isEmpty()) MaterialTheme.colorScheme.outline
-                    else MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.weight(1f),
-        )
-    }
+    DisposableEffect(Unit) { onDispose { hits = emptyList() } }
 }
 
 /** One result the camera saw, how often, and when it last did. */
 private data class Sighting(val hit: ScanHit, val times: Int, val lastSeen: Long)
 
+/** The dark strip over the picture that says what the camera is doing. */
 @Composable
-private fun HitCard(
-    catalog: Catalog,
-    hit: ScanHit,
-    onUseMachine: (String, String?) -> Unit,
-    onOpen: (Route) -> Unit,
-) {
+internal fun Banner(text: String) {
+    Box(
+        Modifier.clip(RoundedCornerShape(20.dp))
+            .background(Color.Black.copy(alpha = 0.55f))
+            .padding(horizontal = 14.dp, vertical = 7.dp),
+    ) {
+        Text(text, style = MaterialTheme.typography.labelLarge, color = Color.White)
+    }
+}
+
+/** Reading a photo from the gallery: the way in when the camera cannot see it. */
+@Composable
+internal fun PhotoButton(onPick: () -> Unit) {
+    FilledTonalButton(onClick = onPick) {
+        Icon(Icons.Filled.PhotoLibrary, null, modifier = Modifier.height(18.dp))
+        Spacer(Modifier.width(8.dp))
+        Text(stringResource(R.string.from_photo))
+    }
+}
+
+@Composable
+private fun HitCard(catalog: Catalog, hit: ScanHit, onOpen: (Route) -> Unit) {
     when (hit) {
         is ScanHit.PartHit -> HitRow(
             Icons.Filled.Build,
@@ -542,7 +370,7 @@ private fun HitCard(
             "${catalog.machine(hit.part.machine)?.name ?: hit.part.machine}  ·  ${hit.part.section}",
             hit.confidence,
             mono = true,
-        ) { onOpen(Route.PartSection(hit.part.machine, hit.part.variant, hit.part.section)) }
+        ) { onOpen(routeFor(hit)) }
 
         is ScanHit.FaultHit -> HitRow(
             Icons.Filled.WarningAmber,
@@ -550,43 +378,7 @@ private fun HitCard(
             hit.group.first.dutch,
             stringResource(R.string.fault_2, categoryLabel(hit.group.first.category)),
             hit.confidence,
-        ) { onOpen(Route.Fault(hit.group.message)) }
-
-        is ScanHit.MachineHit -> HitRow(
-            Icons.Filled.CoffeeMaker,
-            hit.machine.name,
-            hit.machine.summary,
-            stringResource(R.string.machine_tap_to_point_the_app_at_it),
-            hit.confidence,
-        ) {
-            onUseMachine(hit.machine.id, null)
-            onOpen(Route.Machine(hit.machine.id))
-        }
-
-        // The type plate is the one moment the app knows exactly which machine
-        // it is standing in front of. Take it: from here on every list is that
-        // machine's list, without anyone picking it from a row of chips.
-        is ScanHit.TypePlate -> HitRow(
-            Icons.Filled.Info,
-            listOfNotNull(
-                hit.machine?.name ?: stringResource(R.string.type_plate),
-                hit.build.ifEmpty { null },
-            ).joinToString(" · "),
-            listOfNotNull(
-                hit.serienummer.ifEmpty { null }
-                    ?.let { stringResource(R.string.serial_number, it) },
-                hit.built.ifEmpty { null },
-            ).joinToString("  ·  "),
-            if (hit.code.isNotEmpty()) stringResource(R.string.type_code_tap_to_point_the_app_at_it, hit.code)
-            else stringResource(R.string.from_the_type_plate),
-            hit.confidence,
-        ) {
-            hit.machine?.let { machine ->
-                onUseMachine(machine.id, hit.build.ifEmpty { null })
-                onOpen(Route.Machine(machine.id))
-            }
-        }
-
+        ) { onOpen(routeFor(hit)) }
     }
 }
 
@@ -625,78 +417,8 @@ private fun HitRow(
     }
 }
 
-/** CameraX preview with ML Kit text recognition on every other frame. */
-@Composable
-private fun CameraPreview(onText: (List<String>) -> Unit) {
-    val context = LocalContext.current
-    val owner = LocalLifecycleOwner.current
-    val executor = remember { Executors.newSingleThreadExecutor() }
-    val recognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
-    // A frame can still be on its way in when the screen closes; handing it to
-    // a reader that has been shut is a crash.
-    val open = remember { java.util.concurrent.atomic.AtomicBoolean(true) }
-
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = { ctx ->
-            val view = PreviewView(ctx).apply {
-                scaleType = PreviewView.ScaleType.FILL_CENTER
-            }
-            val providerFuture = ProcessCameraProvider.getInstance(ctx)
-            providerFuture.addListener({
-                val provider = providerFuture.get()
-                val preview = Preview.Builder().build().also {
-                    it.surfaceProvider = view.surfaceProvider
-                }
-                val analysis = ImageAnalysis.Builder()
-                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                    .build()
-                analysis.setAnalyzer(executor) { proxy ->
-                    if (open.get()) analyse(proxy, recognizer, onText) else proxy.close()
-                }
-                runCatching {
-                    provider.unbindAll()
-                    provider.bindToLifecycle(owner, CameraSelector.DEFAULT_BACK_CAMERA, preview, analysis)
-                }
-            }, ContextCompat.getMainExecutor(ctx))
-            view
-        },
-    )
-
-    DisposableEffect(Unit) {
-        onDispose {
-            open.set(false)
-            executor.shutdown()
-            recognizer.close()
-        }
-    }
-}
-
-@androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
-private fun analyse(
-    proxy: ImageProxy,
-    recognizer: com.google.mlkit.vision.text.TextRecognizer,
-    onText: (List<String>) -> Unit,
-) {
-    val media = proxy.image
-    if (media == null) {
-        proxy.close()
-        return
-    }
-    val image = InputImage.fromMediaImage(media, proxy.imageInfo.rotationDegrees)
-    recognizer.process(image)
-        .addOnSuccessListener { result ->
-            // An empty frame is a frame too: it is how a result that the
-            // camera has left behind gets its chance to expire.
-            onText(result.textBlocks.flatMap { block -> block.lines.map { it.text } })
-        }
-        .addOnCompleteListener { proxy.close() }
-}
-
 /** Where a scan result leads. */
-private fun routeFor(hit: ScanHit): Route? = when (hit) {
+private fun routeFor(hit: ScanHit): Route = when (hit) {
     is ScanHit.PartHit -> Route.PartSection(hit.part.machine, hit.part.variant, hit.part.section)
     is ScanHit.FaultHit -> Route.Fault(hit.group.message)
-    is ScanHit.MachineHit -> Route.Machine(hit.machine.id)
-    is ScanHit.TypePlate -> hit.machine?.let { Route.Machine(it.id) }
 }

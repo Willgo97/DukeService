@@ -78,7 +78,6 @@
     <string name="light">Světlé</string>
     <string name="monthly">Měsíčně</string>
     <string name="machine">Stroj</string>
-    <string name="machine_tap_to_point_the_app_at_it">Stroj  ·  klepnutím na něj aplikaci nastavíte</string>
     <string name="machines">Stroje</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Hlášení, číslo nebo postup</string>
@@ -128,8 +127,6 @@ Příčina: </string>
     <string name="procedure">Postup</string>
     <string name="procedures">Postupy</string>
     <string name="recent_searches">Naposledy hledané</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Zaměřte na štítek, typový štítek nebo displej</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Zaměřte na štítek dílu, typový štítek nebo displej stroje. Aplikace čte text přímo v zařízení — nic neodchází ven.</string>
     <string name="scan">Skenovat</string>
     <string name="scanning">Skenování</string>
     <string name="scanner">Skener</string>
@@ -137,7 +134,6 @@ Příčina: </string>
     <string name="screen_messages">Hlášení na displeji</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = zásoba ve voze · SW = sklad · poz. odkazuje na číslo ve výkresu.</string>
     <string name="serial_number_location_what_you_replaced">Sériové číslo, umístění, co jste vyměnili…</string>
-    <string name="serial_number">Sériové číslo %1$s</string>
     <string name="service_message">Servisní hlášení</string>
     <string name="service_menu">Servisní nabídka</string>
     <string name="service_menu_unknown">servisní nabídka neznámá</string>
@@ -161,13 +157,11 @@ Příčina: </string>
     <string name="tap_the_build_in_front_of_you_the_type_code">Klepněte na provedení, které máte před sebou — typový kód je na typovém štítku. Seznamy v aplikaci se pak budou týkat jen jeho.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Klepněte na číslo ve výkresu nebo na díl v seznamu.</string>
     <string name="type_code">Typový kód</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Typový kód %1$s — klepnutím na něj aplikaci nastavíte</string>
     <string name="type_plate">Typový štítek</string>
     <string name="from_the_manual">Z příručky</string>
     <string name="from_photo">Z fotky</string>
     <string name="builds">Provedení</string>
     <string name="often_needed">Často potřebné</string>
-    <string name="from_the_type_plate">Z typového štítku</string>
     <string name="pinned">Připnuto</string>
     <string name="pin">Připnout</string>
     <string name="fresh_milk">Čerstvé mléko</string>
@@ -313,4 +307,11 @@ Příčina: </string>
     <string name="use_this_machine">Použít tento stroj</string>
     <string name="open_settings">Otevřít nastavení</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">Fotoaparát je pro tuto aplikaci vypnutý. Zapněte jej v nastavení telefonu, nebo načtěte už pořízenou fotku.</string>
+    <string name="point_at_a_label_or_the_screen">Zamiřte na štítek dílu nebo na displej</string>
+    <string name="point_at_the_type_plate">Zamiřte na typový štítek</string>
+    <string name="part_or_message">Díl nebo hlášení</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Zamiřte na štítek dílu nebo na displej stroje. Aplikace čte text přímo v zařízení — nic neodchází ven.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Zamiřte na typový štítek na vnitřní straně dveří. Aplikace čte text přímo v zařízení — nic neodchází ven.</string>
+    <string name="no_type_plate_in_the_photo">Na fotografii není typový štítek</string>
+    <string name="built_label">Rok výroby</string>
 </resources>

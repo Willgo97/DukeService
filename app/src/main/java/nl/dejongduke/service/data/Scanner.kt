@@ -3,27 +3,18 @@ package nl.dejongduke.service.data
 import java.util.Locale
 
 /**
- * What the camera found. The scanner does not care whether it is looking at a
- * part label, a type plate or the machine's own display — it reads whatever
- * text is there and works out what it belongs to.
+ * What the camera found on a part label or on the machine's display.
+ *
+ * The type plate is deliberately not in here: it is read by its own scanner,
+ * on its own screen. Its pressures and power ratings read like part numbers
+ * and its model line shares words with a screen message, so a scanner that
+ * looks for all three at once is worse at all three.
  */
 sealed interface ScanHit {
     val confidence: Int
 
     data class PartHit(val part: Part, val read: String, override val confidence: Int) : ScanHit
     data class FaultHit(val group: FaultGroup, val read: String, override val confidence: Int) : ScanHit
-    data class MachineHit(val machine: Machine, val read: String, override val confidence: Int) : ScanHit
-    data class TypePlate(
-        val machine: Machine?,
-        /** The build the type code names: CKA, XEA, CECK … */
-        val build: String,
-        /** The type code as printed: 9CKAA211A2A00. */
-        val code: String,
-        val serienummer: String,
-        /** "2014 · week 38", read out of the serial number. */
-        val built: String,
-        override val confidence: Int,
-    ) : ScanHit
 }
 
 /**
@@ -48,15 +39,12 @@ data class Plate(
     /** Nothing read off it yet: worth a "hold still", not worth a panel. */
     val isEmpty: Boolean get() = code.isEmpty() && serial.isEmpty() && model.isEmpty()
 
-    /** Enough to point the app at this machine. */
-    val known: Boolean get() = machine != null
-
     /** Everything a plate carries has been read. */
     val complete: Boolean get() = code.isNotEmpty() && serial.isNotEmpty()
 
     /** What this frame added to what was already on screen. */
     fun merge(newer: Plate) = Plate(
-        machine = newer.machine ?: machine,
+        machine = machine ?: newer.machine,
         build = build.ifEmpty { newer.build },
         code = code.ifEmpty { newer.code },
         serial = serial.ifEmpty { newer.serial },
@@ -71,6 +59,10 @@ data class Plate(
  * OCR on a greasy label in a dim plant room is not clean, so part numbers are
  * matched on a character-folded form: the mistakes a reader makes between O/0,
  * I/1, S/5 and B/8 are exactly the characters DUKE's numbering uses.
+ *
+ * Everything that can be prepared is prepared once, in the constructor: this
+ * runs on every camera frame, and a regex compiled inside the loop over the
+ * catalog is a thousand regexes compiled per frame.
  */
 class Scanner(private val catalog: Catalog) {
 
@@ -81,22 +73,25 @@ class Scanner(private val catalog: Catalog) {
         }
     }
 
-    private val machineWords: List<Pair<String, Machine>> = catalog.machines.flatMap { m ->
+    /** Machine names and type codes, each with the pattern that finds it. */
+    private val machineWords: List<Triple<String, Machine, Regex>> = catalog.machines.flatMap { m ->
         buildList {
-            add(m.name.uppercase(Locale.ROOT) to m)
+            add(m.name.uppercase(Locale.ROOT))
             if (m.typeCode.isNotEmpty()) {
-                m.typeCode.split("/").map { it.trim() }.filter { it.length >= 4 }
-                    .forEach { add(it.uppercase(Locale.ROOT) to m) }
+                addAll(m.typeCode.split("/").map { it.trim() }.filter { it.length >= 4 })
             }
-            m.variants.forEach { u -> add(u.code.uppercase(Locale.ROOT) to m) }
-        }
+            m.variants.forEach { add(it.code) }
+        }.map { it.uppercase(Locale.ROOT) }
+            .filter { it.length >= 3 }
+            .distinct()
+            .map { Triple(it, m, word(it)) }
     }
 
     /**
      * The builds a type code can name, longest first: a plate reading 9CECK…
      * is a CoEx 70/90, not the CEC it starts with.
      */
-    private val builds: List<Pair<String, Machine?>> = buildList {
+    private val builds: List<Triple<String, Machine?, Regex>> = buildList {
         catalog.machines.forEach { m ->
             m.variants.forEach { add(it.code.uppercase(Locale.ROOT) to m) }
         }
@@ -107,28 +102,34 @@ class Scanner(private val catalog: Catalog) {
         .distinctBy { it.first + (it.second?.id ?: "") }
         .sortedWith(compareByDescending<Pair<String, Machine?>> { it.first.length }
             .thenBy { it.second == null })
+        .map { (build, machine) -> Triple(build, machine, TYPE_CODE(build)) }
 
-    /** The full message text, for a straight containment match. */
-    private val faultTexts: List<Pair<List<String>, FaultGroup>> = catalog.faultGroups.map { g ->
-        listOf(g.message, g.first.dutch).filter { it.isNotBlank() }.map { plain(it) } to g
-    }
+    /**
+     * One row per screen message: the message as printed (in the app's
+     * language and in English, because the machine in front of you may be set
+     * to either), and the words worth matching it on.
+     */
+    private class Message(val texts: List<String>, val words: Set<String>, val group: FaultGroup)
 
-    /** Screen messages, split into the words worth matching on. */
-    private val faultWords: List<Pair<Set<String>, FaultGroup>> = catalog.faultGroups.map { g ->
-        val words = (g.message + " " + g.first.dutch)
-            .lowercase(Locale.ROOT)
-            .split(Regex("[^a-z0-9]+"))
-            .filter { it.length >= 4 && it !in STOP }
-            .toSet()
-        words to g
+    private val messages: List<Message> = catalog.faultGroups.map { g ->
+        val printed = listOf(g.message, g.first.dutch).filter { it.isNotBlank() }
+        Message(
+            texts = printed.map { plain(it) }.distinct(),
+            words = printed.joinToString(" ")
+                .lowercase(Locale.ROOT)
+                .split(WORD_BREAK)
+                .filter { it.length >= 4 && it !in STOP }
+                .toSet(),
+            group = g,
+        )
     }
 
     /**
+     * Reads a part label or a machine display.
+     *
      * @param minimum drop anything the reader is less sure about than this.
      *   Live camera frames ask for a high bar, a photo the engineer picked on
      *   purpose can be read more generously.
-     */
-    /**
      * @param machine the machine the app is pointed at. The same number sits in
      *   a dozen books; the row worth showing is the one from the machine in
      *   front of you.
@@ -138,19 +139,6 @@ class Scanner(private val catalog: Catalog) {
         val joined = lines.joinToString(" ")
         val upper = joined.uppercase(Locale.ROOT)
 
-        // A type code is unmistakable, and the rest of that plate is noise: its
-        // pressures and power ratings read like part numbers and its model
-        // line shares words with a screen message. Anything less than a type
-        // code — the maker's name is printed all over the machine — leaves the
-        // label or the screen in front of the camera being read as usual.
-        val plate = readPlateHit(upper)
-        if (plate != null && plate.code.isNotEmpty()) {
-            return listOf(plate).filter { it.confidence >= minimum }
-        }
-        if (plate != null) hits += plate
-        val seenWords = joined.lowercase(Locale.ROOT)
-            .split(Regex("[^a-z0-9]+")).filter { it.length >= 4 }.toSet()
-
         // --- part numbers -------------------------------------------------
         for (token in TOKEN.findAll(upper).map { it.value }.distinct()) {
             if (token.length < 5) continue
@@ -158,17 +146,6 @@ class Scanner(private val catalog: Catalog) {
             val part = found.firstOrNull { it.machine == machine } ?: found.first()
             val exact = found.any { it.number.equals(token, ignoreCase = true) }
             hits += ScanHit.PartHit(part, token, if (exact) 100 else 80)
-        }
-
-        // --- machine name on the housing ----------------------------------
-        for ((word, machine) in machineWords) {
-            if (word.length < 3) continue
-            if (!Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)) continue
-            if (hits.any { it is ScanHit.MachineHit && it.machine.id == machine.id }) continue
-            // The plate above already says which machine it is, and it says
-            // the build as well; a bare name underneath adds nothing.
-            if (hits.any { it is ScanHit.TypePlate && it.machine?.id == machine.id }) continue
-            hits += ScanHit.MachineHit(machine, word, if (word.length > 4) 85 else 76)
         }
 
         // --- a message on the machine's display ---------------------------
@@ -180,21 +157,22 @@ class Scanner(private val catalog: Catalog) {
         // Read off a glossy screen at an angle a character or two comes back
         // wrong, so the phrase is matched with a few edits allowed.
         val flat = plain(joined)
-        for ((texts, group) in faultTexts) {
-            val exact = texts.firstOrNull { it.length >= 6 && flat.contains(it) }
+        val seenWords = flat.split(' ').filter { it.length >= 4 }.toSet()
+        for (message in messages) {
+            val exact = message.texts.firstOrNull { it.length >= 6 && flat.contains(it) }
             if (exact != null) {
-                hits += ScanHit.FaultHit(group, exact, 98)
+                hits += ScanHit.FaultHit(message.group, exact, 98)
                 continue
             }
             // Matching a phrase letter by letter costs time proportional to
             // how much text is in the picture. A screen message is short; a
             // drawing page that happens to be in frame is not, and the camera
             // hands over the next frame in a few hundred milliseconds.
-            val close = if (flat.length > FUZZY_LIMIT) null else texts.firstOrNull {
+            val close = if (flat.length > FUZZY_LIMIT) null else message.texts.firstOrNull {
                 it.length >= 10 && fuzzyContains(it, flat, budget(it))
             }
             if (close != null) {
-                hits += ScanHit.FaultHit(group, close, 92)
+                hits += ScanHit.FaultHit(message.group, close, 92)
                 continue
             }
             // A long message may lose a word to a reflection; a short one may
@@ -203,11 +181,10 @@ class Scanner(private val catalog: Catalog) {
             // its words somewhere, and comparing them all costs more time than
             // there is between two frames.
             if (seenWords.size > BUSY_FRAME) continue
-            val words = faultWordsOf(group)
-            if (words.size < 4) continue
-            val overlap = words.count { word -> seenWords.any { near(word, it) } }
-            if (overlap * 100 / words.size < 80) continue
-            hits += ScanHit.FaultHit(group, group.message, 80)
+            if (message.words.size < 4) continue
+            val overlap = message.words.count { word -> seenWords.any { near(word, it) } }
+            if (overlap * 100 / message.words.size < 80) continue
+            hits += ScanHit.FaultHit(message.group, message.group.message, 80)
         }
 
         return hits.filter { it.confidence >= minimum }
@@ -221,27 +198,32 @@ class Scanner(private val catalog: Catalog) {
      * type code (which machine and which build), the serial number (when it
      * was built) and the model line. A plate behind a milk cooler is often
      * only readable at an angle, so a hit on one of the three is enough.
+     *
+     * Returns null when there is no plate in front of the camera at all — and
+     * an empty [Plate] when there is one but this frame could not read a field
+     * off it yet, which is what "hold still" is for.
      */
+    fun readPlate(lines: List<String>): Plate? {
+        val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
+        val onAPlate = looksLikePlate(upper)
+        val fields = plateFields(upper, loose = onAPlate)
+        if (fields == null && !onAPlate) return null
+        val plate = (fields ?: Plate()).copy(model = modelLine(lines, upper))
+        // Without a book for that build the machine has to come from the model
+        // line: "Model: Virtu 70.2 CoEx".
+        return if (plate.machine != null) plate else plate.copy(machine = machineIn(upper))
+    }
+
     /**
      * Whether the camera is looking at a type plate at all.
      *
-     * The plate always carries the maker's name and the words in front of the
-     * fields; one of those is enough to stop reading the frame as if it were a
-     * part label or a screen message.
+     * The plate carries the maker's name and the words in front of its fields.
+     * One of those on its own is no proof — the maker's name is printed on the
+     * front, on stickers and on the drip tray — but on the plate scanner it is
+     * reason enough to say "hold still" while the fields are being read.
      */
-    fun isPlate(lines: List<String>): Boolean {
-        val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
-        return plateFields(upper) != null ||
-            PLATE_FIELDS.any { upper.contains(it) } ||
-            PLATE_HINTS.count { upper.contains(it) } >= 2
-    }
-
-    /** What this frame could read off the plate; null when there is no plate. */
-    fun readPlate(lines: List<String>): Plate? {
-        if (!isPlate(lines)) return null
-        val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
-        return (plateFields(upper) ?: Plate()).copy(model = modelLine(lines))
-    }
+    private fun looksLikePlate(upper: String): Boolean =
+        PLATE_FIELDS.any { upper.contains(it) } || PLATE_HINTS.any { upper.contains(it) }
 
     /**
      * The model line as printed — "Nio 20.2 FM [a] CoEx bean2cup" — because it
@@ -249,26 +231,33 @@ class Scanner(private val catalog: Catalog) {
      * always keep the word "Model" with it, so a line that names a machine and
      * carries a number counts too.
      */
-    private fun modelLine(lines: List<String>): String {
+    private fun modelLine(lines: List<String>, upper: String): String {
         val labelled = lines.firstOrNull { it.uppercase(Locale.ROOT).contains("MODEL") }
         if (labelled != null) {
             val text = labelled.substringAfter(':', labelled).trim()
             if (text.isNotEmpty() && !text.equals("model", ignoreCase = true)) return text.take(60)
         }
+        // Nothing names a machine anywhere in frame: no line can be the one.
+        if (machineIn(upper) == null) return ""
         return lines.firstOrNull { line ->
-            val upper = line.uppercase(Locale.ROOT)
-            line.any { it.isDigit() } && machineWords.any { (word, _) ->
-                word.length >= 3 && Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)
-            }
+            line.any { it.isDigit() } && machineIn(line.uppercase(Locale.ROOT)) != null
         }?.trim()?.take(60).orEmpty()
     }
 
-    private fun plateFields(upper: String): Plate? {
-        val found = builds.firstNotNullOfOrNull { (build, machine) ->
-            TYPE_CODE(build).find(upper)?.let { Triple(machine, build, it.value) }
+    /** The first machine named in already-uppercased text. */
+    private fun machineIn(upper: String): Machine? =
+        machineWords.firstOrNull { it.third.containsMatchIn(upper) }?.second
+
+    /**
+     * @param loose accept a serial number that is only a run of digits. On a
+     *   plate that is the serial; anywhere else it is a drawing number.
+     */
+    private fun plateFields(upper: String, loose: Boolean): Plate? {
+        val found = builds.firstNotNullOfOrNull { (build, machine, pattern) ->
+            pattern.find(upper)?.let { Triple(machine, build, it.value) }
         }
         val serial = SERIAL.find(upper)?.value
-            ?: if (found != null) LOOSE_SERIAL.find(upper)?.value else null
+            ?: if (loose || found != null) LOOSE_SERIAL.find(upper)?.value else null
         if (found == null && serial == null) return null
         return Plate(
             machine = found?.first,
@@ -279,36 +268,9 @@ class Scanner(private val catalog: Catalog) {
         )
     }
 
-    private fun readPlateHit(upper: String): ScanHit.TypePlate? {
-        val fields = plateFields(upper) ?: return null
-        // Without a book for that build the machine has to come from the model
-        // line: "Model: Virtu 70.2 CoEx".
-        val machine = fields.machine ?: machineWords.firstOrNull { (word, _) ->
-            word.length >= 3 && Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)
-        }?.second
-        val confidence = when {
-            fields.code.isNotEmpty() && fields.serial.isNotEmpty() -> 98
-            fields.code.isNotEmpty() -> 92
-            else -> 85
-        }
-        return ScanHit.TypePlate(
-            machine = machine,
-            build = fields.build,
-            code = fields.code,
-            serienummer = fields.serial,
-            built = fields.built,
-            confidence = confidence,
-        )
-    }
-
-    private fun faultWordsOf(group: FaultGroup): Set<String> =
-        faultWords.firstOrNull { it.second === group }?.first.orEmpty()
-
     fun key(hit: ScanHit): String = when (hit) {
         is ScanHit.PartHit -> "p:" + hit.part.number
         is ScanHit.FaultHit -> "f:" + hit.group.message
-        is ScanHit.MachineHit -> "m:" + hit.machine.id
-        is ScanHit.TypePlate -> "t:" + hit.serienummer
     }
 
     companion object {
@@ -321,12 +283,12 @@ class Scanner(private val catalog: Catalog) {
         private const val BUSY_FRAME = 400
 
         private val TOKEN = Regex("[0-9A-Z][0-9A-Z.\\-]{3,18}")
+        private val WORD_BREAK = Regex("[^a-z0-9]+")
+        private val NOT_WORD = Regex("[^a-z0-9]+")
 
-        /**
-         * Every build DUKE puts on a type plate. The catalog knows the ones we
-         * have books for; a machine on site may be one we do not, and reading
-         * its plate should still say which build it is.
-         */
+        /** A whole word, not a word inside another: "CEC" is not "9CECK". */
+        private fun word(text: String) = Regex("\\b${Regex.escape(text)}\\b")
+
         /** The words in front of the fields: these stand on the plate only. */
         private val PLATE_FIELDS = listOf(
             "SERIAL NR", "SERIAL NO", "SERIENR", "RATED PRESSURE", "LINE PRESSURE",
@@ -334,13 +296,17 @@ class Scanner(private val catalog: Catalog) {
 
         /**
          * On the plate too, but not only there: the maker's name is printed on
-         * the front, on stickers and on the drip tray. One of these is not a
-         * plate — two of them together is.
+         * the front, on stickers and on the drip tray.
          */
         private val PLATE_HINTS = listOf(
             "JONG DUKE", "DEJONGDUKE", "MADE IN HOLLAND", "SLIEDRECHT", "TYPE:",
         )
 
+        /**
+         * Every build DUKE puts on a type plate. The catalog knows the ones we
+         * have books for; a machine on site may be one we do not, and reading
+         * its plate should still say which build it is.
+         */
         private val BUILDS = listOf(
             "CECK", "CECP", "CEC", "CND", "FEC", "FND", "IEA", "INB",
             "XEA", "XNA", "XKA", "CKA",
@@ -370,6 +336,7 @@ class Scanner(private val catalog: Catalog) {
             val week = digits.drop(4).take(2).toIntOrNull() ?: return ""
             return if (week in 1..53) "$year · week $week" else "$year"
         }
+
         private val STOP = setOf(
             "machine", "koffiemachine", "coffee", "niet", "the", "een", "van", "voor",
             "door", "worden", "wordt", "deze", "your", "please", "with",
@@ -377,7 +344,7 @@ class Scanner(private val catalog: Catalog) {
 
         /** Lowercase, letters and digits only — how two bits of text are compared. */
         fun plain(s: String): String =
-            s.lowercase(Locale.ROOT).replace(Regex("[^a-z0-9]+"), " ").trim()
+            s.lowercase(Locale.ROOT).replace(NOT_WORD, " ").trim()
 
         /** True when two words differ by at most one or two characters. */
         fun near(a: String, b: String): Boolean {
@@ -388,7 +355,7 @@ class Scanner(private val catalog: Catalog) {
                 a.length >= 6 -> 1
                 else -> 0
             }
-            return allowed > 0 && distance(a, b, allowed) <= allowed
+            return allowed > 0 && editDistance(a, b, allowed, free = false) <= allowed
         }
 
         /** How many misread characters a message of this length may carry. */
@@ -396,13 +363,21 @@ class Scanner(private val catalog: Catalog) {
 
         /**
          * Whether `needle` occurs in `haystack` as a phrase, give or take
-         * `max` characters. Edit distance with a free start and end, so the
-         * message may sit anywhere in what the camera read, but the words in
-         * between still have to be there.
+         * `max` characters. The message may sit anywhere in what the camera
+         * read, but the words in between still have to be there.
          */
         fun fuzzyContains(needle: String, haystack: String, max: Int): Boolean {
             if (needle.isEmpty() || haystack.length + max < needle.length) return false
-            var prev = IntArray(haystack.length + 1)          // free start
+            return editDistance(needle, haystack, max, free = true) <= max
+        }
+
+        /**
+         * Levenshtein, cut off once it exceeds the budget. With [free] the
+         * start and the end of the haystack cost nothing, which turns the
+         * whole-string comparison into "does this phrase occur in there".
+         */
+        private fun editDistance(needle: String, haystack: String, max: Int, free: Boolean): Int {
+            var prev = IntArray(haystack.length + 1) { if (free) 0 else it }
             for (i in 1..needle.length) {
                 val cur = IntArray(haystack.length + 1)
                 cur[0] = i
@@ -412,28 +387,10 @@ class Scanner(private val catalog: Catalog) {
                     cur[j] = minOf(cur[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost)
                     best = minOf(best, cur[j])
                 }
-                if (best > max) return false
-                prev = cur
-            }
-            return prev.min() <= max                          // free end
-        }
-
-        /** Levenshtein, cut off once it exceeds the budget. */
-        private fun distance(a: String, b: String, max: Int): Int {
-            var prev = IntArray(b.length + 1) { it }
-            for (i in 1..a.length) {
-                val cur = IntArray(b.length + 1)
-                cur[0] = i
-                var best = cur[0]
-                for (j in 1..b.length) {
-                    val cost = if (a[i - 1] == b[j - 1]) 0 else 1
-                    cur[j] = minOf(cur[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost)
-                    best = minOf(best, cur[j])
-                }
                 if (best > max) return max + 1
                 prev = cur
             }
-            return prev[b.length]
+            return if (free) prev.min() else prev[haystack.length]
         }
 
         /** Folds the character pairs OCR mixes up, so a misread still matches. */

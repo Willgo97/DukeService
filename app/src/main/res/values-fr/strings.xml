@@ -78,7 +78,6 @@
     <string name="light">Clair</string>
     <string name="monthly">Mensuel</string>
     <string name="machine">Machine</string>
-    <string name="machine_tap_to_point_the_app_at_it">Machine  ·  touchez pour y régler l\'application</string>
     <string name="machines">Machines</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Message, numéro ou procédure</string>
@@ -128,8 +127,6 @@ Cause : </string>
     <string name="procedure">Procédure</string>
     <string name="procedures">Procédures</string>
     <string name="recent_searches">Recherches récentes</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Visez une étiquette, la plaque signalétique ou l\'écran</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Visez une étiquette de pièce, la plaque signalétique ou l\'écran de la machine. L\'application lit le texte sur l\'appareil même — rien ne sort.</string>
     <string name="scan">Scanner</string>
     <string name="scanning">Numérisation</string>
     <string name="scanner">Scanner</string>
@@ -137,7 +134,6 @@ Cause : </string>
     <string name="screen_messages">Messages à l\'écran</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = stock du technicien · SW = stock magasin · pos. renvoie au numéro du dessin.</string>
     <string name="serial_number_location_what_you_replaced">Numéro de série, emplacement, ce que vous avez remplacé…</string>
-    <string name="serial_number">Numéro de série %1$s</string>
     <string name="service_message">Message de service</string>
     <string name="service_menu">Menu service</string>
     <string name="service_menu_unknown">menu service inconnu</string>
@@ -161,13 +157,11 @@ Cause : </string>
     <string name="tap_the_build_in_front_of_you_the_type_code">Touchez la version qui est devant vous — le code type figure sur la plaque signalétique. Les listes de l\'application ne porteront plus que sur celle-ci.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Touchez un numéro dans le dessin, ou une pièce dans la liste.</string>
     <string name="type_code">Code type</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Code type %1$s — touchez pour y régler l\'application</string>
     <string name="type_plate">Plaque signalétique</string>
     <string name="from_the_manual">Du manuel</string>
     <string name="from_photo">Depuis une photo</string>
     <string name="builds">Versions</string>
     <string name="often_needed">Souvent utile</string>
-    <string name="from_the_type_plate">De la plaque signalétique</string>
     <string name="pinned">Épinglé</string>
     <string name="pin">Épingler</string>
     <string name="fresh_milk">Lait frais</string>
@@ -297,4 +291,11 @@ Cause : </string>
     <string name="use_this_machine">Utiliser cette machine</string>
     <string name="open_settings">Ouvrir les réglages</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">L’appareil photo est désactivé pour cette application. Activez-le dans les réglages du téléphone, ou lisez une photo déjà prise.</string>
+    <string name="point_at_a_label_or_the_screen">Visez une étiquette de pièce ou l’écran</string>
+    <string name="point_at_the_type_plate">Visez la plaque signalétique</string>
+    <string name="part_or_message">Pièce ou message</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Visez une étiquette de pièce ou l’écran de la machine. L’application lit le texte sur l’appareil même — rien ne sort du téléphone.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Visez la plaque signalétique à l’intérieur de la porte. L’application lit le texte sur l’appareil même — rien ne sort du téléphone.</string>
+    <string name="no_type_plate_in_the_photo">Aucune plaque signalétique sur la photo</string>
+    <string name="built_label">Année de construction</string>
 </resources>

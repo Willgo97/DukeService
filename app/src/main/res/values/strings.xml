@@ -79,7 +79,6 @@
     <string name="light">Licht</string>
     <string name="monthly">Maandelijks</string>
     <string name="machine">Machine</string>
-    <string name="machine_tap_to_point_the_app_at_it">Machine  ·  tik om de app hierop te zetten</string>
     <string name="machines">Machines</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Melding, nummer of procedure</string>
@@ -127,8 +126,6 @@
     <string name="procedure">Procedure</string>
     <string name="procedures">Procedures</string>
     <string name="recent_searches">Recent gezocht</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Richt op een label, typeplaatje of het scherm</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Richt op een onderdeellabel, het typeplaatje of het scherm van de machine. De app leest de tekst op het toestel zelf — er gaat niets naar buiten.</string>
     <string name="scan">Scan</string>
     <string name="scanning">Scannen</string>
     <string name="scanner">Scanner</string>
@@ -136,7 +133,6 @@
     <string name="screen_messages">Schermmeldingen</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = monteursvoorraad · SW = magazijnvoorraad · pos verwijst naar het nummer in de tekening.</string>
     <string name="serial_number_location_what_you_replaced">Serienummer, locatie, wat je hebt vervangen…</string>
-    <string name="serial_number">Serienummer %1$s</string>
     <string name="service_message">Servicemelding</string>
     <string name="service_menu">Servicemenu</string>
     <string name="service_menu_unknown">servicemenu onbekend</string>
@@ -160,13 +156,11 @@
     <string name="tap_the_build_in_front_of_you_the_type_code">Tik de uitvoering aan die voor je staat — de typecode staat op het typeplaatje. De lijsten in de app gaan dan alleen nog daarover.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Tik een nummer in de tekening aan, of tik een onderdeel in de lijst.</string>
     <string name="type_code">Typecode</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Typecode %1$s — tik om de app hierop te zetten</string>
     <string name="type_plate">Typeplaatje</string>
     <string name="from_the_manual">Uit de handleiding</string>
     <string name="from_photo">Uit foto</string>
     <string name="builds">Uitvoeringen</string>
     <string name="often_needed">Vaak nodig</string>
-    <string name="from_the_type_plate">Van het typeplaatje</string>
     <string name="pinned">Vastgezet</string>
     <string name="pin">Vastzetten</string>
     <string name="fresh_milk">Verse melk</string>
@@ -296,4 +290,11 @@
     <string name="use_this_machine">Deze machine gebruiken</string>
     <string name="open_settings">Instellingen openen</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">De camera staat uit voor deze app. Zet hem aan in de instellingen van je telefoon, of lees een foto die je al gemaakt hebt.</string>
+    <string name="point_at_a_label_or_the_screen">Richt op een onderdeellabel of het scherm</string>
+    <string name="point_at_the_type_plate">Richt op het typeplaatje</string>
+    <string name="part_or_message">Onderdeel of melding</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Richt op een onderdeellabel of op het scherm van de machine. De app leest de tekst op het toestel zelf — er gaat niets naar buiten.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Richt op het typeplaatje in de deur. De app leest de tekst op het toestel zelf — er gaat niets naar buiten.</string>
+    <string name="no_type_plate_in_the_photo">Geen typeplaatje in de foto</string>
+    <string name="built_label">Bouwjaar</string>
 </resources>

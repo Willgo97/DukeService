@@ -74,6 +74,11 @@ import nl.dejongduke.service.ui.screens.SpecsScreen
 import nl.dejongduke.service.ui.screens.StepPlayer
 import nl.dejongduke.service.ui.screens.cardSteps
 import nl.dejongduke.service.ui.screens.procedureSteps
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.filled.Badge
+import androidx.compose.ui.unit.dp
+import nl.dejongduke.service.ui.screens.PlateScanScreen
 
 private fun tabIcon(tab: Tab): ImageVector = when (tab) {
     Tab.Search -> Icons.Filled.Search
@@ -140,13 +145,26 @@ fun AppShell(vm: AppViewModel = viewModel()) {
         },
         floatingActionButton = {
             if (current == null) {
-                ExtendedFloatingActionButton(
-                    onClick = { vm.open(Route.Scan) },
-                    icon = { Icon(Icons.Filled.CameraAlt, null) },
-                    text = { Text(stringResource(R.string.scan)) },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                )
+                // Two scanners, because they are two jobs: a part label or a
+                // message on the screen, or the type plate that says which
+                // machine you are standing in front of.
+                Column(horizontalAlignment = Alignment.End) {
+                    ExtendedFloatingActionButton(
+                        onClick = { vm.open(Route.PlateScan) },
+                        icon = { Icon(Icons.Filled.Badge, null) },
+                        text = { Text(stringResource(R.string.type_plate)) },
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    )
+                    Spacer(Modifier.height(10.dp))
+                    ExtendedFloatingActionButton(
+                        onClick = { vm.open(Route.Scan) },
+                        icon = { Icon(Icons.Filled.CameraAlt, null) },
+                        text = { Text(stringResource(R.string.scan)) },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                    )
+                }
             }
         },
         bottomBar = {
@@ -274,7 +292,12 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         Route.Scan -> {
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
-            ScanScreen(loaded, filter, direct, vm::useMachine, vm::open)
+            ScanScreen(loaded, filter, direct, vm::open) { vm.open(Route.PlateScan) }
+        }
+
+        Route.PlateScan -> {
+            val direct by vm.scanDirect.collectAsStateWithLifecycle()
+            PlateScanScreen(loaded, direct, vm::useMachine, vm::open) { vm.open(Route.Scan) }
         }
 
         Route.Settings -> {
@@ -367,6 +390,7 @@ private fun titleFor(catalog: Catalog?, tab: Tab, route: Route?): String = when 
     Route.Components -> stringResource(R.string.technical)
     Route.ServiceMenu -> stringResource(R.string.service_menu)
     Route.Scan -> stringResource(R.string.scanning)
+    Route.PlateScan -> stringResource(R.string.type_plate)
     Route.Settings -> stringResource(R.string.settings)
     is Route.MenuItem -> stringResource(R.string.service_menu)
     is Route.Component -> stringResource(R.string.technical)

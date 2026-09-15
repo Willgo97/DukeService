@@ -78,7 +78,6 @@
     <string name="light">Lyst</string>
     <string name="monthly">Månedlig</string>
     <string name="machine">Maskin</string>
-    <string name="machine_tap_to_point_the_app_at_it">Maskin  ·  trykk for å stille appen på den</string>
     <string name="machines">Maskiner</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Melding, nummer eller prosedyre</string>
@@ -128,8 +127,6 @@
     <string name="procedure">Prosedyre</string>
     <string name="procedures">Prosedyrer</string>
     <string name="recent_searches">Nylige søk</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Rett mot en etikett, typeskilt eller skjermen</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Rett mot en deleetikett, typeskiltet eller skjermen på maskinen. Appen leser teksten på enheten selv — ingenting sendes ut.</string>
     <string name="scan">Skann</string>
     <string name="scanning">Skanner</string>
     <string name="scanner">Skanner</string>
@@ -137,7 +134,6 @@
     <string name="screen_messages">Skjermmeldinger</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = bilens lager · SW = sentrallager · pos viser til nummeret i tegningen.</string>
     <string name="serial_number_location_what_you_replaced">Serienummer, plassering, hva du byttet…</string>
-    <string name="serial_number">Serienummer %1$s</string>
     <string name="service_message">Servicemelding</string>
     <string name="service_menu">Servicemeny</string>
     <string name="service_menu_unknown">servicemeny ukjent</string>
@@ -161,13 +157,11 @@
     <string name="tap_the_build_in_front_of_you_the_type_code">Trykk på utførelsen som står foran deg — typekoden står på typeskiltet. Listene i appen handler da bare om den.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Trykk på et nummer i tegningen, eller på en del i listen.</string>
     <string name="type_code">Typekode</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Typekode %1$s — trykk for å stille appen på den</string>
     <string name="type_plate">Typeskilt</string>
     <string name="from_the_manual">Fra håndboken</string>
     <string name="from_photo">Fra bilde</string>
     <string name="builds">Utførelser</string>
     <string name="often_needed">Ofte brukt</string>
-    <string name="from_the_type_plate">Fra typeskiltet</string>
     <string name="pinned">Festet</string>
     <string name="pin">Fest</string>
     <string name="fresh_milk">Fersk melk</string>
@@ -297,4 +291,11 @@
     <string name="use_this_machine">Bruk denne maskinen</string>
     <string name="open_settings">Åpne innstillinger</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">Kameraet er slått av for denne appen. Slå det på i telefonens innstillinger, eller les et bilde du allerede har tatt.</string>
+    <string name="point_at_a_label_or_the_screen">Rett mot en delelapp eller displayet</string>
+    <string name="point_at_the_type_plate">Rett mot typeskiltet</string>
+    <string name="part_or_message">Del eller melding</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Rett mot en delelapp eller mot maskinens display. Appen leser teksten på enheten selv — ingenting sendes ut.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Rett mot typeskiltet på innsiden av døren. Appen leser teksten på enheten selv — ingenting sendes ut.</string>
+    <string name="no_type_plate_in_the_photo">Ingen typeskilt på bildet</string>
+    <string name="built_label">Byggeår</string>
 </resources>

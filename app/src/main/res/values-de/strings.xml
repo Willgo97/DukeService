@@ -78,7 +78,6 @@
     <string name="light">Hell</string>
     <string name="monthly">Monatlich</string>
     <string name="machine">Maschine</string>
-    <string name="machine_tap_to_point_the_app_at_it">Maschine  ·  tippen, um die App darauf zu stellen</string>
     <string name="machines">Maschinen</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Meldung, Nummer oder Ablauf</string>
@@ -128,8 +127,6 @@ Ursache: </string>
     <string name="procedure">Ablauf</string>
     <string name="procedures">Abläufe</string>
     <string name="recent_searches">Zuletzt gesucht</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Auf ein Etikett, Typenschild oder das Display richten</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Auf ein Teile-Etikett, das Typenschild oder das Display der Maschine richten. Die App liest den Text auf dem Gerät selbst — es geht nichts nach außen.</string>
     <string name="scan">Scannen</string>
     <string name="scanning">Scannen</string>
     <string name="scanner">Scanner</string>
@@ -137,7 +134,6 @@ Ursache: </string>
     <string name="screen_messages">Displaymeldungen</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = Fahrzeugbestand · SW = Lagerbestand · Pos. verweist auf die Nummer in der Zeichnung.</string>
     <string name="serial_number_location_what_you_replaced">Seriennummer, Standort, was ersetzt wurde…</string>
-    <string name="serial_number">Seriennummer %1$s</string>
     <string name="service_message">Servicemeldung</string>
     <string name="service_menu">Servicemenü</string>
     <string name="service_menu_unknown">Servicemenü unbekannt</string>
@@ -161,13 +157,11 @@ Ursache: </string>
     <string name="tap_the_build_in_front_of_you_the_type_code">Tippen Sie die Ausführung an, die vor Ihnen steht — der Typcode steht auf dem Typenschild. Die Listen in der App zeigen dann nur noch diese.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Tippen Sie eine Nummer in der Zeichnung an oder ein Teil in der Liste.</string>
     <string name="type_code">Typcode</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Typcode %1$s — tippen, um die App darauf zu stellen</string>
     <string name="type_plate">Typenschild</string>
     <string name="from_the_manual">Aus dem Handbuch</string>
     <string name="from_photo">Aus Foto</string>
     <string name="builds">Ausführungen</string>
     <string name="often_needed">Oft gebraucht</string>
-    <string name="from_the_type_plate">Vom Typenschild</string>
     <string name="pinned">Angeheftet</string>
     <string name="pin">Anheften</string>
     <string name="fresh_milk">Frischmilch</string>
@@ -297,4 +291,11 @@ Ursache: </string>
     <string name="use_this_machine">Diese Maschine verwenden</string>
     <string name="open_settings">Einstellungen öffnen</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">Die Kamera ist für diese App ausgeschaltet. Schalten Sie sie in den Telefoneinstellungen ein oder lesen Sie ein bereits aufgenommenes Foto.</string>
+    <string name="point_at_a_label_or_the_screen">Auf ein Teile-Etikett oder das Display richten</string>
+    <string name="point_at_the_type_plate">Auf das Typenschild richten</string>
+    <string name="part_or_message">Teil oder Meldung</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Auf ein Teile-Etikett oder auf das Display der Maschine richten. Die App liest den Text auf dem Gerät selbst — es verlässt nichts das Telefon.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Auf das Typenschild in der Tür richten. Die App liest den Text auf dem Gerät selbst — es verlässt nichts das Telefon.</string>
+    <string name="no_type_plate_in_the_photo">Kein Typenschild auf dem Foto</string>
+    <string name="built_label">Baujahr</string>
 </resources>

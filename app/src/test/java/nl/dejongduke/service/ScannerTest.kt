@@ -77,11 +77,11 @@ class ScannerTest {
     }
 
     // --- the type plate inside the door ----------------------------------
-    // What the camera gets off a real plate, photographed at an angle because
-    // there is a milk cooler in front of it.
+    // Read by its own scanner, on its own screen. What the camera gets off a
+    // real plate, photographed at an angle because there is a milk cooler in
+    // front of it.
 
-    private fun plate(vararg lines: String) =
-        scanner.scan(lines.toList(), 60).filterIsInstance<ScanHit.TypePlate>().firstOrNull()
+    private fun plate(vararg lines: String) = scanner.readPlate(lines.toList())
 
     @Test
     fun readsTheWholeTypePlate() {
@@ -96,8 +96,9 @@ class ScannerTest {
         assertEquals("nio", hit?.machine?.id)
         assertEquals("CKA", hit?.build)
         assertEquals("9CKAA211A2A00", hit?.code)
-        assertEquals("2014386812001", hit?.serienummer)
+        assertEquals("2014386812001", hit?.serial)
         assertEquals("2014 · week 38", hit?.built)
+        assertTrue("complete", hit?.complete == true)
     }
 
     @Test
@@ -106,7 +107,6 @@ class ScannerTest {
         val hit = plate("Type: 9CKAA211A2A00")
         assertEquals("nio", hit?.machine?.id)
         assertEquals("CKA", hit?.build)
-        assertTrue("confidence", (hit?.confidence ?: 0) >= 90)
     }
 
     @Test
@@ -128,38 +128,22 @@ class ScannerTest {
     @Test
     fun plainTextIsNotATypePlate() {
         assertEquals(null, plate("Clean the milk system", "5KAF119 suction filter"))
+        assertEquals(null, plate("Login", "Hardware", "Brewer", "Counters"))
     }
 
     @Test
-    fun aPlateIsReadAsAPlateAndNothingElse() {
-        // The pressures and the power rating look like part numbers, and the
-        // model line shares words with a screen message.
-        val found = scanner.scan(
-            listOf(
-                "de JONG DUKE", "MADE IN HOLLAND",
-                "Serial nr.: 2014386812001",
-                "Type: 9CKAA211A2A00",
-                "Model: Nio 20.2 FM [a] CoEx® bean2cup",
-                "220-240V 50-60 Hz 2.9-3.4 kW",
-                "Line pressure: 0.05 - 0.6 MPa (0.5 - 6.0 bar)",
-            ),
-            60,
-        )
-        assertEquals(1, found.size)
-        assertTrue("type plate", found.first() is ScanHit.TypePlate)
-    }
-
-    @Test
-    fun theMakersNameAloneSaysItIsAPlate() {
-        assertTrue(scanner.isPlate(listOf("de JONG DUKE", "SLIEDRECHT, NL")))
-        assertTrue(!scanner.isPlate(listOf("5KAF119 suction filter", "Brewer out of position")))
+    fun aPlateWithNothingReadOffItYetSaysHoldStill() {
+        // Two words off the plate came through, no field did.
+        val reading = plate("de JONG DUKE", "MADE IN HOLLAND")
+        assertTrue("recognised as a plate", reading != null)
+        assertTrue("nothing read off it yet", reading!!.isEmpty)
     }
 
     @Test
     fun aPlateFillsUpOverSeveralFrames() {
         // What the camera gets while you move the phone along the plate.
         var plate = scanner.readPlate(listOf("de JONG DUKE", "MADE IN HOLLAND"))!!
-        assertTrue("nothing read yet", !plate.known)
+        assertTrue("nothing read yet", plate.machine == null)
 
         plate = plate.merge(scanner.readPlate(listOf("Type: 9CKAA211A2A00"))!!)
         assertEquals("nio", plate.machine?.id)
@@ -193,48 +177,30 @@ class ScannerTest {
     }
 
     @Test
-    fun theMakersNameAloneIsNotAPlate() {
-        assertTrue(!scanner.isPlate(listOf("de JONG DUKE", "5KAF119")))
-        // The words in front of the fields are only ever on a plate.
-        assertTrue(scanner.isPlate(listOf("Serial nr.: ", "Rated pressure:")))
-        // And so is the maker's name together with where it was made.
-        assertTrue(scanner.isPlate(listOf("de JONG DUKE", "MADE IN HOLLAND")))
-    }
-
-    @Test
-    fun aPlateWithATypeCodeLeavesNothingElseInTheList() {
-        val found = scanner.scan(
-            listOf(
-                "de JONG DUKE", "Serial nr.: 2014386812001", "Type: 9CKAA211A2A00",
-                "220-240V 50-60 Hz 2.9-3.4 kW", "Line pressure: 0.05 - 0.6 MPa",
-            ),
-            60,
-        )
-        assertEquals(1, found.size)
-        assertTrue("type plate", found.first() is ScanHit.TypePlate)
-    }
-
-
-    @Test
-    fun aPlateWithNothingOnItYetIsNotAResult() {
-        // Two words off the plate came through, no field did. That is a
-        // "hold still", not something to put on screen instead of the label
-        // the camera is actually pointed at.
-        val reading = scanner.readPlate(listOf("de JONG DUKE", "MADE IN HOLLAND"))
-        assertTrue("recognised", reading != null)
-        assertTrue("empty", reading!!.isEmpty)
-
-        val found = scanner.scan(
-            listOf("de JONG DUKE", "MADE IN HOLLAND", "5KAF119", "Suction filter"), 60)
-        assertTrue("the part is still found", found.any { it is ScanHit.PartHit })
-    }
-
-    @Test
     fun aLabelIsReadWithTheMakersNameBesideIt() {
         // What the camera really returns off a sticker on the machine.
         val lines = listOf("de jONG DUKE", "5KAF119", "Suction filter for 2 mixers", "Made in Holland")
         val found = scanner.scan(lines, 60)
         assertTrue("part", found.any { it is ScanHit.PartHit })
+    }
+
+    @Test
+    fun aTypePlateInFrameInventsNoMessage() {
+        // The model line shares words with a screen message and the pressures
+        // read like part numbers. The part and message scanner does not read
+        // plates, and it may not turn one into a fault either.
+        val found = scanner.scan(
+            listOf(
+                "de JONG DUKE", "MADE IN HOLLAND",
+                "Serial nr.: 2014386812001",
+                "Type: 9CKAA211A2A00",
+                "Model: Nio 20.2 FM [a] CoEx® bean2cup",
+                "220-240V 50-60 Hz 2.9-3.4 kW",
+                "Line pressure: 0.05 - 0.6 MPa (0.5 - 6.0 bar)",
+            ),
+            75,
+        )
+        assertEquals(emptyList<ScanHit>(), found.filterIsInstance<ScanHit.FaultHit>())
     }
 
     // --- what the camera drags in besides the label ------------------------

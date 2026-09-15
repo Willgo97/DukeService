@@ -78,7 +78,6 @@
     <string name="light">Ljust</string>
     <string name="monthly">Månadsvis</string>
     <string name="machine">Maskin</string>
-    <string name="machine_tap_to_point_the_app_at_it">Maskin  ·  tryck för att ställa appen på den</string>
     <string name="machines">Maskiner</string>
     <string name="medium">Medium</string>
     <string name="message_number_or_procedure">Meddelande, nummer eller procedur</string>
@@ -128,8 +127,6 @@ Orsak: </string>
     <string name="procedure">Procedur</string>
     <string name="procedures">Procedurer</string>
     <string name="recent_searches">Senaste sökningar</string>
-    <string name="point_at_a_label_type_plate_or_the_screen">Rikta mot en etikett, typskylt eller skärmen</string>
-    <string name="point_at_a_part_label_the_type_plate_or_the">Rikta mot en artikeletikett, typskylten eller maskinens skärm. Appen läser texten på enheten själv — inget lämnar den.</string>
     <string name="scan">Skanna</string>
     <string name="scanning">Skannar</string>
     <string name="scanner">Skanner</string>
@@ -137,7 +134,6 @@ Orsak: </string>
     <string name="screen_messages">Skärmmeddelanden</string>
     <string name="se_van_stock_sw_warehouse_stock_pos_refers_t">SE = bilens lager · SW = centrallager · pos hänvisar till numret i ritningen.</string>
     <string name="serial_number_location_what_you_replaced">Serienummer, plats, vad du bytte…</string>
-    <string name="serial_number">Serienummer %1$s</string>
     <string name="service_message">Servicemeddelande</string>
     <string name="service_menu">Servicemeny</string>
     <string name="service_menu_unknown">servicemeny okänd</string>
@@ -161,13 +157,11 @@ Orsak: </string>
     <string name="tap_the_build_in_front_of_you_the_type_code">Tryck på det utförande som står framför dig — typkoden står på typskylten. Listorna i appen handlar sedan bara om det.</string>
     <string name="tap_a_number_in_the_drawing_or_tap_a_part_in">Tryck på ett nummer i ritningen, eller på en del i listan.</string>
     <string name="type_code">Typkod</string>
-    <string name="type_code_tap_to_point_the_app_at_it">Typkod %1$s — tryck för att ställa appen på den</string>
     <string name="type_plate">Typskylt</string>
     <string name="from_the_manual">Ur manualen</string>
     <string name="from_photo">Från foto</string>
     <string name="builds">Utföranden</string>
     <string name="often_needed">Ofta använt</string>
-    <string name="from_the_type_plate">Från typskylten</string>
     <string name="pinned">Fäst</string>
     <string name="pin">Fäst</string>
     <string name="fresh_milk">Färsk mjölk</string>
@@ -297,4 +291,11 @@ Orsak: </string>
     <string name="use_this_machine">Använd den här maskinen</string>
     <string name="open_settings">Öppna inställningar</string>
     <string name="the_camera_was_turned_off_for_this_app_you_c">Kameran är avstängd för den här appen. Slå på den i telefonens inställningar, eller läs ett foto du redan tagit.</string>
+    <string name="point_at_a_label_or_the_screen">Rikta mot en artikeletikett eller displayen</string>
+    <string name="point_at_the_type_plate">Rikta mot typskylten</string>
+    <string name="part_or_message">Artikel eller meddelande</string>
+    <string name="point_at_a_part_label_or_the_screen_of_the_ma">Rikta mot en artikeletikett eller mot maskinens display. Appen läser texten i telefonen — ingenting skickas vidare.</string>
+    <string name="point_at_the_type_plate_inside_the_door_the_a">Rikta mot typskylten på insidan av luckan. Appen läser texten i telefonen — ingenting skickas vidare.</string>
+    <string name="no_type_plate_in_the_photo">Ingen typskylt på bilden</string>
+    <string name="built_label">Byggår</string>
 </resources>
