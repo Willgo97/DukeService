@@ -49,6 +49,7 @@ import nl.dejongduke.service.ui.SectionHeader
 import nl.dejongduke.service.ui.Tab
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.Badge
 
 @Composable
 fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
@@ -56,6 +57,33 @@ fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
     val older = catalog.machines.filterNot { it.active }
 
     LazyColumn(Modifier.fillMaxWidth()) {
+        // Picking your machine out of eleven is the slow way round when the
+        // answer is screwed to the inside of the door.
+        item {
+            Card(onClick = { onOpen(Route.PlateScan) }) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        Icons.Filled.Badge, null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.height(24.dp),
+                    )
+                    Spacer(Modifier.width(14.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            stringResource(R.string.which_machine_is_in_front_of_you),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            stringResource(R.string.read_the_type_plate),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
         item { SectionHeader(stringResource(R.string.technical)) }
         item {
             Card(onClick = { onOpen(Route.Components) }) {

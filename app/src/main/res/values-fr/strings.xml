@@ -73,7 +73,6 @@
     <string name="details">Caractéristiques</string>
     <string name="done">Terminé</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Pincez pour agrandir. Les numéros du dessin sont les positions ci-dessous.</string>
-    <string name="copy">Copier</string>
     <string name="reading_failed">Échec de lecture : %1$s</string>
     <string name="light">Clair</string>
     <string name="monthly">Mensuel</string>
@@ -306,4 +305,6 @@ Cause : </string>
         <item quantity="one">%d page</item>
         <item quantity="other">%d pages</item>
     </plurals>
+    <string name="which_machine_is_in_front_of_you">Quelle machine avez-vous devant vous ?</string>
+    <string name="read_the_type_plate">Lire la plaque signalétique dans la porte</string>
 </resources>

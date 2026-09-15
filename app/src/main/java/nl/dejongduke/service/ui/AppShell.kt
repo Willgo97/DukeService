@@ -136,27 +136,18 @@ fun AppShell(vm: AppViewModel = viewModel()) {
             )
         },
         floatingActionButton = {
+            // One button over the app, for the thing you do with a machine in
+            // front of you. Reading a type plate lives where you would
+            // otherwise pick the machine by hand: at the top of Machines, and
+            // one tap away inside the scanner itself.
             if (current == null) {
-                // Two scanners, because they are two jobs: a part label or a
-                // message on the screen, or the type plate that says which
-                // machine you are standing in front of.
-                Column(horizontalAlignment = Alignment.End) {
-                    ExtendedFloatingActionButton(
-                        onClick = { vm.open(Route.PlateScan) },
-                        icon = { Icon(Icons.Filled.Badge, null) },
-                        text = { Text(stringResource(R.string.type_plate)) },
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                    )
-                    Spacer(Modifier.height(10.dp))
-                    ExtendedFloatingActionButton(
-                        onClick = { vm.open(Route.Scan) },
-                        icon = { Icon(Icons.Filled.CameraAlt, null) },
-                        text = { Text(stringResource(R.string.scan)) },
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                }
+                ExtendedFloatingActionButton(
+                    onClick = { vm.open(Route.Scan) },
+                    icon = { Icon(Icons.Filled.CameraAlt, null) },
+                    text = { Text(stringResource(R.string.scan)) },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                )
             }
         },
         bottomBar = {

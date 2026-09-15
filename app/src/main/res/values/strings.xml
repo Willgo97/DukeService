@@ -74,7 +74,6 @@
     <string name="details">Kenmerken</string>
     <string name="done">Klaar</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Knijp om in te zoomen. De nummers in de tekening zijn de posities hieronder.</string>
-    <string name="copy">Kopieer</string>
     <string name="reading_failed">Lezen mislukt: %1$s</string>
     <string name="light">Licht</string>
     <string name="monthly">Maandelijks</string>
@@ -305,4 +304,6 @@
         <item quantity="one">%d pagina</item>
         <item quantity="other">%d pagina\'s</item>
     </plurals>
+    <string name="which_machine_is_in_front_of_you">Welke machine staat er voor je?</string>
+    <string name="read_the_type_plate">Lees het typeplaatje in de deur</string>
 </resources>

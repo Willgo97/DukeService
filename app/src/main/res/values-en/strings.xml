@@ -73,7 +73,6 @@
     <string name="details">Details</string>
     <string name="done">Done</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Pinch to zoom. The numbers in the drawing are the positions below.</string>
-    <string name="copy">Copy</string>
     <string name="reading_failed">Reading failed: %1$s</string>
     <string name="light">Light</string>
     <string name="monthly">Monthly</string>
@@ -306,4 +305,6 @@ Cause: </string>
         <item quantity="one">%d page</item>
         <item quantity="other">%d pages</item>
     </plurals>
+    <string name="which_machine_is_in_front_of_you">Which machine is in front of you?</string>
+    <string name="read_the_type_plate">Read the type plate inside the door</string>
 </resources>

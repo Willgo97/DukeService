@@ -73,7 +73,6 @@
     <string name="details">Egenskaper</string>
     <string name="done">Ferdig</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Knip for å zoome. Numrene i tegningen er posisjonene nedenfor.</string>
-    <string name="copy">Kopier</string>
     <string name="reading_failed">Lesing mislyktes: %1$s</string>
     <string name="light">Lyst</string>
     <string name="monthly">Månedlig</string>
@@ -306,4 +305,6 @@
         <item quantity="one">%d side</item>
         <item quantity="other">%d sider</item>
     </plurals>
+    <string name="which_machine_is_in_front_of_you">Hvilken maskin står foran deg?</string>
+    <string name="read_the_type_plate">Les typeskiltet på innsiden av døren</string>
 </resources>

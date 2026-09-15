@@ -73,7 +73,6 @@
     <string name="details">Merkmale</string>
     <string name="done">Fertig</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Zum Vergrößern aufziehen. Die Nummern in der Zeichnung sind die Positionen darunter.</string>
-    <string name="copy">Kopieren</string>
     <string name="reading_failed">Lesen fehlgeschlagen: %1$s</string>
     <string name="light">Hell</string>
     <string name="monthly">Monatlich</string>
@@ -306,4 +305,6 @@ Ursache: </string>
         <item quantity="one">%d Seite</item>
         <item quantity="other">%d Seiten</item>
     </plurals>
+    <string name="which_machine_is_in_front_of_you">Welche Maschine steht vor Ihnen?</string>
+    <string name="read_the_type_plate">Das Typenschild in der Tür lesen</string>
 </resources>
