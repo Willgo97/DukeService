@@ -289,4 +289,10 @@ Cause: </string>
         <item quantity="one">%d build</item>
         <item quantity="other">%d builds</item>
     </plurals>
+    <string name="type_plate_found">Type plate found</string>
+    <string name="hold_still_reading_the_plate">Hold still — reading the plate</string>
+    <string name="serial_number_label">Serial number</string>
+    <string name="model_label">Model</string>
+    <string name="not_read_yet">not read yet</string>
+    <string name="use_this_machine">Use this machine</string>
 </resources>

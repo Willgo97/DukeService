@@ -72,6 +72,22 @@ class Catalog(
         return if (words.isEmpty()) code else "$words ($code)"
     }
 
+    /**
+     * Narrow a machine's list to one build — but only when the books really do
+     * split it that way.
+     *
+     * For most machines a message or a procedure carries the build codes it
+     * belongs to, and six to nine out of ten survive the narrowing. Where the
+     * manuals never split that build out, almost nothing does, and an engineer
+     * would be looking at three of the forty-two messages his screen can show.
+     * Then the machine's own list is the honest answer.
+     */
+    fun <T> forBuild(all: List<T>, variant: String?, matches: (T) -> Boolean): List<T> {
+        if (variant == null) return all
+        val narrowed = all.filter(matches)
+        return if (narrowed.size * 4 >= all.size) narrowed else all
+    }
+
     fun forVariant(codes: List<String>, variant: String?): Boolean =
         variant == null || codes.isEmpty() || codes.contains(variant)
 

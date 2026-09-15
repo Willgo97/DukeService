@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +69,7 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
+import nl.dejongduke.service.data.Plate
 import nl.dejongduke.service.data.ScanHit
 import nl.dejongduke.service.data.Scanner
 import nl.dejongduke.service.ui.Card
@@ -150,6 +152,10 @@ fun ScanScreen(
         value = withContext(Dispatchers.Default) { Scanner(catalog) }
     }
     var hits by remember { mutableStateOf<List<ScanHit>>(emptyList()) }
+    // A type plate is not read in one frame: it fills up while the phone moves
+    // along it. What has been read stays until the plate leaves the picture.
+    var plate by remember { mutableStateOf<Plate?>(null) }
+    var plateSeen by remember { mutableStateOf(0L) }
     var fromPhoto by remember { mutableStateOf(false) }
     // What the camera has seen lately, keyed by hit. A label drifts out of
     // frame while you are still reading it, and one frame of a bad angle
@@ -178,13 +184,15 @@ fun ScanScreen(
                         val lines = result.textBlocks.flatMap { b -> b.lines.map { it.text } }
                         // A photo is a deliberate choice, so read it more
                         // generously than a frame that happened to go by.
-                        val found = (scanner ?: return@addOnSuccessListener)
-                            .scan(lines, PHOTO_THRESHOLD)
-                        hits = found
+                        val reader = scanner ?: return@addOnSuccessListener
+                        val found = reader.scan(lines, PHOTO_THRESHOLD)
+                        plate = reader.readPlate(lines)
+                        plateSeen = System.currentTimeMillis()
+                        hits = if (plate != null) emptyList() else found
                         seen = emptyMap()
                         fromPhoto = true
                         photoUntil = System.currentTimeMillis() + PHOTO_PAUSE_MS
-                        message = if (found.isEmpty()) {
+                        message = if (found.isEmpty() && plate == null) {
                             if (lines.isEmpty()) noTextInPhoto
                             else readNothingFound + lines.take(3).joinToString(" · ")
                         } else ""
@@ -198,8 +206,30 @@ fun ScanScreen(
             val reader = scanner ?: return@CameraPreview
             if (fromPhoto && System.currentTimeMillis() < photoUntil) return@CameraPreview
             fromPhoto = false
-            val found = reader.scan(lines, LIVE_THRESHOLD)
             val now = System.currentTimeMillis()
+
+            // Standing in front of the plate: read that, and only that, until
+            // everything on it has been read or it goes out of frame.
+            val reading = reader.readPlate(lines)
+            if (reading != null) {
+                val filled = (plate ?: Plate()).merge(reading)
+                plate = filled
+                plateSeen = now
+                hits = emptyList()
+                seen = emptyMap()
+                message = ""
+                if (direct && filled.complete && filled.machine != null) {
+                    onUseMachine(filled.machine!!.id, filled.build.ifEmpty { null })
+                    onOpen(Route.Machine(filled.machine!!.id))
+                }
+                return@CameraPreview
+            }
+            if (plate != null) {
+                if (now - plateSeen <= KEEP_ALIVE_MS) return@CameraPreview
+                plate = null
+            }
+
+            val found = reader.scan(lines, LIVE_THRESHOLD)
             val updated = seen.toMutableMap()
             for (hit in found) {
                 val key = reader.key(hit)
@@ -253,6 +283,9 @@ fun ScanScreen(
                 Text(
                     when {
                         message.isNotEmpty() -> message
+                        plate != null && plate?.complete != true ->
+                            stringResource(R.string.hold_still_reading_the_plate)
+                        plate != null -> stringResource(R.string.type_plate_found)
                         hits.isEmpty() && seen.isNotEmpty() -> stringResource(R.string.hold_still)
                         hits.isEmpty() -> stringResource(R.string.point_at_a_label_type_plate_or_the_screen)
                         fromPhoto -> stringResource(R.string.found_in_the_photo, hits.size)
@@ -273,7 +306,7 @@ fun ScanScreen(
         }
 
         AnimatedVisibility(
-            visible = hits.isNotEmpty(),
+            visible = hits.isNotEmpty() || plate != null,
             enter = slideInVertically { it },
             exit = slideOutVertically { it },
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -285,6 +318,7 @@ fun ScanScreen(
                     .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                     .background(MaterialTheme.colorScheme.surface),
             ) {
+                plate?.let { PlateCard(it, onUseMachine, onOpen) }
                 LazyColumn(Modifier.padding(top = 10.dp)) {
                     items(hits.size) { index ->
                         HitCard(catalog, hits[index], onUseMachine, onOpen)
@@ -294,7 +328,87 @@ fun ScanScreen(
         }
     }
 
-    DisposableEffect(Unit) { onDispose { hits = emptyList() } }
+    DisposableEffect(Unit) { onDispose { hits = emptyList(); plate = null } }
+}
+
+/**
+ * The type plate as it fills up.
+ *
+ * The plate is one thing, not a list of finds, so it gets its own panel: what
+ * has been read, what is still missing, and — the moment the machine is known
+ * — the one button that matters.
+ */
+@Composable
+private fun PlateCard(
+    plate: Plate,
+    onUseMachine: (String, String?) -> Unit,
+    onOpen: (Route) -> Unit,
+) {
+    Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Info, null, tint = MaterialTheme.colorScheme.primary,
+                 modifier = Modifier.height(20.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.type_plate), style = MaterialTheme.typography.titleMedium)
+            Spacer(Modifier.weight(1f))
+            if (!plate.complete) {
+                CircularProgressIndicator(
+                    Modifier.height(16.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+        }
+        Spacer(Modifier.height(10.dp))
+        PlateRow(stringResource(R.string.type_code), plate.code)
+        PlateRow(stringResource(R.string.serial_number_label), plate.serial)
+        PlateRow(stringResource(R.string.model_label), plate.model)
+
+        plate.machine?.let { machine ->
+            Spacer(Modifier.height(14.dp))
+            Button(
+                onClick = {
+                    onUseMachine(machine.id, plate.build.ifEmpty { null })
+                    onOpen(Route.Machine(machine.id))
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    listOfNotNull(machine.name, plate.build.ifEmpty { null },
+                                  plate.built.ifEmpty { null }).joinToString(" · ")
+                )
+            }
+            Spacer(Modifier.height(4.dp))
+            Text(
+                stringResource(R.string.use_this_machine),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
+        }
+    }
+}
+
+@Composable
+private fun PlateRow(label: String, value: String) {
+    Row(
+        Modifier.fillMaxWidth().padding(vertical = 3.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.width(120.dp),
+        )
+        Text(
+            value.ifEmpty { stringResource(R.string.not_read_yet) },
+            style = MaterialTheme.typography.bodyLarge,
+            color = if (value.isEmpty()) MaterialTheme.colorScheme.outline
+                    else MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f),
+        )
+    }
 }
 
 /** One result the camera saw, how often, and when it last did. */

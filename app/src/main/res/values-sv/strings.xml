@@ -289,4 +289,10 @@ Orsak: </string>
         <item quantity="one">%d utförande</item>
         <item quantity="other">%d utföranden</item>
     </plurals>
+    <string name="type_plate_found">Typskylt hittad</string>
+    <string name="hold_still_reading_the_plate">Håll stilla — skylten läses</string>
+    <string name="serial_number_label">Serienummer</string>
+    <string name="model_label">Modell</string>
+    <string name="not_read_yet">inte läst ännu</string>
+    <string name="use_this_machine">Använd den här maskinen</string>
 </resources>

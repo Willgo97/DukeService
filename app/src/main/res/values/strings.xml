@@ -288,4 +288,10 @@
         <item quantity="one">%d uitvoering</item>
         <item quantity="other">%d uitvoeringen</item>
     </plurals>
+    <string name="type_plate_found">Typeplaatje gevonden</string>
+    <string name="hold_still_reading_the_plate">Even stilhouden — het plaatje wordt gelezen</string>
+    <string name="serial_number_label">Serienummer</string>
+    <string name="model_label">Model</string>
+    <string name="not_read_yet">nog niet gelezen</string>
+    <string name="use_this_machine">Deze machine gebruiken</string>
 </resources>

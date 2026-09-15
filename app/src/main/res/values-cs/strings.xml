@@ -305,4 +305,10 @@ Příčina: </string>
         <item quantity="few">%d provedení</item>
         <item quantity="other">%d provedení</item>
     </plurals>
+    <string name="type_plate_found">Nalezen typový štítek</string>
+    <string name="hold_still_reading_the_plate">Držte klidně — štítek se načítá</string>
+    <string name="serial_number_label">Sériové číslo</string>
+    <string name="model_label">Model</string>
+    <string name="not_read_yet">zatím nenačteno</string>
+    <string name="use_this_machine">Použít tento stroj</string>
 </resources>

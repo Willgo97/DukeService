@@ -27,6 +27,42 @@ sealed interface ScanHit {
 }
 
 /**
+ * A type plate as the camera reads it, which is rarely in one go.
+ *
+ * The plate sits inside the door, often behind a milk cooler, and comes into
+ * frame line by line. Every frame adds what it could read; what was already
+ * read stays. [complete] is true once the two lines that matter are in.
+ */
+data class Plate(
+    val machine: Machine? = null,
+    /** The build the type code names: CKA, XEA, CECK … */
+    val build: String = "",
+    /** The type code as printed: 9CKAA211A2A00. */
+    val code: String = "",
+    val serial: String = "",
+    /** "2014 · week 38", read out of the serial number. */
+    val built: String = "",
+    /** The model line: "Nio 20.2 FM [a] CoEx bean2cup". */
+    val model: String = "",
+) {
+    /** Enough to point the app at this machine. */
+    val known: Boolean get() = machine != null
+
+    /** Everything a plate carries has been read. */
+    val complete: Boolean get() = code.isNotEmpty() && serial.isNotEmpty()
+
+    /** What this frame added to what was already on screen. */
+    fun merge(newer: Plate) = Plate(
+        machine = newer.machine ?: machine,
+        build = build.ifEmpty { newer.build },
+        code = code.ifEmpty { newer.code },
+        serial = serial.ifEmpty { newer.serial },
+        built = built.ifEmpty { newer.built },
+        model = model.ifEmpty { newer.model },
+    )
+}
+
+/**
  * Matches recognised text against the catalog.
  *
  * OCR on a greasy label in a dim plant room is not clean, so part numbers are
@@ -93,6 +129,15 @@ class Scanner(private val catalog: Catalog) {
         val hits = mutableListOf<ScanHit>()
         val joined = lines.joinToString(" ")
         val upper = joined.uppercase(Locale.ROOT)
+
+        // A type plate is read as a type plate. Its pressures and power
+        // ratings look enough like part numbers, and its model line enough
+        // like a screen message, to fill the list with things that are not
+        // there — while the one thing that is there says exactly which
+        // machine you are standing in front of.
+        if (isPlate(lines)) {
+            return listOfNotNull(readPlateHit(upper)).filter { it.confidence >= minimum }
+        }
         val seenWords = joined.lowercase(Locale.ROOT)
             .split(Regex("[^a-z0-9]+")).filter { it.length >= 4 }.toSet()
 
@@ -109,7 +154,7 @@ class Scanner(private val catalog: Catalog) {
         // The plate inside the door is the one thing that says exactly which
         // machine is standing there: "Type: 9CKAA211A2A00" is a Nio with a
         // CoEx brewer, and the serial number says when it was built.
-        readPlate(upper)?.let { hits += it }
+        readPlateHit(upper)?.let { hits += it }
 
         // --- machine name on the housing ----------------------------------
         for ((word, machine) in machineWords) {
@@ -165,31 +210,80 @@ class Scanner(private val catalog: Catalog) {
      * was built) and the model line. A plate behind a milk cooler is often
      * only readable at an angle, so a hit on one of the three is enough.
      */
-    private fun readPlate(upper: String): ScanHit.TypePlate? {
+    /**
+     * Whether the camera is looking at a type plate at all.
+     *
+     * The plate always carries the maker's name and the words in front of the
+     * fields; one of those is enough to stop reading the frame as if it were a
+     * part label or a screen message.
+     */
+    fun isPlate(lines: List<String>): Boolean {
+        val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
+        return PLATE_WORDS.count { upper.contains(it) } >= 1 || plateFields(upper) != null
+    }
+
+    /** What this frame could read off the plate; null when there is no plate. */
+    fun readPlate(lines: List<String>): Plate? {
+        val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
+        val fields = plateFields(upper)
+        if (fields == null && PLATE_WORDS.none { upper.contains(it) }) return null
+        return (fields ?: Plate()).copy(model = modelLine(lines))
+    }
+
+    /**
+     * The model line as printed — "Nio 20.2 FM [a] CoEx bean2cup" — because it
+     * is the line the engineer recognises the machine by. The reader does not
+     * always keep the word "Model" with it, so a line that names a machine and
+     * carries a number counts too.
+     */
+    private fun modelLine(lines: List<String>): String {
+        val labelled = lines.firstOrNull { it.uppercase(Locale.ROOT).contains("MODEL") }
+        if (labelled != null) {
+            val text = labelled.substringAfter(':', labelled).trim()
+            if (text.isNotEmpty() && !text.equals("model", ignoreCase = true)) return text.take(60)
+        }
+        return lines.firstOrNull { line ->
+            val upper = line.uppercase(Locale.ROOT)
+            line.any { it.isDigit() } && machineWords.any { (word, _) ->
+                word.length >= 3 && Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)
+            }
+        }?.trim()?.take(60).orEmpty()
+    }
+
+    private fun plateFields(upper: String): Plate? {
         val found = builds.firstNotNullOfOrNull { (build, machine) ->
             TYPE_CODE(build).find(upper)?.let { Triple(machine, build, it.value) }
-        }
-        // Without a book for that build the machine has to come from the model
-        // line: "Model: Virtu 70.2 CoEx".
-        val machine = found?.first ?: found?.let {
-            machineWords.firstOrNull { (word, _) ->
-                word.length >= 3 && Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)
-            }?.second
         }
         val serial = SERIAL.find(upper)?.value
             ?: if (found != null) LOOSE_SERIAL.find(upper)?.value else null
         if (found == null && serial == null) return null
+        return Plate(
+            machine = found?.first,
+            build = found?.second.orEmpty(),
+            code = found?.third.orEmpty(),
+            serial = serial.orEmpty(),
+            built = serial?.let { built(it) }.orEmpty(),
+        )
+    }
+
+    private fun readPlateHit(upper: String): ScanHit.TypePlate? {
+        val fields = plateFields(upper) ?: return null
+        // Without a book for that build the machine has to come from the model
+        // line: "Model: Virtu 70.2 CoEx".
+        val machine = fields.machine ?: machineWords.firstOrNull { (word, _) ->
+            word.length >= 3 && Regex("\\b${Regex.escape(word)}\\b").containsMatchIn(upper)
+        }?.second
         val confidence = when {
-            found != null && serial != null -> 98
-            found != null -> 92
+            fields.code.isNotEmpty() && fields.serial.isNotEmpty() -> 98
+            fields.code.isNotEmpty() -> 92
             else -> 85
         }
         return ScanHit.TypePlate(
             machine = machine,
-            build = found?.second.orEmpty(),
-            code = found?.third.orEmpty(),
-            serienummer = serial.orEmpty(),
-            built = serial?.let { built(it) }.orEmpty(),
+            build = fields.build,
+            code = fields.code,
+            serienummer = fields.serial,
+            built = fields.built,
             confidence = confidence,
         )
     }
@@ -212,6 +306,12 @@ class Scanner(private val catalog: Catalog) {
          * have books for; a machine on site may be one we do not, and reading
          * its plate should still say which build it is.
          */
+        /** Printed on every DUKE plate, and nowhere else on the machine. */
+        private val PLATE_WORDS = listOf(
+            "JONG DUKE", "DEJONGDUKE", "MADE IN HOLLAND", "SERIAL NR", "SERIAL NO",
+            "SERIENR", "RATED PRESSURE", "LINE PRESSURE", "TYPE:",
+        )
+
         private val BUILDS = listOf(
             "CECK", "CECP", "CEC", "CND", "FEC", "FND", "IEA", "INB",
             "XEA", "XNA", "XKA", "CKA",

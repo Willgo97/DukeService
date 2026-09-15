@@ -159,14 +159,12 @@ fun MachineDetail(
 ) {
     // Once the type plate has said which build is standing there, everything
     // on this screen is about that build — not about the machine line.
-    val forMachine = catalog.faults.filter { machine.id in it.machines }
-    val faults = forMachine.count { catalog.forVariant(it.codes, variant) }
-        .let { if (it > 0) it else forMachine.size }
-    val machineProcs = catalog.procedures.filter {
-        machine.id in it.machines && it.steps.isNotEmpty()
-    }
-    val procs = machineProcs.count { catalog.forVariant(it.codes, variant) }
-        .let { if (it > 0) it else machineProcs.size }
+    val faults = catalog.forBuild(
+        catalog.faults.filter { machine.id in it.machines }, variant,
+    ) { catalog.forVariant(it.codes, variant) }.size
+    val procs = catalog.forBuild(
+        catalog.procedures.filter { machine.id in it.machines && it.steps.isNotEmpty() }, variant,
+    ) { catalog.forVariant(it.codes, variant) }.size
     val parts = catalog.partCount(machine.id, variant)
 
     LazyColumn(Modifier.fillMaxWidth()) {

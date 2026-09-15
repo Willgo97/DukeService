@@ -289,4 +289,10 @@ Ursache: </string>
         <item quantity="one">%d Ausführung</item>
         <item quantity="other">%d Ausführungen</item>
     </plurals>
+    <string name="type_plate_found">Typenschild gefunden</string>
+    <string name="hold_still_reading_the_plate">Ruhig halten — das Schild wird gelesen</string>
+    <string name="serial_number_label">Seriennummer</string>
+    <string name="model_label">Modell</string>
+    <string name="not_read_yet">noch nicht gelesen</string>
+    <string name="use_this_machine">Diese Maschine verwenden</string>
 </resources>

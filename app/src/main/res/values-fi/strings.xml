@@ -289,4 +289,10 @@ Syy: </string>
         <item quantity="one">%d malli</item>
         <item quantity="other">%d mallia</item>
     </plurals>
+    <string name="type_plate_found">Tyyppikilpi löytyi</string>
+    <string name="hold_still_reading_the_plate">Pidä paikallaan — kilpeä luetaan</string>
+    <string name="serial_number_label">Sarjanumero</string>
+    <string name="model_label">Malli</string>
+    <string name="not_read_yet">ei vielä luettu</string>
+    <string name="use_this_machine">Käytä tätä konetta</string>
 </resources>

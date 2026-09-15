@@ -129,4 +129,49 @@ class ScannerTest {
     fun plainTextIsNotATypePlate() {
         assertEquals(null, plate("Clean the milk system", "5KAF119 suction filter"))
     }
+
+    @Test
+    fun aPlateIsReadAsAPlateAndNothingElse() {
+        // The pressures and the power rating look like part numbers, and the
+        // model line shares words with a screen message.
+        val found = scanner.scan(
+            listOf(
+                "de JONG DUKE", "MADE IN HOLLAND",
+                "Serial nr.: 2014386812001",
+                "Type: 9CKAA211A2A00",
+                "Model: Nio 20.2 FM [a] CoEx® bean2cup",
+                "220-240V 50-60 Hz 2.9-3.4 kW",
+                "Line pressure: 0.05 - 0.6 MPa (0.5 - 6.0 bar)",
+            ),
+            60,
+        )
+        assertEquals(1, found.size)
+        assertTrue("type plate", found.first() is ScanHit.TypePlate)
+    }
+
+    @Test
+    fun theMakersNameAloneSaysItIsAPlate() {
+        assertTrue(scanner.isPlate(listOf("de JONG DUKE", "SLIEDRECHT, NL")))
+        assertTrue(!scanner.isPlate(listOf("5KAF119 suction filter", "Brewer out of position")))
+    }
+
+    @Test
+    fun aPlateFillsUpOverSeveralFrames() {
+        // What the camera gets while you move the phone along the plate.
+        var plate = scanner.readPlate(listOf("de JONG DUKE", "MADE IN HOLLAND"))!!
+        assertTrue("nothing read yet", !plate.known)
+
+        plate = plate.merge(scanner.readPlate(listOf("Type: 9CKAA211A2A00"))!!)
+        assertEquals("nio", plate.machine?.id)
+        assertEquals("CKA", plate.build)
+        assertTrue("not complete without the serial", !plate.complete)
+
+        plate = plate.merge(scanner.readPlate(
+            listOf("Serial nr.: 2014386812001", "Model: Nio 20.2 FM [a] CoEx® bean2cup"))!!)
+        assertTrue("complete", plate.complete)
+        assertEquals("Nio 20.2 FM [a] CoEx® bean2cup", plate.model)
+        assertEquals("2014 · week 38", plate.built)
+        // What was read first is not thrown away by a later frame.
+        assertEquals("9CKAA211A2A00", plate.code)
+    }
 }

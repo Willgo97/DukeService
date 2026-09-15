@@ -289,4 +289,10 @@ Cause : </string>
         <item quantity="one">%d version</item>
         <item quantity="other">%d versions</item>
     </plurals>
+    <string name="type_plate_found">Plaque signalétique trouvée</string>
+    <string name="hold_still_reading_the_plate">Ne bougez pas — lecture de la plaque</string>
+    <string name="serial_number_label">Numéro de série</string>
+    <string name="model_label">Modèle</string>
+    <string name="not_read_yet">pas encore lu</string>
+    <string name="use_this_machine">Utiliser cette machine</string>
 </resources>
