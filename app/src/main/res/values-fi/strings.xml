@@ -71,7 +71,6 @@
     <string name="cannot_open_the_photo">Kuvaa ei voi avata</string>
     <string name="cabinet">Kaappi</string>
     <string name="details">Ominaisuudet</string>
-    <string name="done">Valmis</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Nipistä zoomataksesi. Piirustuksen numerot ovat alla olevat paikat.</string>
     <string name="reading_failed">Lukeminen epäonnistui: %1$s</string>
     <string name="light">Vaalea</string>
@@ -266,7 +265,6 @@ Syy: </string>
         <item quantity="one">%d komponentti kaavioineen teknisestä käsikirjasta</item>
         <item quantity="other">%d komponenttia kaavioineen teknisestä käsikirjasta</item>
     </plurals>
-    <string name="done_2">tehty</string>
     <string name="engineer">asentaja</string>
     <string name="brewer_2">%s-keitin</string>
     <string name="clickable">%d napautettavaa</string>

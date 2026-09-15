@@ -72,7 +72,6 @@
     <string name="cannot_open_the_photo">Kan de foto niet openen</string>
     <string name="cabinet">Kast</string>
     <string name="details">Kenmerken</string>
-    <string name="done">Klaar</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Knijp om in te zoomen. De nummers in de tekening zijn de posities hieronder.</string>
     <string name="reading_failed">Lezen mislukt: %1$s</string>
     <string name="light">Licht</string>
@@ -265,7 +264,6 @@
         <item quantity="one">%d onderdeel met schema’s uit de technische handleiding</item>
         <item quantity="other">%d onderdelen met schema’s uit de technische handleiding</item>
     </plurals>
-    <string name="done_2">afgevinkt</string>
     <string name="engineer">monteur</string>
     <string name="brewer_2">%s-brewer</string>
     <string name="clickable">%d aanklikbaar</string>

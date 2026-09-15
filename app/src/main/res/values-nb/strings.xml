@@ -71,7 +71,6 @@
     <string name="cannot_open_the_photo">Kan ikke åpne bildet</string>
     <string name="cabinet">Kabinett</string>
     <string name="details">Egenskaper</string>
-    <string name="done">Ferdig</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Knip for å zoome. Numrene i tegningen er posisjonene nedenfor.</string>
     <string name="reading_failed">Lesing mislyktes: %1$s</string>
     <string name="light">Lyst</string>
@@ -266,7 +265,6 @@
         <item quantity="one">%d komponent med skjemaer fra den tekniske håndboken</item>
         <item quantity="other">%d komponenter med skjemaer fra den tekniske håndboken</item>
     </plurals>
-    <string name="done_2">utført</string>
     <string name="engineer">tekniker</string>
     <string name="brewer_2">%s-brygger</string>
     <string name="clickable">%d klikkbare</string>

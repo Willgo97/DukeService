@@ -71,7 +71,6 @@
     <string name="cannot_open_the_photo">Fotku nelze otevřít</string>
     <string name="cabinet">Skříň</string>
     <string name="details">Vlastnosti</string>
-    <string name="done">Hotovo</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Roztažením přiblížíte. Čísla ve výkresu jsou pozice níže.</string>
     <string name="reading_failed">Čtení selhalo: %1$s</string>
     <string name="light">Světlé</string>
@@ -280,7 +279,6 @@ Příčina: </string>
         <item quantity="few">%d díly se schématy z technické příručky</item>
         <item quantity="other">%d dílů se schématy z technické příručky</item>
     </plurals>
-    <string name="done_2">hotovo</string>
     <string name="engineer">technik</string>
     <string name="brewer_2">spařovač %s</string>
     <string name="clickable">%d klikatelných</string>

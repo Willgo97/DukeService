@@ -18,7 +18,6 @@ import nl.dejongduke.service.data.Locales
 import nl.dejongduke.service.data.Prefs
 import nl.dejongduke.service.data.SearchResult
 import nl.dejongduke.service.ui.theme.ThemeMode
-import java.time.LocalDate
 
 enum class Tab(@StringRes val label: Int) {
     Search(R.string.search),
@@ -83,8 +82,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
      * outlives midnight, and an engineer who reopens the app the next morning
      * would otherwise tick off yesterday's list.
      */
-    private val _today = MutableStateFlow(LocalDate.now())
-    val today: StateFlow<LocalDate> = _today.asStateFlow()
 
     private val _recent = MutableStateFlow(prefs.recent())
     val recent: StateFlow<List<String>> = _recent.asStateFlow()
@@ -153,7 +150,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Call when the app returns to the foreground, so the date stays right. */
     fun refreshDay() {
-        _today.value = LocalDate.now()
     }
 
     fun selectTab(tab: Tab) {

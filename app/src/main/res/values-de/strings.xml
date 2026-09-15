@@ -71,7 +71,6 @@
     <string name="cannot_open_the_photo">Foto lässt sich nicht öffnen</string>
     <string name="cabinet">Gehäuse</string>
     <string name="details">Merkmale</string>
-    <string name="done">Fertig</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Zum Vergrößern aufziehen. Die Nummern in der Zeichnung sind die Positionen darunter.</string>
     <string name="reading_failed">Lesen fehlgeschlagen: %1$s</string>
     <string name="light">Hell</string>
@@ -266,7 +265,6 @@ Ursache: </string>
         <item quantity="one">%d Bauteil mit Schaltplänen aus dem technischen Handbuch</item>
         <item quantity="other">%d Bauteile mit Schaltplänen aus dem technischen Handbuch</item>
     </plurals>
-    <string name="done_2">erledigt</string>
     <string name="engineer">Techniker</string>
     <string name="brewer_2">%s-Brüheinheit</string>
     <string name="clickable">%d anklickbar</string>

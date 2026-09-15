@@ -19,15 +19,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import nl.dejongduke.service.R
 import nl.dejongduke.service.data.Catalog
-import nl.dejongduke.service.ui.Pill
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
@@ -66,7 +62,6 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
     }
     val pager = rememberPagerState(pageCount = { steps.size })
     val scope = rememberCoroutineScope()
-    var done by remember { mutableStateOf(setOf<Int>()) }
 
     Column(Modifier.fillMaxSize()) {
         Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
@@ -97,28 +92,34 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                         )
                         Spacer(Modifier.width(14.dp))
                     }
-                    if (done.contains(index)) Pill(stringResource(R.string.done_2))
                 }
                 Spacer(Modifier.height(10.dp))
                 step.points.forEach { point ->
-                    Text(stringResource(R.string.text_6, point), style = MaterialTheme.typography.headlineSmall)
+                    Text(
+                        // One instruction is a sentence, several are a list.
+                        if (step.points.size > 1) stringResource(R.string.text_6, point) else point,
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
                     Spacer(Modifier.height(10.dp))
                 }
-                step.notes.forEach { note ->
-                    Box(
+                if (step.notes.isNotEmpty()) {
+                    Column(
                         Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(12.dp))
                             .background(MaterialTheme.colorScheme.secondaryContainer)
                             .padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        Text(note, style = MaterialTheme.typography.bodyLarge,
-                             color = MaterialTheme.colorScheme.onSecondaryContainer)
+                        step.notes.forEach { note ->
+                            Text(note, style = MaterialTheme.typography.bodyLarge,
+                                 color = MaterialTheme.colorScheme.onSecondaryContainer)
+                        }
                     }
                     Spacer(Modifier.height(10.dp))
                 }
                 step.images.forEach { image ->
-                    AssetImage(image)
+                    AssetImage(image, maxHeight = 420.dp)
                     Spacer(Modifier.height(10.dp))
                 }
                 Spacer(Modifier.height(24.dp))
@@ -149,22 +150,15 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.weight(1f))
-                TextButton(onClick = {
-                    done = if (done.contains(pager.currentPage)) done - pager.currentPage
-                    else done + pager.currentPage
-                    scope.launch {
-                        if (pager.currentPage < steps.size - 1) {
-                            pager.animateScrollToPage(pager.currentPage + 1)
-                        }
-                    }
-                }) {
-                    Icon(
-                        if (pager.currentPage == steps.size - 1) Icons.Filled.Check
-                        else Icons.AutoMirrored.Filled.ArrowForward,
-                        null, Modifier.height(18.dp),
-                    )
+                TextButton(
+                    onClick = {
+                        scope.launch { pager.animateScrollToPage(pager.currentPage + 1) }
+                    },
+                    enabled = pager.currentPage < steps.size - 1,
+                ) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null, Modifier.height(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text(if (pager.currentPage == steps.size - 1) stringResource(R.string.done) else stringResource(R.string.next))
+                    Text(stringResource(R.string.next))
                 }
             }
         }

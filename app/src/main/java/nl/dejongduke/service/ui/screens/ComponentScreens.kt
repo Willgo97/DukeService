@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -59,6 +58,9 @@ import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.graphics.Color
 
 /**
  * The order the machine is built in, not the order the books number things:
@@ -217,8 +219,19 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
     }
 }
 
+/**
+ * A drawing from the manual.
+ *
+ * The pictures come out of the books a few hundred pixels wide — smaller than
+ * the phone they are read on. They are drawn to fill the frame rather than at
+ * their own pixel size, which is what kept an illustration sitting as a stamp
+ * in the middle of an empty panel.
+ *
+ * @param maxHeight a tall drawing may not push everything under it off the
+ *   screen. One step of a job gets more room than one picture in a list.
+ */
 @Composable
-fun AssetImage(path: String) {
+fun AssetImage(path: String, maxHeight: Dp = 320.dp) {
     val context = LocalContext.current
     val screen = LocalConfiguration.current.screenWidthDp
     val density = LocalDensity.current.density
@@ -232,14 +245,20 @@ fun AssetImage(path: String) {
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
     val image = bitmap
+    val frame = (screen.dp - 24.dp).let { width ->
+        if (image == null) 220.dp
+        else minOf(width * (image.height.toFloat() / image.width), maxHeight)
+    }
 
     Box(
         Modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-            .then(if (image != null) Modifier.aspectRatio(image.width.toFloat() / image.height) else Modifier.height(220.dp)),
+            // The drawings are printed on white and carry their own ground;
+            // a panel behind them only adds a second frame.
+            .background(if (image == null) MaterialTheme.colorScheme.surfaceContainerHighest else Color.White)
+            .height(frame),
         contentAlignment = Alignment.Center,
     ) {
         if (image == null) {
@@ -251,7 +270,7 @@ fun AssetImage(path: String) {
             contentDescription = stringResource(R.string.page_from_the_manual),
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .graphicsLayer(scaleX = scale, scaleY = scale, translationX = offsetX, translationY = offsetY)
                 .pointerInput(path) {
                     detectTransformGestures { _, pan, zoom, _ ->

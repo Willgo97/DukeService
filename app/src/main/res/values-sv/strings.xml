@@ -71,7 +71,6 @@
     <string name="cannot_open_the_photo">Kan inte öppna fotot</string>
     <string name="cabinet">Skåp</string>
     <string name="details">Egenskaper</string>
-    <string name="done">Klar</string>
     <string name="pinch_to_zoom_the_numbers_in_the_drawing_are">Nyp för att zooma. Numren i ritningen är positionerna nedan.</string>
     <string name="reading_failed">Läsningen misslyckades: %1$s</string>
     <string name="light">Ljust</string>
@@ -266,7 +265,6 @@ Orsak: </string>
         <item quantity="one">%d komponent med scheman ur den tekniska handboken</item>
         <item quantity="other">%d komponenter med scheman ur den tekniska handboken</item>
     </plurals>
-    <string name="done_2">klart</string>
     <string name="engineer">tekniker</string>
     <string name="brewer_2">%s-bryggare</string>
     <string name="clickable">%d klickbara</string>
