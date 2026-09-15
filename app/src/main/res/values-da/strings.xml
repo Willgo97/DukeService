@@ -136,7 +136,6 @@
     <string name="service_menu">Servicemenu</string>
     <string name="service_menu_unknown">servicemenu ukendt</string>
     <string name="small">Small</string>
-    <string name="default_machine">Standardmaskine</string>
     <string name="step_by_step">Trin for trin</string>
     <string name="steps">Trin</string>
     <string name="fault">Fejl</string>
@@ -172,7 +171,6 @@
     <string name="there_is_no_manufacturer_s_card_for_this_mac">For denne maskine er der intet producentkort i appen.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">For denne maskine er der intet vedligeholdelseskort i appen.</string>
     <string name="for_label">For %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">Hvad listerne åbner med. Du kan altid skifte øverst i en liste.</string>
     <string name="where_does_this_come_from">Hvor kommer det her fra?</string>
     <string name="where_do_you_want_to_go">Hvor vil du hen</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Værdier fra brugervejledningerne til Virtu og Lua, omregnet til metriske enheder. De gælder i store træk for hele CoEx-familien; typeskiltet i maskinen gælder altid først.</string>

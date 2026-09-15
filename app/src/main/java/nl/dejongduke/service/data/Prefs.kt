@@ -91,9 +91,4 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("scan_direct", false)
         set(value) = sp.edit().putBoolean("scan_direct", value).apply()
 
-    // --- Last used machine ------------------------------------------------
-
-    var machine: String?
-        get() = sp.getString("machine", null)
-        set(value) = sp.edit().putString("machine", value).apply()
 }

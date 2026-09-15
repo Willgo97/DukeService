@@ -135,7 +135,6 @@
     <string name="service_menu">Servicemenu</string>
     <string name="service_menu_unknown">servicemenu onbekend</string>
     <string name="small">Small</string>
-    <string name="default_machine">Standaardmachine</string>
     <string name="step_by_step">Stap voor stap</string>
     <string name="steps">Stappen</string>
     <string name="fault">Storing</string>
@@ -171,7 +170,6 @@
     <string name="there_is_no_manufacturer_s_card_for_this_mac">Voor deze machine zit er geen kaart van de fabrikant in de app.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">Voor deze machine zit er geen onderhoudskaart in de app.</string>
     <string name="for_label">Voor %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">Waar de lijsten mee openen. Je kunt altijd wisselen bovenin een lijst.</string>
     <string name="where_does_this_come_from">Waar komt dit vandaan?</string>
     <string name="where_do_you_want_to_go">Waar wil je heen</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Waarden uit de gebruikershandleidingen van Virtu en Lua, omgerekend naar metrisch. Gelden in grote lijnen voor de hele CoEx-familie; het typeplaatje in de machine is altijd leidend.</string>

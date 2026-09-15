@@ -136,7 +136,6 @@ Cause : </string>
     <string name="service_menu">Menu service</string>
     <string name="service_menu_unknown">menu service inconnu</string>
     <string name="small">Small</string>
-    <string name="default_machine">Machine par défaut</string>
     <string name="step_by_step">Étape par étape</string>
     <string name="steps">Étapes</string>
     <string name="fault">Panne</string>
@@ -172,7 +171,6 @@ Cause : </string>
     <string name="there_is_no_manufacturer_s_card_for_this_mac">Aucune fiche du fabricant pour cette machine dans l\'application.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">Aucune fiche d\'entretien pour cette machine dans l\'application.</string>
     <string name="for_label">Pour %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">Ce que les listes affichent à l\'ouverture. Vous pouvez toujours changer en haut d\'une liste.</string>
     <string name="where_does_this_come_from">D\'où cela vient-il ?</string>
     <string name="where_do_you_want_to_go">Où voulez-vous aller</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Valeurs des manuels d\'utilisation Virtu et Lua, converties en unités métriques. Elles valent en gros pour toute la famille CoEx ; la plaque signalétique dans la machine prime toujours.</string>

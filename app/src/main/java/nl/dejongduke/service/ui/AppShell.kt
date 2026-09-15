@@ -67,6 +67,16 @@ import nl.dejongduke.service.ui.screens.procedureSteps
 import nl.dejongduke.service.ui.screens.PlateScanScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 
 private fun tabIcon(tab: Tab): ImageVector = when (tab) {
     Tab.Search -> Icons.Filled.Search
@@ -101,13 +111,33 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                     val machine = filter?.let { catalog?.machine(it) }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(titleFor(catalog, tab, current), maxLines = 1)
+                        // Tapping the machine lets it go: it is the one place
+                        // the narrowing is visible from every tab, so it is
+                        // where it has to be undone.
                         if (machine != null && current == null) {
-                            Text(
-                                machine.name,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                                maxLines = 1,
-                            )
+                            Row(
+                                Modifier
+                                    .padding(top = 2.dp)
+                                    .clip(RoundedCornerShape(50))
+                                    .clickable { vm.setFilter(null) }
+                                    .background(MaterialTheme.colorScheme.primaryContainer)
+                                    .padding(start = 10.dp, end = 5.dp, top = 2.dp, bottom = 2.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    machine.name,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    maxLines = 1,
+                                )
+                                Spacer(Modifier.width(3.dp))
+                                Icon(
+                                    Icons.Filled.Close,
+                                    stringResource(R.string.all_machines),
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier.height(15.dp),
+                                )
+                            }
                         }
                     }
                 },
@@ -293,8 +323,6 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
                 onLanguage = vm::setLanguage,
                 messageLanguage = language,
                 onMessageLanguage = vm::setMessageLanguage,
-                defaultMachine = filter,
-                onMachine = vm::setFilter,
                 scanDirect = direct,
                 onScanDirect = vm::setScanDirect,
                 onOpen = vm::open,

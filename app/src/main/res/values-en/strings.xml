@@ -136,7 +136,6 @@ Cause: </string>
     <string name="service_menu">Service menu</string>
     <string name="service_menu_unknown">service menu unknown</string>
     <string name="small">Small</string>
-    <string name="default_machine">Default machine</string>
     <string name="step_by_step">Step by step</string>
     <string name="steps">Steps</string>
     <string name="fault">Fault</string>
@@ -172,7 +171,6 @@ Cause: </string>
     <string name="there_is_no_manufacturer_s_card_for_this_mac">There is no manufacturer\'s card for this machine in the app.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">There is no maintenance card for this machine in the app.</string>
     <string name="for_label">For %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">What the lists open with. You can always switch at the top of a list.</string>
     <string name="where_does_this_come_from">Where does this come from?</string>
     <string name="where_do_you_want_to_go">Where do you want to go</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Values from the Virtu and Lua user manuals, converted to metric. They hold broadly for the whole CoEx family; the type plate inside the machine always takes precedence.</string>

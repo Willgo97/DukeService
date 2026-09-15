@@ -68,8 +68,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val _results = MutableStateFlow(SearchResult())
     val results: StateFlow<SearchResult> = _results.asStateFlow()
 
-    /** null means "all machines"; otherwise a machine id the lists are narrowed to. */
-    private val _filter = MutableStateFlow(prefs.machine)
+    /**
+     * null means "all machines"; otherwise a machine id the lists are narrowed to.
+     *
+     * Deliberately not remembered: the app opens on everything. A machine you
+     * stood in front of last week is the wrong answer to what you are looking
+     * at now, and a list that is quietly narrowed to it looks like missing
+     * data. It survives the app being in the background, not the app being
+     * closed.
+     */
+    private val _filter = MutableStateFlow<String?>(null)
     val filter: StateFlow<String?> = _filter.asStateFlow()
 
     private val _theme = MutableStateFlow(
@@ -231,12 +239,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setFilter(machineId: String?) {
         _filter.value = machineId
-        prefs.machine = machineId
         _variant.value = machineId?.let { prefs.variant(it) }
     }
 
     /** The build of the machine the lists are narrowed to, if one was chosen. */
-    private val _variant = MutableStateFlow(prefs.machine?.let { prefs.variant(it) })
+    private val _variant = MutableStateFlow<String?>(null)
     val variant: StateFlow<String?> = _variant.asStateFlow()
 
     fun setVariant(code: String?) {

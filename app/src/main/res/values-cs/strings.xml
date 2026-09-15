@@ -136,7 +136,6 @@ Příčina: </string>
     <string name="service_menu">Servisní nabídka</string>
     <string name="service_menu_unknown">servisní nabídka neznámá</string>
     <string name="small">Small</string>
-    <string name="default_machine">Výchozí stroj</string>
     <string name="step_by_step">Krok za krokem</string>
     <string name="steps">Kroky</string>
     <string name="fault">Porucha</string>
@@ -172,7 +171,6 @@ Příčina: </string>
     <string name="there_is_no_manufacturer_s_card_for_this_mac">Pro tento stroj v aplikaci není karta výrobce.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">Pro tento stroj v aplikaci není karta údržby.</string>
     <string name="for_label">Pro %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">S čím se seznamy otevřou. Nahoře v seznamu lze vždy přepnout.</string>
     <string name="where_does_this_come_from">Odkud to pochází?</string>
     <string name="where_do_you_want_to_go">Kam chcete</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Hodnoty z návodů k obsluze Virtu a Lua, převedené do metrických jednotek. Platí zhruba pro celou rodinu CoEx; typový štítek ve stroji má vždy přednost.</string>

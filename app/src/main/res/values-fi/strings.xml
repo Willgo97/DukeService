@@ -136,7 +136,6 @@ Syy: </string>
     <string name="service_menu">Huoltovalikko</string>
     <string name="service_menu_unknown">huoltovalikko tuntematon</string>
     <string name="small">Small</string>
-    <string name="default_machine">Oletuskone</string>
     <string name="step_by_step">Vaihe vaiheelta</string>
     <string name="steps">Vaiheet</string>
     <string name="fault">Vika</string>
@@ -172,7 +171,6 @@ Syy: </string>
     <string name="there_is_no_manufacturer_s_card_for_this_mac">Tälle koneelle ei ole valmistajan korttia sovelluksessa.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">Tälle koneelle ei ole huoltokorttia sovelluksessa.</string>
     <string name="for_label">Koneelle %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">Millä luettelot avautuvat. Voit aina vaihtaa luettelon yläreunasta.</string>
     <string name="where_does_this_come_from">Mistä tämä on peräisin?</string>
     <string name="where_do_you_want_to_go">Minne haluat</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Arvot Virtun ja Luan käyttöohjeista, muunnettuna metrijärjestelmään. Ne pätevät karkeasti koko CoEx-perheeseen; koneen tyyppikilpi ratkaisee aina ensin.</string>

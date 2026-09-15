@@ -136,7 +136,6 @@ Ursache: </string>
     <string name="service_menu">Servicemenü</string>
     <string name="service_menu_unknown">Servicemenü unbekannt</string>
     <string name="small">Small</string>
-    <string name="default_machine">Standardmaschine</string>
     <string name="step_by_step">Schritt für Schritt</string>
     <string name="steps">Schritte</string>
     <string name="fault">Störung</string>
@@ -172,7 +171,6 @@ Ursache: </string>
     <string name="there_is_no_manufacturer_s_card_for_this_mac">Für diese Maschine gibt es keine Herstellerkarte in der App.</string>
     <string name="there_is_no_maintenance_card_for_this_machin">Für diese Maschine gibt es keine Wartungskarte in der App.</string>
     <string name="for_label">Für %1$s</string>
-    <string name="what_the_lists_open_with_you_can_always_swit">Womit die Listen öffnen. Oben in einer Liste lässt sich immer wechseln.</string>
     <string name="where_does_this_come_from">Woher kommt das?</string>
     <string name="where_do_you_want_to_go">Wohin möchten Sie</string>
     <string name="values_from_the_virtu_and_lua_user_manuals_c">Werte aus den Bedienungsanleitungen von Virtu und Lua, in metrische Einheiten umgerechnet. Sie gelten grob für die gesamte CoEx-Familie; das Typenschild in der Maschine hat immer Vorrang.</string>

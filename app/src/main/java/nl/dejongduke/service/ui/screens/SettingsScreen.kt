@@ -49,8 +49,6 @@ fun SettingsScreen(
     onLanguage: (String?) -> Unit,
     messageLanguage: String,
     onMessageLanguage: (String) -> Unit,
-    defaultMachine: String?,
-    onMachine: (String?) -> Unit,
     scanDirect: Boolean,
     onScanDirect: (Boolean) -> Unit,
     onOpen: (Route) -> Unit,
@@ -112,25 +110,6 @@ fun SettingsScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
-            )
-        }
-
-        item { SectionHeader(stringResource(R.string.default_machine)) }
-        item {
-            ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
-                    catalog.machinesWithParts
-                        .map { it.id as String? to it.name },
-                selected = defaultMachine,
-                onSelect = onMachine,
-            )
-        }
-        item {
-            Text(
-                stringResource(R.string.what_the_lists_open_with_you_can_always_swit),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
             )
         }
 
