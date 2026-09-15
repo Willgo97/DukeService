@@ -15,8 +15,8 @@ android {
         applicationId = "nl.dejongduke.service"
         minSdk = 26
         targetSdk = 36
-        versionCode = 13
-        versionName = "3.1"
+        versionCode = 14
+        versionName = "3.2"
     }
 
     // Release signing comes from ~/.gradle/gradle.properties (or the matching

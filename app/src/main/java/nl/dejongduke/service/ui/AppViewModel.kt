@@ -149,23 +149,40 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** Call when the app returns to the foreground, so the date stays right. */
-    fun refreshDay() {
-    }
 
+    /**
+     * A tab always lands on that tab's own list.
+     *
+     * Switching tabs used to leave whatever was open on top of the old one, so
+     * tapping Maintenance while a part was open kept showing the part.
+     */
     fun selectTab(tab: Tab) {
-        if (_tab.value == tab) _stack.value = emptyList() else _tab.value = tab
+        _tab.value = tab
+        _stack.value = emptyList()
     }
 
     fun open(route: Route) {
         _stack.value = _stack.value + route
     }
 
-    /** Returns false when there was nothing left to pop, so the system can handle back. */
+    /**
+     * Back leaves the screen, then the tab, and only then the app: from a
+     * detail to the list it came from, from a side tab to search.
+     *
+     * @return false when there is nothing left to leave, so the system can
+     *   close the app.
+     */
     fun back(): Boolean {
         val current = _stack.value
-        if (current.isEmpty()) return false
-        _stack.value = current.dropLast(1)
-        return true
+        if (current.isNotEmpty()) {
+            _stack.value = current.dropLast(1)
+            return true
+        }
+        if (_tab.value != Tab.Search) {
+            _tab.value = Tab.Search
+            return true
+        }
+        return false
     }
 
     private var searchJob: Job? = null

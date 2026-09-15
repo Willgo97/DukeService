@@ -66,6 +66,7 @@ import nl.dejongduke.service.ui.screens.StepPlayer
 import nl.dejongduke.service.ui.screens.procedureSteps
 import nl.dejongduke.service.ui.screens.PlateScanScreen
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 
 private fun tabIcon(tab: Tab): ImageVector = when (tab) {
     Tab.Search -> Icons.Filled.Search
@@ -85,13 +86,10 @@ fun AppShell(vm: AppViewModel = viewModel()) {
     val variant by vm.variant.collectAsStateWithLifecycle()
 
     val current = stack.lastOrNull()
-    BackHandler(enabled = current != null) { vm.back() }
-
-    // Coming back after midnight has to move the checklists to the new day.
-    LifecycleResumeEffect(Unit) {
-        vm.refreshDay()
-        onPauseOrDispose { }
-    }
+    // Where each screen's scroll position and typed-in text are kept while it
+    // is off screen.
+    val screens = rememberSaveableStateHolder()
+    BackHandler(enabled = current != null || tab != Tab.Search) { vm.back() }
 
     Scaffold(
         topBar = {
@@ -182,10 +180,15 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                 // how the scanner ended up looking for part numbers in an
                 // empty list.
                 val shown = catalog ?: return@AnimatedContent
-                Column(Modifier.fillMaxSize()) {
-                    when (route) {
-                        null -> RootScreen(vm, shown, activeTab, filter, variant)
-                        else -> DetailScreen(vm, shown, route)
+                // Each screen keeps its own place. Without this, opening a
+                // part and coming back put you at the top of forty thousand
+                // rows again, and every tab started over on every visit.
+                screens.SaveableStateProvider(route?.toString() ?: "tab:${activeTab.name}") {
+                    Column(Modifier.fillMaxSize()) {
+                        when (route) {
+                            null -> RootScreen(vm, shown, activeTab, filter, variant)
+                            else -> DetailScreen(vm, shown, route)
+                        }
                     }
                 }
             }
