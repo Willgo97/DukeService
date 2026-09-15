@@ -643,15 +643,36 @@ def build_cards(maintenance, pictures):
     return out
 
 
+# A cell that is not a part number: a plus sign holding a table together, a
+# column header that ran into the number column, "TBD".
+GLUED = re.compile(r"(Productgroup|Product group).*$", re.I)
+
+
+def part_number(text):
+    """The number as it should be looked up, or "" when the cell is not one."""
+    number = GLUED.sub("", clean(text or "")).strip().upper()
+    if (len(number) < 3 or len(number) > 20 or not any(c.isdigit() for c in number)
+            or "=" in number or "#" in number):
+        return ""
+    return number
+
+
 def build_parts(parts):
     out = []
     for row in parts:
+        # A part without a number is a real line — "not available separately"
+        # — and the balloon on the drawing points at its position. Only the
+        # cell that is not a number at all is emptied.
+        number = part_number(row["part_nr"])
+        description = clean(row["description"] or "")
+        if not number and not (row["pos"] or "").strip() and not description:
+            continue
         product = (row["applies_to"] or [None])[0]
         out.append(dict(m=brand_of(product), u=code_of(product) if product else "",
                         s=row["section"] or "", d=row["drawing"] or "",
-                        p=row["pos"] or "", n=row["part_nr"] or "",
+                        p=row["pos"] or "", n=number,
                         q=row["qty"] or "", v=row["stock"] or "",
-                        t=clean(row["description"] or "")))
+                        t=description))
     return out
 
 

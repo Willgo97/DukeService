@@ -295,4 +295,6 @@ Cause: </string>
     <string name="model_label">Model</string>
     <string name="not_read_yet">not read yet</string>
     <string name="use_this_machine">Use this machine</string>
+    <string name="open_settings">Open settings</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">The camera is switched off for this app. Turn it on in your phone\'s settings, or read a photo you already took.</string>
 </resources>

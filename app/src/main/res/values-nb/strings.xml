@@ -295,4 +295,6 @@
     <string name="model_label">Modell</string>
     <string name="not_read_yet">ikke lest ennå</string>
     <string name="use_this_machine">Bruk denne maskinen</string>
+    <string name="open_settings">Åpne innstillinger</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">Kameraet er slått av for denne appen. Slå det på i telefonens innstillinger, eller les et bilde du allerede har tatt.</string>
 </resources>

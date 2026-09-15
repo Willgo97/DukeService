@@ -128,7 +128,12 @@ class Scanner(private val catalog: Catalog) {
      *   Live camera frames ask for a high bar, a photo the engineer picked on
      *   purpose can be read more generously.
      */
-    fun scan(lines: List<String>, minimum: Int = 0): List<ScanHit> {
+    /**
+     * @param machine the machine the app is pointed at. The same number sits in
+     *   a dozen books; the row worth showing is the one from the machine in
+     *   front of you.
+     */
+    fun scan(lines: List<String>, minimum: Int = 0, machine: String? = null): List<ScanHit> {
         val hits = mutableListOf<ScanHit>()
         val joined = lines.joinToString(" ")
         val upper = joined.uppercase(Locale.ROOT)
@@ -150,7 +155,7 @@ class Scanner(private val catalog: Catalog) {
         for (token in TOKEN.findAll(upper).map { it.value }.distinct()) {
             if (token.length < 5) continue
             val found = partIndex[fold(token)] ?: continue
-            val part = found.first()
+            val part = found.firstOrNull { it.machine == machine } ?: found.first()
             val exact = found.any { it.number.equals(token, ignoreCase = true) }
             hits += ScanHit.PartHit(part, token, if (exact) 100 else 80)
         }
@@ -181,7 +186,11 @@ class Scanner(private val catalog: Catalog) {
                 hits += ScanHit.FaultHit(group, exact, 98)
                 continue
             }
-            val close = texts.firstOrNull {
+            // Matching a phrase letter by letter costs time proportional to
+            // how much text is in the picture. A screen message is short; a
+            // drawing page that happens to be in frame is not, and the camera
+            // hands over the next frame in a few hundred milliseconds.
+            val close = if (flat.length > FUZZY_LIMIT) null else texts.firstOrNull {
                 it.length >= 10 && fuzzyContains(it, flat, budget(it))
             }
             if (close != null) {
@@ -189,7 +198,11 @@ class Scanner(private val catalog: Catalog) {
                 continue
             }
             // A long message may lose a word to a reflection; a short one may
-            // not, because two common words are no evidence at all.
+            // not, because two common words are no evidence at all. With a
+            // page of text in frame this is skipped: every message would find
+            // its words somewhere, and comparing them all costs more time than
+            // there is between two frames.
+            if (seenWords.size > BUSY_FRAME) continue
             val words = faultWordsOf(group)
             if (words.size < 4) continue
             val overlap = words.count { word -> seenWords.any { near(word, it) } }
@@ -299,6 +312,14 @@ class Scanner(private val catalog: Catalog) {
     }
 
     companion object {
+        /**
+         * Guards against a pathological frame, not against a busy one: a whole
+         * page of text is read in about 25 ms, so the limits sit far above
+         * anything a machine's screen can hold.
+         */
+        private const val FUZZY_LIMIT = 4_000
+        private const val BUSY_FRAME = 400
+
         private val TOKEN = Regex("[0-9A-Z][0-9A-Z.\\-]{3,18}")
 
         /**

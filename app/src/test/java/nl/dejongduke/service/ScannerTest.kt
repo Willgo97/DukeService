@@ -236,4 +236,62 @@ class ScannerTest {
         val found = scanner.scan(lines, 60)
         assertTrue("part", found.any { it is ScanHit.PartHit })
     }
+
+    // --- what the camera drags in besides the label ------------------------
+
+    @Test
+    fun aWholePageOfTextDoesNotStallTheScanner() {
+        // A drawing page or a service menu in frame: a lot of text, a lot of
+        // numbers. The reader gets a frame every few hundred milliseconds, so
+        // this may not take longer than that.
+        val page = buildList {
+            repeat(60) { add("4BBK052 Button head screw M4x10 qty 4 drawing 3532 pos $it") }
+            add("Login > Hardware > Calibrations > Water flow meter")
+            add("Boiler temperature 92 °C, pressure 11 bar, 2019.14.0428.001")
+        }
+        scanner.scan(listOf("warm up"), 75)      // building the index is not the scan
+        val started = System.nanoTime()
+        val found = scanner.scan(page, 75)
+        val tookMs = (System.nanoTime() - started) / 1_000_000
+        println("page scan took " + tookMs + " ms, " + found.size + " hits")
+        assertTrue("a page may not take longer than a frame: " + tookMs + " ms", tookMs < 250)
+    }
+
+    @Test
+    fun rubbishInDoesNotCrashOrInvent() {
+        assertEquals(emptyList<ScanHit>(), scanner.scan(emptyList(), 75))
+        assertEquals(emptyList<ScanHit>(), scanner.scan(listOf("", "   ", "@@@ ### %%%"), 75))
+        assertEquals(emptyList<ScanHit>(), scanner.scan(listOf("x".repeat(4000)), 75))
+    }
+
+    @Test
+    fun aServiceMenuScreenIsNotAFault() {
+        // Words from the menu overlap with the messages; the phrase does not.
+        val found = scanner.scan(
+            listOf(
+                "Login", "Hardware", "Brewer", "Grinder", "Mixer", "Water filter",
+                "Boiler temperature", "Counters", "Software information",
+            ),
+            75,
+        )
+        assertEquals(emptyList<ScanHit>(), found.filterIsInstance<ScanHit.FaultHit>())
+    }
+
+    @Test
+    fun thePartOfTheMachineYouArePointedAtComesFirst() {
+        // A number that sits in more than one machine's parts book.
+        val shared = catalog.parts.groupBy { it.number }
+            .entries.first { (number, rows) ->
+                number.isNotEmpty() && rows.map { it.machine }.distinct().size > 1
+            }
+        val machines = shared.value.map { it.machine }.distinct()
+        for (machine in machines.take(3)) {
+            val hit = scanner.scan(listOf(shared.key), 60, machine = machine)
+                .filterIsInstance<ScanHit.PartHit>().firstOrNull()
+            assertEquals("row for " + machine, machine, hit?.part?.machine)
+        }
+        // And without a machine it still finds the part.
+        assertTrue("no machine", scanner.scan(listOf(shared.key), 60)
+            .any { it is ScanHit.PartHit })
+    }
 }

@@ -295,4 +295,6 @@ Cause : </string>
     <string name="model_label">Modèle</string>
     <string name="not_read_yet">pas encore lu</string>
     <string name="use_this_machine">Utiliser cette machine</string>
+    <string name="open_settings">Ouvrir les réglages</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">L’appareil photo est désactivé pour cette application. Activez-le dans les réglages du téléphone, ou lisez une photo déjà prise.</string>
 </resources>

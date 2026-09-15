@@ -294,4 +294,6 @@
     <string name="model_label">Model</string>
     <string name="not_read_yet">nog niet gelezen</string>
     <string name="use_this_machine">Deze machine gebruiken</string>
+    <string name="open_settings">Instellingen openen</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">De camera staat uit voor deze app. Zet hem aan in de instellingen van je telefoon, of lees een foto die je al gemaakt hebt.</string>
 </resources>

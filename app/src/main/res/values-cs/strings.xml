@@ -311,4 +311,6 @@ Příčina: </string>
     <string name="model_label">Model</string>
     <string name="not_read_yet">zatím nenačteno</string>
     <string name="use_this_machine">Použít tento stroj</string>
+    <string name="open_settings">Otevřít nastavení</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">Fotoaparát je pro tuto aplikaci vypnutý. Zapněte jej v nastavení telefonu, nebo načtěte už pořízenou fotku.</string>
 </resources>

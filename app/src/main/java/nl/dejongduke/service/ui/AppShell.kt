@@ -274,7 +274,7 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         Route.Scan -> {
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
-            ScanScreen(loaded, direct, vm::useMachine, vm::open)
+            ScanScreen(loaded, filter, direct, vm::useMachine, vm::open)
         }
 
         Route.Settings -> {

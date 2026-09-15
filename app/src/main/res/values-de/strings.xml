@@ -295,4 +295,6 @@ Ursache: </string>
     <string name="model_label">Modell</string>
     <string name="not_read_yet">noch nicht gelesen</string>
     <string name="use_this_machine">Diese Maschine verwenden</string>
+    <string name="open_settings">Einstellungen öffnen</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">Die Kamera ist für diese App ausgeschaltet. Schalten Sie sie in den Telefoneinstellungen ein oder lesen Sie ein bereits aufgenommenes Foto.</string>
 </resources>

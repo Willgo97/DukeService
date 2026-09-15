@@ -295,4 +295,6 @@ Orsak: </string>
     <string name="model_label">Modell</string>
     <string name="not_read_yet">inte läst ännu</string>
     <string name="use_this_machine">Använd den här maskinen</string>
+    <string name="open_settings">Öppna inställningar</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">Kameran är avstängd för den här appen. Slå på den i telefonens inställningar, eller läs ett foto du redan tagit.</string>
 </resources>

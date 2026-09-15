@@ -295,4 +295,6 @@ Syy: </string>
     <string name="model_label">Malli</string>
     <string name="not_read_yet">ei vielä luettu</string>
     <string name="use_this_machine">Käytä tätä konetta</string>
+    <string name="open_settings">Avaa asetukset</string>
+    <string name="the_camera_was_turned_off_for_this_app_you_c">Kamera on pois käytöstä tässä sovelluksessa. Kytke se päälle puhelimen asetuksista tai lue jo ottamasi kuva.</string>
 </resources>
