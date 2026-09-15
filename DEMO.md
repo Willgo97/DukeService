@@ -6,11 +6,11 @@ gewoon door.
 
 ## 1. Waar het om draait (30 sec)
 
-Open de app. Het startscherm laat zien wat erin zit: **53 storingen, 247
-componenten, 277 servicemenu-onderwerpen, 40.475 onderdeelregels, 100
-onderhoudskaarten, 207 handleidingen.**
+Open de app. Het startscherm laat zien wat erin zit: **48 storingen, 197
+componenten, 226 servicemenu-onderwerpen, 38.427 onderdeelregels, 100
+onderhoudskaarten, 185 handleidingen.**
 
-> "Dit is alles wat in de service­documentatie staat — 207 boeken, 16.912
+> "Dit is alles wat in de service­documentatie staat — 185 boeken, 15.380
 > pagina's — doorzoekbaar op de telefoon, zonder internet."
 
 Alle merken en alle uitvoeringen: Virtu, Zia, Nio, Lua, Avy, Rosa, Lina, Blu en
@@ -75,12 +75,12 @@ verschijnt eronder. Andersom werkt ook.
 
 ## 6. Techniek en servicemenu (45 sec)
 
-**Techniek**: 247 componenten — inlaatventiel, drukregelaar,
+**Techniek**: 197 componenten — inlaatventiel, drukregelaar,
 waterstroommeter, clixon, besturingsprint — elk met de tekeningen uit de
 technische handleiding. Filter op machine en de lijst wordt die van die
 machine.
 
-**Servicemenu**: 277 onderwerpen met het pad erheen (`Login > Hardware >
+**Servicemenu**: 226 onderwerpen met het pad erheen (`Login > Hardware >
 Calibrations > Ingredient Canisters`) en de stappen.
 
 ## 7. Machines (45 sec)
@@ -90,7 +90,7 @@ aanzichten met genummerde verwijzingen, en — wat bij storingzoeken als eerste
 telt — **welk servicemenu erop draait**: oud (ICeQ2), nieuw, of allebei vanaf
 software 6.30/6.40.
 
-**Waar komt dit vandaan** (onderaan Instellingen): welke 207 boeken erachter
+**Waar komt dit vandaan** (onderaan Instellingen): welke 185 boeken erachter
 zitten en hoe ze zijn samengevoegd. De PDF's zelf zitten er niet in — die zijn
 van de fabrikant; bij elke melding, elk component en elke procedure staat wel
 onderaan uit welk boek hij komt.
@@ -109,7 +109,7 @@ Nederlands, andersom.
 ## Vragen die gaan komen
 
 **"Waar komt de data vandaan?"**
-Uit alle 207 service­boeken: technische handleidingen, onderhoudskaarten,
+Uit alle 185 service­boeken: technische handleidingen, onderhoudskaarten,
 gebruikers­handleidingen, snelstartgidsen, onderdelenboeken en brochures. Elke
 melding, elk component en elke procedure noemt onderaan uit welk boek hij komt.
 

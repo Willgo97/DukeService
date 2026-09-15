@@ -43,8 +43,8 @@ import nl.dejongduke.service.ui.theme.ThemeMode
 @Composable
 fun SettingsScreen(
     catalog: Catalog,
-    thema: ThemeMode,
-    onThema: (ThemeMode) -> Unit,
+    theme: ThemeMode,
+    onTheme: (ThemeMode) -> Unit,
     language: String?,
     onLanguage: (String?) -> Unit,
     messageLanguage: String,
@@ -56,10 +56,10 @@ fun SettingsScreen(
     onOpen: (Route) -> Unit,
 ) {
     LazyColumn(Modifier.fillMaxWidth()) {
-        item { SectionHeader(stringResource(R.string.taal)) }
+        item { SectionHeader(stringResource(R.string.language)) }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.taal_van_de_telefoon)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.phone_language)) +
                     Catalog.LANGUAGES.map { it as String? to (Locales.NAMES[it] ?: it) },
                 selected = language,
                 onSelect = onLanguage,
@@ -67,58 +67,58 @@ fun SettingsScreen(
         }
         item {
             Text(
-                stringResource(R.string.de_hele_app_volgt_deze_keuze_teksten_uit_de),
+                stringResource(R.string.the_whole_app_follows_this_choice_text_from),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
             )
         }
 
-        item { SectionHeader(stringResource(R.string.weergave)) }
+        item { SectionHeader(stringResource(R.string.appearance)) }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
                 ThemeMode.entries.forEach { mode ->
                     Choice(
                         title = stringResource(mode.label),
-                        onder = when (mode) {
-                            ThemeMode.System -> stringResource(R.string.volgt_de_stand_van_je_telefoon)
-                            ThemeMode.Light -> stringResource(R.string.altijd_licht)
-                            ThemeMode.Dark -> stringResource(R.string.altijd_donker_prettiger_in_een_donkere_ruimt)
+                        subtitle = when (mode) {
+                            ThemeMode.System -> stringResource(R.string.follows_your_phone)
+                            ThemeMode.Light -> stringResource(R.string.always_light)
+                            ThemeMode.Dark -> stringResource(R.string.always_dark_easier_on_the_eyes_in_a_dim_room)
                         },
-                        selected = mode == thema,
-                    ) { onThema(mode) }
+                        selected = mode == theme,
+                    ) { onTheme(mode) }
                 }
             }
         }
 
-        item { SectionHeader(stringResource(R.string.taal_van_de_meldingen)) }
+        item { SectionHeader(stringResource(R.string.language_of_the_messages)) }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
                 Choice(
-                    stringResource(R.string.nederlands_voorop),
-                    stringResource(R.string.zoals_een_machine_die_op_nederlands_staat_he),
+                    stringResource(R.string.dutch_first),
+                    stringResource(R.string.such_as_a_machine_set_to_dutch_shows_it),
                     messageLanguage == "nl",
                 ) { onMessageLanguage("nl") }
                 Choice(
-                    stringResource(R.string.engels_voorop),
-                    stringResource(R.string.zoals_de_handleiding_en_een_machine_die_op_e),
+                    stringResource(R.string.english_first),
+                    stringResource(R.string.such_as_the_manual_and_a_machine_set_to_engl),
                     messageLanguage == "en",
                 ) { onMessageLanguage("en") }
             }
         }
         item {
             Text(
-                stringResource(R.string.beide_talen_blijven_zichtbaar_dit_bepaalt_al),
+                stringResource(R.string.both_languages_stay_visible_this_only_sets_w),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
             )
         }
 
-        item { SectionHeader(stringResource(R.string.standaardmachine)) }
+        item { SectionHeader(stringResource(R.string.default_machine)) }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     catalog.machinesWithParts
                         .map { it.id as String? to it.name },
                 selected = defaultMachine,
@@ -127,7 +127,7 @@ fun SettingsScreen(
         }
         item {
             Text(
-                stringResource(R.string.waar_de_lijsten_mee_openen_je_kunt_altijd_wi),
+                stringResource(R.string.what_the_lists_open_with_you_can_always_swit),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
@@ -141,9 +141,9 @@ fun SettingsScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.direct_openen), style = MaterialTheme.typography.bodyLarge)
+                    Text(stringResource(R.string.open_straight_away), style = MaterialTheme.typography.bodyLarge)
                     Text(
-                        stringResource(R.string.bij_een_treffer_meteen_de_pagina_openen),
+                        stringResource(R.string.open_the_page_straight_away_on_a_single_hit),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -153,19 +153,19 @@ fun SettingsScreen(
         }
 
         if (BuildConfig.DEBUG) {
-            item { SectionHeader(stringResource(R.string.ontwikkelen)) }
+            item { SectionHeader(stringResource(R.string.development)) }
             item {
                 var status by remember { mutableStateOf("") }
                 val scope = rememberCoroutineScope()
                 val context = LocalContext.current
-                val busy = stringResource(R.string.bezig)
+                val busy = stringResource(R.string.working)
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     TextButton(onClick = {
                         scope.launch {
                             status = busy
                             status = DrawingIndexer.run(context) { status = it }
                         }
-                    }) { Text(stringResource(R.string.tekeningen_indexeren)) }
+                    }) { Text(stringResource(R.string.index_drawings)) }
                     if (status.isNotEmpty()) {
                         Text(
                             status,
@@ -178,24 +178,24 @@ fun SettingsScreen(
             }
         }
 
-        item { SectionHeader(stringResource(R.string.over)) }
+        item { SectionHeader(stringResource(R.string.about)) }
         item {
             Column(Modifier.padding(horizontal = 20.dp)) {
-                InfoRow(stringResource(R.string.versie), BuildConfig.VERSION_NAME)
-                InfoRow(stringResource(R.string.inhoud), count(R.plurals.n_faults, catalog.faultGroups.size) + " · " +
+                InfoRow(stringResource(R.string.version), BuildConfig.VERSION_NAME)
+                InfoRow(stringResource(R.string.contents), count(R.plurals.n_faults, catalog.faultGroups.size) + " · " +
                     count(R.plurals.n_parts, catalog.parts.size))
-                InfoRow(stringResource(R.string.werkt_offline), stringResource(R.string.ook_de_tekstherkenning_van_de_scanner))
+                InfoRow(stringResource(R.string.works_offline), stringResource(R.string.including_the_scanner_s_text_recognition))
                 Spacer(Modifier.height(10.dp))
             }
         }
         item {
             Column(Modifier.padding(horizontal = 12.dp)) {
-                TextButton(onClick = { onOpen(Route.Sources) }) { Text(stringResource(R.string.waar_komt_dit_vandaan)) }
+                TextButton(onClick = { onOpen(Route.Sources) }) { Text(stringResource(R.string.where_does_this_come_from)) }
             }
         }
         item {
             Text(
-                stringResource(R.string.privewerk_geen_officiele_uitgave_van_de_jong),
+                stringResource(R.string.private_work_not_an_official_de_jong_duke_re),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -206,7 +206,7 @@ fun SettingsScreen(
 }
 
 @Composable
-private fun Choice(title: String, onder: String, selected: Boolean, onClick: () -> Unit) {
+private fun Choice(title: String, subtitle: String, selected: Boolean, onClick: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -224,7 +224,7 @@ private fun Choice(title: String, onder: String, selected: Boolean, onClick: () 
         Column(Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
             Text(
-                onder,
+                subtitle,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

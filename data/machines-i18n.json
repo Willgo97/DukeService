@@ -315,6 +315,16 @@
    "da": "Ikke registreret. Se i maskinen, hvilken styring den har.",
    "fi": "Ei kirjattu. Katso koneen sisältä, mikä ohjaus siinä on.",
    "cs": "Nezaznamenáno. Podívejte se do stroje, jaké má řízení."
+  },
+  "De technische handleiding van de Blu beschrijft het oude servicemenu; de besturingsprint is een ICEQ2 (9EPRxxx).": {
+   "en": "The Blu technical manual describes the old service menu; the control board is an ICEQ2 (9EPRxxx).",
+   "de": "Das technische Handbuch der Blu beschreibt das alte Servicemenü; die Steuerplatine ist eine ICEQ2 (9EPRxxx).",
+   "fr": "Le manuel technique de la Blu décrit l’ancien menu de service ; la carte de commande est une ICEQ2 (9EPRxxx).",
+   "sv": "Blu:s tekniska handbok beskriver den gamla servicemenyn; styrkortet är ett ICEQ2 (9EPRxxx).",
+   "no": "Den tekniske håndboken for Blu beskriver den gamle servicemenyen; styrekortet er et ICEQ2 (9EPRxxx).",
+   "da": "Blu’ens tekniske manual beskriver den gamle servicemenu; styrekortet er et ICEQ2 (9EPRxxx).",
+   "fi": "Blun tekninen käsikirja kuvaa vanhan huoltovalikon; ohjauskortti on ICEQ2 (9EPRxxx).",
+   "cs": "Technická příručka Blu popisuje staré servisní menu; řídicí deska je ICEQ2 (9EPRxxx)."
   }
  },
  "specLabel": {
@@ -377,6 +387,61 @@
    "da": "Energimærke",
    "fi": "Energiamerkintä",
    "cs": "Energetický štítek"
+  },
+  "Height": {
+   "nl": "Hoogte",
+   "en": "Height",
+   "de": "Höhe",
+   "fr": "Hauteur",
+   "sv": "Höjd",
+   "no": "Høyde",
+   "da": "Højde",
+   "fi": "Korkeus",
+   "cs": "Výška"
+  },
+  "Height with bean canister": {
+   "nl": "Hoogte met bonencontainer",
+   "en": "Height with bean canister",
+   "de": "Höhe mit Bohnenbehälter",
+   "fr": "Hauteur avec trémie à grains",
+   "sv": "Höjd med bönbehållare",
+   "no": "Høyde med bønnebeholder",
+   "da": "Højde med bønnebeholder",
+   "fi": "Korkeus papusäiliön kanssa",
+   "cs": "Výška se zásobníkem na zrna"
+  },
+  "Width": {
+   "nl": "Breedte",
+   "en": "Width",
+   "de": "Breite",
+   "fr": "Largeur",
+   "sv": "Bredd",
+   "no": "Bredde",
+   "da": "Bredde",
+   "fi": "Leveys",
+   "cs": "Šířka"
+  },
+  "Depth": {
+   "nl": "Diepte",
+   "en": "Depth",
+   "de": "Tiefe",
+   "fr": "Profondeur",
+   "sv": "Djup",
+   "no": "Dybde",
+   "da": "Dybde",
+   "fi": "Syvyys",
+   "cs": "Hloubka"
+  },
+  "Weight": {
+   "nl": "Gewicht",
+   "en": "Weight",
+   "de": "Gewicht",
+   "fr": "Poids",
+   "sv": "Vikt",
+   "no": "Vekt",
+   "da": "Vægt",
+   "fi": "Paino",
+   "cs": "Hmotnost"
   }
  }
 }

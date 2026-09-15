@@ -98,11 +98,11 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                         )
                         Spacer(Modifier.width(14.dp))
                     }
-                    if (done.contains(index)) Pill(stringResource(R.string.afgevinkt))
+                    if (done.contains(index)) Pill(stringResource(R.string.done_2))
                 }
                 Spacer(Modifier.height(10.dp))
                 step.points.forEach { point ->
-                    Text(stringResource(R.string.x_6, point), style = MaterialTheme.typography.headlineSmall)
+                    Text(stringResource(R.string.text_6, point), style = MaterialTheme.typography.headlineSmall)
                     Spacer(Modifier.height(10.dp))
                 }
                 step.notes.forEach { note ->
@@ -141,7 +141,7 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                 ) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, null, Modifier.height(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text(stringResource(R.string.terug))
+                    Text(stringResource(R.string.back))
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -165,7 +165,7 @@ fun StepPlayer(title: String, subtitle: String, steps: List<StepPage>) {
                         null, Modifier.height(18.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text(if (pager.currentPage == steps.size - 1) stringResource(R.string.klaar) else stringResource(R.string.volgende))
+                    Text(if (pager.currentPage == steps.size - 1) stringResource(R.string.done) else stringResource(R.string.next))
                 }
             }
         }
@@ -179,7 +179,7 @@ private fun EmptyStepState() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(stringResource(R.string.geen_stappen), style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.no_steps), style = MaterialTheme.typography.titleMedium)
     }
 }
 

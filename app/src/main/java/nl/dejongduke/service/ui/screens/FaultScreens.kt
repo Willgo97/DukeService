@@ -71,7 +71,7 @@ fun FaultsScreen(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -80,21 +80,21 @@ fun FaultsScreen(
         item { Spacer(Modifier.height(8.dp)) }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alles)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.everything)) +
                     categories.map { it as String? to categoryLabel(it) },
                 selected = category,
                 onSelect = { category = it },
             )
         }
-        item { SectionHeader(stringResource(R.string.schermmeldingen), "${shown.size}") }
+        item { SectionHeader(stringResource(R.string.screen_messages), "${shown.size}") }
 
         if (shown.isEmpty()) {
             val name = filter?.let { catalog.machine(it)?.name }
             item {
                 EmptyState(
-                    stringResource(R.string.geen_meldingen),
-                    if (name != null) stringResource(R.string.voor_de_x_staat_nog_geen_storingslijst_in_de, name)
-                    else stringResource(R.string.er_staat_nog_geen_storingslijst_in_de_app),
+                    stringResource(R.string.no_messages),
+                    if (name != null) stringResource(R.string.there_is_no_fault_list_for_the_in_the_app_ye, name)
+                    else stringResource(R.string.there_is_no_fault_list_in_the_app_yet),
                 )
             }
         }
@@ -118,7 +118,7 @@ fun FaultCard(
 ) {
     // Which line leads depends on what the machine in front of you displays.
     val key = if (language == "en") group.message else group.first.dutch
-    val onder = if (language == "en") group.first.dutch else group.message
+    val subtitle = if (language == "en") group.first.dutch else group.message
     Card(onClick = onClick) {
         Column {
             Row {
@@ -135,10 +135,10 @@ fun FaultCard(
             // The machine shows the message in one language and the manual
             // prints it in another; where the manufacturer never translated it
             // the two are the same sentence, and once is enough.
-            if (!onder.equals(key, ignoreCase = true)) {
+            if (!subtitle.equals(key, ignoreCase = true)) {
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    onder,
+                    subtitle,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 18.dp),
@@ -151,7 +151,7 @@ fun FaultCard(
             ) {
                 Pill(categoryLabel(group.first.category))
                 if (showMachines) Pill(catalog.machineNames(group.machines))
-                if (!group.selfService) Pill(stringResource(R.string.monteur), tone = MaterialTheme.colorScheme.error)
+                if (!group.selfService) Pill(stringResource(R.string.engineer), tone = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -168,21 +168,21 @@ fun FaultDetail(
     onOpen: (Route) -> Unit,
 ) {
     val key = if (language == "en") group.message else group.first.dutch
-    val onder = if (language == "en") group.first.dutch else group.message
+    val subtitle = if (language == "en") group.first.dutch else group.message
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    stringResource(R.string.op_het_scherm),
+                    stringResource(R.string.on_the_screen),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(key, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
-                if (!onder.equals(key, ignoreCase = true)) {
+                if (!subtitle.equals(key, ignoreCase = true)) {
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        onder,
+                        subtitle,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -207,9 +207,9 @@ fun FaultDetail(
                 shareText = buildString {
                     appendLine(group.message)
                     appendLine(group.first.dutch)
-                    if (group.first.cause.isNotEmpty()) appendLine(stringResource(R.string.noorzaak) + group.first.cause)
+                    if (group.first.cause.isNotEmpty()) appendLine(stringResource(R.string.cause) + group.first.cause)
                     group.first.solution.forEachIndexed { i, step -> appendLine("${i + 1}. $step") }
-                    append(stringResource(R.string.n_duke_service))
+                    append(stringResource(R.string.duke_service_2))
                 },
             )
         }
@@ -223,7 +223,7 @@ fun FaultDetail(
                             color = MaterialTheme.colorScheme.outlineVariant,
                         )
                     }
-                    SectionHeader(stringResource(R.string.voor_x, catalog.machineNames(variant.machines)))
+                    SectionHeader(stringResource(R.string.for_label, catalog.machineNames(variant.machines)))
                 }
             }
             faultBody(variant, catalog, onOpen)
@@ -232,7 +232,7 @@ fun FaultDetail(
             val source = group.variants.mapNotNull { it.source.ifEmpty { null } }.distinct()
             if (source.isNotEmpty()) {
                 Text(
-                    stringResource(R.string.bron) + source.joinToString(" · "),
+                    stringResource(R.string.source) + source.joinToString(" · "),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -250,7 +250,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
     onOpen: (Route) -> Unit,
 ) {
     if (fault.cause.isNotEmpty()) {
-        item { SectionHeader(stringResource(R.string.oorzaak)) }
+        item { SectionHeader(stringResource(R.string.cause_2)) }
         item {
             Text(
                 fault.cause,
@@ -261,7 +261,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
     }
 
     if (fault.solution.isNotEmpty()) {
-        item { SectionHeader(if (fault.selfService) stringResource(R.string.wat_je_doet) else stringResource(R.string.wat_er_moet_gebeuren)) }
+        item { SectionHeader(if (fault.selfService) stringResource(R.string.what_you_do) else stringResource(R.string.what_needs_to_happen)) }
         items(fault.solution.size) { index ->
             Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp)) {
                 Box(
@@ -286,7 +286,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
             Card {
                 Column {
                     Text(
-                        if (fault.selfService) stringResource(R.string.als_het_blijft) else stringResource(R.string.servicemelding),
+                        if (fault.selfService) stringResource(R.string.if_it_stays) else stringResource(R.string.service_message),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.error,
                     )
@@ -308,7 +308,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
 
     val linked = fault.procedures.mapNotNull { catalog.procedure(it) }
     if (linked.isNotEmpty()) {
-        item { SectionHeader(stringResource(R.string.bijbehorende_procedures)) }
+        item { SectionHeader(stringResource(R.string.related_procedures)) }
         items(linked, key = { fault.message + it.id }) { procedures ->
             Card(onClick = { onOpen(Route.Procedure(procedures.id)) }) {
                 Column {
@@ -316,7 +316,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.faultBody(
                     Spacer(Modifier.height(2.dp))
                     Text(
                         count(R.plurals.n_steps, procedures.steps.size) +
-                            if (procedures.brewer.isNotEmpty()) stringResource(R.string.x_2, procedures.brewer) else "",
+                            if (procedures.brewer.isNotEmpty()) stringResource(R.string.text_2, procedures.brewer) else "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

@@ -56,12 +56,12 @@ fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
     val older = catalog.machines.filterNot { it.active }
 
     LazyColumn(Modifier.fillMaxWidth()) {
-        item { SectionHeader(stringResource(R.string.techniek)) }
+        item { SectionHeader(stringResource(R.string.technical)) }
         item {
             Card(onClick = { onOpen(Route.Components) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.hoe_de_machine_werkt), style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(R.string.how_the_machine_works), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
                             count(R.plurals.n_components_with_diagrams, catalog.components.size),
@@ -73,9 +73,9 @@ fun MachinesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
                 }
             }
         }
-        item { SectionHeader(stringResource(R.string.huidig_assortiment), "${current.size}") }
+        item { SectionHeader(stringResource(R.string.current_range), "${current.size}") }
         items(current, key = { it.id }) { machine -> MachineCard(catalog, machine, onOpen) }
-        item { SectionHeader(stringResource(R.string.ouder_uitlopend), "${older.size}") }
+        item { SectionHeader(stringResource(R.string.older_phasing_out), "${older.size}") }
         items(older, key = { it.id }) { machine -> MachineCard(catalog, machine, onOpen) }
         item { Spacer(Modifier.height(24.dp)) }
     }
@@ -118,7 +118,7 @@ private fun MachineCard(catalog: Catalog, machine: Machine, onOpen: (Route) -> U
                     if (machine.serviceMenu.isNotEmpty()) {
                         Pill(
                             serviceMenuLabel(machine.serviceMenu),
-                            tone = if (machine.serviceMenu == "nieuw") MaterialTheme.colorScheme.primary else null,
+                            tone = if (machine.serviceMenu == "new") MaterialTheme.colorScheme.primary else null,
                         )
                     }
                     if (faults > 0) Pill(count(R.plurals.n_faults, faults))
@@ -191,7 +191,7 @@ fun MachineDetail(
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (machine.typeCode.isNotEmpty()) Pill(machine.typeCode)
-                    if (machine.brewer.isNotEmpty()) Pill(stringResource(R.string.x_brewer, machine.brewer))
+                    if (machine.brewer.isNotEmpty()) Pill(stringResource(R.string.brewer_2, machine.brewer))
                 }
             }
         }
@@ -207,14 +207,14 @@ fun MachineDetail(
         }
 
         if (machine.serviceMenu.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.servicemenu)) }
+            item { SectionHeader(stringResource(R.string.service_menu)) }
             item {
                 Card {
                     Column {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Pill(
                                 serviceMenuLabel(machine.serviceMenu),
-                                tone = if (machine.serviceMenu == "nieuw") MaterialTheme.colorScheme.primary else null,
+                                tone = if (machine.serviceMenu == "new") MaterialTheme.colorScheme.primary else null,
                             )
                         }
                         if (machine.serviceMenuNote.isNotEmpty()) {
@@ -231,20 +231,20 @@ fun MachineDetail(
         }
 
 
-        item { SectionHeader(stringResource(R.string.in_de_app)) }
+        item { SectionHeader(stringResource(R.string.in_the_app)) }
         item {
             Column {
-                JumpRow(stringResource(R.string.storingen), if (faults > 0) count(R.plurals.n_messages, faults) else stringResource(R.string.nog_niets_vastgelegd), faults > 0) {
+                JumpRow(stringResource(R.string.faults), if (faults > 0) count(R.plurals.n_messages, faults) else stringResource(R.string.nothing_recorded_yet), faults > 0) {
                     onJump(Tab.Faults, machine.id)
                 }
                 val cards = catalog.cardsFor(machine.id).size
-                JumpRow(stringResource(R.string.onderhoudskaart), if (cards > 0) count(R.plurals.n_cards_from_manufacturer, cards) else stringResource(R.string.geen_kaart_2), cards > 0) {
+                JumpRow(stringResource(R.string.maintenance_card), if (cards > 0) count(R.plurals.n_cards_from_manufacturer, cards) else stringResource(R.string.no_card_2), cards > 0) {
                     onOpen(Route.Cards)
                 }
-                JumpRow(stringResource(R.string.onderhoud_en_procedures), if (procs > 0) count(R.plurals.n_procedures, procs) else stringResource(R.string.nog_niets_vastgelegd), procs > 0) {
+                JumpRow(stringResource(R.string.maintenance_and_procedures), if (procs > 0) count(R.plurals.n_procedures, procs) else stringResource(R.string.nothing_recorded_yet), procs > 0) {
                     onJump(Tab.Maintenance, machine.id)
                 }
-                JumpRow(stringResource(R.string.onderdelen), if (parts > 0) count(R.plurals.n_rows_from_parts_book, parts) else stringResource(R.string.geen_onderdelenboek), parts > 0) {
+                JumpRow(stringResource(R.string.parts), if (parts > 0) count(R.plurals.n_rows_from_parts_book, parts) else stringResource(R.string.no_spare_parts_book), parts > 0) {
                     onJump(Tab.Parts, machine.id)
                 }
             }
@@ -254,7 +254,7 @@ fun MachineDetail(
         // so an aanzicht opens when it is asked for.
         val views = catalog.viewsFor(machine.id)
         if (views.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.aanzichten), "${views.size}") }
+            item { SectionHeader(stringResource(R.string.views), "${views.size}") }
             items(views, key = { it.id }) { view ->
                 var open by rememberSaveable(view.id) { mutableStateOf(false) }
                 Card(onClick = { open = !open }) {
@@ -297,7 +297,17 @@ fun MachineDetail(
         item { Spacer(Modifier.height(24.dp)) }
 
         if (machine.specs.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.afmetingen_en_aansluiting)) }
+            item { SectionHeader(stringResource(R.string.dimensions_and_connections)) }
+            if (machine.specsSource.isNotEmpty()) {
+                item {
+                    Text(
+                        stringResource(R.string.source_2, machine.specsSource),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.outline,
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 2.dp),
+                    )
+                }
+            }
             item {
                 Column(Modifier.padding(horizontal = 12.dp)) {
                     Row(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp)) {
@@ -352,11 +362,11 @@ fun MachineDetail(
 
         if (machine.variants.isNotEmpty()) {
             item {
-                SectionHeader(stringResource(R.string.uitvoeringen), "${machine.variants.size}")
+                SectionHeader(stringResource(R.string.builds), "${machine.variants.size}")
             }
             item {
                 Text(
-                    stringResource(R.string.tik_de_uitvoering_aan_die_voor_je_staat_de_t),
+                    stringResource(R.string.tap_the_build_in_front_of_you_the_type_code),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
@@ -416,13 +426,13 @@ fun MachineDetail(
         val hasProperties = listOf(machine.cabinet, machine.screen, machine.brewer,
                                    machine.typeCode).any { it.isNotEmpty() }
         if (hasProperties) {
-            item { SectionHeader(stringResource(R.string.kenmerken)) }
+            item { SectionHeader(stringResource(R.string.details)) }
             item {
                 val properties = buildList {
-                    if (machine.cabinet.isNotEmpty()) add(R.string.kast to machine.cabinet)
-                    if (machine.screen.isNotEmpty()) add(R.string.scherm to machine.screen)
+                    if (machine.cabinet.isNotEmpty()) add(R.string.cabinet to machine.cabinet)
+                    if (machine.screen.isNotEmpty()) add(R.string.screen to machine.screen)
                     if (machine.brewer.isNotEmpty()) add(R.string.brewer to machine.brewer)
-                    if (machine.typeCode.isNotEmpty()) add(R.string.typecode to machine.typeCode)
+                    if (machine.typeCode.isNotEmpty()) add(R.string.type_code to machine.typeCode)
                 }
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     properties.forEach { (label, value) ->
@@ -442,18 +452,18 @@ fun MachineDetail(
         }
 
         if (machine.docs.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.bron_van_deze_gegevens)) }
+            item { SectionHeader(stringResource(R.string.where_this_comes_from)) }
             item {
                 Column(Modifier.padding(horizontal = 20.dp, vertical = 2.dp)) {
                     machine.docs.forEach { doc ->
-                        Text(stringResource(R.string.x_3, doc), style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(R.string.text_3, doc), style = MaterialTheme.typography.bodyMedium)
                         Spacer(Modifier.height(4.dp))
                     }
                 }
             }
         }
 
-        item { SectionHeader(stringResource(R.string.mijn_notitie)) }
+        item { SectionHeader(stringResource(R.string.my_note)) }
         item {
             var text by remember(machine.id) { mutableStateOf(note) }
             Column(Modifier.padding(horizontal = 12.dp)) {
@@ -464,24 +474,24 @@ fun MachineDetail(
                         onNote(machine.id, it)
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text(stringResource(R.string.serienummer_locatie_wat_je_hebt_vervangen)) },
+                    placeholder = { Text(stringResource(R.string.serial_number_location_what_you_replaced)) },
                     minLines = 3,
                     textStyle = MaterialTheme.typography.bodyLarge,
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    stringResource(R.string.blijft_op_deze_telefoon_staan),
+                    stringResource(R.string.stays_on_this_phone),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                 )
             }
         }
 
-        item { SectionHeader(stringResource(R.string.algemeen)) }
+        item { SectionHeader(stringResource(R.string.general)) }
         item {
             Card(onClick = { onOpen(Route.Specs) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(R.string.technische_gegevens), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.technical_data), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
                     Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
@@ -540,10 +550,10 @@ fun SpecsScreen(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(stringResource(R.string.technische_gegevens), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.technical_data), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    stringResource(R.string.waarden_uit_de_gebruikershandleidingen_van_v),
+                    stringResource(R.string.values_from_the_virtu_and_lua_user_manuals_c),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -551,7 +561,7 @@ fun SpecsScreen(
         }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -562,8 +572,8 @@ fun SpecsScreen(
         if (shown.isEmpty()) {
             item {
                 EmptyState(
-                    stringResource(R.string.geen_techniek),
-                    stringResource(R.string.voor_deze_machine_staat_de_technische_handle),
+                    stringResource(R.string.no_technical_section),
+                    stringResource(R.string.the_technical_manual_for_this_machine_is_not),
                 )
             }
         }
@@ -631,36 +641,36 @@ fun SourcesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
-                Text(stringResource(R.string.waar_komt_dit_vandaan), style = MaterialTheme.typography.headlineSmall,
+                Text(stringResource(R.string.where_does_this_come_from), style = MaterialTheme.typography.headlineSmall,
                      fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    stringResource(R.string.alles_in_deze_app_is_overgenomen_uit_de_serv),
+                    stringResource(R.string.everything_in_this_app_is_taken_from_de_jong),
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
-        item { SectionHeader(stringResource(R.string.hoe_het_is_samengevoegd)) }
+        item { SectionHeader(stringResource(R.string.how_it_was_put_together)) }
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 4.dp)) {
                 Text(
-                    stringResource(R.string.de_techniek_achter_de_deur_hangt_aan_de_mode),
+                    stringResource(R.string.the_machine_behind_the_door_follows_the_mode),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    stringResource(R.string.nederlandse_schermmeldingen_komen_uit_de_ned),
+                    stringResource(R.string.dutch_messages_come_from_the_dutch_manual_th),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    stringResource(R.string.onafhankelijk_hulpmiddel_prive_gemaakt_geen_),
+                    stringResource(R.string.independent_tool_made_privately_not_publishe),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    stringResource(R.string.werken_aan_deze_machines_is_werken_met_heet_),
+                    stringResource(R.string.working_on_these_machines_means_hot_water_st),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -672,8 +682,8 @@ fun SourcesScreen(catalog: Catalog, onOpen: (Route) -> Unit) {
 
 @Composable
 fun serviceMenuLabel(kind: String) = when (kind) {
-    "oud" -> stringResource(R.string.oud_servicemenu)
-    "nieuw" -> stringResource(R.string.nieuw_servicemenu)
-    "beide" -> stringResource(R.string.oud_of_nieuw_servicemenu)
-    else -> stringResource(R.string.servicemenu_onbekend)
+    "old" -> stringResource(R.string.old_service_menu)
+    "new" -> stringResource(R.string.new_service_menu)
+    "both" -> stringResource(R.string.old_or_new_service_menu)
+    else -> stringResource(R.string.service_menu_unknown)
 }

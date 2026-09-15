@@ -6,7 +6,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [],
@@ -50,12 +50,12 @@
  {
   "id": "uitschakelen",
   "title": "Machine uitschakelen / buiten gebruik stellen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [],
@@ -81,12 +81,12 @@
  {
   "id": "deur-openen",
   "title": "Deur openen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [],
@@ -119,7 +119,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [],
@@ -158,12 +158,12 @@
  {
   "id": "bovenklep",
   "title": "Bovenklep openen of sluiten",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "Om canisters te vullen of te reinigen moeten ze uit de machine. Via de bovenklep kom je er makkelijk bij.",
   "needed": [],
@@ -186,12 +186,12 @@
  {
   "id": "servicesleutel",
   "title": "De servicesleutel",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "Uit veiligheid schakelt de machine alle afgiftefuncties uit als de deur opengaat. Met de groene servicesleutel omzeil je die beveiliging voor onderhoud waarbij de machine moet blijven werken.",
   "needed": [],
@@ -202,12 +202,12 @@
  {
   "id": "servicesleutel-plaatsen",
   "title": "Servicesleutel plaatsen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [
@@ -240,12 +240,12 @@
  {
   "id": "servicesleutel-verwijderen",
   "title": "Servicesleutel verwijderen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [
@@ -265,12 +265,12 @@
  {
   "id": "geplande-spoeling",
   "title": "Geplande spoeling",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks, wordt op het scherm aangekondigd",
   "purpose": "Reinigen wordt weleens overgeslagen of vergeten. De geplande spoeling wordt daarom elke dag door de scheduler afgedwongen. In plaats hiervan kun je ook het dagelijks of wekelijks onderhoud draaien.",
   "needed": [
@@ -310,7 +310,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
   "purpose": "De spoeling jaagt heet water door de mixers en de brewer om restanten weg te spoelen.",
   "needed": [
@@ -346,7 +346,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "Na elke afgifte gaat het koffiedik (de koffiekoek) in de afvalemmer. Overtollig water uit de brewer wordt opgevangen in een drupbak die in de afvalemmer staat, net onder de brewer. Bij een externe afvalbak is de afvalemmer vervangen door een afvalgeleider.",
   "needed": [],
@@ -385,7 +385,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "Voor het reinigen moeten de bekerstandaards uit de machine.",
   "needed": [],
@@ -427,7 +427,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Wekelijks, vaker als het nodig is",
   "purpose": "Staat de machine op een onderkast, dan gaat overtollig water uit de brewer en afvalwater uit de lekbak naar de linker afvalbak en het koffiedik naar de rechter. Allebei moeten ze regelmatig schoon.",
   "needed": [],
@@ -461,7 +461,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "De lekbak vangt afvalwater van de machine en van de afgifte op en moet regelmatig schoon. De lekbak zit onder de kannenplateau. Afhankelijk van het model zit er een metalen rooster in.",
   "needed": [],
@@ -509,12 +509,12 @@
  {
   "id": "mixsysteem-reinigen",
   "title": "Mixsysteem reinigen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Wekelijks, vaker als het nodig is",
   "purpose": "Om verstopping door ingrediënten te voorkomen moeten de mixers uit de machine en schoongemaakt worden.",
   "needed": [],
@@ -603,7 +603,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Minimaal wekelijks, vaker als het nodig is",
   "purpose": "Voor een volledige reiniging met water moet de brewer uit de machine. Ook de brewerhouder moet gecontroleerd en schoongemaakt worden, anders gaat de brewer storen.",
   "needed": [
@@ -664,7 +664,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
   "purpose": "Reinigen met een tablet haalt alle koffieresten uit de brewer.",
   "needed": [
@@ -729,7 +729,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Bij de melding 'Grinder blocked'",
   "purpose": "Soms zit er een takje of steentje tussen de verse bonen. De molen stopt als zo'n vreemd voorwerp hem blokkeert; in het meldingsgebied verschijnt 'Grinder blocked'.",
   "needed": [],
@@ -813,7 +813,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Wanneer nodig",
   "purpose": "Alleen bij machines met bekerdispenser. Vul op tijd bij, anders kan de machine geen dranken meer afgeven. Een beker met de hand plaatsen kan altijd.",
   "needed": [
@@ -853,12 +853,12 @@
  {
   "id": "theebrewer-reinigen",
   "title": "Theebrewer reinigen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Wekelijks",
   "purpose": "Reinigen haalt alle resten uit de theebrewer. Daarvoor moet hij uit de machine.",
   "needed": [],
@@ -903,12 +903,12 @@
  {
   "id": "canisters-reinigen",
   "title": "Canisters reinigen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "maand",
+  "interval": "monthly",
   "intervalText": "Maandelijks, vaker als het nodig is",
   "purpose": "Alle ingrediënten laten resten achter in de canister. Voor het reinigen moeten de canisters uit de machine.",
   "needed": [],
@@ -954,12 +954,12 @@
  {
   "id": "canisters-vullen",
   "title": "Ingrediëntcanisters vullen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks of wanneer nodig",
   "purpose": "Vul op tijd bij, anders kan de machine geen dranken meer afgeven.",
   "needed": [
@@ -1024,12 +1024,12 @@
  {
   "id": "bonencanister-vullen",
   "title": "Bonencanister vullen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks of wanneer nodig",
   "purpose": "Vul op tijd bij, anders kan de machine geen dranken meer afgeven.",
   "needed": [
@@ -1092,12 +1092,12 @@
  {
   "id": "koudwater-uitloop",
   "title": "Koudwateruitloop reinigen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Wekelijks, vaker afhankelijk van gebruik en omgeving",
   "purpose": "De koudwateruitloop moet regelmatig schoon om bacteriegroei te voorkomen.",
   "needed": [
@@ -1148,12 +1148,12 @@
  {
   "id": "koudwater-diepreiniging",
   "title": "Koudwateruitloop diepreinigen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "maand",
+  "interval": "monthly",
   "intervalText": "Maandelijks, vaker afhankelijk van gebruik en omgeving",
   "purpose": "De koudwateruitloop moet regelmatig gereinigd én gedesinfecteerd worden om bacteriegroei te voorkomen.",
   "needed": [
@@ -1225,7 +1225,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Verschijnt bij het verlaten van het servicemenu, als deze optie aanstaat",
   "purpose": "Staat deze optie aan, dan meldt de machine wanneer de canisters bijna leeg zijn. Op basis van het aantal getapte dranken rekent de machine uit hoeveel er nog in zit. Na het bijvullen moeten de tellers gereset worden.",
   "needed": [],
@@ -1260,12 +1260,12 @@
  {
   "id": "buitenkant-reinigen",
   "title": "Buitenkant van de machine reinigen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "lua"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "Alle buitenvlakken schoonmaken die in geen andere procedure aan bod komen.",
   "needed": [
@@ -1291,7 +1291,7 @@
   "machines": [
    "virtu"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
   "purpose": "Het touchscreen is de belangrijkste schakel tussen gebruiker en machine. Voor hygiënisch en foutloos gebruik moet het regelmatig schoon.",
   "needed": [
@@ -1329,7 +1329,7 @@
    "lua",
    "avy"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [],
@@ -1378,7 +1378,7 @@
    "lua",
    "avy"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "",
   "purpose": "",
   "needed": [],
@@ -1422,7 +1422,7 @@
    "lua",
    "avy"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Minimaal dagelijks, vaker als het nodig is. Duurt 1 tot 2 minuten",
   "purpose": "De spoeling jaagt heet water door de mixers en de brewer om restanten weg te spoelen.",
   "needed": [
@@ -1462,7 +1462,7 @@
    "lua",
    "avy"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "Na elke afgifte gaat de koffiekoek in de afvalemmer. Overtollig water uit de brewer wordt opgevangen in een drupbak die daarin staat.",
   "needed": [],
@@ -1510,7 +1510,7 @@
    "lua",
    "avy"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "De bekerstandaard moet regelmatig uit de machine en schoongemaakt worden.",
   "needed": [],
@@ -1536,7 +1536,7 @@
    "lua",
    "avy"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Wekelijks, vaker als het nodig is",
   "purpose": "Staat de machine op een onderkast, dan kunnen de emmers binnenin vervangen zijn door een afvalgeleider en een vaste afvalwateraansluiting.",
   "needed": [],
@@ -1580,7 +1580,7 @@
    "lua",
    "avy"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Dagelijks",
   "purpose": "De lekbak vangt afvalwater van de machine en van de afgifte op en moet regelmatig schoon.",
   "needed": [],
@@ -1624,7 +1624,7 @@
    "lua",
    "avy"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Minimaal één keer per week, vaker als het nodig is",
   "purpose": "Voor reiniging met water moet de brewer uit de machine. Ook het montageframe moet gecontroleerd en schoongemaakt worden.",
   "needed": [
@@ -1707,7 +1707,7 @@
    "lua",
    "avy"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Minimaal één keer per week, vaker als het nodig is. De cyclus duurt 8 minuten",
   "purpose": "Reinigen met een tablet haalt alle koffieresten uit de brewer. De brewer blijft in de machine zitten.",
   "needed": [
@@ -1791,7 +1791,7 @@
    "lua",
    "avy"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Bij de melding 'Grinder blocked'",
   "purpose": "Soms zit er een takje of steentje tussen de verse bonen. De molen stopt als zo'n vreemd voorwerp hem blokkeert.",
   "needed": [],
@@ -1855,7 +1855,7 @@
    "lua",
    "avy"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Verschijnt bij het openen van de deur, als deze optie aanstaat",
   "purpose": "Staat deze optie aan, dan meldt de machine 'Canister % almost empty' zodra een canister bijna leeg is. Na het bijvullen moeten de niveaus opnieuw ingevoerd worden.",
   "needed": [],
@@ -1901,7 +1901,7 @@
    "lua",
    "avy"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Minimaal dagelijks, en wanneer het scherm erom vraagt",
   "purpose": "Het touchscreen is de belangrijkste schakel tussen gebruiker en machine. Voor hygiënisch en foutloos gebruik moet het regelmatig schoon.",
   "needed": [
@@ -2141,7 +2141,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Daily, announced on screen",
   "purpose": "Cleaning the coffee machine can be skipped or forgotten. The scheduled rinse is forced every day using a scheduler. When activated follow the procedure below to perform the rinse. Instead you can also run the daily maintenance or weekly maintenance.",
   "needed": [
@@ -2185,7 +2185,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "At least daily, increase the frequency if needed Total time • Total time needed to rinse is 1 to 2 minutes.",
   "purpose": "The Rinse process flushes hot water through the mixers and the brewer to remove any residue.",
   "needed": [
@@ -2230,7 +2230,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Daily.",
   "purpose": "Used coffee filter paper and coffee residue is transported into the waste bucket. A metal waste disposer inside the waste bucket ensures a better distribution of the waste. Regular cleaning is needed. If an external waste bin is used, the waste bucket and disposer (B) are replaced by a waste guide (G). Perform the following steps:",
   "needed": [],
@@ -2269,7 +2269,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Daily",
   "purpose": "The cup stand needs to be removed from the machine and cleaned regularly.",
   "needed": [],
@@ -2298,7 +2298,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Weekly, increase the frequency if needed",
   "purpose": "If waste bins in a base cabinet (or other external cabinet) are installed, excess water from the brewer and waste water from the drip tray is captured in the left waste bin and coffee residue in the right waste bin. Both bins must be cleaned regularly.",
   "needed": [],
@@ -2344,7 +2344,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Daily",
   "purpose": "The drip tray collects waste water from the coffee machine and waste water during the dispense of products and needs to be cleaned regularly. The drip tray is covered by the jug stand.",
   "needed": [],
@@ -2394,7 +2394,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Weekly, increase the frequency if needed",
   "purpose": "To prevent clogging of ingredients the mixers must be removed from the coffee machine and cleaned.",
   "needed": [],
@@ -2877,7 +2877,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "maand",
+  "interval": "monthly",
   "intervalText": "Monthly, increase the frequency if needed",
   "purpose": "All ingredients leave residue inside the canister. To clean the canisters they need to be removed from the machine.",
   "needed": [],
@@ -2937,7 +2937,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "week",
+  "interval": "weekly",
   "intervalText": "Weekly, increase the frequency if needed (depending on machine usage and environmental conditions)",
   "purpose": "The cold water outlet nozzle must be cleaned regularly to prevent bacteria growth.",
   "needed": [
@@ -3001,7 +3001,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "maand",
+  "interval": "monthly",
   "intervalText": "Monthly, increase the frequency if needed (depending on machine usage and environmental conditions)",
   "purpose": "The cold water outlet nozzle must be cleaned and disinfected regularly to prevent bacteria growth.",
   "needed": [
@@ -3301,7 +3301,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "Daily",
   "purpose": "To clean all outside areas of the coffee machine that are not cleaned in any other procedure.",
   "needed": [
@@ -3324,7 +3324,7 @@
   "machines": [
    "rosa"
   ],
-  "interval": "dag",
+  "interval": "daily",
   "intervalText": "At least daily. When announced on screen.",
   "purpose": "The touchscreen is the main interface between user and coffee machine. To ensure a hygienic and flawless use, the touchscreen must be cleaned regularly.",
   "needed": [
@@ -3408,7 +3408,7 @@
  {
   "id": "touchless-software",
   "title": "Touchless Interface: software klaarzetten",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "zia",
@@ -3419,7 +3419,7 @@
    "edge",
    "vareo"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Eenmalig, voordat je naar de klant gaat.",
   "purpose": "De Touchless Interface laat de klant een drank bestellen door een QR-code op de machine te scannen met zijn telefoon. Daarvoor moeten MoVeC 5.30 of hoger, de bijbehorende interface-versie en twee .ipk-bestanden op de machine komen. Je zet ze thuis of op kantoor op twee lege USB-sticks klaar.",
   "needed": [
@@ -3496,7 +3496,7 @@
  {
   "id": "touchless-installeren",
   "title": "Touchless Interface installeren op de machine",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "zia",
@@ -3507,7 +3507,7 @@
    "edge",
    "vareo"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Bij de machine, nadat de sticks klaar zijn.",
   "purpose": "De software van beide USB-sticks op de machine zetten, zodat de QR-code op het hoofdscherm verschijnt.",
   "needed": [
@@ -3581,7 +3581,7 @@
  {
   "id": "touchless-gprs",
   "title": "GPRS-verbinding instellen in het servicemenu",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "zia",
@@ -3592,7 +3592,7 @@
    "edge",
    "vareo"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Na het plaatsen van de GPRS-dongle.",
   "purpose": "De dongle aan de praat krijgen: serienummer controleren, pincode en APN invullen en de verbinding nakijken.",
   "needed": [
@@ -3642,7 +3642,7 @@
  {
   "id": "touchless-testen",
   "title": "Touchless Interface testen",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "zia",
@@ -3653,7 +3653,7 @@
    "edge",
    "vareo"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Na installatie, voordat je de klant afmeldt.",
   "purpose": "Controleren of de klant echt een drank kan bestellen met zijn telefoon.",
   "needed": [
@@ -3688,7 +3688,7 @@
  {
   "id": "touchless-storing",
   "title": "QR-code zichtbaar maar Touchless werkt niet",
-  "brewer": "beide",
+  "brewer": "both",
   "machines": [
    "virtu",
    "zia",
@@ -3699,7 +3699,7 @@
    "edge",
    "vareo"
   ],
-  "interval": "nodig",
+  "interval": "when_needed",
   "intervalText": "Bij een storingsmelding over de Touchless Interface.",
   "purpose": "Wat je zelf nakijkt voordat je technische ondersteuning belt.",
   "needed": [],

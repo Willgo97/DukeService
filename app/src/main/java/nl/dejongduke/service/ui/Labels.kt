@@ -18,30 +18,30 @@ import nl.dejongduke.service.data.Locales
 @Composable
 fun categoryLabel(name: String): String = when (name) {
     "Brewer" -> stringResource(R.string.brewer)
-    "Water" -> stringResource(R.string.watersysteem)
-    "Afval" -> stringResource(R.string.afval)
-    "Reiniging" -> stringResource(R.string.reiniging)
-    "Temperatuur" -> stringResource(R.string.temperatuur)
-    "Molen" -> stringResource(R.string.molen)
+    "Water" -> stringResource(R.string.water_system)
+    "Waste" -> stringResource(R.string.waste)
+    "Cleaning" -> stringResource(R.string.cleaning)
+    "Temperature" -> stringResource(R.string.temperature)
+    "Grinder" -> stringResource(R.string.grinder)
     "Mixer" -> stringResource(R.string.mixer)
-    "Beker" -> stringResource(R.string.beker)
-    "Betaling" -> stringResource(R.string.betaling)
-    "Besturing" -> stringResource(R.string.besturing)
-    "Ingrediënten" -> stringResource(R.string.ingredienten)
-    "Bediening" -> stringResource(R.string.bediening)
-    "Overig" -> stringResource(R.string.overig)
+    "Cups" -> stringResource(R.string.cups)
+    "Payment" -> stringResource(R.string.payment)
+    "Controls" -> stringResource(R.string.controls)
+    "Ingredients" -> stringResource(R.string.ingredients)
+    "Operation" -> stringResource(R.string.operation)
+    "Other" -> stringResource(R.string.other)
     else -> name
 }
 
 @Composable
 fun cardTitle(title: String): String = when (title) {
-    "Dagelijks onderhoud" -> stringResource(R.string.dagelijks_onderhoud)
-    "Periodiek onderhoud" -> stringResource(R.string.periodiek_onderhoud)
+    "Dagelijks onderhoud" -> stringResource(R.string.daily_maintenance)
+    "Periodiek onderhoud" -> stringResource(R.string.regular_maintenance)
     else -> title
 }
 
 /**
- * "50 meldingen", and "1 melding" when there is one. Which of the two — or of
+ * "50 messages", and "1 message" when there is one. Which of the two — or of
  * the three Czech has — is the phone's business, not ours.
  */
 @Composable

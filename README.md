@@ -5,7 +5,7 @@ Android, Kotlin, Jetpack Compose. Alles zit in de APK — geen netwerk nodig,
 want in een kelder of serverruimte heb je dat toch niet.
 
 Achter de app ligt een kennisbank die uit álle servicedocumentatie is
-opgebouwd: 207 boeken, 16.912 pagina's, negen talen. Die kennisbank staat los
+opgebouwd: 185 boeken, 15.380 pagina's, negen talen. Die kennisbank staat los
 van de app en is ook door andere programma's te gebruiken — zie
 [`kb/README.md`](kb/README.md).
 
@@ -13,17 +13,17 @@ van de app en is ook door andere programma's te gebruiken — zie
 
 | | |
 |---|---|
-| 11 machinelijnen, 59 uitvoeringen | merk × brewer × kastmaat, met serienummers en welk servicemenu |
-| 53 schermmeldingen | Nederlandse displaytekst, oorzaak en wat je controleert, met de machines waarvoor ze gelden |
+| 11 machinelijnen, 58 uitvoeringen | merk × brewer × kastmaat, met serienummers en welk servicemenu |
+| 48 schermmeldingen | Nederlandse displaytekst, oorzaak en wat je controleert, met de machines waarvoor ze gelden |
 | 100 onderhoudskaarten | de kaart van de fabrikant zelf: genummerde stappen met de tekening die erbij hoort |
-| 194 procedures | stap voor stap, met waarschuwingen en benodigdheden |
-| 247 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
-| 277 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
-| 40.475 onderdeelregels | 1.935 unieke nummers uit 62 onderdelenboeken |
-| 1.773 explosietekeningen | met de onderdelentabel ernaast; op 89 ervan zijn de ballonnummers aanklikbaar |
-| 52 aanzichten | voor-, achter- en binnenkant met genummerde verwijzingen |
-| 207 boeken | welke handleiding waar vandaan komt |
-| 40 tabellen technische gegevens | maten, aansluitwaarden, waterkwaliteit, geluidsdruk |
+| 131 procedures | stap voor stap, met waarschuwingen en benodigdheden |
+| 197 componenten | hoe watersysteem, boilers, ventielen, brewer en molen werken, per brewer |
+| 226 servicemenu-onderwerpen | wat elke functie doet, met het pad erheen |
+| 38.427 onderdeelregels | 1.930 unieke nummers uit 60 onderdelenboeken |
+| 1.736 explosietekeningen | met de onderdelentabel ernaast; op 75 ervan zijn de ballonnummers aanklikbaar |
+| 24 aanzichten | voor-, achter- en binnenkant met genummerde verwijzingen |
+| 185 boeken | welke handleiding waar vandaan komt |
+| 20 tabellen technische gegevens | maten, aansluitwaarden, waterkwaliteit, geluidsdruk |
 | Scanner | leest labels, typeplaatjes en schermmeldingen met de camera |
 | 9 talen | de app zelf en de teksten uit de handleidingen: nl, en, de, fr, sv, no, da, fi, cs |
 
@@ -131,15 +131,18 @@ De documentatie zelf staat in `manuals/` en blijft daar: die is auteursrechtelij
 beschermd door de fabrikant en gaat niet mee in git (zie `.gitignore` en
 `LICENSE`). `manuals/INDEX.md` zegt welk boek waar staat.
 
-- 73 technische handleidingen (TM), in NL, EN, DE, FR-ca, SV, NO, DA, FI en CZ
+- 70 technische handleidingen (TM), in NL, EN, DE, FR-ca, SV, NO, DA, FI en CZ
 - 50 onderhoudskaarten (SMI), één per machine en uitvoering
-- 61 onderdelenboeken (Spare Parts Manual), 2022 tot 2026
-- 6 gebruikershandleidingen, 5 snelstartgidsen, 1 installatiehandleiding
-- 8 productbrochures van dejongduke.com
+- 60 onderdelenboeken (Spare Parts Manual), 2022 tot 2026
+- 5 snelstartgidsen (QSG)
 
-Niet verwerkt tot machinekennis: `User_Manual_W100_EN_T0642EN00.pdf`. Dat is een
-andere machine met een eigen documentatiefamilie, en de W100 staat ook niet in
-de machinelijst van de app.
+Alles hier komt uit de servicemap van De Jong DUKE zelf. Documentatie die
+eerder van de website was geplukt is er weer uit gehaald, zodat één bron
+leidend is. Wat daarmee ook verdween: de enige technische handleiding van de
+Nio en van de Rosa, de Nederlandse TM van de Lua Instant, de installatie-
+handleiding van de Touchless Interface, vier Engelse gebruikershandleidingen en
+de acht productbrochures. Wie die inhoud terug wil zet die PDF's in `manuals/`
+en draait `./kbtools/build_kb.sh` opnieuw.
 
 ## Let op
 

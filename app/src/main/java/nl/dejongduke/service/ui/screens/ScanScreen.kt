@@ -131,15 +131,15 @@ fun ScanScreen(
                 modifier = Modifier.height(40.dp),
             )
             Spacer(Modifier.height(16.dp))
-            Text(stringResource(R.string.camera_nodig), style = MaterialTheme.typography.titleLarge)
+            Text(stringResource(R.string.camera_needed), style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(8.dp))
             Text(
-                stringResource(R.string.richt_op_een_onderdeellabel_het_typeplaatje_),
+                stringResource(R.string.point_at_a_part_label_the_type_plate_or_the),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(24.dp))
-            Button(onClick = { ask.launch(Manifest.permission.CAMERA) }) { Text(stringResource(R.string.camera_toestaan)) }
+            Button(onClick = { ask.launch(Manifest.permission.CAMERA) }) { Text(stringResource(R.string.allow_camera)) }
         }
         return
     }
@@ -160,11 +160,11 @@ fun ScanScreen(
     val recognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
     var message by remember { mutableStateOf("") }
     // Read here: the callbacks below run outside composition.
-    val readingPhoto = stringResource(R.string.foto_lezen)
-    val cannotOpenPhoto = stringResource(R.string.kan_de_foto_niet_openen)
-    val noTextInPhoto = stringResource(R.string.geen_tekst_in_de_foto)
-    val readNothingFound = stringResource(R.string.tekst_gelezen_niets_herkend)
-    val readFailed = stringResource(R.string.lezen_mislukt_x, "")
+    val readingPhoto = stringResource(R.string.reading_photo)
+    val cannotOpenPhoto = stringResource(R.string.cannot_open_the_photo)
+    val noTextInPhoto = stringResource(R.string.no_text_in_the_photo)
+    val readNothingFound = stringResource(R.string.text_read_nothing_recognised)
+    val readFailed = stringResource(R.string.reading_failed, "")
     val pickPhoto = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
@@ -253,10 +253,10 @@ fun ScanScreen(
                 Text(
                     when {
                         message.isNotEmpty() -> message
-                        hits.isEmpty() && seen.isNotEmpty() -> stringResource(R.string.even_stilhouden)
-                        hits.isEmpty() -> stringResource(R.string.richt_op_een_label_typeplaatje_of_het_scherm)
-                        fromPhoto -> stringResource(R.string.x_gevonden_in_de_foto, hits.size)
-                        else -> stringResource(R.string.x_gevonden, hits.size)
+                        hits.isEmpty() && seen.isNotEmpty() -> stringResource(R.string.hold_still)
+                        hits.isEmpty() -> stringResource(R.string.point_at_a_label_type_plate_or_the_screen)
+                        fromPhoto -> stringResource(R.string.found_in_the_photo, hits.size)
+                        else -> stringResource(R.string.found_2, hits.size)
                     },
                     style = MaterialTheme.typography.labelLarge,
                     color = Color.White,
@@ -268,7 +268,7 @@ fun ScanScreen(
             }) {
                 Icon(Icons.Filled.PhotoLibrary, null, modifier = Modifier.height(18.dp))
                 Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.uit_foto))
+                Text(stringResource(R.string.from_photo))
             }
         }
 
@@ -321,7 +321,7 @@ private fun HitCard(
             Icons.Filled.WarningAmber,
             hit.group.message,
             hit.group.first.dutch,
-            stringResource(R.string.storing_x, categoryLabel(hit.group.first.category)),
+            stringResource(R.string.fault_2, categoryLabel(hit.group.first.category)),
             hit.confidence,
         ) { onOpen(Route.Fault(hit.group.message)) }
 
@@ -329,7 +329,7 @@ private fun HitCard(
             Icons.Filled.CoffeeMaker,
             hit.machine.name,
             hit.machine.summary,
-            stringResource(R.string.machine_tik_om_de_app_hierop_te_zetten),
+            stringResource(R.string.machine_tap_to_point_the_app_at_it),
             hit.confidence,
         ) {
             onUseMachine(hit.machine.id, null)
@@ -341,10 +341,10 @@ private fun HitCard(
         // machine's list, without anyone picking it from a row of chips.
         is ScanHit.TypePlate -> HitRow(
             Icons.Filled.Info,
-            hit.machine?.name ?: stringResource(R.string.typeplaatje),
-            stringResource(R.string.serienummer_x, hit.serienummer),
-            if (hit.code.isNotEmpty()) stringResource(R.string.typecode_x_tik_om_de_app_hierop_te_zetten, hit.code)
-            else stringResource(R.string.van_het_typeplaatje),
+            hit.machine?.name ?: stringResource(R.string.type_plate),
+            stringResource(R.string.serial_number, hit.serienummer),
+            if (hit.code.isNotEmpty()) stringResource(R.string.type_code_tap_to_point_the_app_at_it, hit.code)
+            else stringResource(R.string.from_the_type_plate),
             hit.confidence,
         ) {
             hit.machine?.let { machine ->
@@ -362,7 +362,7 @@ private fun HitCard(
 private fun HitRow(
     icon: ImageVector,
     title: String,
-    onder: String,
+    subtitle: String,
     context: String,
     confidence: Int,
     mono: Boolean = false,
@@ -379,9 +379,9 @@ private fun HitRow(
                     fontFamily = if (mono) FontFamily.Monospace else FontFamily.Default,
                     fontWeight = FontWeight.SemiBold,
                 )
-                if (onder.isNotEmpty()) {
+                if (subtitle.isNotEmpty()) {
                     Spacer(Modifier.height(2.dp))
-                    Text(onder, style = MaterialTheme.typography.bodyMedium, maxLines = 2)
+                    Text(subtitle, style = MaterialTheme.typography.bodyMedium, maxLines = 2)
                 }
                 Spacer(Modifier.height(6.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {

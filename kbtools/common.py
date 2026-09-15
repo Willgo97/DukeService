@@ -70,8 +70,8 @@ CODE_BRAND = {
 SPARE_CODE = re.compile(r"\b9(CEC|CND|XEA|XNA|FEC|FND|IEA|INB|CKA|XKA)\b", re.I)
 
 # Which controller generation, i.e. which service menu the machine shows.
-OLD_MENU = {"virtu", "zia", "nio", "edge"}          # ICeQ2 only
-BOTH_MENU = {"lua", "avy", "rosa", "blu"}            # old until sw 6.30/6.40
+OLD_MENU = {"virtu", "zia", "nio", "edge", "blu"}   # ICeQ2 only
+BOTH_MENU = {"lua", "avy", "rosa"}                  # old until sw 6.30/6.40
 NEW_MENU = {"lina", "nionext"}                       # new menu only
 
 

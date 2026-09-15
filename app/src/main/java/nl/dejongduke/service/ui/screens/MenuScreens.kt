@@ -45,7 +45,7 @@ fun MenuList(
     onOpen: (Route) -> Unit,
 ) {
     val chapters = listOf(
-        "6" to stringResource(R.string.servicemenu),
+        "6" to stringResource(R.string.service_menu),
     )
     val documented = remember(catalog) {
         catalog.machines.filter { m -> catalog.menu.any { m.id in it.machines } }
@@ -62,7 +62,7 @@ fun MenuList(
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    stringResource(R.string.wat_er_in_het_servicemenu_zit_en_wat_elke_fu),
+                    stringResource(R.string.what_is_in_the_service_menu_and_what_each_fu),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -70,7 +70,7 @@ fun MenuList(
         }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -106,7 +106,7 @@ fun MenuList(
                             }
                         }
                         if (m.level.isNotEmpty()) {
-                            Pill(stringResource(R.string.niveau_x, m.level))
+                            Pill(stringResource(R.string.level, m.level))
                             Spacer(Modifier.height(0.dp))
                         }
                         Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -128,9 +128,9 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(item.number)
                     if (item.level.isNotEmpty()) {
-                        Pill(stringResource(R.string.wachtwoordniveau_x, item.level), tone = MaterialTheme.colorScheme.primary)
+                        Pill(stringResource(R.string.password_level, item.level), tone = MaterialTheme.colorScheme.primary)
                     }
-                    if (item.page > 0) Pill(stringResource(R.string.pagina_x_2, item.page))
+                    if (item.page > 0) Pill(stringResource(R.string.page_2, item.page))
                 }
             }
         }
@@ -143,7 +143,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
                         .padding(14.dp),
                 ) {
                     Text(
-                        stringResource(R.string.in_het_menu),
+                        stringResource(R.string.in_the_menu),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -161,7 +161,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             item { Spacer(Modifier.height(8.dp)); AssetImage(item.image) }
         }
         if (item.purpose.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.waarom)) }
+            item { SectionHeader(stringResource(R.string.why)) }
             item {
                 Text(
                     item.purpose,
@@ -171,7 +171,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
         if (item.interval.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.wanneer)) }
+            item { SectionHeader(stringResource(R.string.when_label)) }
             item {
                 Text(
                     item.interval,
@@ -181,7 +181,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
         if (item.needed.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.nodig)) }
+            item { SectionHeader(stringResource(R.string.needed)) }
             item {
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     item.needed.forEach { n ->
@@ -195,7 +195,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
             }
         }
         if (item.steps.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.stappen), "${item.steps.size}") }
+            item { SectionHeader(stringResource(R.string.steps), "${item.steps.size}") }
             items(item.steps.size) { index ->
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp)) {
                     Text(
@@ -239,7 +239,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
         }
 
         if (item.images.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.uit_de_handleiding), "${item.images.size} pagina's") }
+            item { SectionHeader(stringResource(R.string.from_the_manual), "${item.images.size} pagina's") }
             items(item.images.size) { index ->
                 Column {
                     AssetImage(item.images[index])
@@ -251,7 +251,7 @@ fun MenuDetail(catalog: Catalog, item: MenuItem) {
         if (item.source.isNotEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.bron_x_2, item.source),
+                    stringResource(R.string.source_3, item.source),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

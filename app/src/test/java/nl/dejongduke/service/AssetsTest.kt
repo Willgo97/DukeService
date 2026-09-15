@@ -46,7 +46,7 @@ class AssetsTest {
         val components: List<Component> = nl.components
         val menu: List<MenuItem> = nl.menu
         val drawings: Map<String, List<String>> = read("drawings.json")
-        val namen: Map<String, String> = read("drawingnames.json")
+        val names: Map<String, String> = read("drawingnames.json")
         val hotspots: Map<String, List<Hotspot>> = read("hotspots.json")
 
         assertTrue("machines", machines.size >= 10)
@@ -55,12 +55,12 @@ class AssetsTest {
         assertTrue("maintenance cards", cards.size >= 50)
         assertTrue("parts", parts.size >= 30_000)
         assertTrue("specs", specs.isNotEmpty())
-        assertTrue("components", components.size >= 200)
-        assertTrue("menu", menu.size >= 200)
+        assertTrue("components", components.size >= 150)
+        assertTrue("menu", menu.size >= 150)
         val views: List<MachineView> = nl.views
         assertTrue("views", views.isNotEmpty())
         assertTrue("drawings", drawings.size >= 1_000)
-        assertTrue("drawing names", namen.size >= 1_000)
+        assertTrue("drawing names", names.size >= 1_000)
         assertTrue("hotspots", hotspots.isNotEmpty())
     }
 

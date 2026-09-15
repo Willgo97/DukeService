@@ -19,6 +19,8 @@ data class Machine(
     val summary: String = "",
     val description: String = "",
     val specs: List<SpecRow> = emptyList(),
+    /** Which book the sizes are from; the figures are not typed in by hand. */
+    val specsSource: String = "",
     val docs: List<String> = emptyList(),
     val variants: List<Variant> = emptyList(),
 )

@@ -42,15 +42,15 @@ import nl.dejongduke.service.ui.Route
 import nl.dejongduke.service.ui.SectionHeader
 import nl.dejongduke.service.ui.WarnBanner
 
-private val intervalOrder = listOf("dag", "week", "maand", "halfjaar", "nodig")
+private val intervalOrder = listOf("daily", "weekly", "monthly", "half_yearly", "when_needed")
 
 @Composable
 private fun intervalLabel(key: String) = when (key) {
-    "dag" -> stringResource(R.string.dagelijks)
-    "week" -> stringResource(R.string.wekelijks)
-    "maand" -> stringResource(R.string.maandelijks)
-    "halfjaar" -> stringResource(R.string.halfjaarlijks)
-    else -> stringResource(R.string.wanneer_nodig)
+    "daily" -> stringResource(R.string.daily)
+    "weekly" -> stringResource(R.string.weekly)
+    "monthly" -> stringResource(R.string.monthly)
+    "half_yearly" -> stringResource(R.string.every_six_months)
+    else -> stringResource(R.string.when_needed)
 }
 
 @Composable
@@ -68,7 +68,7 @@ fun ProcedureList(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -95,7 +95,7 @@ fun ProcedureList(
                         Spacer(Modifier.height(8.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             Pill(count(R.plurals.n_steps, procedures.steps.size))
-                            if (procedures.brewer.isNotEmpty() && procedures.brewer != "beide") Pill(procedures.brewer)
+                            if (procedures.brewer.isNotEmpty() && procedures.brewer != "both") Pill(procedures.brewer)
                         }
                     }
                 }
@@ -134,7 +134,7 @@ fun ProcedureDetail(
                     FilledTonalButton(onClick = { onOpen(Route.Steps("procedure", procedure.id)) }) {
                         Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
                         Spacer(Modifier.width(8.dp))
-                        Text(stringResource(R.string.stap_voor_stap))
+                        Text(stringResource(R.string.step_by_step))
                     }
                 }
             }
@@ -183,7 +183,7 @@ fun ProcedureDetail(
         }
 
         if (procedure.purpose.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.waarom)) }
+            item { SectionHeader(stringResource(R.string.why)) }
             item {
                 Text(
                     procedure.purpose,
@@ -194,7 +194,7 @@ fun ProcedureDetail(
         }
 
         if (procedure.needed.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.nodig)) }
+            item { SectionHeader(stringResource(R.string.needed)) }
             item {
                 Column(Modifier.padding(horizontal = 20.dp)) {
                     procedure.needed.forEach { item ->
@@ -222,7 +222,7 @@ fun ProcedureDetail(
         }
 
         if (procedure.steps.isNotEmpty()) {
-            item { SectionHeader(stringResource(R.string.stappen), "${procedure.steps.size}") }
+            item { SectionHeader(stringResource(R.string.steps), "${procedure.steps.size}") }
             items(procedure.steps.size) { index ->
                 val step = procedure.steps[index]
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 7.dp)) {
@@ -262,7 +262,7 @@ fun ProcedureDetail(
         if (procedure.source.isNotEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.bron_x_3, procedure.source),
+                    stringResource(R.string.source_4, procedure.source),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),

@@ -64,7 +64,7 @@ fun MaintenanceScreen(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -80,8 +80,8 @@ fun MaintenanceScreen(
         }
         if (cards.isEmpty()) {
             item {
-                EmptyState(stringResource(R.string.geen_onderhoudskaart),
-                           stringResource(R.string.voor_deze_machine_zit_er_geen_kaart_van_de_f))
+                EmptyState(stringResource(R.string.no_maintenance_card),
+                           stringResource(R.string.there_is_no_manufacturer_s_card_for_this_mac))
             }
         }
         cards.groupBy { it.interval }.forEach { (interval, group) ->
@@ -118,7 +118,7 @@ fun MaintenanceScreen(
             Card(onClick = { onOpen(Route.Procedures) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.alle_procedures), style = MaterialTheme.typography.titleMedium)
+                        Text(stringResource(R.string.all_procedures), style = MaterialTheme.typography.titleMedium)
                         Spacer(Modifier.height(2.dp))
                         Text(
                             count(R.plurals.n_step_by_step, procedures),

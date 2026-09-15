@@ -98,9 +98,9 @@ private val AppTypography = Typography().let { base ->
 }
 
 enum class ThemeMode(@StringRes val label: Int) {
-    System(R.string.systeem),
-    Light(R.string.licht),
-    Dark(R.string.donker),
+    System(R.string.system),
+    Light(R.string.light),
+    Dark(R.string.dark),
 }
 
 @Composable

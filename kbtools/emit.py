@@ -187,12 +187,12 @@ def build_maintenance(facts, corpus_by_doc, index):
 
 def interval_of(group):
     low = group.lower()
-    for key, value in (("daily", "dag"), ("dagelijks", "dag"), ("regular", "periodiek"),
-                       ("weekly", "week"), ("monthly", "maand"), ("quarterly", "kwartaal"),
-                       ("yearly", "jaar"), ("annual", "jaar")):
-        if key in low:
-            return value
-    return "overig"
+    for word, key in (("daily", "daily"), ("dagelijks", "daily"), ("regular", "regular"),
+                      ("weekly", "weekly"), ("monthly", "monthly"), ("quarterly", "quarterly"),
+                      ("yearly", "yearly"), ("annual", "yearly")):
+        if word in low:
+            return key
+    return "other"
 
 
 def build_drawings(parts, media, corpus_by_doc):

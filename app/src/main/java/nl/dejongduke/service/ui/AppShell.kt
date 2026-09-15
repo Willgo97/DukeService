@@ -124,13 +124,13 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                 navigationIcon = {
                     if (current != null) {
                         IconButton(onClick = { vm.back() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.terug))
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back))
                         }
                     }
                 },
                 actions = {
                     IconButton(onClick = { vm.open(Route.Settings) }) {
-                        Icon(Icons.Filled.Settings, stringResource(R.string.instellingen))
+                        Icon(Icons.Filled.Settings, stringResource(R.string.settings))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -272,14 +272,14 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
         }
 
         Route.Settings -> {
-            val thema by vm.theme.collectAsStateWithLifecycle()
+            val theme by vm.theme.collectAsStateWithLifecycle()
             val languageSetting by vm.languageSetting.collectAsStateWithLifecycle()
             val language by vm.messageLanguage.collectAsStateWithLifecycle()
             val direct by vm.scanDirect.collectAsStateWithLifecycle()
             SettingsScreen(
                 catalog = loaded,
-                thema = thema,
-                onThema = vm::setTheme,
+                theme = theme,
+                onTheme = vm::setTheme,
                 language = languageSetting,
                 onLanguage = vm::setLanguage,
                 messageLanguage = language,
@@ -320,20 +320,20 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
 
         is Route.MaintenanceCard -> {
             val card = loaded.card(route.id)
-            if (card == null) EmptyState(stringResource(R.string.niet_gevonden), stringResource(R.string.deze_onderhoudskaart_staat_niet_in_de_app))
+            if (card == null) EmptyState(stringResource(R.string.not_found), stringResource(R.string.this_maintenance_card_is_not_in_the_app))
             else CardDetail(loaded, card, vm::open)
         }
 
         is Route.Steps -> when (route.kind) {
             "card" -> {
                 val card = loaded.card(route.id)
-                StepPlayer(card?.title ?: stringResource(R.string.stappen),
+                StepPlayer(card?.title ?: stringResource(R.string.steps),
                            loaded.machineNames(card?.machines.orEmpty()),
                            loaded.cardSteps(route.id))
             }
             else -> {
                 val procedure = loaded.procedure(route.id)
-                StepPlayer(procedure?.title ?: stringResource(R.string.stappen),
+                StepPlayer(procedure?.title ?: stringResource(R.string.steps),
                            loaded.machineNames(procedure?.machines.orEmpty()),
                            loaded.procedureSteps(route.id))
             }
@@ -351,20 +351,20 @@ private fun titleFor(catalog: Catalog?, tab: Tab, route: Route?): String = when 
         Tab.Search -> "DUKE Service"
         else -> stringResource(tab.label)
     }
-    is Route.Fault -> stringResource(R.string.storing)
+    is Route.Fault -> stringResource(R.string.fault)
     is Route.Procedure -> stringResource(R.string.procedure)
     Route.Procedures -> stringResource(R.string.procedures)
-    Route.Components -> stringResource(R.string.techniek)
-    Route.ServiceMenu -> stringResource(R.string.servicemenu)
-    Route.Scan -> stringResource(R.string.scannen)
-    Route.Settings -> stringResource(R.string.instellingen)
-    is Route.MenuItem -> stringResource(R.string.servicemenu)
-    is Route.Component -> stringResource(R.string.techniek)
+    Route.Components -> stringResource(R.string.technical)
+    Route.ServiceMenu -> stringResource(R.string.service_menu)
+    Route.Scan -> stringResource(R.string.scanning)
+    Route.Settings -> stringResource(R.string.settings)
+    is Route.MenuItem -> stringResource(R.string.service_menu)
+    is Route.Component -> stringResource(R.string.technical)
     is Route.Machine -> catalog?.machine(route.id)?.name ?: stringResource(R.string.machine)
-    is Route.PartSection -> stringResource(R.string.onderdelen)
-    is Route.MaintenanceCard -> stringResource(R.string.onderhoudskaart)
-    Route.Cards -> stringResource(R.string.onderhoudskaarten)
-    is Route.Steps -> stringResource(R.string.stap_voor_stap)
-    Route.Specs -> stringResource(R.string.technisch)
-    Route.Sources -> stringResource(R.string.bronnen)
+    is Route.PartSection -> stringResource(R.string.parts)
+    is Route.MaintenanceCard -> stringResource(R.string.maintenance_card)
+    Route.Cards -> stringResource(R.string.maintenance_cards)
+    is Route.Steps -> stringResource(R.string.step_by_step)
+    Route.Specs -> stringResource(R.string.technical_2)
+    Route.Sources -> stringResource(R.string.sources)
 }

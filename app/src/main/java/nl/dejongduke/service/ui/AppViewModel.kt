@@ -21,10 +21,10 @@ import nl.dejongduke.service.ui.theme.ThemeMode
 import java.time.LocalDate
 
 enum class Tab(@StringRes val label: Int) {
-    Search(R.string.zoek),
-    Faults(R.string.storingen),
-    Maintenance(R.string.onderhoud),
-    Parts(R.string.onderdelen),
+    Search(R.string.search),
+    Faults(R.string.faults),
+    Maintenance(R.string.maintenance),
+    Parts(R.string.parts),
     Machines(R.string.machines),
 }
 

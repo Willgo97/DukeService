@@ -175,7 +175,7 @@ fun DrawingView(
             ) {
                 Image(
                     bitmap = image,
-                    contentDescription = stringResource(R.string.explosietekening),
+                    contentDescription = stringResource(R.string.exploded_drawing),
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -217,7 +217,7 @@ fun DrawingView(
                     .padding(horizontal = 8.dp, vertical = 3.dp),
             ) {
                 Text(
-                    stringResource(R.string.pos_x, selected),
+                    stringResource(R.string.pos, selected),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold,

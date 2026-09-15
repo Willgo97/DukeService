@@ -102,11 +102,11 @@ fun PartsScreen(
                 value = term,
                 onValueChange = { term = it },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
-                placeholder = { Text(stringResource(R.string.nummer_of_omschrijving)) },
+                placeholder = { Text(stringResource(R.string.number_or_description)) },
                 leadingIcon = { Icon(Icons.Filled.Search, null) },
                 trailingIcon = {
                     if (term.isNotEmpty()) {
-                        IconButton(onClick = { term = "" }) { Icon(Icons.Filled.Close, stringResource(R.string.wissen)) }
+                        IconButton(onClick = { term = "" }) { Icon(Icons.Filled.Close, stringResource(R.string.clear)) }
                     }
                 },
                 singleLine = true,
@@ -114,21 +114,21 @@ fun PartsScreen(
         }
 
         if (machine == null) {
-            item { EmptyState(stringResource(R.string.geen_onderdelenboek_2), stringResource(R.string.voor_deze_machine_staat_nog_geen_onderdelenl)) }
+            item { EmptyState(stringResource(R.string.no_spare_parts_book_2), stringResource(R.string.there_is_no_parts_list_for_this_machine_in_t)) }
             return@LazyColumn
         }
 
         if (searching) {
-            item { SectionHeader(stringResource(R.string.gevonden), "${hits.size}") }
+            item { SectionHeader(stringResource(R.string.found), "${hits.size}") }
             if (hits.isEmpty()) {
-                item { EmptyState(stringResource(R.string.niets_gevonden), stringResource(R.string.probeer_een_deel_van_het_nummer_of_een_engel)) }
+                item { EmptyState(stringResource(R.string.nothing_found), stringResource(R.string.try_part_of_the_number_or_an_english_term_su)) }
             }
             items(hits.size) { index -> PartRow(hits[index], showSection = true) }
             item { Spacer(Modifier.height(24.dp)) }
             return@LazyColumn
         }
 
-        item { SectionHeader(stringResource(R.string.tekeningen), "${sections.size}") }
+        item { SectionHeader(stringResource(R.string.drawings), "${sections.size}") }
         items(sections.keys.toList()) { section ->
             val count = sections[section]?.size ?: 0
             val name = catalog.drawingName(machine, selectedBuild.orEmpty(), section)
@@ -185,9 +185,9 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Pill(catalog.machine(machine)?.name ?: machine)
                     if (variant.isNotEmpty()) Pill(variant)
-                    Pill(stringResource(R.string.tek_x, section))
+                    Pill(stringResource(R.string.dwg, section))
                     Pill(count(R.plurals.n_parts, parts.size))
-                    if (balloons.isNotEmpty()) Pill(stringResource(R.string.x_aanklikbaar, balloons.size))
+                    if (balloons.isNotEmpty()) Pill(stringResource(R.string.clickable, balloons.size))
                 }
             }
         }
@@ -212,9 +212,9 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
                     Spacer(Modifier.height(6.dp))
                     Text(
                         if (balloons.isEmpty())
-                            stringResource(R.string.knijp_om_in_te_zoomen_de_nummers_in_de_teken)
+                            stringResource(R.string.pinch_to_zoom_the_numbers_in_the_drawing_are)
                         else
-                            stringResource(R.string.tik_een_nummer_in_de_tekening_aan_of_tik_een),
+                            stringResource(R.string.tap_a_number_in_the_drawing_or_tap_a_part_in),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.outline,
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
@@ -252,7 +252,7 @@ fun PartSectionDetail(catalog: Catalog, machine: String, variant: String, sectio
         }
         item {
             Text(
-                stringResource(R.string.se_monteursvoorraad_sw_magazijnvoorraad_pos_),
+                stringResource(R.string.se_van_stock_sw_warehouse_stock_pos_refers_t),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
@@ -280,7 +280,7 @@ private fun PartRow(
     ) {
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (part.available) PartNumber(part.number) else Pill(stringResource(R.string.niet_los_leverbaar))
+                if (part.available) PartNumber(part.number) else Pill(stringResource(R.string.not_sold_separately))
                 Spacer(Modifier.width(8.dp))
                 if (part.stock.isNotEmpty()) {
                     Pill(
@@ -292,7 +292,7 @@ private fun PartRow(
                 Spacer(Modifier.weight(1f))
                 if (part.pos.isNotEmpty()) {
                     Text(
-                        stringResource(R.string.pos_x_2, part.pos),
+                        stringResource(R.string.pos_2, part.pos),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

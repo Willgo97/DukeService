@@ -79,14 +79,14 @@ private val GROUP_ORDER = listOf(
 
 @Composable
 private fun groupLabel(key: String): String = when (key) {
-    "water" -> stringResource(R.string.watersysteem)
+    "water" -> stringResource(R.string.water_system)
     "brewer" -> stringResource(R.string.brewer)
-    "grinder" -> stringResource(R.string.molen)
+    "grinder" -> stringResource(R.string.grinder)
     "mixer" -> stringResource(R.string.mixer)
-    "ingredients" -> stringResource(R.string.ingredienten)
-    "milk" -> stringResource(R.string.verse_melk)
-    "electronics" -> stringResource(R.string.elektronica)
-    else -> stringResource(R.string.overig)
+    "ingredients" -> stringResource(R.string.ingredients)
+    "milk" -> stringResource(R.string.fresh_milk)
+    "electronics" -> stringResource(R.string.electronics)
+    else -> stringResource(R.string.other)
 }
 
 @Composable
@@ -118,7 +118,7 @@ fun ComponentList(
         item {
             Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
                 Text(
-                    stringResource(R.string.hoe_de_machine_werkt_watersysteem_boilers_ve),
+                    stringResource(R.string.how_the_machine_works_water_system_boilers_v),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -126,7 +126,7 @@ fun ComponentList(
         }
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle_machines)) +
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all_machines)) +
                     documented.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
@@ -137,8 +137,8 @@ fun ComponentList(
         if (shown.isEmpty()) {
             item {
                 EmptyState(
-                    stringResource(R.string.geen_techniek),
-                    stringResource(R.string.voor_deze_machine_staat_de_technische_handle),
+                    stringResource(R.string.no_technical_section),
+                    stringResource(R.string.the_technical_manual_for_this_machine_is_not),
                 )
             }
         }
@@ -188,7 +188,7 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (component.brewer.isNotEmpty()) Pill(component.brewer, selected = true)
                     machines.forEach { Pill(it) }
-                    if (component.page > 0) Pill(stringResource(R.string.pagina_x, component.page))
+                    if (component.page > 0) Pill(stringResource(R.string.page, component.page))
                     // Not every book exists in every language; this one is read
                     // in whichever came closest.
                     if (component.language != appLanguage()) Pill(languageName(component.language))
@@ -209,7 +209,7 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
         if (component.source.isNotEmpty()) {
             item {
                 Text(
-                    stringResource(R.string.bron_x, component.source),
+                    stringResource(R.string.source_2, component.source),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.outline,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
@@ -251,7 +251,7 @@ fun AssetImage(path: String) {
         }
         Image(
             bitmap = image,
-            contentDescription = stringResource(R.string.pagina_uit_de_handleiding),
+            contentDescription = stringResource(R.string.page_from_the_manual),
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .fillMaxWidth()

@@ -30,25 +30,6 @@
   "message": "Brewer out of position",
   "dutch": "Brewer niet in positie",
   "machines": [
-   "virtu"
-  ],
-  "category": "Brewer",
-  "cause": "De brewer zit niet goed in de houder.",
-  "solution": [
-   "Verwijder de brewer en reinig hem. Wanneer het probleem niet verholpen is: neem contact op met fabrikant."
-  ],
-  "engineerNote": "Blijft de melding staan, dan is het een servicemelding.",
-  "procedures": [
-   "brewer-schoonmaken"
-  ],
-  "selfService": true,
-  "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
-  "brewers": []
- },
- {
-  "message": "Brewer out of position",
-  "dutch": "Brewer niet in positie",
-  "machines": [
    "lua",
    "avy",
    "nio",
@@ -580,11 +561,11 @@
   "message": "Drip tray full",
   "dutch": "Lekbak vol",
   "machines": [
-   "virtu",
-   "lua",
    "avy",
+   "lua",
    "nio",
-   "rosa"
+   "rosa",
+   "virtu"
   ],
   "category": "Afval",
   "cause": "De niveausensor in de lekbak of drupbak is aangesproken.",
@@ -604,8 +585,10 @@
   "brewers": [
    "CoEx",
    "CoEx XL",
+   "Instant",
    "Uni-Brewer"
-  ]
+  ],
+  "note": "Op de Instant-uitvoering staat er “Lekbak vol / Afvalbak vol!!!”."
  },
  {
   "message": "Install drip tray",
@@ -844,23 +827,6 @@
   "message": "Place cup in center",
   "dutch": "Plaats beker in midden",
   "machines": [
-   "virtu"
-  ],
-  "category": "Beker",
-  "cause": "De beker moet onder de juiste tuit worden geplaatst voordat de [Start]-knop beschikbaar is.",
-  "solution": [
-   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken. Opmerking: De gevoeligheid van de sensor is instelbaar."
-  ],
-  "engineerNote": "",
-  "procedures": [],
-  "selfService": true,
-  "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
-  "brewers": []
- },
- {
-  "message": "Place cup in center",
-  "dutch": "Plaats beker in midden",
-  "machines": [
    "lua",
    "avy",
    "nio",
@@ -882,23 +848,6 @@
    "Instant",
    "Uni-Brewer"
   ]
- },
- {
-  "message": "Place cup right",
-  "dutch": "Plaats beker rechts",
-  "machines": [
-   "virtu"
-  ],
-  "category": "Beker",
-  "cause": "De beker moet onder de waterschenktuit worden geplaatst voordat de knop beschikbaar is.",
-  "solution": [
-   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken."
-  ],
-  "engineerNote": "",
-  "procedures": [],
-  "selfService": true,
-  "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
-  "brewers": []
  },
  {
   "message": "Place cup right",
@@ -1213,6 +1162,7 @@
   "machines": [
    "avy",
    "lua",
+   "nio",
    "rosa"
   ],
   "category": "Water",
@@ -1227,60 +1177,10 @@
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
   "brewers": [
    "CoEx",
+   "CoEx XL",
    "Instant",
    "Uni-Brewer"
   ]
- },
- {
-  "message": "Open boiler leaking, inlet valve closed",
-  "dutch": "Open boiler leaking, inlet valve closed",
-  "machines": [
-   "avy",
-   "nio",
-   "rosa"
-  ],
-  "brewers": [
-   "CoEx",
-   "CoEx XL",
-   "Uni-Brewer"
-  ],
-  "category": "Water",
-  "cause": "A leak is detected.",
-  "solution": [
-   "Close the water tap.",
-   "If open boiler not detected full after 3 minutes of filling:",
-   "Check for leaks to or from the open boiler, including drain tube, inlet fill tube above the boiler and outlet valves.",
-   "Check ground cable that connects door to cabinet. Ensure that both ends are connected and that the screw on the cabinet connector is tight.",
-   "Inspect open boiler level sensor (wiring/connector, scale buildup/corrosion).",
-   "Replace open boiler level sensor.",
-   "Check inlet water supply and/or external filters."
-  ],
-  "engineerNote": "",
-  "procedures": [],
-  "selfService": true,
-  "note": "",
-  "source": "TM Avy CoEx Small EN V1.1 (5DTCNT20M)"
- },
- {
-  "message": "Lekbak vol / Afvalbak vol!!!",
-  "dutch": "Lekbak vol / Afvalbak vol!!!",
-  "machines": [
-   "lua"
-  ],
-  "brewers": [
-   "Instant"
-  ],
-  "category": "Afval",
-  "cause": "",
-  "solution": [
-   "Reinig de lekbak aan de voorkant van de machine.",
-   "Zorg ervoor dat de waterniveausensoren in de lekbak droog zijn. Zie het gedeelte Dagelijks onderhoud."
-  ],
-  "engineerNote": "",
-  "procedures": [],
-  "selfService": true,
-  "note": "",
-  "source": "TM Lua Instant Small NL V1.0 (5DTINS10M)"
  },
  {
   "message": "Clean the milk system",

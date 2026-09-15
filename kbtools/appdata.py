@@ -138,7 +138,76 @@ class Pictures:
         return path
 
 
-def build_machines(products, pictures, locale="nl"):
+# --- sizes and weights ------------------------------------------------------
+# The figures come out of the technical manuals themselves rather than out of a
+# brochure: a brochure gives a range over every build, the book gives the size
+# of exactly this model.
+DIMENSION = [
+    ("Height", r"^(hoogte|height)$"),
+    ("Height with bean canister",
+     r"^(hoogte|height)[\s(]*(met|with)\s+((grote|extended|verlengde)\s+)?(bonencontainer|bean canister)\)?$"),
+    ("Width", r"^(breedte|width)$"),
+    ("Depth", r"^(diepte|depth)$"),
+    ("Weight", r"^(gewicht \(leeg\)|weight \(empty\))$"),
+]
+METRIC = re.compile(r"\b(mm|cm|kg)\b", re.I)
+
+
+def dimension_tables(kb_specs):
+    """The size rows of every specification table that counts in mm and kg."""
+    out = []
+    for topic in kb_specs:
+        if not topic["title"].lower().startswith(("technische spec", "technical spec")):
+            continue
+        rows = (topic["rows"].get("NL") or topic["rows"].get("EN")
+                or next(iter(topic["rows"].values()), []))
+        found = {}
+        for row in rows:
+            key = clean(row.get("key") or "").strip().lower()
+            value = re.sub(r"\bKg\b", "kg", clean(row.get("value") or "").strip())
+            for label, pattern in DIMENSION:
+                if re.fullmatch(pattern, key):
+                    found.setdefault(label, value)
+        if found and any(METRIC.search(v) for v in found.values()):
+            out.append((set(topic["applies_to"]), found, (topic["sources"] or [""])[0]))
+    return out
+
+
+def machine_dimensions(brand, model_codes, tables):
+    """One machine's size table: the small cabinet beside the medium one."""
+    own = [t for t in tables if t[2].split("-")[1:2] == [brand]]
+    per_label = {}
+    sources = []
+    for code in model_codes:
+        size = MODEL_CODES.get(code, ("", ""))[1] or ""
+        found = next((t for t in own if f"{brand}.{code.lower()}" in t[0]), None)
+        found = found or next((t for t in tables if f"{brand}.{code.lower()}" in t[0]), None)
+        if not found:
+            continue
+        sources.append(found[2])
+        for label, value in found[1].items():
+            per_label.setdefault(label, {}).setdefault(size, set()).add(value)
+
+    def cell(values):
+        if not values:
+            return ""
+        if len(values) == 1:
+            return next(iter(values))
+        # Two builds that are not equally deep: give the range.
+        order = sorted(values, key=lambda v: float(re.sub(r"[^\d.,]", "", v).replace(",", ".") or 0))
+        return f"{order[0]} \u2013 {order[-1]}"
+
+    rows = []
+    for label, _ in DIMENSION:
+        sizes = per_label.get(label)
+        if not sizes:
+            continue
+        rows.append(dict(label=label, small=cell(sizes.get("Small", set())),
+                         medium=cell(sizes.get("Medium", set()))))
+    return rows, sorted(set(sources))
+
+
+def build_machines(products, pictures, locale="nl", kb_specs=()):
     """The eleven machine lines, with the builds each one is sold in.
 
     The words around the machine — what it is, which service menu it runs, what
@@ -155,6 +224,7 @@ def build_machines(products, pictures, locale="nl"):
         """The translation of a hand-written line, or the Dutch it was written in."""
         return (table.get(text) or {}).get(locale, text) if locale != "nl" else text
 
+    tables = dimension_tables(kb_specs)
     base = read_json(os.path.join(DATA, "machines.json"), [])
     by_brand = defaultdict(list)
     for p in products:
@@ -169,7 +239,9 @@ def build_machines(products, pictures, locale="nl"):
         if machine.get("serviceMenuNote"):
             machine["serviceMenuNote"] = say(notes, machine["serviceMenuNote"])
         for row in machine.get("specs", []):
-            row["label"] = say(labels, row["label"])
+            # Every language, Dutch included: the label itself is written in
+            # English in the code.
+            row["label"] = (labels.get(row["label"]) or {}).get(locale, row["label"])
         variants = sorted(by_brand.get(brand, []), key=lambda p: p["model_code"])
         machine["variants"] = [dict(
             code=v["model_code"],
@@ -179,6 +251,12 @@ def build_machines(products, pictures, locale="nl"):
         ) for v in variants]
         if variants:
             machine["typeCode"] = " / ".join(v["model_code"] for v in variants)
+            # The sizes come from the books, not from what was written by hand
+            # in machines.json.
+            rows, sources = machine_dimensions(
+                brand, [v["model_code"] for v in variants], tables)
+            machine["specs"] = rows or machine.get("specs", [])
+            machine["specsSource"] = ", ".join(sources[:2])
             sizes = sorted({v["size"] for v in variants if v["size"]})
             machine["cabinet"] = ", ".join(sizes)
             brewers = sorted({v["brewer"] for v in variants if v["brewer"]})
@@ -215,8 +293,9 @@ def build_faults(kb_faults, langs=LANG):
     over, because that part is not language-bound.
     """
     dutch_first = bool(langs) and langs[0] == "NL"
-    out = [dict(f, codes=f.get("codes", [])) for f in
-           read_json(os.path.join(DATA, "faults.json"), [])]
+    out = [dict(f, codes=f.get("codes", []),
+                category=CATEGORY_WAS.get(f.get("category"), f.get("category") or "Other"))
+           for f in read_json(os.path.join(DATA, "faults.json"), [])]
 
     def key_of(text):
         return re.sub(r"\W+", "", (text or "").lower())
@@ -264,14 +343,24 @@ def build_faults(kb_faults, langs=LANG):
     return out
 
 
+# The name is a key, not a label: the app looks up the word the reader sees.
+# The patterns match both languages a message can be written in.
 CATEGORY = [
     ("Brewer", r"brewer|brew|zetgroep"), ("Water", r"water|boiler|kalk|filter|pomp|druk"),
-    ("Afval", r"waste|afval|drip|lekbak"), ("Reiniging", r"clean|reinig|spoel|rinse"),
-    ("Temperatuur", r"temp|heat|verwarm"), ("Molen", r"grind|molen|bean|bonen"),
-    ("Mixer", r"mixer|mengen"), ("Beker", r"cup|beker"),
-    ("Betaling", r"coin|payment|betaal|munt"), ("Besturing", r"communicat|board|software|config|usb"),
-    ("Ingrediënten", r"ingredient|canister|container"), ("Bediening", r"door|deur|key|sleutel|screen|scherm"),
+    ("Waste", r"waste|afval|drip|lekbak"), ("Cleaning", r"clean|reinig|spoel|rinse"),
+    ("Temperature", r"temp|heat|verwarm"), ("Grinder", r"grind|molen|bean|bonen"),
+    ("Mixer", r"mixer|mengen"), ("Cups", r"cup|beker"),
+    ("Payment", r"coin|payment|betaal|munt"), ("Controls", r"communicat|board|software|config|usb"),
+    ("Ingredients", r"ingredient|canister|container"), ("Operation", r"door|deur|key|sleutel|screen|scherm"),
 ]
+
+# What the hand-written faults in data/faults.json still call them.
+CATEGORY_WAS = {
+    "Afval": "Waste", "Reiniging": "Cleaning", "Temperatuur": "Temperature",
+    "Molen": "Grinder", "Beker": "Cups", "Betaling": "Payment",
+    "Besturing": "Controls", "Ingrediënten": "Ingredients",
+    "Bediening": "Operation", "Overig": "Other",
+}
 
 
 def category(message):
@@ -279,7 +368,7 @@ def category(message):
     for name, pattern in CATEGORY:
         if re.search(pattern, low):
             return name
-    return "Overig"
+    return "Other"
 
 
 # Which subject a section belongs to, from where it sits in the manual:
@@ -521,14 +610,14 @@ def build_procedures(kb_procedures, pictures, langs=LANG):
 
 
 # The sheets are English only; the heading is what the engineer scans for, so
-# that one is given in Dutch. The steps stay in the manufacturer's words.
+# the two the books use are given a fixed name the app can translate.
 CARD_TITLES = {
-    "daily maintenance": "Dagelijks onderhoud",
-    "regular maintenance": "Periodiek onderhoud",
-    "weekly maintenance": "Wekelijks onderhoud",
-    "monthly maintenance": "Maandelijks onderhoud",
-    "quarterly maintenance": "Onderhoud per kwartaal",
-    "yearly maintenance": "Jaarlijks onderhoud",
+    "daily maintenance": "Daily maintenance",
+    "regular maintenance": "Regular maintenance",
+    "weekly maintenance": "Weekly maintenance",
+    "monthly maintenance": "Monthly maintenance",
+    "quarterly maintenance": "Quarterly maintenance",
+    "yearly maintenance": "Yearly maintenance",
 }
 
 
@@ -569,6 +658,37 @@ def build_parts(parts):
 BALLOON_CODE = re.compile(r"^(\d{3,5})")
 
 
+def checked_hotspots(legacy, parts):
+    """Balloon numbers that really do have a row in the parts books.
+
+    The drawings with clickable balloons come from an earlier run. Where such a
+    drawing is from a different printing than the parts book it now belongs to,
+    a balloon points at a row that does not exist. That balloon is dropped; if
+    too little is left the whole drawing is dropped and the one rendered from
+    the manual is shown instead.
+    """
+    hotspots = read_json(os.path.join(DATA, "hotspots.json"), {})
+    rows = defaultdict(set)
+    for row in parts:
+        if row["s"]:
+            rows[(row["m"], row["s"])].add((row["p"] or "").lstrip("0").lower())
+
+    keep, dropped, thin = {}, 0, []
+    for (brand, code), path in legacy.items():
+        name = os.path.basename(path).removesuffix(".webp")
+        spots = hotspots.get(name)
+        if not spots:
+            continue
+        have = rows.get((brand, code), set())
+        good = [s for s in spots if str(s["n"]).lstrip("0").lower() in have]
+        dropped += len(spots) - len(good)
+        if len(good) < max(2, len(spots) // 2):
+            thin.append(f"{brand} {code}")
+            continue
+        keep[name] = good
+    return keep, dropped, thin
+
+
 def legacy_drawings():
     """The drawings whose balloon numbers were read earlier.
 
@@ -589,11 +709,18 @@ def legacy_drawings():
     return out
 
 
-def build_drawings(drawings, pictures):
+def build_drawings(drawings, pictures, parts):
     """machine|build|section -> the exploded views of that section."""
     out = {}
     titles = {}
     legacy = legacy_drawings()
+    hotspots, dropped, thin = checked_hotspots(legacy, parts)
+    # A drawing without usable balloons comes from the new render.
+    legacy = {k: v for k, v in legacy.items()
+              if os.path.basename(v).removesuffix(".webp") in hotspots}
+    print(f"  balloons: {dropped} without a row in the parts books left out, "
+          f"{len(thin)} drawing(s) replaced{' (' + ', '.join(thin[:6]) + ')' if thin else ''}")
+    build_drawings.hotspots = hotspots
     src = os.path.join(DATA, "tek_ballon")
     dst = os.path.join(ASSETS, "tek")
     os.makedirs(dst, exist_ok=True)
@@ -761,13 +888,14 @@ def main():
     # --- the same for everyone ---------------------------------------------
     cards = build_cards(kb["maintenance"], pictures)
     parts = build_parts(kb["parts"])
-    drawings, drawing_titles = build_drawings(kb["drawings"], pictures)
+    drawings, drawing_titles = build_drawings(kb["drawings"], pictures, parts)
 
     sizes = {}
     sizes["cards.json"] = compact("cards.json", cards)
     sizes["parts.json"] = compact("parts.json", parts)
     sizes["drawings.json"] = compact("drawings.json", drawings)
     sizes["drawingnames.json"] = compact("drawingnames.json", drawing_titles)
+    sizes["hotspots.json"] = compact("hotspots.json", build_drawings.hotspots)
 
     # --- once per language --------------------------------------------------
     # The manuals were translated by the manufacturer; the app hands the
@@ -777,7 +905,7 @@ def main():
     machines = {}
     for locale, code in LOCALES.items():
         langs = [code, "EN", "NL"]
-        machines[locale] = build_machines(kb["products"], pictures, locale)
+        machines[locale] = build_machines(kb["products"], pictures, locale, kb["specs"])
         sizes[f"machines-{locale}.json"] = compact(
             f"machines-{locale}.json", machines[locale])
         content = dict(
@@ -793,7 +921,7 @@ def main():
         counts[locale] = {k: len(v) for k, v in content.items()}
         native = sum(1 for row in content["components"] if row["language"] == locale)
         print(f"  {locale}  {sizes[name]/1024:7.0f} KB   "
-              f"{native}/{len(content['components'])} componenten in eigen taal")
+              f"{native}/{len(content['components'])} components in their own language")
 
     print(f"\n{len(machines['nl'])} machines, {len(cards)} maintenance cards, "
           f"{len(parts)} part rows, {len(drawings)} drawings")

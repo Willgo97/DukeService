@@ -46,7 +46,7 @@
    "Gebruikershandleiding 5DUCEK20I",
    "Onderdelenboek 9CECK (CoEx)"
   ],
-  "serviceMenu": "oud",
+  "serviceMenu": "old",
   "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "variants": [
    {
@@ -104,7 +104,7 @@
   "docs": [
    "Onderdelenboek 9CECP (CoEx)"
   ],
-  "serviceMenu": "oud",
+  "serviceMenu": "old",
   "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "variants": [
    {
@@ -123,7 +123,7 @@
   "typeCode": "9CKA",
   "brewer": "CoEx / CoEx XL",
   "cabinet": "Tafelmodel",
-  "screen": "Touchscreen",
+  "screen": "10,4\" touchscreen",
   "active": false,
   "summary": "Compact tafelmodel; voorganger van de Nio Next.",
   "description": "Tafelmodel met CoEx-brewer, leverbaar met metalen of PPSU-kleppen. Let op: het onderdelenboek splitst pressure boiler en steam boiler per uitvoering en per bouwjaar.",
@@ -132,7 +132,7 @@
    "Technische handleiding 5DTXKA20M (CoEx XL)",
    "Onderdelenboek 9CKA (CoEx)"
   ],
-  "serviceMenu": "oud",
+  "serviceMenu": "old",
   "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "variants": [
    {
@@ -194,7 +194,7 @@
    }
   ],
   "docs": [],
-  "serviceMenu": "nieuw",
+  "serviceMenu": "new",
   "serviceMenuNote": "Alleen het nieuwe servicemenu.",
   "photo": "machines/nionext.webp"
  },
@@ -246,7 +246,7 @@
    "Technische handleiding 5DTINS10M (NL, Instant)",
    "Onderdelenboek 9XEAS (CoEx XL)"
   ],
-  "serviceMenu": "beide",
+  "serviceMenu": "both",
   "serviceMenuNote": "Heeft op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.",
   "variants": [
    {
@@ -313,7 +313,7 @@
    "Gebruikershandleiding 5DUXET20M",
    "Onderdelenboek 9XEAT (CoEx XL)"
   ],
-  "serviceMenu": "beide",
+  "serviceMenu": "both",
   "serviceMenuNote": "Heeft op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.",
   "variants": [
    {
@@ -385,7 +385,7 @@
    "Gebruikershandleiding 5DUFNV20M",
    "Onderdelenboek 9FND (Uni-Brewer)"
   ],
-  "serviceMenu": "beide",
+  "serviceMenu": "both",
   "serviceMenuNote": "Mogelijk ook op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.",
   "variants": [
    {
@@ -441,7 +441,7 @@
    }
   ],
   "docs": [],
-  "serviceMenu": "nieuw",
+  "serviceMenu": "new",
   "serviceMenuNote": "Alleen het nieuwe servicemenu.",
   "photo": "machines/lina.webp"
  },
@@ -452,7 +452,7 @@
   "typeCode": "",
   "brewer": "CoEx",
   "cabinet": "Small, Medium",
-  "screen": "Touchscreen",
+  "screen": "10,4\" touchscreen",
   "active": true,
   "summary": "Duurzaamste model: 96% recyclebaar, gebouwd op repareren en refurbishen.",
   "description": "Geen verf, lijm of hars op de deur; de machine is voor 96% recyclebaar en bewust ontworpen om te repareren en te refurbishen. Gekoppeld aan ConnectMe schakelt Blu in daluren zelf naar de spaarstand.",
@@ -489,8 +489,8 @@
    }
   ],
   "docs": [],
-  "serviceMenu": "onbekend",
-  "serviceMenuNote": "Niet vastgelegd. Kijk in de machine welke besturing erin zit.",
+  "serviceMenu": "old",
+  "serviceMenuNote": "De technische handleiding van de Blu beschrijft het oude servicemenu; de besturingsprint is een ICEQ2 (9EPRxxx).",
   "photo": "machines/blu.webp"
  },
  {
@@ -500,13 +500,13 @@
   "typeCode": "",
   "brewer": "",
   "cabinet": "",
-  "screen": "",
+  "screen": "10,4\" touchscreen",
   "active": false,
   "summary": "Ouder model. Geen publieke documentatie gevonden — vul zelf aan.",
   "description": "Voor dit model stond bij het samenstellen geen handleiding of onderdelenboek online. Storingen en procedures van de CoEx-machines komen vaak overeen; controleer altijd het typeplaatje in de machine.",
   "specs": [],
   "docs": [],
-  "serviceMenu": "oud",
+  "serviceMenu": "old",
   "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "photo": ""
  },
@@ -523,7 +523,7 @@
   "description": "Voor dit model stond bij het samenstellen geen handleiding of onderdelenboek online.",
   "specs": [],
   "docs": [],
-  "serviceMenu": "oud",
+  "serviceMenu": "old",
   "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "photo": ""
  }

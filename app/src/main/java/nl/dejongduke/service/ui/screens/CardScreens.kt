@@ -58,21 +58,21 @@ fun CardList(
     LazyColumn(Modifier.fillMaxWidth()) {
         item {
             ChipRow(
-                options = listOf<Pair<String?, String>>(null to stringResource(R.string.alle)) + withCards.map { it.id as String? to it.name },
+                options = listOf<Pair<String?, String>>(null to stringResource(R.string.all)) + withCards.map { it.id as String? to it.name },
                 selected = filter,
                 onSelect = onFilter,
             )
         }
         item {
             Text(
-                stringResource(R.string.de_onderhoudskaart_van_de_fabrikant_stap_voo),
+                stringResource(R.string.the_manufacturer_s_maintenance_card_step_by),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             )
         }
         if (cards.isEmpty()) {
-            item { EmptyState(stringResource(R.string.geen_kaart), stringResource(R.string.voor_deze_machine_zit_er_geen_onderhoudskaar)) }
+            item { EmptyState(stringResource(R.string.no_card), stringResource(R.string.there_is_no_maintenance_card_for_this_machin)) }
         }
         for ((interval, group) in perInterval) {
             item { SectionHeader(intervalName(interval), "${group.size}") }
@@ -108,13 +108,13 @@ fun CardList(
 
 @Composable
 fun intervalName(interval: String) = when (interval) {
-    "dag" -> stringResource(R.string.dagelijks)
-    "week" -> stringResource(R.string.wekelijks)
-    "maand" -> stringResource(R.string.maandelijks)
-    "kwartaal" -> stringResource(R.string.per_kwartaal)
-    "jaar" -> stringResource(R.string.jaarlijks)
-    "periodiek" -> stringResource(R.string.periodiek_onderhoud)
-    else -> stringResource(R.string.overig)
+    "daily" -> stringResource(R.string.daily)
+    "weekly" -> stringResource(R.string.weekly)
+    "monthly" -> stringResource(R.string.monthly)
+    "quarterly" -> stringResource(R.string.quarterly)
+    "yearly" -> stringResource(R.string.yearly)
+    "regular" -> stringResource(R.string.regular_maintenance)
+    else -> stringResource(R.string.other)
 }
 
 @Composable
@@ -136,7 +136,7 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
                 FilledTonalButton(onClick = { onOpen(Route.Steps("card", card.id)) }) {
                     Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.stap_voor_stap))
+                    Text(stringResource(R.string.step_by_step))
                 }
             }
         }
@@ -156,7 +156,7 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
                         }
                         Column(Modifier.weight(1f)) {
                             step.points.forEach { punt ->
-                                Text(stringResource(R.string.x, punt), style = MaterialTheme.typography.bodyLarge)
+                                Text(stringResource(R.string.text, punt), style = MaterialTheme.typography.bodyLarge)
                                 Spacer(Modifier.height(4.dp))
                             }
                             step.notes.forEach { note ->
@@ -178,7 +178,7 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
         }
         item {
             Text(
-                stringResource(R.string.bron_x_bij_twijfel_is_de_kaart_in_de_machine, card.source),
+                stringResource(R.string.source_if_in_doubt_the_card_inside_the_machi, card.source),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
