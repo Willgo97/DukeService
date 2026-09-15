@@ -131,7 +131,7 @@ fun ProcedureDetail(
                 }
                 if (procedure.steps.isNotEmpty()) {
                     Spacer(Modifier.height(12.dp))
-                    FilledTonalButton(onClick = { onOpen(Route.Steps("procedure", procedure.id)) }) {
+                    FilledTonalButton(onClick = { onOpen(Route.Steps(procedure.id)) }) {
                         Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
                         Spacer(Modifier.width(8.dp))
                         Text(stringResource(R.string.step_by_step))

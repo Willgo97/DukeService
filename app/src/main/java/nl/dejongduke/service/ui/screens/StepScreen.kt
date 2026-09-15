@@ -2,7 +2,6 @@ package nl.dejongduke.service.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -175,12 +174,6 @@ private fun EmptyStepState() {
         Text(stringResource(R.string.no_steps), style = MaterialTheme.typography.titleMedium)
     }
 }
-
-/** The steps of a maintenance card, ready for the player. */
-fun Catalog.cardSteps(id: String): List<StepPage> =
-    card(id)?.steps.orEmpty().map { step ->
-        StepPage(step.number, step.points, step.notes, step.images)
-    }.filter { it.points.isNotEmpty() || it.images.isNotEmpty() }
 
 /** The steps of a procedure, ready for the player. */
 fun Catalog.procedureSteps(id: String): List<StepPage> {

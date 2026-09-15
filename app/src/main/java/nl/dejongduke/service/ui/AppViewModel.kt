@@ -33,8 +33,8 @@ sealed interface Route {
     data class Machine(val id: String) : Route
     data class PartSection(val machine: String, val variant: String, val section: String) : Route
     data class MaintenanceCard(val id: String) : Route
-    /** A job walked through one step at a time; kind is "card" or "procedure". */
-    data class Steps(val kind: String, val id: String) : Route
+    /** A procedure walked through one step at a time. */
+    data class Steps(val id: String) : Route
     data object Cards : Route
     data class Component(val id: String) : Route
     data object Components : Route

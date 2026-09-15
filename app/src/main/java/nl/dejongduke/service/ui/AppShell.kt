@@ -63,7 +63,6 @@ import nl.dejongduke.service.ui.screens.SearchScreen
 import nl.dejongduke.service.ui.screens.SettingsScreen
 import nl.dejongduke.service.ui.screens.SpecsScreen
 import nl.dejongduke.service.ui.screens.StepPlayer
-import nl.dejongduke.service.ui.screens.cardSteps
 import nl.dejongduke.service.ui.screens.procedureSteps
 import nl.dejongduke.service.ui.screens.PlateScanScreen
 import androidx.compose.runtime.getValue
@@ -332,29 +331,14 @@ private fun DetailScreen(vm: AppViewModel, loaded: Catalog, route: Route) {
         is Route.MaintenanceCard -> {
             val card = loaded.card(route.id)
             if (card == null) EmptyState(stringResource(R.string.not_found), stringResource(R.string.this_maintenance_card_is_not_in_the_app))
-            else CardDetail(loaded, card, vm::open)
+            else CardDetail(loaded, card)
         }
 
-        is Route.Steps -> when (route.kind) {
-            "card" -> {
-                val card = loaded.card(route.id)
-                StepPlayer(
-                    card?.title?.let { cardTitle(it) } ?: stringResource(R.string.steps),
-                    listOfNotNull(
-                        loaded.machineNames(card?.machines.orEmpty()).ifEmpty { null },
-                        card?.codes?.joinToString(", ") {
-                            loaded.variantLabel(card.machines.firstOrNull(), it)
-                        }?.ifEmpty { null },
-                    ).joinToString("  ·  "),
-                    loaded.cardSteps(route.id),
-                )
-            }
-            else -> {
-                val procedure = loaded.procedure(route.id)
-                StepPlayer(procedure?.title ?: stringResource(R.string.steps),
-                           loaded.machineNames(procedure?.machines.orEmpty()),
-                           loaded.procedureSteps(route.id))
-            }
+        is Route.Steps -> {
+            val procedure = loaded.procedure(route.id)
+            StepPlayer(procedure?.title ?: stringResource(R.string.steps),
+                       loaded.machineNames(procedure?.machines.orEmpty()),
+                       loaded.procedureSteps(route.id))
         }
 
         Route.Specs -> SpecsScreen(loaded, filter, variant, vm::setFilter)

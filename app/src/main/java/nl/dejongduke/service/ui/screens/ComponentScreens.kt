@@ -4,7 +4,11 @@ package nl.dejongduke.service.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculatePan
+import androidx.compose.foundation.gestures.calculateZoom
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -229,9 +233,13 @@ fun ComponentDetail(catalog: Catalog, component: Component) {
  *
  * @param maxHeight a tall drawing may not push everything under it off the
  *   screen. One step of a job gets more room than one picture in a list.
+ * @param zoomable for the dense drawings out of the technical manual, where
+ *   the call-out numbers are small. A maintenance card's pictures are drawn
+ *   large enough to begin with, and a picture that takes gestures is a picture
+ *   the page cannot be scrolled past.
  */
 @Composable
-fun AssetImage(path: String, maxHeight: Dp = 320.dp) {
+fun AssetImage(path: String, maxHeight: Dp = 320.dp, zoomable: Boolean = true) {
     val context = LocalContext.current
     val screen = LocalConfiguration.current.screenWidthDp
     val density = LocalDensity.current.density
@@ -272,18 +280,39 @@ fun AssetImage(path: String, maxHeight: Dp = 320.dp) {
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer(scaleX = scale, scaleY = scale, translationX = offsetX, translationY = offsetY)
-                .pointerInput(path) {
-                    detectTransformGestures { _, pan, zoom, _ ->
-                        scale = (scale * zoom).coerceIn(1f, 5f)
-                        if (scale > 1f) {
-                            offsetX += pan.x
-                            offsetY += pan.y
-                        } else {
-                            offsetX = 0f
-                            offsetY = 0f
+                .then(if (!zoomable) Modifier else Modifier
+                    // Two fingers zoom the drawing; one finger belongs to the
+                    // page. A detector that swallows every drag leaves a list
+                    // that will not scroll wherever a picture is, and the
+                    // pictures are now most of the screen.
+                    .pointerInput(path) {
+                        awaitEachGesture {
+                            awaitFirstDown(requireUnconsumed = false)
+                            do {
+                                val event = awaitPointerEvent()
+                                if (event.changes.size < 2 && scale == 1f) continue
+                                scale = (scale * event.calculateZoom()).coerceIn(1f, 5f)
+                                if (scale > 1f) {
+                                    val pan = event.calculatePan()
+                                    offsetX += pan.x
+                                    offsetY += pan.y
+                                } else {
+                                    offsetX = 0f
+                                    offsetY = 0f
+                                }
+                                event.changes.forEach { it.consume() }
+                            } while (event.changes.any { it.pressed })
                         }
                     }
-                },
+                    // Back to how it was, without pinching it back.
+                    .pointerInput(path) {
+                        detectTapGestures(onDoubleTap = {
+                            scale = 1f
+                            offsetX = 0f
+                            offsetY = 0f
+                        })
+                    }
+                ),
         )
     }
 }

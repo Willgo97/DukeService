@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -166,7 +164,7 @@ fun intervalName(interval: String) = when (interval) {
 }
 
 @Composable
-fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit) {
+fun CardDetail(catalog: Catalog, card: MaintenanceCard) {
     // Half the cards open with an unnumbered block: what the sheet says before
     // step one, plus the safety notes. It is not a step, so it does not get a
     // number and it does not look like one.
@@ -195,12 +193,6 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
                     Spacer(Modifier.height(8.dp))
                     Pill(languageName(card.language))
                 }
-                Spacer(Modifier.height(14.dp))
-                FilledTonalButton(onClick = { onOpen(Route.Steps("card", card.id)) }) {
-                    Icon(Icons.Filled.PlayArrow, null, Modifier.height(18.dp))
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.step_by_step))
-                }
             }
         }
 
@@ -217,7 +209,7 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
                         // to the user manual, not something you work from.
                         intro.images.forEach { image ->
                             Spacer(Modifier.height(8.dp))
-                            AssetImage(image, maxHeight = 140.dp)
+                            AssetImage(image, maxHeight = 140.dp, zoomable = false)
                         }
                     }
                 }
@@ -251,7 +243,7 @@ fun CardDetail(catalog: Catalog, card: MaintenanceCard, onOpen: (Route) -> Unit)
                     }
                     step.images.forEach { image ->
                         Spacer(Modifier.height(12.dp))
-                        AssetImage(image)
+                        AssetImage(image, zoomable = false)
                     }
                 }
             }
