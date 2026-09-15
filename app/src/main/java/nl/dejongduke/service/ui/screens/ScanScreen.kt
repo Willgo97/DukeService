@@ -43,6 +43,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -156,12 +157,18 @@ fun ScanScreen(
     // along it. What has been read stays until the plate leaves the picture.
     var plate by remember { mutableStateOf<Plate?>(null) }
     var plateSeen by remember { mutableStateOf(0L) }
+    // The camera is looking at a plate but has not read a field off it yet.
+    var platePending by remember { mutableStateOf(false) }
     var fromPhoto by remember { mutableStateOf(false) }
     // What the camera has seen lately, keyed by hit. A label drifts out of
     // frame while you are still reading it, and one frame of a bad angle
     // should not throw away what was on screen a moment ago.
     var seen by remember { mutableStateOf<Map<String, Sighting>>(emptyMap()) }
     var photoUntil by remember { mutableStateOf(0L) }
+    // The parts table is read after the app is already usable. A photo taken
+    // in those first seconds is kept, so it can go past the scanner again once
+    // the numbers are in instead of coming back as "nothing recognised".
+    var lastLines by remember { mutableStateOf<List<String>>(emptyList()) }
 
     val recognizer = remember { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) }
     var message by remember { mutableStateOf("") }
@@ -171,6 +178,7 @@ fun ScanScreen(
     val noTextInPhoto = stringResource(R.string.no_text_in_the_photo)
     val readNothingFound = stringResource(R.string.text_read_nothing_recognised)
     val readFailed = stringResource(R.string.reading_failed, "")
+    val partsLoading = stringResource(R.string.the_parts_list_is_still_loading_try_again_in)
     val pickPhoto = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
@@ -185,20 +193,42 @@ fun ScanScreen(
                         // A photo is a deliberate choice, so read it more
                         // generously than a frame that happened to go by.
                         val reader = scanner ?: return@addOnSuccessListener
+                        lastLines = lines
                         val found = reader.scan(lines, PHOTO_THRESHOLD)
-                        plate = reader.readPlate(lines)
+                        // A plate with nothing read off it is not a result; the
+                        // label or the screen in the same picture is.
+                        plate = reader.readPlate(lines)?.takeIf { !it.isEmpty }
                         plateSeen = System.currentTimeMillis()
                         hits = if (plate != null) emptyList() else found
                         seen = emptyMap()
                         fromPhoto = true
                         photoUntil = System.currentTimeMillis() + PHOTO_PAUSE_MS
-                        message = if (found.isEmpty() && plate == null) {
-                            if (lines.isEmpty()) noTextInPhoto
-                            else readNothingFound + lines.take(3).joinToString(" · ")
-                        } else ""
+                        message = when {
+                            found.isNotEmpty() || plate != null -> ""
+                            lines.isEmpty() -> noTextInPhoto
+                            // Saying "nothing recognised" while half the
+                            // catalog is still on its way is a lie the
+                            // engineer acts on.
+                            catalog.parts.isEmpty() -> partsLoading
+                            else -> readNothingFound + lines.take(3).joinToString(" · ")
+                        }
                     }
                     .addOnFailureListener { message = readFailed + (it.message ?: "") }
             }
+    }
+
+    // The scanner is rebuilt when the parts arrive; the photo that came back
+    // empty a moment ago deserves a second pass.
+    LaunchedEffect(scanner) {
+        val reader = scanner ?: return@LaunchedEffect
+        if (lastLines.isEmpty() || hits.isNotEmpty() || plate != null) return@LaunchedEffect
+        val found = reader.scan(lastLines, PHOTO_THRESHOLD)
+        if (found.isNotEmpty()) {
+            hits = found
+            fromPhoto = true
+            photoUntil = System.currentTimeMillis() + PHOTO_PAUSE_MS
+            message = ""
+        }
     }
 
     Box(Modifier.fillMaxSize()) {
@@ -208,30 +238,30 @@ fun ScanScreen(
             fromPhoto = false
             val now = System.currentTimeMillis()
 
-            // Standing in front of the plate: read that, and only that, until
-            // everything on it has been read or it goes out of frame.
+            val found = reader.scan(lines, LIVE_THRESHOLD)
+
+            // Standing in front of the plate: keep filling it in, frame by
+            // frame. A plate the camera has left goes as soon as there is
+            // something else to show, or after the usual few seconds.
             val reading = reader.readPlate(lines)
+            platePending = reading != null
             if (reading != null) {
                 val filled = (plate ?: Plate()).merge(reading)
-                plate = filled
+                plate = filled.takeIf { !it.isEmpty }
                 plateSeen = now
-                hits = emptyList()
-                seen = emptyMap()
                 message = ""
                 if (direct && filled.complete && filled.machine != null) {
                     onUseMachine(filled.machine!!.id, filled.build.ifEmpty { null })
                     onOpen(Route.Machine(filled.machine!!.id))
+                    return@CameraPreview
                 }
-                return@CameraPreview
-            }
-            if (plate != null) {
-                if (now - plateSeen <= KEEP_ALIVE_MS) return@CameraPreview
+            } else if (plate != null && (found.isNotEmpty() || now - plateSeen > KEEP_ALIVE_MS)) {
                 plate = null
             }
-
-            val found = reader.scan(lines, LIVE_THRESHOLD)
+            // The panel says everything the plate hit would say.
+            val rest = if (plate != null) found.filterNot { it is ScanHit.TypePlate } else found
             val updated = seen.toMutableMap()
-            for (hit in found) {
+            for (hit in rest) {
                 val key = reader.key(hit)
                 val previous = updated[key]
                 updated[key] = Sighting(
@@ -283,9 +313,12 @@ fun ScanScreen(
                 Text(
                     when {
                         message.isNotEmpty() -> message
-                        plate != null && plate?.complete != true ->
+                        plate?.complete == true -> stringResource(R.string.type_plate_found)
+                        plate != null || (hits.isEmpty() && platePending) ->
                             stringResource(R.string.hold_still_reading_the_plate)
-                        plate != null -> stringResource(R.string.type_plate_found)
+                        // Part numbers cannot be found before the table is in.
+                        hits.isEmpty() && catalog.parts.isEmpty() ->
+                            stringResource(R.string.the_parts_list_is_still_loading_try_again_in)
                         hits.isEmpty() && seen.isNotEmpty() -> stringResource(R.string.hold_still)
                         hits.isEmpty() -> stringResource(R.string.point_at_a_label_type_plate_or_the_screen)
                         fromPhoto -> stringResource(R.string.found_in_the_photo, hits.size)

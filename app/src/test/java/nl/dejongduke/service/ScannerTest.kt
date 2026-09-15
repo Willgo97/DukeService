@@ -174,4 +174,66 @@ class ScannerTest {
         // What was read first is not thrown away by a later frame.
         assertEquals("9CKAA211A2A00", plate.code)
     }
+
+    // --- a label or a screen with the machine's own name in frame ---------
+    // The maker's name is printed all over the machine, so it may not decide
+    // what the camera is looking at.
+
+    @Test
+    fun aPartLabelIsStillReadWithTheMakersNameInFrame() {
+        val found = scanner.scan(listOf("de JONG DUKE", "5KAF119", "Suction filter"), 60)
+        assertTrue("part", found.any { it is ScanHit.PartHit })
+    }
+
+    @Test
+    fun aScreenMessageIsStillReadWithTheMakersNameInFrame() {
+        val found = scanner.scan(
+            listOf("de JONG DUKE", "SLIEDRECHT", "Brewer out of position"), 60)
+        assertTrue("fault", found.any { it is ScanHit.FaultHit })
+    }
+
+    @Test
+    fun theMakersNameAloneIsNotAPlate() {
+        assertTrue(!scanner.isPlate(listOf("de JONG DUKE", "5KAF119")))
+        // The words in front of the fields are only ever on a plate.
+        assertTrue(scanner.isPlate(listOf("Serial nr.: ", "Rated pressure:")))
+        // And so is the maker's name together with where it was made.
+        assertTrue(scanner.isPlate(listOf("de JONG DUKE", "MADE IN HOLLAND")))
+    }
+
+    @Test
+    fun aPlateWithATypeCodeLeavesNothingElseInTheList() {
+        val found = scanner.scan(
+            listOf(
+                "de JONG DUKE", "Serial nr.: 2014386812001", "Type: 9CKAA211A2A00",
+                "220-240V 50-60 Hz 2.9-3.4 kW", "Line pressure: 0.05 - 0.6 MPa",
+            ),
+            60,
+        )
+        assertEquals(1, found.size)
+        assertTrue("type plate", found.first() is ScanHit.TypePlate)
+    }
+
+
+    @Test
+    fun aPlateWithNothingOnItYetIsNotAResult() {
+        // Two words off the plate came through, no field did. That is a
+        // "hold still", not something to put on screen instead of the label
+        // the camera is actually pointed at.
+        val reading = scanner.readPlate(listOf("de JONG DUKE", "MADE IN HOLLAND"))
+        assertTrue("recognised", reading != null)
+        assertTrue("empty", reading!!.isEmpty)
+
+        val found = scanner.scan(
+            listOf("de JONG DUKE", "MADE IN HOLLAND", "5KAF119", "Suction filter"), 60)
+        assertTrue("the part is still found", found.any { it is ScanHit.PartHit })
+    }
+
+    @Test
+    fun aLabelIsReadWithTheMakersNameBesideIt() {
+        // What the camera really returns off a sticker on the machine.
+        val lines = listOf("de jONG DUKE", "5KAF119", "Suction filter for 2 mixers", "Made in Holland")
+        val found = scanner.scan(lines, 60)
+        assertTrue("part", found.any { it is ScanHit.PartHit })
+    }
 }

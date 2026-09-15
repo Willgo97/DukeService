@@ -45,6 +45,9 @@ data class Plate(
     /** The model line: "Nio 20.2 FM [a] CoEx bean2cup". */
     val model: String = "",
 ) {
+    /** Nothing read off it yet: worth a "hold still", not worth a panel. */
+    val isEmpty: Boolean get() = code.isEmpty() && serial.isEmpty() && model.isEmpty()
+
     /** Enough to point the app at this machine. */
     val known: Boolean get() = machine != null
 
@@ -130,14 +133,16 @@ class Scanner(private val catalog: Catalog) {
         val joined = lines.joinToString(" ")
         val upper = joined.uppercase(Locale.ROOT)
 
-        // A type plate is read as a type plate. Its pressures and power
-        // ratings look enough like part numbers, and its model line enough
-        // like a screen message, to fill the list with things that are not
-        // there — while the one thing that is there says exactly which
-        // machine you are standing in front of.
-        if (isPlate(lines)) {
-            return listOfNotNull(readPlateHit(upper)).filter { it.confidence >= minimum }
+        // A type code is unmistakable, and the rest of that plate is noise: its
+        // pressures and power ratings read like part numbers and its model
+        // line shares words with a screen message. Anything less than a type
+        // code — the maker's name is printed all over the machine — leaves the
+        // label or the screen in front of the camera being read as usual.
+        val plate = readPlateHit(upper)
+        if (plate != null && plate.code.isNotEmpty()) {
+            return listOf(plate).filter { it.confidence >= minimum }
         }
+        if (plate != null) hits += plate
         val seenWords = joined.lowercase(Locale.ROOT)
             .split(Regex("[^a-z0-9]+")).filter { it.length >= 4 }.toSet()
 
@@ -149,12 +154,6 @@ class Scanner(private val catalog: Catalog) {
             val exact = found.any { it.number.equals(token, ignoreCase = true) }
             hits += ScanHit.PartHit(part, token, if (exact) 100 else 80)
         }
-
-        // --- type plate ---------------------------------------------------
-        // The plate inside the door is the one thing that says exactly which
-        // machine is standing there: "Type: 9CKAA211A2A00" is a Nio with a
-        // CoEx brewer, and the serial number says when it was built.
-        readPlateHit(upper)?.let { hits += it }
 
         // --- machine name on the housing ----------------------------------
         for ((word, machine) in machineWords) {
@@ -219,15 +218,16 @@ class Scanner(private val catalog: Catalog) {
      */
     fun isPlate(lines: List<String>): Boolean {
         val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
-        return PLATE_WORDS.count { upper.contains(it) } >= 1 || plateFields(upper) != null
+        return plateFields(upper) != null ||
+            PLATE_FIELDS.any { upper.contains(it) } ||
+            PLATE_HINTS.count { upper.contains(it) } >= 2
     }
 
     /** What this frame could read off the plate; null when there is no plate. */
     fun readPlate(lines: List<String>): Plate? {
+        if (!isPlate(lines)) return null
         val upper = lines.joinToString(" ").uppercase(Locale.ROOT)
-        val fields = plateFields(upper)
-        if (fields == null && PLATE_WORDS.none { upper.contains(it) }) return null
-        return (fields ?: Plate()).copy(model = modelLine(lines))
+        return (plateFields(upper) ?: Plate()).copy(model = modelLine(lines))
     }
 
     /**
@@ -306,10 +306,18 @@ class Scanner(private val catalog: Catalog) {
          * have books for; a machine on site may be one we do not, and reading
          * its plate should still say which build it is.
          */
-        /** Printed on every DUKE plate, and nowhere else on the machine. */
-        private val PLATE_WORDS = listOf(
-            "JONG DUKE", "DEJONGDUKE", "MADE IN HOLLAND", "SERIAL NR", "SERIAL NO",
-            "SERIENR", "RATED PRESSURE", "LINE PRESSURE", "TYPE:",
+        /** The words in front of the fields: these stand on the plate only. */
+        private val PLATE_FIELDS = listOf(
+            "SERIAL NR", "SERIAL NO", "SERIENR", "RATED PRESSURE", "LINE PRESSURE",
+        )
+
+        /**
+         * On the plate too, but not only there: the maker's name is printed on
+         * the front, on stickers and on the drip tray. One of these is not a
+         * plate — two of them together is.
+         */
+        private val PLATE_HINTS = listOf(
+            "JONG DUKE", "DEJONGDUKE", "MADE IN HOLLAND", "SLIEDRECHT", "TYPE:",
         )
 
         private val BUILDS = listOf(

@@ -178,12 +178,18 @@ fun AppShell(vm: AppViewModel = viewModel()) {
                         fadeIn() togetherWith (slideOutHorizontally { it / 6 } + fadeOut())
                     }
                 },
-                label = "scherm",
+                label = "screen",
             ) { (route, activeTab) ->
+                // Read the catalog here, not above: the parts table arrives a
+                // second after the rest, and a screen that was already on its
+                // way in would otherwise keep the one without it — which is
+                // how the scanner ended up looking for part numbers in an
+                // empty list.
+                val shown = catalog ?: return@AnimatedContent
                 Column(Modifier.fillMaxSize()) {
                     when (route) {
-                        null -> RootScreen(vm, loaded, activeTab, filter, variant)
-                        else -> DetailScreen(vm, loaded, route)
+                        null -> RootScreen(vm, shown, activeTab, filter, variant)
+                        else -> DetailScreen(vm, shown, route)
                     }
                 }
             }
