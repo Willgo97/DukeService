@@ -39,9 +39,9 @@ twaalf stappen langs scrollen niet.
 
 ## Machines
 
-Elke machinelijn wordt in meerdere uitvoeringen verkocht: de driletterige code
+Elke machinelijn wordt in meerdere uitvoeringen verkocht: de drieletterige code
 zegt welke brewer en welke kastmaat, en dát is wat de documentatie uit elkaar
-houdt. Een Avy CND en een Zia CND zijn dezelfde machine in een andere kast, en
+houdt. Een Avy CND en een Zia CND zijn dezelfde machine maar met een ander scherm, en
 de app behandelt ze ook zo: de techniek komt uit hetzelfde boek, de kast en het
 scherm niet.
 
@@ -54,7 +54,7 @@ scherm niet.
 | CKA / XKA | CoEx / CoEx XL | Nio | — |
 
 Servicemenu per machine: **oud** (ICeQ2) bij Virtu, Zia, Nio en Edge, **oud of
-nieuw** bij Lua, Avy, Blu en Rosa (vanaf software 6.30/6.40 is het nieuwe
+nieuw** bij Lua, Avy, en Rosa (vanaf software 6.30/6.40 is het nieuwe
 verplicht), **alleen nieuw** bij Lina en Nio Next.
 
 ## Talen
