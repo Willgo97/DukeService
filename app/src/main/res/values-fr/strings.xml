@@ -303,4 +303,8 @@ Cause : </string>
     </plurals>
     <string name="which_machine_is_in_front_of_you">Quelle machine avez-vous devant vous ?</string>
     <string name="read_the_type_plate">Lire la plaque signalétique dans la porte</string>
+    <string name="warn_note">Remarque</string>
+    <string name="warn_caution">Attention</string>
+    <string name="warn_warning">Avertissement</string>
+    <string name="warn_danger">Danger</string>
 </resources>

@@ -320,4 +320,8 @@ Příčina: </string>
     </plurals>
     <string name="which_machine_is_in_front_of_you">Který stroj máte před sebou?</string>
     <string name="read_the_type_plate">Přečtěte typový štítek na vnitřní straně dveří</string>
+    <string name="warn_note">Poznámka</string>
+    <string name="warn_caution">Upozornění</string>
+    <string name="warn_warning">Výstraha</string>
+    <string name="warn_danger">Nebezpečí</string>
 </resources>

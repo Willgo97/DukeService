@@ -303,4 +303,8 @@ Syy: </string>
     </plurals>
     <string name="which_machine_is_in_front_of_you">Mikä kone on edessäsi?</string>
     <string name="read_the_type_plate">Lue oven sisäpuolen tyyppikilpi</string>
+    <string name="warn_note">Huomaa</string>
+    <string name="warn_caution">Huomio</string>
+    <string name="warn_warning">Varoitus</string>
+    <string name="warn_danger">Vaara</string>
 </resources>

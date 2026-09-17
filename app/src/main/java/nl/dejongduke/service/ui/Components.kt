@@ -6,6 +6,8 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import nl.dejongduke.service.R
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -173,6 +175,16 @@ fun Card(
     )
 }
 
+/** The four strengths a safety banner comes in, in the reader's language. */
+@Composable
+fun warnLabel(level: String): String = when (level.lowercase()) {
+    "danger" -> stringResource(R.string.warn_danger)
+    "warning" -> stringResource(R.string.warn_warning)
+    "caution" -> stringResource(R.string.warn_caution)
+    else -> stringResource(R.string.warn_note)
+}
+
+
 @Composable
 fun WarnBanner(item: SafetyNote, modifier: Modifier = Modifier) {
     val tone = warnColor(item.level)
@@ -188,7 +200,7 @@ fun WarnBanner(item: SafetyNote, modifier: Modifier = Modifier) {
         Spacer(Modifier.width(10.dp))
         Column {
             Text(
-                item.level.uppercase(),
+                warnLabel(item.level).uppercase(),
                 style = MaterialTheme.typography.labelSmall,
                 color = tone,
                 fontWeight = FontWeight.Bold,

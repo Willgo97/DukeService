@@ -29,6 +29,13 @@ LINE_BREAK_HYPHEN = re.compile(
     r"([A-Za-z\u00c0-\u024f])- (?!(?:%s)\b)([a-z\u00e0-\u024f])" % CONJUNCTIONS)
 SPACE_INSIDE = re.compile(r"\(\s+|\s+\)")
 URL_BREAK = re.compile(r"(https?://[^\s]*)\s+(?=[^\s])")
+# The Symbol font prints "less than or equal" as a pound sign, and the
+# extractor takes it at face value: "£ 61,97 dB(A)" is "≤ 61,97 dB(A)". Only a
+# pound in front of a measurement is read that way, so a price in an English
+# parts book stays a price.
+UNITS = "dB|bar|kPa|MPa|°C|°dH|fH|mm|cm|m|kg|g|ms|s|min|h|ml|l|V|VAC|W|kW|A|mA|Hz|%"
+SYMBOL_LE = re.compile(r"£\s*(?=[\d.,]+\s*(?:%s)\b)" % UNITS)
+
 BLANK_LINES = re.compile(r"\n{3,}")
 
 
@@ -43,6 +50,7 @@ def clean(text):
     text = SOFT_HYPHEN.sub("", text)
     text = LINE_BREAK_HYPHEN.sub(r"\1-\2", text)
     text = URL_BREAK.sub(r"\1", text)
+    text = SYMBOL_LE.sub("\u2264 ", text)
     text = "\n".join(RUN_OF_SPACE.sub(" ", line).strip() for line in text.split("\n"))
     text = SPACE_BEFORE.sub(r"\1", text)
     text = SPACE_INSIDE.sub(lambda m: "(" if m.group(0).startswith("(") else ")", text)

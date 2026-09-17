@@ -13,7 +13,7 @@
    "Controleer of de brewer correct is geïnstalleerd. Verwijder en vervang de brewer volgens de procedure.",
    "Controleer of de micro-leveler gebogen is.",
    "Controleer of de motorschacht defect is.",
-   "Controleer of de brewer geblokkeerd en niet kan draaien."
+   "Controleer of de brewer geblokkeerd is en niet kan draaien."
   ],
   "engineerNote": "Blijft de melding staan, dan is het een servicemelding.",
   "procedures": [
@@ -38,7 +38,7 @@
   "category": "Brewer",
   "cause": "De brewer zit niet goed vergrendeld in de machine.",
   "solution": [
-   "Verwijder de brewer en reinig hem. Wanneer het probleem niet verholpen is: neem contact op met fabrikant."
+   "Verwijder de brewer en reinig hem. Wanneer het probleem niet verholpen is: neem contact op met de fabrikant."
   ],
   "engineerNote": "Blijft de melding staan, dan is het een servicemelding.",
   "procedures": [
@@ -343,7 +343,7 @@
    "rosa"
   ],
   "category": "Water",
-  "cause": "De niveausensor in de boiler heeft heen waterniveau gedetecteerd.",
+  "cause": "De niveausensor in de boiler heeft geen waterniveau gedetecteerd.",
   "solution": [
    "Controleer of de kraan is geopend.",
    "Controleer de niveausensor.",
@@ -514,7 +514,7 @@
    "Controleer of de verwarming defect is en blijft verwarmen.",
    "Controleer de temperatuurinstelling.",
    "Controleer de temperatuursensor.",
-   "Controleer op losse bedrading/slecht contact",
+   "Controleer op losse bedrading/slecht contact.",
    "Controleer of de boilers correct zijn aangesloten. Verwissel de bedrading voor boiler 1 niet met die van boiler 2."
   ],
   "engineerNote": "Staat de melding er dan nog: servicemelding.",
@@ -634,10 +634,10 @@
   "cause": "De emmer met koffiedik is vol, of de detectieschakelaar is vervuild.",
   "solution": [
    "Maak afvalbak leeg.",
-   "Wanneer het bericht nog steeds wordt weergegeven, verwijdert u de afvalbak en wacht u 6 seconden voordat u hem terug plaatst.",
+   "Wanneer het bericht nog steeds wordt weergegeven, verwijdert u de afvalbak en wacht u 6 seconden voordat u hem terugplaatst.",
    "Wanneer het bericht nog steeds wordt weergegeven, controleert u of de detectorschakelaar van de afvalbak schoon is.",
    "Wanneer in de onderkast een afvalbak wordt gebruikt, reset dan de afvalbakteller of pas de waarde van de volle afvalbak aan in Errorinstellingen.",
-   "Wanneer het probleem niet verholpen is: neem contact op met fabrikant."
+   "Wanneer het probleem niet verholpen is: neem contact op met de fabrikant."
   ],
   "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [
@@ -940,7 +940,7 @@
   "category": "Betaling",
   "cause": "De betaling is nog niet compleet.",
   "solution": [
-   "Betaal het volledige met muntgeld, munten of een kaart."
+   "Betaal het volledige bedrag met muntgeld, munten of een kaart."
   ],
   "engineerNote": "",
   "procedures": [],
@@ -1169,7 +1169,7 @@
   "cause": "Er is een lek gedetecteerd.",
   "solution": [
    "Draai de kraan dicht.",
-   "neem contact op met fabrikant."
+   "neem contact op met de fabrikant."
   ],
   "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
@@ -1184,7 +1184,7 @@
  },
  {
   "message": "Clean the milk system",
-  "dutch": "Clean the milk system",
+  "dutch": "Reinig het melksysteem",
   "machines": [
    "nio"
   ],
@@ -1192,9 +1192,9 @@
    "CoEx XL"
   ],
   "category": "Reiniging",
-  "cause": "The last time the milk system was cleaned was at least 20 hours ago.",
+  "cause": "Het melksysteem is minstens 20 uur geleden voor het laatst gereinigd.",
   "solution": [
-   "Clean the fresh milk system. The cleaning cycle resets the timer counter."
+   "Reinig het systeem voor verse melk. De reinigingscyclus zet de teller terug."
   ],
   "engineerNote": "",
   "procedures": [],
@@ -1204,7 +1204,7 @@
  },
  {
   "message": "Place coffee funnel in the machine",
-  "dutch": "Place coffee funnel in the machine",
+  "dutch": "Plaats de koffie-trechter in de machine",
   "machines": [
    "nio"
   ],
@@ -1212,10 +1212,10 @@
    "CoEx XL"
   ],
   "category": "Bediening",
-  "cause": "The funnel magnet is not detected by the switch.",
+  "cause": "De schakelaar detecteert de magneet van de trechter niet.",
   "solution": [
-   "Place the coffee funnel.",
-   "Check the funnel switch / check the wiring."
+   "Plaats de koffie-trechter.",
+   "Controleer de trechterschakelaar / controleer de bedrading."
   ],
   "engineerNote": "",
   "procedures": [],
@@ -1225,7 +1225,7 @@
  },
  {
   "message": "Place cup left",
-  "dutch": "Place cup left",
+  "dutch": "Plaats beker links",
   "machines": [
    "nio"
   ],
@@ -1233,9 +1233,9 @@
    "CoEx XL"
   ],
   "category": "Water",
-  "cause": "Cup needs to be placed under the water dispensing nozzle before the [Start] button is available.",
+  "cause": "De beker moet onder de waterschenktuit worden geplaatst voordat de [Start]-knop beschikbaar is.",
   "solution": [
-   "If cup is placed in the correct position clean the cup sensor."
+   "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken."
   ],
   "engineerNote": "",
   "procedures": [],
@@ -1245,7 +1245,7 @@
  },
  {
   "message": "Install new filter paper",
-  "dutch": "Install new filter paper",
+  "dutch": "Plaats nieuw filterpapier",
   "machines": [
    "rosa"
   ],
@@ -1253,9 +1253,9 @@
    "Uni-Brewer"
   ],
   "category": "Water",
-  "cause": "Filter paper roll is empty.",
+  "cause": "De rol filterpapier is op.",
   "solution": [
-   "Place new filter paper."
+   "Plaats nieuw filterpapier."
   ],
   "engineerNote": "",
   "procedures": [],

@@ -59,7 +59,7 @@
     <string name="found">Gevonden</string>
     <string name="every_six_months">Halfjaarlijks</string>
     <string name="how_the_machine_works">Hoe de machine werkt</string>
-    <string name="how_the_machine_works_water_system_boilers_v">Hoe de machine werkt: watersysteem, boilers, ventielen, brewer, molen en elektronica — met de bijbehorende pagina\'s uit de technische handleiding.</string>
+    <string name="how_the_machine_works_water_system_boilers_v">Hoe de machine werkt: watersysteem, boilers, ventielen, brewer, molen en elektronica — met de bijbehorende pagina’s uit de technische handleiding.</string>
     <string name="how_it_was_put_together">Hoe het is samengevoegd</string>
     <string name="current_range">Huidig assortiment</string>
     <string name="in_the_app">In de app</string>
@@ -119,7 +119,7 @@
     <string name="pos_2">pos %1$s</string>
     <string name="pos_3">  ·  pos %1$s</string>
     <string name="private_work_not_an_official_de_jong_duke_re">Privéwerk, geen officiële uitgave van De Jong DUKE. Bij twijfel zijn de handleiding en het typeplaatje in de machine leidend.</string>
-    <string name="try_part_of_the_number_or_an_english_term_su">Probeer een deel van het nummer of een Engelse term, zoals \\"boiler\\".</string>
+    <string name="try_part_of_the_number_or_an_english_term_su">Probeer een deel van het nummer of een Engelse term, zoals \"boiler\".</string>
     <string name="try_part_of_the_word_or_search_on_a_part_num">Probeer een deel van het woord, of zoek op onderdeelnummer.</string>
     <string name="procedure">Procedure</string>
     <string name="procedures">Procedures</string>
@@ -201,7 +201,7 @@
     <string name="waste">Afval</string>
     <string name="cleaning">Reiniging</string>
     <string name="temperature">Temperatuur</string>
-    <string name="cups">Beker</string>
+    <string name="cups">Bekers</string>
     <string name="payment">Betaling</string>
     <string name="controls">Besturing</string>
     <string name="operation">Bediening</string>
@@ -298,8 +298,12 @@
     <string name="warehouse_stock">magazijnvoorraad</string>
     <plurals name="n_pages">
         <item quantity="one">%d pagina</item>
-        <item quantity="other">%d pagina\'s</item>
+        <item quantity="other">%d pagina’s</item>
     </plurals>
     <string name="which_machine_is_in_front_of_you">Welke machine staat er voor je?</string>
     <string name="read_the_type_plate">Lees het typeplaatje in de deur</string>
+    <string name="warn_note">Let op</string>
+    <string name="warn_caution">Pas op</string>
+    <string name="warn_warning">Waarschuwing</string>
+    <string name="warn_danger">Gevaar</string>
 </resources>
