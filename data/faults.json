@@ -15,7 +15,6 @@
    "Controleer of de motorschacht defect is.",
    "Controleer of de brewer geblokkeerd is en niet kan draaien."
   ],
-  "engineerNote": "Blijft de melding staan, dan is het een servicemelding.",
   "procedures": [
    "brewer-schoonmaken"
   ],
@@ -37,10 +36,7 @@
   ],
   "category": "Brewer",
   "cause": "De brewer zit niet goed vergrendeld in de machine.",
-  "solution": [
-   "Verwijder de brewer en reinig hem. Wanneer het probleem niet verholpen is: neem contact op met de fabrikant."
-  ],
-  "engineerNote": "Blijft de melding staan, dan is het een servicemelding.",
+  "solution": [],
   "procedures": [
    "brewer-schoonmaken-xl"
   ],
@@ -60,11 +56,10 @@
    "nio"
   ],
   "category": "Brewer",
-  "cause": "De brewermotor draait verkeerd om — vrijwel altijd een bedradingsfout na een reparatie of vervanging.",
+  "cause": "",
   "solution": [
    "Controleer de bedrading van de brewermotor."
   ],
-  "engineerNote": "Dit is een servicemelding: laat het na door een monteur controleren.",
   "procedures": [],
   "selfService": false,
   "brewers": [
@@ -85,7 +80,6 @@
    "Open en sluit de deur om de brewer te initialiseren.",
    "Controleer de werking door een koffie te tappen."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [
    "brewer-schoonmaken-xl"
   ],
@@ -103,12 +97,11 @@
    "nio"
   ],
   "category": "Brewer",
-  "cause": "De brewer kon bij het opstarten zijn volledige slag niet maken.",
+  "cause": "",
   "solution": [
    "Open en sluit de deur om de brewer te initialiseren.",
    "Controleer de werking door een koffie te tappen."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [
    "brewer-schoonmaken-xl"
   ],
@@ -131,7 +124,6 @@
    "Open en sluit de deur om de brewer te initialiseren.",
    "Controleer de werking door een koffie te tappen."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding — laat de dosering nakijken.",
   "procedures": [
    "brewer-schoonmaken-xl"
   ],
@@ -149,12 +141,11 @@
    "nio"
   ],
   "category": "Brewer",
-  "cause": "Er ging iets mis tijdens het bereiden van een drank.",
+  "cause": "",
   "solution": [
    "Open en sluit de deur om de brewer te initialiseren.",
    "Controleer de werking door een koffie te tappen."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [],
   "selfService": true,
   "brewers": [
@@ -177,7 +168,6 @@
    "Controleer of de container moet worden gevuld. Zie het gedeelte De ingrediëntencontainers vullen.",
    "Controleer of de molen werkt en de brewer vult."
   ],
-  "engineerNote": "",
   "procedures": [
    "bonencanister-vullen",
    "molen-vrijmaken",
@@ -200,11 +190,10 @@
    "nio"
   ],
   "category": "Brewer",
-  "cause": "De softwareconfiguratie komt niet overeen met de gemonteerde brewer.",
+  "cause": "",
   "solution": [
    "De configuratie moet worden aangepast."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "brewers": [
@@ -226,7 +215,6 @@
   "solution": [
    "Maak de koffiemolen schoon."
   ],
-  "engineerNote": "",
   "procedures": [
    "molen-vrijmaken",
    "molen-vrijmaken-xl"
@@ -256,7 +244,6 @@
    "Reinig de mengschaal, controleer de motor.",
    "Controleer de recepten. Er mag geen droog poeder in de mengschaal vallen."
   ],
-  "engineerNote": "",
   "procedures": [
    "mixsysteem-reinigen"
   ],
@@ -288,7 +275,6 @@
    "Controleer de pomp(en).",
    "Controleer of de waterstroommeter is aangesloten en naar behoren werkt."
   ],
-  "engineerNote": "Blijft het probleem: servicemelding — geef de uitkomst van stap 3 door.",
   "procedures": [
    "brewer-tablet",
    "brewer-tablet-xl"
@@ -321,7 +307,6 @@
    "Controleer het inlaatventiel, drukregelaar en waterstroommeter.",
    "Controleer de aardingsdraad aangesloten op de boiler."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -351,7 +336,6 @@
    "Controleer de aarding aangesloten op de boiler.",
    "Controleer of de boiler water lekt vanwege een lekkage of een verkeerd aangesloten ventiel."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -381,7 +365,6 @@
    "Controleer of het inlaatventiel en pompen werken.",
    "Controleer het watersysteem in de machine."
   ],
-  "engineerNote": "Staat de melding er na 10 minuten nog: servicemelding.",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -407,7 +390,6 @@
   "solution": [
    "Installeer een nieuwe filter en reset de teller."
   ],
-  "engineerNote": "Dit doet de monteur.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -433,7 +415,6 @@
   "solution": [
    "Zie het hoofdstuk Waterfilterinstellingen voor meer informatie."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -461,7 +442,6 @@
    "Als het bericht niet is verdwenen, wacht u 10 minuten:",
    "controleer de clixon(s) en het verwarmingselement."
   ],
-  "engineerNote": "Staat de melding er na 10 minuten nog: servicemelding.",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -487,7 +467,6 @@
    "Als het bericht niet is verdwenen, wacht u 10 minuten:",
    "controleer de clixon(s) en het verwarmingselement."
   ],
-  "engineerNote": "Staat de melding er na 10 minuten nog: servicemelding.",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -517,7 +496,6 @@
    "Controleer op losse bedrading/slecht contact.",
    "Controleer of de boilers correct zijn aangesloten. Verwissel de bedrading voor boiler 1 niet met die van boiler 2."
   ],
-  "engineerNote": "Staat de melding er dan nog: servicemelding.",
   "procedures": [
    "mixers-spoelen",
    "mixers-spoelen-xl"
@@ -546,7 +524,6 @@
   "solution": [
    "Controleer of de temperatuursensor defect is, of de bedrading los zit."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -568,12 +545,11 @@
    "virtu"
   ],
   "category": "Afval",
-  "cause": "De niveausensor in de lekbak of drupbak is aangesproken.",
+  "cause": "",
   "solution": [
    "Reinig de lekbak aan de voorzijde van de machine en/of reinig de lekbak van de brewer binnenin de afvalbak.",
    "Zorg ervoor dat de waterniveausensoren in de lekbak/ afvalbak droog zijn. Zie het gedeelte Dagelijks onderhoud."
   ],
-  "engineerNote": "",
   "procedures": [
    "lekbak-reinigen",
    "lekbak-reinigen-xl",
@@ -606,7 +582,6 @@
    "Plaats de lekbak.",
    "Controleer contactpunten op de lekbak, reinig de contactpunten op de lekbak en in de machine (kunnen vuil zijn, gecorrodeerd)."
   ],
-  "engineerNote": "",
   "procedures": [
    "lekbak-reinigen",
    "lekbak-reinigen-xl"
@@ -631,7 +606,7 @@
    "rosa"
   ],
   "category": "Afval",
-  "cause": "De emmer met koffiedik is vol, of de detectieschakelaar is vervuild.",
+  "cause": "",
   "solution": [
    "Maak afvalbak leeg.",
    "Wanneer het bericht nog steeds wordt weergegeven, verwijdert u de afvalbak en wacht u 6 seconden voordat u hem terugplaatst.",
@@ -639,7 +614,6 @@
    "Wanneer in de onderkast een afvalbak wordt gebruikt, reset dan de afvalbakteller of pas de waarde van de volle afvalbak aan in Errorinstellingen.",
    "Wanneer het probleem niet verholpen is: neem contact op met de fabrikant."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [
    "afvalemmer-reinigen",
    "afvalemmer-reinigen-xl",
@@ -671,7 +645,6 @@
    "Als het bericht nog steeds wordt weergegeven, controleert u of de detectorschakelaar schoon is.",
    "Als in de onderkast een afvalbak wordt gebruikt, reset dan de afvalbakteller of pas de waarde van de lege afvalbak aan in Errorinstellingen."
   ],
-  "engineerNote": "",
   "procedures": [
    "afvalemmer-reinigen",
    "afvalemmer-reinigen-xl"
@@ -701,7 +674,6 @@
   "solution": [
    "Plaats de afvalbak."
   ],
-  "engineerNote": "",
   "procedures": [
    "afvalemmer-reinigen",
    "afvalemmer-reinigen-xl"
@@ -729,7 +701,6 @@
   "solution": [
    "Reinig het touchscreen volgens de procedure."
   ],
-  "engineerNote": "",
   "procedures": [
    "touchscreen-reinigen",
    "touchscreen-reinigen-xl"
@@ -756,7 +727,6 @@
   "solution": [
    "Voer de reinigingscyclus voor de brewer (opnieuw) uit."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [
    "brewer-tablet"
   ],
@@ -782,7 +752,6 @@
   "solution": [
    "Voer de reinigingscyclus uit en de melding verdwijnt. De timer wordt gereset."
   ],
-  "engineerNote": "",
   "procedures": [
    "brewer-tablet",
    "brewer-tablet-xl"
@@ -806,11 +775,10 @@
    "rosa"
   ],
   "category": "Ingrediënten",
-  "cause": "Een of meer canisters zijn leeg.",
+  "cause": "",
   "solution": [
    "Een of meer containers moeten worden bijgevuld. Zie het gedeelte De ingrediëntencontainers vullen."
   ],
-  "engineerNote": "",
   "procedures": [
    "canisters-vullen"
   ],
@@ -838,7 +806,6 @@
   "solution": [
    "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken. Opmerking: De gevoeligheid van de sensor is instelbaar."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -863,7 +830,6 @@
   "solution": [
    "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -884,11 +850,10 @@
    "rosa"
   ],
   "category": "Bediening",
-  "cause": "De bereiding is klaar. Geen storing.",
+  "cause": "",
   "solution": [
    "Pak de beker of kan weg."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "brewers": [
@@ -908,11 +873,10 @@
    "rosa"
   ],
   "category": "Bediening",
-  "cause": "De deur staat open of de deurschakelaar is niet bekrachtigd.",
+  "cause": "",
   "solution": [
    "Sluit de deur of plaats de groene servicesleutel om de machine te activeren."
   ],
-  "engineerNote": "",
   "procedures": [
    "servicesleutel-plaatsen",
    "deur-sluiten",
@@ -942,7 +906,6 @@
   "solution": [
    "Betaal het volledige bedrag met muntgeld, munten of een kaart."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -969,7 +932,6 @@
    "Wijzig de instellingen in de planner.",
    "Controleer of de klok in de koffiemachine goed staat ingesteld."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -991,11 +953,10 @@
    "rosa"
   ],
   "category": "Bediening",
-  "cause": "De operator heeft deze melding bewust gezet, bijvoorbeeld omdat er geen ingrediënten zijn.",
+  "cause": "",
   "solution": [
    "De melding is bewust door de operator in het servicemenu of op afstand via ConnectMe ingesteld. Zie het hoofdstuk Melding buiten werking voor meer informatie."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -1023,7 +984,6 @@
    "Als de melding opnieuw verschijnt, controleer dan het overstortventiel, 2 bar-ventiel, pompen, waterinlaat van de waterleiding en inlaatventiel.",
    "Controleer de waterstroommeter."
   ],
-  "engineerNote": "Blijft het probleem, dan is het een servicemelding.",
   "procedures": [
    "inschakelen",
    "inschakelen-xl"
@@ -1050,7 +1010,6 @@
   "solution": [
    "Wacht tot de machine klaar is."
   ],
-  "engineerNote": "Staat de melding er na 10 minuten nog: servicemelding.",
   "procedures": [],
   "selfService": true,
   "brewers": [
@@ -1073,7 +1032,6 @@
    "Controleer de kabel tussen de printplaten op schade.",
    "Een slechte verbinding op besturings- of IO-print kan deze melding genereren."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -1099,7 +1057,6 @@
   "solution": [
    "Zie het hoofdstuk Een nieuw configuratiebestand laden vanaf een USB-stick om een configuratie te laden."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -1125,7 +1082,6 @@
   "solution": [
    "Zie het hoofdstuk IPK- of FW-bestanden laden vanaf USB om alle bestanden inclusief de gebruikersinterface te laden."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -1146,10 +1102,7 @@
   ],
   "category": "Besturing",
   "cause": "Er zit een fout in het receptenbestand.",
-  "solution": [
-   "Laad de recepten opnieuw in of neem contact op met technical support."
-  ],
-  "engineerNote": "Dit is een servicemelding.",
+  "solution": [],
   "procedures": [],
   "selfService": false,
   "brewers": [
@@ -1171,7 +1124,6 @@
    "Draai de kraan dicht.",
    "neem contact op met de fabrikant."
   ],
-  "engineerNote": "Dit is een servicemelding.",
   "procedures": [],
   "selfService": false,
   "source": "TM Avy CoEx Medium NL V1.0 (5DTCET10M)",
@@ -1192,11 +1144,8 @@
    "CoEx XL"
   ],
   "category": "Reiniging",
-  "cause": "Het melksysteem is minstens 20 uur geleden voor het laatst gereinigd.",
-  "solution": [
-   "Reinig het systeem voor verse melk. De reinigingscyclus zet de teller terug."
-  ],
-  "engineerNote": "",
+  "cause": "",
+  "solution": [],
   "procedures": [],
   "selfService": true,
   "note": "",
@@ -1212,12 +1161,11 @@
    "CoEx XL"
   ],
   "category": "Bediening",
-  "cause": "De schakelaar detecteert de magneet van de trechter niet.",
+  "cause": "",
   "solution": [
    "Plaats de koffie-trechter.",
    "Controleer de trechterschakelaar / controleer de bedrading."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "note": "",
@@ -1237,7 +1185,6 @@
   "solution": [
    "Als de beker op de juiste plaats staat, moet u de sensor schoonmaken."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "note": "",
@@ -1257,7 +1204,6 @@
   "solution": [
    "Plaats nieuw filterpapier."
   ],
-  "engineerNote": "",
   "procedures": [],
   "selfService": true,
   "note": "",

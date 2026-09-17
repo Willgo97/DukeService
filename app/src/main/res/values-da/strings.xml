@@ -9,7 +9,7 @@
     <string name="all_machines">Alle maskiner</string>
     <string name="all_procedures">Alle procedurer</string>
     <string name="everything">Alt</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Alt i appen stammer fra De Jong DUKEs servicedokumentation: 207 bøger på ni sprog — tekniske manualer, vedligeholdelseskort, brugervejledninger, lynguider og reservedelskataloger. Selve manualerne er ikke med; de tilhører producenten. Ved hver meddelelse, komponent og procedure står der, hvilken bog den kommer fra.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Alt i denne app er hentet fra De Jong DUKEs servicedokumentation: 185 bøger på ni sprog — 70 tekniske manualer, 60 reservedelskataloger, 50 vedligeholdelseskort og 5 lynstartguider. Selve manualerne er ikke med; de tilhører producenten. Når en meddelelse, en komponent eller en procedure kommer fra en bog, står bogen anført nedenunder.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Alt offline. Bygget af manualerne, reservedelskatalogerne og den tekniske dokumentation.</string>
     <string name="if_it_stays">Hvis den bliver stående</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Altid mørk — mere behagelig i et mørkt rum</string>
@@ -173,7 +173,7 @@
     <string name="for_label">For %1$s</string>
     <string name="where_does_this_come_from">Hvor kommer det her fra?</string>
     <string name="where_do_you_want_to_go">Hvor vil du hen</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Værdier fra brugervejledningerne til Virtu og Lua, omregnet til metriske enheder. De gælder i store træk for hele CoEx-familien; typeskiltet i maskinen gælder altid først.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Tabellerne kommer fra de tekniske manualer; hver tabel angiver, hvilke modelkoder den gælder for. Typeskiltet i maskinen gælder altid først.</string>
     <string name="why">Hvorfor</string>
     <string name="password_level">adgangskodeniveau %1$s</string>
     <string name="when_label">Hvornår</string>

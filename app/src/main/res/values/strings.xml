@@ -10,7 +10,7 @@
     <string name="all_machines">Alle machines</string>
     <string name="all_procedures">Alle procedures</string>
     <string name="everything">Alles</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Alles in deze app is overgenomen uit de servicedocumentatie van De Jong DUKE: 207 boeken in negen talen — technische handleidingen, onderhoudskaarten, gebruikershandleidingen, snelstartgidsen en onderdelenboeken. De handleidingen zelf zitten er niet in; die zijn van de fabrikant. Bij elke melding, elk component en elke procedure staat onderaan uit welk boek hij komt.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Alles in deze app is overgenomen uit de servicedocumentatie van De Jong DUKE: 185 boeken in negen talen — 70 technische handleidingen, 60 onderdelenboeken, 50 onderhoudskaarten en 5 snelstartgidsen. De handleidingen zelf zitten er niet in; die zijn van de fabrikant. Waar een melding, component of procedure uit een boek komt, staat dat boek eronder.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Alles offline. Gebouwd uit de handleidingen, onderdelenboeken en technische documentatie.</string>
     <string name="if_it_stays">Als het blijft</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Altijd donker — prettiger in een donkere ruimte</string>
@@ -172,7 +172,7 @@
     <string name="for_label">Voor %1$s</string>
     <string name="where_does_this_come_from">Waar komt dit vandaan?</string>
     <string name="where_do_you_want_to_go">Waar wil je heen</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Waarden uit de gebruikershandleidingen van Virtu en Lua, omgerekend naar metrisch. Gelden in grote lijnen voor de hele CoEx-familie; het typeplaatje in de machine is altijd leidend.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">De tabellen komen uit de technische handleidingen; achter elke tabel staat voor welke modelcodes hij geldt. Het typeplaatje in de machine is altijd leidend.</string>
     <string name="why">Waarom</string>
     <string name="password_level">wachtwoordniveau %1$s</string>
     <string name="when_label">Wanneer</string>

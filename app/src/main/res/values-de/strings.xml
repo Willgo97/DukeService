@@ -9,7 +9,7 @@
     <string name="all_machines">Alle Maschinen</string>
     <string name="all_procedures">Alle Abläufe</string>
     <string name="everything">Alles</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Alles in dieser App stammt aus der Servicedokumentation von De Jong DUKE: 207 Bücher in neun Sprachen — technische Handbücher, Wartungskarten, Bedienungsanleitungen, Kurzanleitungen und Ersatzteilkataloge. Die Handbücher selbst sind nicht enthalten; sie gehören dem Hersteller. Bei jeder Meldung, jeder Baugruppe und jedem Ablauf steht, aus welchem Buch sie stammt.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Alles in dieser App stammt aus der Servicedokumentation von De Jong DUKE: 185 Bücher in neun Sprachen — 70 technische Handbücher, 60 Ersatzteilkataloge, 50 Wartungskarten und 5 Kurzanleitungen. Die Handbücher selbst sind nicht enthalten; sie gehören dem Hersteller. Wenn eine Meldung, eine Baugruppe oder ein Ablauf aus einem Buch stammt, steht dieses Buch darunter.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Alles offline. Aufgebaut aus den Handbüchern, Ersatzteilkatalogen und der technischen Dokumentation.</string>
     <string name="if_it_stays">Bleibt sie bestehen</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Immer dunkel — angenehmer in einem dunklen Raum</string>
@@ -173,7 +173,7 @@ Ursache: </string>
     <string name="for_label">Für %1$s</string>
     <string name="where_does_this_come_from">Woher kommt das?</string>
     <string name="where_do_you_want_to_go">Wohin möchten Sie</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Werte aus den Bedienungsanleitungen von Virtu und Lua, in metrische Einheiten umgerechnet. Sie gelten grob für die gesamte CoEx-Familie; das Typenschild in der Maschine hat immer Vorrang.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Die Tabellen stammen aus den technischen Handbüchern; bei jeder steht, für welche Modellcodes sie gilt. Das Typenschild in der Maschine hat immer Vorrang.</string>
     <string name="why">Warum</string>
     <string name="password_level">Passwortstufe %1$s</string>
     <string name="when_label">Wann</string>

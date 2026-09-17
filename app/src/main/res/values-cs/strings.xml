@@ -9,7 +9,7 @@
     <string name="all_machines">Všechny stroje</string>
     <string name="all_procedures">Všechny postupy</string>
     <string name="everything">Vše</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Vše v této aplikaci pochází ze servisní dokumentace De Jong DUKE: 207 knih v devíti jazycích — technické příručky, karty údržby, návody k obsluze, rychlé návody a katalogy náhradních dílů. Samotné příručky součástí nejsou; patří výrobci. U každého hlášení, dílu a postupu je uvedeno, ze které knihy pochází.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Vše v této aplikaci pochází ze servisní dokumentace De Jong DUKE: 185 knih v devíti jazycích — 70 technických příruček, 60 katalogů náhradních dílů, 50 servisních karet a 5 stručných návodů. Samotné příručky součástí nejsou; patří výrobci. Pokud hlášení, komponenta nebo postup pochází z knihy, je tato kniha uvedena pod ním.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Vše offline. Sestaveno z příruček, katalogů dílů a technické dokumentace.</string>
     <string name="if_it_stays">Pokud hlášení zůstává</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Vždy tmavé — příjemnější v tmavé místnosti</string>
@@ -173,7 +173,7 @@ Příčina: </string>
     <string name="for_label">Pro %1$s</string>
     <string name="where_does_this_come_from">Odkud to pochází?</string>
     <string name="where_do_you_want_to_go">Kam chcete</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Hodnoty z návodů k obsluze Virtu a Lua, převedené do metrických jednotek. Platí zhruba pro celou rodinu CoEx; typový štítek ve stroji má vždy přednost.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Tabulky pocházejí z technických příruček; u každé je uvedeno, pro které kódy modelů platí. Vždy rozhoduje typový štítek ve stroji.</string>
     <string name="why">Proč</string>
     <string name="password_level">úroveň hesla %1$s</string>
     <string name="when_label">Kdy</string>

@@ -102,20 +102,21 @@ class AssetsTest {
                 c.components.count { it.title.isBlank() }
             assertTrue("$language has $empty untitled items", empty == 0)
 
-            // The machines are described by hand, and those words are
-            // translated too; a machine screen half in Dutch is no use to the
-            // engineer standing in front of it.
+            // Nothing describes a machine in words any more. What kind of
+            // machine it is, which service menu it runs: no manual says it in
+            // so many words, so the app does not either. Only the name and
+            // the figures the books do give.
             val dutchMachines: List<Machine> = read("machines-nl.json")
             val machinesInLanguage: List<Machine> = read("machines-$language.json")
             assertTrue("$language machines", machinesInLanguage.size == dutchMachines.size)
-            assertTrue("$language machine texts",
-                       machinesInLanguage.none { it.name.isBlank() || it.summary.isBlank() })
-            if (language != "nl") {
-                val same = machinesInLanguage.count { row ->
-                    dutchMachines.any { it.id == row.id && it.summary == row.summary }
-                }
-                assertTrue("$language leaves $same machines in Dutch", same == 0)
+            assertTrue("$language machine names",
+                       machinesInLanguage.none { it.name.isBlank() })
+            val described = machinesInLanguage.filter {
+                it.summary.isNotBlank() || it.description.isNotBlank() ||
+                    it.serviceMenuNote.isNotBlank() || it.docs.isNotEmpty()
             }
+            assertTrue("$language describes ${described.map { it.id }} in words",
+                       described.isEmpty())
 
             val figures = (c.components.flatMap { it.images } + c.views.flatMap { it.images })
                 .distinct()

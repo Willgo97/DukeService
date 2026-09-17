@@ -132,12 +132,14 @@ private fun MachineCard(catalog: Catalog, machine: Machine, onOpen: (Route) -> U
                         )
                         Icon(Icons.Filled.ChevronRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Spacer(Modifier.height(2.dp))
-                    Text(
-                        machine.summary,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                    if (machine.summary.isNotEmpty()) {
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            machine.summary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
                     Spacer(Modifier.height(10.dp))
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),

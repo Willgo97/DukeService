@@ -8,8 +8,6 @@
   "cabinet": "Small, Medium",
   "screen": "10,4\" touchscreen",
   "active": true,
-  "summary": "Tijdloze bonenmachine met CoEx-brewer en aanpasbaar rvs frontpaneel.",
-  "description": "Espresso uit verse bonen, verse filterkoffie en klassieke instantdranken. Heet water en optioneel gekoeld water, plat of bruisend. Het rvs frontpaneel is aanpasbaar per locatie. Bekerdetectie start de bereiding pas als er een beker staat.",
   "specs": [
    {
     "label": "Gewicht",
@@ -42,12 +40,6 @@
     "medium": "A / A+"
    }
   ],
-  "docs": [
-   "Gebruikershandleiding 5DUCEK20I",
-   "Onderdelenboek 9CECK (CoEx)"
-  ],
-  "serviceMenu": "old",
-  "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "variants": [
    {
     "code": "9CECK",
@@ -67,8 +59,6 @@
   "cabinet": "Small, Medium",
   "screen": "10,4\" touchscreen",
   "active": true,
-  "summary": "Veelzijdige machine met filter- en bonenkoffie, breed configureerbaar.",
-  "description": "Te configureren met filterkoffie of volledig op bonen. Keuze in aantal bonencanisters en canisters voor melk-, chocolade- of plantaardige poeders. Optioneel een losse kast met koeler voor plat of bruisend water en een afvaldoorvoer.",
   "specs": [
    {
     "label": "Gewicht",
@@ -101,11 +91,6 @@
     "medium": "A / A+"
    }
   ],
-  "docs": [
-   "Onderdelenboek 9CECP (CoEx)"
-  ],
-  "serviceMenu": "old",
-  "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "variants": [
    {
     "code": "9CECP",
@@ -125,15 +110,7 @@
   "cabinet": "Tafelmodel",
   "screen": "10,4\" touchscreen",
   "active": false,
-  "summary": "Compact tafelmodel; voorganger van de Nio Next.",
-  "description": "Tafelmodel met CoEx-brewer, leverbaar met metalen of PPSU-kleppen. Let op: het onderdelenboek splitst pressure boiler en steam boiler per uitvoering en per bouwjaar.",
   "specs": [],
-  "docs": [
-   "Technische handleiding 5DTXKA20M (CoEx XL)",
-   "Onderdelenboek 9CKA (CoEx)"
-  ],
-  "serviceMenu": "old",
-  "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "variants": [
    {
     "code": "9CKA",
@@ -159,8 +136,6 @@
   "cabinet": "Tafelmodel",
   "screen": "Hoge-resolutie touchscreen",
   "active": true,
-  "summary": "Premium tafelmodel met verstelbare rvs doseerkop, optioneel verse melk.",
-  "description": "Opvolger van de Nio. Verstelbare doseerkop van roestvrij staal, dynamische interface met direct-start voorkeuzes. Optioneel verse-melksysteem; die uitvoering is fors breder en zwaarder.",
   "specs": [
    {
     "label": "Gewicht",
@@ -193,9 +168,6 @@
     "medium": "A+ (verse melk)"
    }
   ],
-  "docs": [],
-  "serviceMenu": "new",
-  "serviceMenuNote": "Alleen het nieuwe servicemenu.",
   "photo": "machines/nionext.webp"
  },
  {
@@ -207,8 +179,6 @@
   "cabinet": "Small, Medium",
   "screen": "18,5\" touchscreen",
   "active": true,
-  "summary": "Vloermodel met CoEx XL-brewer en groot glazen touchscreen.",
-  "description": "Groot glazen touchscreen met lichteffecten die aangeven waar de beker moet staan. CoEx XL-brewer: andere reinigingsstappen en andere brewer-onderdelen dan de gewone CoEx.",
   "specs": [
    {
     "label": "Gewicht",
@@ -241,13 +211,6 @@
     "medium": "A+ / A"
    }
   ],
-  "docs": [
-   "Gebruikershandleiding 5DUXES20I",
-   "Technische handleiding 5DTINS10M (NL, Instant)",
-   "Onderdelenboek 9XEAS (CoEx XL)"
-  ],
-  "serviceMenu": "both",
-  "serviceMenuNote": "Heeft op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.",
   "variants": [
    {
     "code": "9XEA",
@@ -271,10 +234,8 @@
   "typeCode": "9XEAT",
   "brewer": "CoEx / CoEx XL",
   "cabinet": "Small, Medium",
-  "screen": "Glazen touchscreen",
+  "screen": "14\" touchscreen",
   "active": true,
-  "summary": "Espressomachine-look met CoEx XL-brewer en uitneembare lekbak.",
-  "description": "Geïnspireerd op traditionele espressomachines, met gebogen lijnen. Aanpasbaar glazen touchscreen en een uitneembare lekbak die het schoonmaken versnelt.",
   "specs": [
    {
     "label": "Gewicht",
@@ -307,14 +268,6 @@
     "medium": "A / A+"
    }
   ],
-  "docs": [
-   "Technische handleiding 5DTCET10M (NL)",
-   "Technische handleiding 5DTCNT20M / 5DTXET20M",
-   "Gebruikershandleiding 5DUXET20M",
-   "Onderdelenboek 9XEAT (CoEx XL)"
-  ],
-  "serviceMenu": "both",
-  "serviceMenuNote": "Heeft op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.",
   "variants": [
    {
     "code": "9CEC",
@@ -346,8 +299,6 @@
   "cabinet": "Small",
   "screen": "14\" touchscreen",
   "active": true,
-  "summary": "Zwart aluminium design met 14-inch scherm; Uni-Brewer met Filterfresh.",
-  "description": "Koffie en espresso van constante kwaliteit, instantdranken, heet water en optioneel gekoeld plat of bruisend water. Anders dan de CoEx-machines zit hier een Uni-Brewer in met Filterfresh: andere brewer, andere onderdelen en andere reinigingsstappen.",
   "specs": [
    {
     "label": "Gewicht",
@@ -380,13 +331,6 @@
     "medium": ""
    }
   ],
-  "docs": [
-   "Technische handleiding 5DTFNV20M",
-   "Gebruikershandleiding 5DUFNV20M",
-   "Onderdelenboek 9FND (Uni-Brewer)"
-  ],
-  "serviceMenu": "both",
-  "serviceMenuNote": "Mogelijk ook op het oude servicemenu gedraaid; vanaf software 6.30/6.40 het nieuwe.",
   "variants": [
    {
     "code": "9FNDV",
@@ -406,8 +350,6 @@
   "cabinet": "Small, Medium",
   "screen": "10,1\" touchscreen",
   "active": true,
-  "summary": "Nieuwste model met next-gen interface, in parelbeige of zilver.",
-  "description": "Hoge-resolutie 10,1-inch scherm met een nieuwe interface: levensechte pictogrammen en soepele navigatie. Verfijnd silhouet met verticaal lijnpatroon. Gebruikt hergebruikte onderdelen.",
   "specs": [
    {
     "label": "Gewicht",
@@ -440,9 +382,6 @@
     "medium": "A / A+"
    }
   ],
-  "docs": [],
-  "serviceMenu": "new",
-  "serviceMenuNote": "Alleen het nieuwe servicemenu.",
   "photo": "machines/lina.webp"
  },
  {
@@ -454,8 +393,6 @@
   "cabinet": "Small, Medium",
   "screen": "10,4\" touchscreen",
   "active": true,
-  "summary": "Duurzaamste model: 96% recyclebaar, gebouwd op repareren en refurbishen.",
-  "description": "Geen verf, lijm of hars op de deur; de machine is voor 96% recyclebaar en bewust ontworpen om te repareren en te refurbishen. Gekoppeld aan ConnectMe schakelt Blu in daluren zelf naar de spaarstand.",
   "specs": [
    {
     "label": "Gewicht",
@@ -488,9 +425,6 @@
     "medium": "A / A+"
    }
   ],
-  "docs": [],
-  "serviceMenu": "old",
-  "serviceMenuNote": "De technische handleiding van de Blu beschrijft het oude servicemenu; de besturingsprint is een ICEQ2 (9EPRxxx).",
   "photo": "machines/blu.webp"
  },
  {
@@ -500,14 +434,8 @@
   "typeCode": "",
   "brewer": "",
   "cabinet": "",
-  "screen": "10,4\" touchscreen",
   "active": false,
-  "summary": "Ouder model. Geen publieke documentatie gevonden — vul zelf aan.",
-  "description": "Voor dit model stond bij het samenstellen geen handleiding of onderdelenboek online. Storingen en procedures van de CoEx-machines komen vaak overeen; controleer altijd het typeplaatje in de machine.",
   "specs": [],
-  "docs": [],
-  "serviceMenu": "old",
-  "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "photo": ""
  },
  {
@@ -517,14 +445,8 @@
   "typeCode": "",
   "brewer": "",
   "cabinet": "",
-  "screen": "",
   "active": false,
-  "summary": "Ouder model, nog gevoerd op de Noord-Amerikaanse markt.",
-  "description": "Voor dit model stond bij het samenstellen geen handleiding of onderdelenboek online.",
   "specs": [],
-  "docs": [],
-  "serviceMenu": "old",
-  "serviceMenuNote": "ICeQ2-besturing: altijd het oude servicemenu.",
   "photo": ""
  }
 ]

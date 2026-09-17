@@ -9,7 +9,7 @@
     <string name="all_machines">All machines</string>
     <string name="all_procedures">All procedures</string>
     <string name="everything">Everything</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Everything in this app is taken from De Jong DUKE service documentation: 207 books in nine languages — technical manuals, maintenance cards, user manuals, quick start guides and spare parts manuals. The manuals themselves are not included; those belong to the manufacturer. Every message, component and procedure names the book it came from.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Everything in this app is taken from De Jong DUKE service documentation: 185 books in nine languages — 70 technical manuals, 60 spare parts manuals, 50 maintenance cards and 5 quick start guides. The manuals themselves are not included; those belong to the manufacturer. Where a message, component or procedure comes from a book, that book is named below it.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">All offline. Built from the manuals, spare parts books and technical documentation.</string>
     <string name="if_it_stays">If it stays</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Always dark — easier on the eyes in a dim room</string>
@@ -173,7 +173,7 @@ Cause: </string>
     <string name="for_label">For %1$s</string>
     <string name="where_does_this_come_from">Where does this come from?</string>
     <string name="where_do_you_want_to_go">Where do you want to go</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Values from the Virtu and Lua user manuals, converted to metric. They hold broadly for the whole CoEx family; the type plate inside the machine always takes precedence.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">The tables come from the technical manuals; each one names the model codes it applies to. The type plate inside the machine always takes precedence.</string>
     <string name="why">Why</string>
     <string name="password_level">password level %1$s</string>
     <string name="when_label">When</string>

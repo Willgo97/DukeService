@@ -232,12 +232,14 @@ fun SearchScreen(
                 Card(onClick = { openResult(Route.Machine(machine.id)) }) {
                     Column {
                         Text(machine.name, style = MaterialTheme.typography.titleMedium)
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            machine.summary,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+                        if (machine.summary.isNotEmpty()) {
+                            Spacer(Modifier.height(2.dp))
+                            Text(
+                                machine.summary,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 }
             }

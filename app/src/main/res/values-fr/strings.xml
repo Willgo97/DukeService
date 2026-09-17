@@ -9,7 +9,7 @@
     <string name="all_machines">Toutes les machines</string>
     <string name="all_procedures">Toutes les procédures</string>
     <string name="everything">Tout</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Tout dans cette application provient de la documentation de service De Jong DUKE : 207 ouvrages en neuf langues — manuels techniques, fiches d\'entretien, manuels d\'utilisation, guides de démarrage rapide et catalogues de pièces. Les manuels eux-mêmes n\'y sont pas ; ils appartiennent au fabricant. Chaque message, composant et procédure indique de quel ouvrage il provient.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Tout dans cette application provient de la documentation de service De Jong DUKE : 185 ouvrages en neuf langues — 70 manuels techniques, 60 catalogues de pièces, 50 fiches d\'entretien et 5 guides de démarrage rapide. Les manuels eux-mêmes n\'y sont pas ; ils appartiennent au fabricant. Lorsqu\'un message, un composant ou une procédure provient d\'un ouvrage, celui-ci est indiqué en dessous.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Tout hors ligne. Construit à partir des manuels, des catalogues de pièces et de la documentation technique.</string>
     <string name="if_it_stays">Si le message persiste</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Toujours sombre — plus reposant dans un local peu éclairé</string>
@@ -173,7 +173,7 @@ Cause : </string>
     <string name="for_label">Pour %1$s</string>
     <string name="where_does_this_come_from">D\'où cela vient-il ?</string>
     <string name="where_do_you_want_to_go">Où voulez-vous aller</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Valeurs des manuels d\'utilisation Virtu et Lua, converties en unités métriques. Elles valent en gros pour toute la famille CoEx ; la plaque signalétique dans la machine prime toujours.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Les tableaux proviennent des manuels techniques ; chacun indique les codes de modèle auxquels il s\'applique. La plaque signalétique dans la machine prime toujours.</string>
     <string name="why">Pourquoi</string>
     <string name="password_level">niveau de mot de passe %1$s</string>
     <string name="when_label">Quand</string>

@@ -9,7 +9,7 @@
     <string name="all_machines">Alla maskiner</string>
     <string name="all_procedures">Alla procedurer</string>
     <string name="everything">Allt</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Allt i appen är hämtat ur De Jong DUKEs servicedokumentation: 207 böcker på nio språk — tekniska manualer, underhållskort, bruksanvisningar, snabbguider och reservdelskataloger. Själva manualerna ingår inte; de tillhör tillverkaren. Vid varje meddelande, komponent och procedur står vilken bok den kommer ur.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Allt i den här appen är hämtat ur De Jong DUKE:s servicedokumentation: 185 böcker på nio språk — 70 tekniska handböcker, 60 reservdelskataloger, 50 underhållskort och 5 snabbstartsguider. Själva handböckerna ingår inte; de tillhör tillverkaren. När ett meddelande, en komponent eller en procedur kommer ur en bok står boken angiven under den.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Allt offline. Byggt ur manualerna, reservdelskatalogerna och den tekniska dokumentationen.</string>
     <string name="if_it_stays">Om det kvarstår</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Alltid mörkt — skonsammare i ett mörkt utrymme</string>
@@ -173,7 +173,7 @@ Orsak: </string>
     <string name="for_label">För %1$s</string>
     <string name="where_does_this_come_from">Varifrån kommer det här?</string>
     <string name="where_do_you_want_to_go">Vart vill du</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Värden ur bruksanvisningarna för Virtu och Lua, omräknade till metriska enheter. De gäller i stort för hela CoEx-familjen; typskylten i maskinen gäller alltid först.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Tabellerna kommer ur de tekniska handböckerna; varje tabell anger vilka modellkoder den gäller. Typskylten i maskinen gäller alltid först.</string>
     <string name="why">Varför</string>
     <string name="password_level">lösenordsnivå %1$s</string>
     <string name="when_label">När</string>

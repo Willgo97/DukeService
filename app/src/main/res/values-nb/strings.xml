@@ -9,7 +9,7 @@
     <string name="all_machines">Alle maskiner</string>
     <string name="all_procedures">Alle prosedyrer</string>
     <string name="everything">Alt</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Alt i appen er hentet fra servicedokumentasjonen til De Jong DUKE: 207 bøker på ni språk — tekniske håndbøker, vedlikeholdskort, bruksanvisninger, hurtigguider og reservedelskataloger. Selve håndbøkene følger ikke med; de tilhører produsenten. Ved hver melding, komponent og prosedyre står det hvilken bok den kommer fra.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Alt i denne appen er hentet fra servicedokumentasjonen til De Jong DUKE: 185 bøker på ni språk — 70 tekniske håndbøker, 60 delekataloger, 50 vedlikeholdskort og 5 hurtigstartveiledninger. Selve håndbøkene følger ikke med; de tilhører produsenten. Når en melding, en komponent eller en prosedyre kommer fra en bok, står boken oppført under.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Alt offline. Bygd opp av håndbøkene, reservedelskatalogene og den tekniske dokumentasjonen.</string>
     <string name="if_it_stays">Hvis den blir stående</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Alltid mørkt — mer behagelig i et mørkt rom</string>
@@ -173,7 +173,7 @@
     <string name="for_label">For %1$s</string>
     <string name="where_does_this_come_from">Hvor kommer dette fra?</string>
     <string name="where_do_you_want_to_go">Hvor vil du</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Verdier fra bruksanvisningene til Virtu og Lua, regnet om til metriske enheter. De gjelder i grove trekk for hele CoEx-familien; typeskiltet i maskinen gjelder alltid først.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Tabellene kommer fra de tekniske håndbøkene; hver tabell oppgir hvilke modellkoder den gjelder for. Typeskiltet i maskinen gjelder alltid først.</string>
     <string name="why">Hvorfor</string>
     <string name="password_level">passordnivå %1$s</string>
     <string name="when_label">Når</string>

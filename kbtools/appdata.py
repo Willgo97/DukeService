@@ -211,19 +211,14 @@ def machine_dimensions(brand, model_codes, tables):
 def build_machines(products, pictures, locale="nl", kb_specs=()):
     """The eleven machine lines, with the builds each one is sold in.
 
-    The words around the machine — what it is, which service menu it runs, what
-    the specification rows are called — are written by hand in Dutch and
-    translated in data/machines-i18n.json, because a machine screen in a
-    language you do not read is no use to the engineer standing in front of it.
+    Nothing here describes the machine in words. What it is called, which
+    builds it is sold in, which brewer and which service menu it runs: all of
+    it comes out of the books by way of the knowledge base. A line saying what
+    kind of machine it is would be a claim no manual makes, and the engineer
+    standing in front of one can see for themselves what it looks like.
     """
     words = read_json(os.path.join(DATA, "machines-i18n.json"), {})
-    per_machine = words.get("machines", {})
-    notes = words.get("serviceMenuNote", {})
     labels = words.get("specLabel", {})
-
-    def say(table, text):
-        """The translation of a hand-written line, or the Dutch it was written in."""
-        return (table.get(text) or {}).get(locale, text) if locale != "nl" else text
 
     tables = dimension_tables(kb_specs)
     base = read_json(os.path.join(DATA, "machines.json"), [])
@@ -233,12 +228,6 @@ def build_machines(products, pictures, locale="nl", kb_specs=()):
     out = []
     for machine in base:
         brand = machine["id"]
-        for field in ("summary", "description"):
-            said = (per_machine.get(brand, {}).get(field) or {}).get(locale)
-            if said:
-                machine[field] = said
-        if machine.get("serviceMenuNote"):
-            machine["serviceMenuNote"] = say(notes, machine["serviceMenuNote"])
         for row in machine.get("specs", []):
             # Every language, Dutch included: the label itself is written in
             # English in the code.
@@ -271,6 +260,12 @@ def build_machines(products, pictures, locale="nl", kb_specs=()):
                     return int(digits[0]) if digits else 0
                 machine["series"] = ", ".join(
                     s.replace(" series", "") for s in sorted(series, key=first_number))
+            # Which service menu it runs is in the books, per build. Where the
+            # builds disagree the machine has seen both, which is what the
+            # engineer needs to know before opening the door.
+            menus = {v.get("menu_generation") for v in variants} - {None, ""}
+            machine["serviceMenu"] = (menus.pop() if len(menus) == 1
+                                      else ("both" if menus else ""))
         out.append(machine)
     known = {m["id"] for m in out}
     for brand, variants in sorted(by_brand.items()):
@@ -328,7 +323,15 @@ def build_faults(kb_faults, langs=LANG):
         if row is not None:
             row["codes"] = sorted(set(row["codes"]) | set(model_codes))
             row["machines"] = sorted(set(row["machines"]) | set(machines))
-            if not dutch_first:
+            if dutch_first:
+                # The hand-written Dutch wins, but only where there is any. A
+                # field left empty because nothing in the books backed what
+                # was written there is filled from the book itself.
+                if not row.get("cause") and cause:
+                    row["cause"] = cause
+                if not row.get("solution") and solution:
+                    row["solution"] = solution
+            else:
                 # The manufacturer translated this message themselves. Their
                 # wording wins per field; where they have none, the
                 # hand-written Dutch stays and is translated further down.

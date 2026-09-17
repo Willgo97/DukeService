@@ -9,7 +9,7 @@
     <string name="all_machines">Kaikki koneet</string>
     <string name="all_procedures">Kaikki toimenpiteet</string>
     <string name="everything">Kaikki</string>
-    <string name="everything_in_this_app_is_taken_from_de_jong">Kaikki tässä sovelluksessa on peräisin De Jong DUKEn huoltodokumentaatiosta: 207 kirjaa yhdeksällä kielellä — tekniset käsikirjat, huoltokortit, käyttöohjeet, pikaoppaat ja varaosaluettelot. Itse käsikirjat eivät sisälly; ne kuuluvat valmistajalle. Jokaisen ilmoituksen, osan ja toimenpiteen kohdalla lukee, mistä kirjasta se on.</string>
+    <string name="everything_in_this_app_is_taken_from_de_jong">Kaikki tässä sovelluksessa on peräisin De Jong DUKEn huoltodokumentaatiosta: 185 kirjaa yhdeksällä kielellä — 70 teknistä käsikirjaa, 60 varaosaluetteloa, 50 huoltokorttia ja 5 pikaopasta. Käsikirjat itsessään eivät sisälly; ne kuuluvat valmistajalle. Kun ilmoitus, komponentti tai toimenpide on peräisin kirjasta, kirja mainitaan sen alla.</string>
     <string name="all_offline_built_from_the_manuals_spare_par">Kaikki offline. Koottu käsikirjoista, varaosaluetteloista ja teknisestä dokumentaatiosta.</string>
     <string name="if_it_stays">Jos se jää näkyviin</string>
     <string name="always_dark_easier_on_the_eyes_in_a_dim_room">Aina tumma — miellyttävämpi hämärässä tilassa</string>
@@ -173,7 +173,7 @@ Syy: </string>
     <string name="for_label">Koneelle %1$s</string>
     <string name="where_does_this_come_from">Mistä tämä on peräisin?</string>
     <string name="where_do_you_want_to_go">Minne haluat</string>
-    <string name="values_from_the_virtu_and_lua_user_manuals_c">Arvot Virtun ja Luan käyttöohjeista, muunnettuna metrijärjestelmään. Ne pätevät karkeasti koko CoEx-perheeseen; koneen tyyppikilpi ratkaisee aina ensin.</string>
+    <string name="values_from_the_virtu_and_lua_user_manuals_c">Taulukot ovat teknisistä käsikirjoista; kussakin mainitaan, mitä mallikoodeja se koskee. Koneen tyyppikilpi on aina ratkaiseva.</string>
     <string name="why">Miksi</string>
     <string name="password_level">salasanataso %1$s</string>
     <string name="when_label">Milloin</string>
