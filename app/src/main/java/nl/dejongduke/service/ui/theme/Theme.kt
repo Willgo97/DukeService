@@ -126,7 +126,7 @@ fun DukeTheme(mode: ThemeMode = ThemeMode.System, content: @Composable () -> Uni
 /** Colour for a NOTE / CAUTION / WARNING banner. */
 @Composable
 fun warnColor(level: String): Color = when (level.lowercase()) {
-    "waarschuwing" -> MaterialTheme.colorScheme.error
-    "pas op" -> MaterialTheme.colorScheme.primary
+    "danger", "warning" -> MaterialTheme.colorScheme.error
+    "caution" -> MaterialTheme.colorScheme.primary
     else -> MaterialTheme.colorScheme.onSurfaceVariant
 }

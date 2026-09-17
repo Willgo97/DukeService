@@ -303,4 +303,8 @@
     </plurals>
     <string name="which_machine_is_in_front_of_you">Hvilken maskine står foran dig?</string>
     <string name="read_the_type_plate">Læs typeskiltet indvendigt i lågen</string>
+    <string name="warn_note">Bemærk</string>
+    <string name="warn_caution">Forsigtig</string>
+    <string name="warn_warning">Advarsel</string>
+    <string name="warn_danger">Fare</string>
 </resources>

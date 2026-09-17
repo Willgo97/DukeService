@@ -12,7 +12,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Stond de deur te lang open, dan verschijnt het servicemenu. Tik op [Exit] en daarna op [Sluit de deur en druk hier om service te verlaten]."
    }
   ],
@@ -61,7 +61,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "tip",
+    "n": "note",
     "t": "Staat de machine langer dan een week stil: voer eerst het maandelijks onderhoud uit, sluit de watertoevoer af en trek de stekker eruit. Dat scheelt ook energie."
    }
   ],
@@ -92,7 +92,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Laat de deur niet onbeheerd openstaan; dan kan iedereen bij de binnenkant van de machine."
    }
   ],
@@ -125,11 +125,11 @@
   "needed": [],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Controleer dat alle canisters geplaatst zijn."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Haal de sleutel altijd uit de machine en uit de eventuele onderkast, zodat niemand anders de deur kan openen."
    }
   ],
@@ -169,7 +169,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "De bovenklep vergrendelt in de deur en gaat alleen open als de deur open is. Afhankelijk van het model zitten er uitsparingen in voor één of twee (bonen)canisters."
    }
   ],
@@ -215,7 +215,7 @@
   ],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Met de servicesleutel erin staat de machine onder spanning terwijl de deur open is. Onderdelen kunnen bewegen en er kan heet water uit komen. Plaats de sleutel alleen als erom gevraagd wordt."
    }
   ],
@@ -391,7 +391,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Afhankelijk van het model heeft de machine één of twee bekerstandaards."
    }
   ],
@@ -467,11 +467,11 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Loopt de lekbak over op een grotere afvalemmer of rechtstreeks op de afvoer, dan mag het interval naar één keer per week."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Zorg dat de nokken aan de achterkant van het kannenplateau (3) in de uitsparingen in de deur (1) vallen."
    }
   ],
@@ -520,15 +520,15 @@
   "needed": [],
   "warnings": [
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Zorg dat het afzuigfilter helemaal droog is voordat je het in de filterlade zet."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Zorg dat de pijl op de mixerpropeller naar de platte kant van de as wijst."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Zorg dat de mixer-afzuiging goed aansluit op de opening in de filterlade."
    }
   ],
@@ -612,11 +612,11 @@
   ],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Haal de brewer zelf niet uit elkaar. Alleen opgeleid personeel mag aan de brewer zelf werken; dat staat in de technische handleiding."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Zit de brewer niet goed gemonteerd, dan kan hij storingen geven of tijdens het zetten uit de houder springen."
    }
   ],
@@ -675,19 +675,19 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Reinig je de brewer niet met de voorgeschreven tablet van de fabrikant, dan vervalt de garantie op de betrokken onderdelen. Niet reinigen kan de machine laten storen. Advies: minimaal één keer per week. Heb je last van dichtgeslibde filterkoppen, doe het dan vaker."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Na 7 dagen zonder reiniging verschijnt er een melding. Na 9 dagen verschijnt er een melding én wordt koffie-afgifte geblokkeerd."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Draag beschermende kleding, handschoenen en een veiligheidsbril als je met reinigingstabletten werkt."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Breek de reinigingscyclus nooit af. Is de cyclus niet helemaal afgerond, doe dan de hele procedure opnieuw."
    }
   ],
@@ -735,15 +735,15 @@
   "needed": [],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Houd de deur open en plaats nooit de servicesleutel — anders kan de molen onverwacht aanslaan."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "De molen zit vol bonen en gemalen koffie. Zet je het molenhuis op zijn kop, dan valt dat eruit."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Zit er niets meer in de weg, dan draait de as soepel rond."
    }
   ],
@@ -821,7 +821,7 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Pas op bij het openen van de dispenserdeur: er kunnen bekers uit vallen."
    }
   ],
@@ -914,15 +914,15 @@
   "needed": [],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Plaats nooit de servicesleutel — anders kan de machine onverwacht aanslaan."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Is warm water alleen niet genoeg, gebruik dan een mild reinigingsmiddel."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Vul de canisters pas als ze helemaal droog zijn. Anders gaat het product klonteren en loopt het systeem vast."
    }
   ],
@@ -967,23 +967,23 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Houd minimaal een laag van 4 cm product in de canisters. Gebruik alleen ingrediënten die de leverancier voorschrijft."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Plaats nooit de servicesleutel — anders kan de machine onverwacht aanslaan."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Vul de canisters buiten de machine."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Zorg dat de aandrijving aan de achterkant van de canister goed op de motoraandrijving valt."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Controleer de stand van de canisteruitloop: hij moet naar de juiste mengbeker wijzen."
    }
   ],
@@ -1037,15 +1037,15 @@
   ],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Plaats nooit de servicesleutel — anders kan de molen onverwacht aanslaan."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Vul de canister buiten de machine."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Trek je de vergrendelschuif niet helemaal uit, dan vallen de bonen uit de canister."
    }
   ],
@@ -1109,11 +1109,11 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Gebruik geen agressieve reinigingsmiddelen of schuurmiddelen op (delen van) de machine."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Draag beschermende kleding, handschoenen en een veiligheidsbril bij het werken met reinigingschemicaliën."
    }
   ],
@@ -1167,11 +1167,11 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Gebruik geen agressieve reinigingsmiddelen of schuurmiddelen op (delen van) de machine."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Draag beschermende kleding, handschoenen en een veiligheidsbril bij het werken met reinigingschemicaliën."
    }
   ],
@@ -1231,7 +1231,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Een volle canister is 100%. Om het product vers te houden kun je ook op 50% vullen."
    }
   ],
@@ -1273,7 +1273,7 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Gebruik geen agressieve reinigingsmiddelen of schuurmiddelen op (delen van) de machine."
    }
   ],
@@ -1300,7 +1300,7 @@
   ],
   "warnings": [
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Gebruik geen andere (agressieve) chemicaliën op het touchscreen. Voorkom druppen: niet te veel vloeistof op de doek."
    }
   ],
@@ -1335,7 +1335,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Stond de deur te lang open, dan verschijnt het servicemenu. Tik op [Exit] en beantwoord de vraag 'Do you want to leave the service menu' met [OK]."
    }
   ],
@@ -1384,11 +1384,11 @@
   "needed": [],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Controleer dat alle canisters geplaatst zijn."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Haal de sleutel altijd uit de machine en uit de eventuele onderkast."
    }
   ],
@@ -1468,7 +1468,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Bij een vaste afvalwateraansluiting is er geen drupbak of afvalwateremmer nodig."
    }
   ],
@@ -1542,11 +1542,11 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Bij een vaste afvalwateraansluiting zit er geen afvalwaterbak in."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "De onderkast moet uit veiligheid op slot. Laat de deur van de onderkast niet onbeheerd openstaan."
    }
   ],
@@ -1586,11 +1586,11 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Loopt de lekbak over op een grotere afvalemmer of rechtstreeks op de afvoer, dan mag het interval naar één keer per week."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Zorg dat de nok aan de achterkant van het kannenplateau (3) in de uitsparing in de deur (1) valt."
    }
   ],
@@ -1632,15 +1632,15 @@
   ],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Haal de brewer zelf niet uit elkaar. Alleen opgeleid personeel mag aan de brewer zelf werken; dat staat in de technische handleiding."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Er kan water en gemalen koffie uit de brewer vallen."
    },
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Zit de brewer niet goed gemonteerd, dan verschijnt 'Brewer out of position' en wordt koffie-afgifte geblokkeerd."
    }
   ],
@@ -1718,19 +1718,19 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Reinig je de brewer niet met de voorgeschreven tablet van de fabrikant, dan vervalt de garantie op de betrokken onderdelen."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Na 7 dagen zonder reiniging verschijnt er een melding. Na 9 dagen verschijnt er een melding én wordt koffie-afgifte geblokkeerd."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Draag beschermende kleding, handschoenen en een veiligheidsbril als je met reinigingstabletten werkt."
    },
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Breek de reinigingscyclus nooit af. Is de cyclus niet helemaal afgerond, doe dan de hele procedure opnieuw."
    }
   ],
@@ -1797,7 +1797,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "waarschuwing",
+    "n": "warning",
     "t": "Houd de deur open en plaats nooit de servicesleutel — anders kan de molen onverwacht aanslaan."
    }
   ],
@@ -1861,7 +1861,7 @@
   "needed": [],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Een volle canister is 100%. Om het product vers te houden kun je ook op 50% vullen."
    }
   ],
@@ -1910,7 +1910,7 @@
   ],
   "warnings": [
    {
-    "n": "pas op",
+    "n": "caution",
     "t": "Gebruik geen andere (agressieve) chemicaliën op het touchscreen. Voorkom druppen: niet te veel vloeistof op de doek."
    }
   ],
@@ -3432,7 +3432,7 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Controleer bij de eigenschappen van de stick dat hij echt FAT32 is; met een ander bestandssysteem leest de machine hem niet."
    }
   ],
@@ -3515,11 +3515,11 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "De machine moet minstens 6 minuten aan staan voordat je met installeren begint."
    },
    {
-    "n": "let op",
+    "n": "note",
     "t": "Installeer eerst de software en pas daarna een eventuele GPRS-dongle. Andersom verbruik je onnodig databundel."
    }
   ],
@@ -3600,7 +3600,7 @@
   ],
   "warnings": [
    {
-    "n": "let op",
+    "n": "note",
     "t": "Heb je de simkaart niet bij De Jong DUKE besteld, gebruik dan de pincode en APN van je eigen provider."
    }
   ],

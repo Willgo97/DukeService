@@ -22,6 +22,7 @@ from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import BUILD, KB, MODEL_CODES, ROOT, read_json, write_json
 from text import clean, prose
+import translate
 
 ASSETS = os.path.join(ROOT, "app", "src", "main", "assets")
 DATA = os.path.join(ROOT, "data")
@@ -293,6 +294,7 @@ def build_faults(kb_faults, langs=LANG):
     over, because that part is not language-bound.
     """
     dutch_first = bool(langs) and langs[0] == "NL"
+    wanted = LOCALE_OF.get(langs[0].lower(), langs[0].lower()) if langs else "nl"
     out = [dict(f, codes=f.get("codes", []),
                 category=CATEGORY_WAS.get(f.get("category"), f.get("category") or "Other"))
            for f in read_json(os.path.join(DATA, "faults.json"), [])]
@@ -306,9 +308,15 @@ def build_faults(kb_faults, langs=LANG):
         english, _ = first(topic["message"], ["EN"])
         local, lang = first(topic["message"], langs)
         message = clean(english or local or topic["title"])
-        cause, _ = first(topic["cause"], langs)
-        solution, _ = first(topic["solution"], langs) or ([], "")
+        cause, cause_lang = first(topic["cause"], langs)
+        solution, solution_lang = first(topic["solution"], langs) or ([], "")
         notes, _ = first(topic["notes"], langs) or ([], "")
+        # first() falls back per field, so cause and solution can each come
+        # back in a different language than the one asked for. Only when the
+        # whole body is in the wanted language is it the manufacturer's.
+        body_lang = (cause_lang if cause and solution and cause_lang == solution_lang
+                     else None)
+        theirs = body_lang == wanted
         cause = clean(cause or "")
         solution = [clean(s) for s in (solution or [])]
         note = clean(" ".join(n["text"] for n in (notes or []))[:400])
@@ -321,15 +329,17 @@ def build_faults(kb_faults, langs=LANG):
             row["codes"] = sorted(set(row["codes"]) | set(model_codes))
             row["machines"] = sorted(set(row["machines"]) | set(machines))
             if not dutch_first:
-                # The manufacturer translated this message themselves.
+                # The manufacturer translated this message themselves. Their
+                # wording wins per field; where they have none, the
+                # hand-written Dutch stays and is translated further down.
                 row["dutch"] = local or message
                 if cause:
                     row["cause"] = cause
                 if solution:
                     row["solution"] = solution
                 row["note"] = note
-                row["engineerNote"] = ""
-                row["language"] = lang
+                row["engineerNote"] = "" if theirs else row.get("engineerNote", "")
+                row["language"] = wanted
             continue
 
         by_key[key_of(message)] = row = dict(
@@ -338,8 +348,13 @@ def build_faults(kb_faults, langs=LANG):
             cause=cause or "", solution=solution or [], note=note,
             selfService=False,
             source=(topic["number"] or "") + " " + (topic["sources"] or [""])[0],
-            language=lang)
+            language=body_lang or lang)
         out.append(row)
+    # A hand-written fault the manuals never carry keeps its Dutch wording and
+    # no language of its own, which would leave a Czech reader in Dutch. Say
+    # out loud that it is Dutch, so the translation layer takes it on.
+    for row in out:
+        row.setdefault("language", "nl")
     return out
 
 
@@ -579,6 +594,21 @@ def build_menu(kb_menu, pictures, langs=LANG):
     return label_duplicates(out, extra="path")
 
 
+# A safety banner is printed in four strengths. The books name them in their
+# own language — a Dutch manual says "waarschuwing" where an English one says
+# "warning" — but the strength is the same thing, and the app needs one word it
+# can colour and translate. The reader's own word is put back on screen from
+# the resources.
+WARN_LEVELS = {"let op": "note", "pas op": "caution", "waarschuwing": "warning",
+               "tip": "note", "important": "caution", "belangrijk": "caution"}
+
+
+def warn_level(level):
+    word = (level or "").strip().lower()
+    return WARN_LEVELS.get(word, word if word in
+                           ("note", "caution", "warning", "danger") else "note")
+
+
 def build_procedures(kb_procedures, pictures, langs=LANG):
     curated = read_json(os.path.join(DATA, "procedures.json"), [])
     out = list(curated)
@@ -602,7 +632,8 @@ def build_procedures(kb_procedures, pictures, langs=LANG):
                                      for c in codes(topic["applies_to"])} - {""})),
             machines=brands(topic["applies_to"]), codes=codes(topic["applies_to"]),
             interval="", intervalText="", purpose=prose(body),
-            needed=[], warnings=[dict(n=n["level"], t=clean(n["text"])) for n in (notes or [])],
+            needed=[], warnings=[dict(n=warn_level(n["level"]), t=clean(n["text"]))
+                                for n in (notes or [])],
             steps=[dict(t=clean(s)) for s in (steps or [])],
             source=(topic["number"] or "") + " " + (topic["sources"] or [""])[0],
             language=lang or body_lang))
@@ -923,6 +954,8 @@ def main():
     # back to English where a book was never translated.
     counts = {}
     machines = {}
+    translated = defaultdict(int)
+    untranslated = defaultdict(dict)
     for locale, code in LOCALES.items():
         langs = [code, "EN", "NL"]
         machines[locale] = build_machines(kb["products"], pictures, locale, kb["specs"])
@@ -936,6 +969,42 @@ def main():
             specs=build_specs(kb["specs"], langs),
             views=build_views(kb["views"], pictures, langs),
         )
+        # Chapters the manufacturer never translated fall back to another
+        # language, and the engineer ends up reading one they may not have.
+        # Where we wrote our own translation it is swapped in here; an item
+        # only loses its language badge once nothing of it is left untranslated.
+        for section in content.values():
+            for row in section:
+                if not isinstance(row, dict):
+                    continue
+                if row.get("language") is None:
+                    continue
+                gap, used = {}, []
+                if row.get("language") == locale:
+                    # Already theirs, but a fault can carry one hand-written
+                    # Dutch step among the manufacturer's own sentences. Swap
+                    # in what we have; what we do not have is already right.
+                    done = translate.apply(row, locale, None, used)
+                    if used:
+                        done["ownTranslation"] = True
+                    row.clear()
+                    row.update(done)
+                    continue
+                done = translate.apply(row, locale, gap, used)
+                # A flag in the file, not in the app: the manufacturer never
+                # translated this, so a button we put in Dutch may still read
+                # English on the machine itself. Anyone reading content-<lang>
+                # .json can see which words are ours. The app parses with
+                # ignoreUnknownKeys and never sees it.
+                if used:
+                    done["ownTranslation"] = True
+                if not gap:
+                    done["language"] = locale
+                    translated[locale] += 1
+                row.clear()
+                row.update(done)
+                untranslated[locale].update(gap)
+
         name = f"content-{locale}.json"
         sizes[name] = compact(name, content)
         counts[locale] = {k: len(v) for k, v in content.items()}
